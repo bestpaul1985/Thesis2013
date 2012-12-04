@@ -55,6 +55,9 @@ void testApp::update(){
     if (bJumpA) {
         frcA.y = -0.5;
     }
+    else if (playerA.pos.y <= 0){
+        frcA.y = 0.5;
+    }
     
     
     playerA.addForce(frcA.x, frcA.y);
@@ -106,14 +109,16 @@ void testApp::draw(){
     
 //----Player
     ofPushMatrix();
-        ofTranslate(ofGetWidth()/2, ofGetHeight()/2 + 350);
+        ofTranslate(ofGetWidth()/3, ofGetHeight()/2 +350 +playerA.pos.y );
 
         //********* item *************
 //        ofSetColor(255, 0, 220);
 //        ofRect(itemPos1,40,40);
     
-        ofSetColor(255);
-        ofCircle(0, 0, 50);
+        ofSetHexColor(0xf0bb46);
+        ofSetRectMode(OF_RECTMODE_CENTER);
+        ofRect(0, 0, 40, 80);
+        ofSetRectMode(OF_RECTMODE_CORNER);
     ofPopMatrix();
     
 //----Button
@@ -140,11 +145,11 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     ofRectangle rect2(ofGetWidth()/2, ofGetHeight()/2,ofGetWidth()/2, ofGetHeight()/2);
     if(rect1.inside(touch.x, touch.y)){
         touch.id = 0;
-    };
+    }
     
     if(rect2.inside(touch.x, touch.y)){
         touch.id = 1;
-    };
+    }
     
     
     //********* left ************
@@ -176,15 +181,14 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     
     if(rect1.inside(touch.x, touch.y)){
         touch.id = 0;
-    };
+    }
     
     
     if(rect2.inside(touch.x, touch.y)){
         touch.id = 1;
-    };
+    }
     
     //********* left ************
-
     if (touch.id ==0 && button1.inside(touch.x, touch.y)) {
         bGoLeftA = true;
     }else{
@@ -192,7 +196,6 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     }
     
     //********* right ************
-    
     if (touch.id ==0 && button2.inside(touch.x, touch.y)) {
         bGoRightA = true;
     }else{
@@ -200,7 +203,6 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     }
     
     //********* jump ************
-    
     if (touch.id == 1 && button3.inside(touch.x, touch.y)) {
         bJumpA = true;
     }else{
@@ -215,24 +217,22 @@ void testApp::touchUp(ofTouchEventArgs & touch){
     ofRectangle rect2(ofGetWidth()/2, ofGetHeight()/2,ofGetWidth()/2, ofGetHeight()/2);
     if(rect1.inside(touch.x, touch.y)){
         touch.id = 0;
-    };
+    }
     if(rect2.inside(touch.x, touch.y)){
         touch.id = 1;
-    };
+    }
     
     //********* left ************
-    
     if (touch.id ==0 && button1.inside(touch.x, touch.y)) {
         bGoLeftA = false;
     }
-    //********* right ************
     
+    //********* right ************
     if (touch.id ==0 && button2.inside(touch.x, touch.y)) {
         bGoRightA = false;
-    
     }
-    //********* jump ************
     
+    //********* jump ************
     if (touch.id == 1 && button3.inside(touch.x, touch.y)) {
         bJumpA = false;
     }
