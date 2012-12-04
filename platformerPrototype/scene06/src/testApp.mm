@@ -9,6 +9,7 @@ void testApp::setup(){
 	//iPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
 	
 	ofBackground(30,30,30);
+    ofSetCircleResolution(60);
     
     //************* player1 ***********
     playerA.setInitialCondition(0, 0,0,0);
@@ -24,9 +25,9 @@ void testApp::setup(){
     button1.set(50, ofGetHeight()-h-50, w, h);
     button2.set(80+w, ofGetHeight()-h-50, w, h);
     button3.set(ofGetWidth()-150, ofGetHeight()-h-50,w, h);
-    
+
     //********** background **************
-    bgA.loadImage("IMG_80521.jpeg");
+//    bgA.loadImage("IMG_80521.jpeg");
     //********** item 1 ******************
     itemPos1.set(200, 0);
 
@@ -69,14 +70,25 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
     
-    ofPushMatrix();
-        ofTranslate(ofGetWidth()/2, ofGetHeight()-150);
     
-        //********* bg A *************
-        ofSetColor(255);
-        bgA.draw(-ofGetWidth()/2-playerA.pos.x,-ofGetHeight()-50,bgA.getWidth(), bgA.getHeight());
-        ofSetColor(255, 0, 220);
-        ofRect(itemPos1,40,40);
+//----Background
+    ofPushMatrix();
+    ofTranslate(-playerA.pos.x, 0);
+    ofSetHexColor(0x5e462f);
+    for (int i=0; i<100; i++) {
+        ofRect(i*20, 0, 10, ofGetHeight()/2);
+    }
+    ofPopMatrix();
+//        bgA.draw(-ofGetWidth()/2-playerA.pos.x,-ofGetHeight()-50,bgA.getWidth(), bgA.getHeight());
+    
+    
+//----Player
+    ofPushMatrix();
+        ofTranslate(ofGetWidth()/2, 350);
+
+        //********* item *************
+//        ofSetColor(255, 0, 220);
+//        ofRect(itemPos1,40,40);
     
         //********* players **********
         ofSetColor(255);
@@ -122,8 +134,8 @@ void testApp::exit(){
 void testApp::touchDown(ofTouchEventArgs & touch){
     
     
-    ofRectangle rect1(0,ofGetHeight()/2,ofGetWidth()/2, ofGetHeight());
-    ofRectangle rect2(ofGetWidth()/2, ofGetHeight()/2,ofGetWidth(), ofGetHeight());
+    ofRectangle rect1(0,ofGetHeight()/2,ofGetWidth()/2, ofGetHeight()/2);
+    ofRectangle rect2(ofGetWidth()/2, ofGetHeight()/2,ofGetWidth()/2, ofGetHeight()/2);
     if(rect1.inside(touch.x, touch.y)){
         touch.id = 0;
     };
@@ -138,7 +150,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
         bGoleftA = true;
     }//********* right ************
     
-    else if (touch.id ==0&& button2.inside(touch.x, touch.y)) {
+    if (touch.id ==0&& button2.inside(touch.x, touch.y)) {
         bGoRightA = true;
     }
     
@@ -147,8 +159,6 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     
     if (touch.id == 1&& button3.inside(touch.x, touch.y)) {
         bJumpA = true;
-        
-        cout<<"ok"<<endl;
     }
    
     
@@ -159,8 +169,8 @@ void testApp::touchDown(ofTouchEventArgs & touch){
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
     
-    ofRectangle rect1(0,ofGetHeight()/2,ofGetWidth()/2, ofGetHeight());
-    ofRectangle rect2(ofGetWidth()/2, ofGetHeight()/2,ofGetWidth(), ofGetHeight());
+    ofRectangle rect1(0,ofGetHeight()/2,ofGetWidth()/2, ofGetHeight()/2);
+    ofRectangle rect2(ofGetWidth()/2, ofGetHeight()/2,ofGetWidth()/2, ofGetHeight()/2);
     
     if(rect1.inside(touch.x, touch.y)){
         touch.id = 0;
@@ -199,8 +209,8 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
     
-    ofRectangle rect1(0,ofGetHeight()/2,ofGetWidth()/2, ofGetHeight());
-    ofRectangle rect2(ofGetWidth()/2, ofGetHeight()/2,ofGetWidth(), ofGetHeight());
+    ofRectangle rect1(0,ofGetHeight()/2,ofGetWidth()/2, ofGetHeight()/2);
+    ofRectangle rect2(ofGetWidth()/2, ofGetHeight()/2,ofGetWidth()/2, ofGetHeight()/2);
     if(rect1.inside(touch.x, touch.y)){
         touch.id = 0;
     };

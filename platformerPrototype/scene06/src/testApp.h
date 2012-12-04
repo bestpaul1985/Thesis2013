@@ -36,7 +36,7 @@ class testApp : public ofxiPhoneApp{
         //----------Box2d
         ofxBox2d worldA;
         //----------Background------
-        ofImage bgA;
+//        ofImage bgA;
         //----------item 1----------
         ofPoint itemPos1;
 
