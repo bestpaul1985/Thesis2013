@@ -10,12 +10,14 @@ void testApp::setup(){
 	
 	ofBackground(30,30,30);
     ofSetCircleResolution(60);
+    ofEnableSmoothing();
     
     //************* player1 ***********
-    playerA.setInitialCondition(0, 0,0,0);
+    playerA.setInitialCondition(0, 0, 0, 0);
     bGoleftA = false;
     bGoRightA = false;
     playerA.damping = 0.05f;
+    
     //************* Buttons ***********
     bc1.set(100, 0, 220);
     bc2.set(100, 0, 220);
@@ -73,7 +75,7 @@ void testApp::draw(){
     
 //----Background
     ofPushMatrix();
-    ofTranslate(-playerA.pos.x, 0);
+    ofTranslate(-playerA.pos.x, ofGetHeight()/2);
     ofSetHexColor(0x5e462f);
     for (int i=0; i<100; i++) {
         ofRect(i*20, 0, 10, ofGetHeight()/2);
@@ -84,37 +86,34 @@ void testApp::draw(){
     
 //----Player
     ofPushMatrix();
-        ofTranslate(ofGetWidth()/2, 350);
+        ofTranslate(ofGetWidth()/2, ofGetHeight()/2 + 350);
 
         //********* item *************
 //        ofSetColor(255, 0, 220);
 //        ofRect(itemPos1,40,40);
     
-        //********* players **********
         ofSetColor(255);
         ofCircle(0, 0, 50);
     ofPopMatrix();
     
-
+//----Button
     ofPushMatrix();
-        //********* buttons **********
-
         if (bGoleftA) {
-            bc1.set(255, 0, 220);
+            bc1.setHex(0xf05a24);
         }else{
-            bc1.set(100, 0, 220);
+            bc1.setHex(0x0071bb);
         }
         
         if (bGoRightA) {
-            bc2.set(255, 0, 220);
+            bc2.setHex(0xf05a24);
         }else{
-            bc2.set(100, 0, 220);
+            bc2.setHex(0x0071bb);
         }
         
         if (bJumpA) {
-            bc3.set(255, 0, 220);
+            bc3.setHex(0xf05a24);
         }else{
-            bc3.set(100, 0, 220);
+            bc3.setHex(0x0071bb);
         }
         ofSetColor(bc1);
         ofRect(button1);
