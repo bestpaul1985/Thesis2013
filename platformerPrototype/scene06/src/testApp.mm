@@ -19,14 +19,15 @@ void testApp::setup(){
     playerA.damping = 0.05f;
     
     //************* Buttons ***********
-    bc1.set(100, 0, 220);
-    bc2.set(100, 0, 220);
-    bc3.set(100, 0, 220);
-    float w = 100;
-    float h = 100;
-    button1.set(50, ofGetHeight()-h-50, w, h);
-    button2.set(80+w, ofGetHeight()-h-50, w, h);
-    button3.set(ofGetWidth()-150, ofGetHeight()-h-50,w, h);
+    bc1.setHex(0x0071bb);
+    bc2.setHex(0x0071bb);
+    bc3.setHex(0x0071bb);
+    
+    float w = 75;
+    float h = 50;
+    button1.set(20, ofGetHeight()-20-h, w, h);
+    button2.set(40+w, ofGetHeight()-20-h, w, h);
+    button3.set(ofGetWidth()-20-w, ofGetHeight()-20-h, w, h);
 
     //********** background **************
 //    bgA.loadImage("IMG_80521.jpeg");
@@ -60,7 +61,26 @@ void testApp::update(){
     playerA.addDampingForce();
     playerA.update();
     
-    //********* bgA **********
+
+    
+//----Button Color
+    if (bGoleftA) {
+        bc1.setHex(0xf05a24);
+    }else{
+        bc1.setHex(0x0071bb);
+    }
+    
+    if (bGoRightA) {
+        bc2.setHex(0xf05a24);
+    }else{
+        bc2.setHex(0x0071bb);
+    }
+    
+    if (bJumpA) {
+        bc3.setHex(0xf05a24);
+    }else{
+        bc3.setHex(0x0071bb);
+    }
     
     
     //********** item 1 ******************
@@ -98,23 +118,6 @@ void testApp::draw(){
     
 //----Button
     ofPushMatrix();
-        if (bGoleftA) {
-            bc1.setHex(0xf05a24);
-        }else{
-            bc1.setHex(0x0071bb);
-        }
-        
-        if (bGoRightA) {
-            bc2.setHex(0xf05a24);
-        }else{
-            bc2.setHex(0x0071bb);
-        }
-        
-        if (bJumpA) {
-            bc3.setHex(0xf05a24);
-        }else{
-            bc3.setHex(0x0071bb);
-        }
         ofSetColor(bc1);
         ofRect(button1);
         ofSetColor(bc2);
@@ -145,18 +148,18 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     
     //********* left ************
 
-    if (touch.id ==0&& button1.inside(touch.x, touch.y)) {
+    if (touch.id ==0 && button1.inside(touch.x, touch.y)) {
         bGoleftA = true;
     }//********* right ************
     
-    if (touch.id ==0&& button2.inside(touch.x, touch.y)) {
+    if (touch.id ==0 && button2.inside(touch.x, touch.y)) {
         bGoRightA = true;
     }
     
     
     //********* jump ************
     
-    if (touch.id == 1&& button3.inside(touch.x, touch.y)) {
+    if (touch.id == 1 && button3.inside(touch.x, touch.y)) {
         bJumpA = true;
     }
    
@@ -182,7 +185,7 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     
     //********* left ************
 
-    if (touch.id ==0&& button1.inside(touch.x, touch.y)) {
+    if (touch.id ==0 && button1.inside(touch.x, touch.y)) {
         bGoleftA = true;
     }else{
          bGoleftA = false;
@@ -190,7 +193,7 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     
     //********* right ************
     
-    if (touch.id ==0&& button2.inside(touch.x, touch.y)) {
+    if (touch.id ==0 && button2.inside(touch.x, touch.y)) {
         bGoRightA = true;
     }else{
         bGoleftA = false;
@@ -198,7 +201,7 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     
     //********* jump ************
     
-    if (touch.id == 1&& button3.inside(touch.x, touch.y)) {
+    if (touch.id == 1 && button3.inside(touch.x, touch.y)) {
         bJumpA = true;
     }else{
         bGoleftA = false;
@@ -219,18 +222,18 @@ void testApp::touchUp(ofTouchEventArgs & touch){
     
     //********* left ************
     
-    if (touch.id ==0&& button1.inside(touch.x, touch.y)) {
+    if (touch.id ==0 && button1.inside(touch.x, touch.y)) {
         bGoleftA = false;
     }
     //********* right ************
     
-    if (touch.id ==0&& button2.inside(touch.x, touch.y)) {
+    if (touch.id ==0 && button2.inside(touch.x, touch.y)) {
         bGoRightA = false;
     
     }
     //********* jump ************
     
-    if (touch.id == 1&& button3.inside(touch.x, touch.y)) {
+    if (touch.id == 1 && button3.inside(touch.x, touch.y)) {
         bJumpA = false;
     }
 
