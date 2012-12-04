@@ -14,7 +14,7 @@ void testApp::setup(){
     
     //************* player1 ***********
     playerA.setInitialCondition(0, 0, 0, 0);
-    bGoleftA = false;
+    bGoLeftA = false;
     bGoRightA = false;
     playerA.damping = 0.05f;
     
@@ -44,7 +44,7 @@ void testApp::update(){
     playerA.resetForce();
     frcA.set(0, 0);
     
-    if (bGoleftA) {
+    if (bGoLeftA) {
         frcA.x = -0.4;
     }
     
@@ -64,7 +64,7 @@ void testApp::update(){
 
     
 //----Button Color
-    if (bGoleftA) {
+    if (bGoLeftA) {
         bc1.setHex(0xf05a24);
     }else{
         bc1.setHex(0x0071bb);
@@ -146,19 +146,19 @@ void testApp::touchDown(ofTouchEventArgs & touch){
         touch.id = 1;
     };
     
-    //********* left ************
-
-    if (touch.id ==0 && button1.inside(touch.x, touch.y)) {
-        bGoleftA = true;
-    }//********* right ************
     
+    //********* left ************
+    if (touch.id ==0 && button1.inside(touch.x, touch.y)) {
+        bGoLeftA = true;
+    }
+    
+    //********* right ************
     if (touch.id ==0 && button2.inside(touch.x, touch.y)) {
         bGoRightA = true;
     }
     
     
     //********* jump ************
-    
     if (touch.id == 1 && button3.inside(touch.x, touch.y)) {
         bJumpA = true;
     }
@@ -186,9 +186,9 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     //********* left ************
 
     if (touch.id ==0 && button1.inside(touch.x, touch.y)) {
-        bGoleftA = true;
+        bGoLeftA = true;
     }else{
-         bGoleftA = false;
+        bGoLeftA = false;
     }
     
     //********* right ************
@@ -196,7 +196,7 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     if (touch.id ==0 && button2.inside(touch.x, touch.y)) {
         bGoRightA = true;
     }else{
-        bGoleftA = false;
+        bGoRightA = false;
     }
     
     //********* jump ************
@@ -204,7 +204,7 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     if (touch.id == 1 && button3.inside(touch.x, touch.y)) {
         bJumpA = true;
     }else{
-        bGoleftA = false;
+        bJumpA = false;
     }
 }
 
@@ -223,7 +223,7 @@ void testApp::touchUp(ofTouchEventArgs & touch){
     //********* left ************
     
     if (touch.id ==0 && button1.inside(touch.x, touch.y)) {
-        bGoleftA = false;
+        bGoLeftA = false;
     }
     //********* right ************
     

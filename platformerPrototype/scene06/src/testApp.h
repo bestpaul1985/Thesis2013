@@ -29,7 +29,7 @@ class testApp : public ofxiPhoneApp{
         //----------player1
         player1particle playerA;
         ofPoint frcA;
-        bool bGoleftA, bGoRightA, bJumpA;
+        bool bGoLeftA, bGoRightA, bJumpA;
         //----------UI
         ofRectangle button1,button2,button3;
         ofColor bc1,bc2,bc3;
