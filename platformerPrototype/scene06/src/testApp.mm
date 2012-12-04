@@ -58,6 +58,9 @@ void testApp::update(){
     else if (playerA.pos.y <= 0){
         frcA.y = 0.5;
     }
+    else if (playerA.pos.y > 0) {
+        frcA.y = 0;
+    }
     
     
     playerA.addForce(frcA.x, frcA.y);
