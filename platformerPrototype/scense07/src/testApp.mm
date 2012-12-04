@@ -244,10 +244,10 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
     //********* middleLine **********
-    ofFill();
-    ofSetColor(214, 79, 42);
-    ofRect(0,ofGetHeight()/2-40, ofGetWidth(), 80);
-    
+//    ofFill();
+//    ofSetColor(214, 79, 42);
+//    ofRect(0,ofGetHeight()/2-40, ofGetWidth(), 80);
+//    
     //********* buttons A**********
     ofFill();
     if (bGoleftA) {
@@ -465,15 +465,15 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     
      //********* jump ************
     if (touch.id == 1&& button3A.inside(touch.x, touch.y)&& bJumpedA==false&& bOntheWallA == true) {
-        b2dPlayerA.setVelocity(b2dPlayerA.getVelocity().x, b2dPlayerA.getVelocity().y-40);
-        bJumpedA = true;
+//        b2dPlayerA.setVelocity(b2dPlayerA.getVelocity().x, b2dPlayerA.getVelocity().y-40);
+//        bJumpedA = true;
     }else{
         bJumpedA = false;
     }
     
     if (touch.id == 2&& button3B.inside(touch.x, touch.y)&& bJumpedB==false && bOntheWallB == true) {
-        b2dPlayerB.setVelocity(b2dPlayerB.getVelocity().x, b2dPlayerB.getVelocity().y+40);
-        bJumpedB = true;
+//        b2dPlayerB.setVelocity(b2dPlayerB.getVelocity().x, b2dPlayerB.getVelocity().y+40);
+//        bJumpedB = true;
     }else{
         bJumpedB = false;
     }
