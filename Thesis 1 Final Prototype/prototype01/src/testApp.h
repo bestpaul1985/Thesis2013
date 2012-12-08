@@ -4,9 +4,11 @@
 #include "ofxiPhone.h"
 #include "ofxiPhoneExtras.h"
 #include "ofxBox2d.h"
+
 #include "dirctiveButton.h"
 #include "jumpButton.h"
 #include "character.h"
+
 class testApp : public ofxiPhoneApp{
 	
     public:
@@ -27,8 +29,6 @@ class testApp : public ofxiPhoneApp{
         void deviceOrientationChanged(int newOrientation);
         
         ofxBox2d worldP1;
-        ofxBox2d worldP2;
-    
         directiveButton P1L;
         directiveButton P1R;
         jumpButton P1J;

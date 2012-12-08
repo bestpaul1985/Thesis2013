@@ -15,7 +15,7 @@
 class character{
     
 public:
-    void setup(ofxBox2d world, float x, float y, float width, float height);
+    void setup(ofxBox2d &world, float x, float y, float width, float height);
     void update(bool L, bool R,float speed, float scale, float dump);
     void draw();
     
@@ -24,7 +24,7 @@ public:
     float density;
     float bounce;
     float friction;
-    ofImage *img;
+    ofImage img;
     float offSetX;
     float offSetY;
 };

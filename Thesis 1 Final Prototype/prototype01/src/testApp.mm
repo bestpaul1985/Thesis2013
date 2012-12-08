@@ -14,6 +14,7 @@ void testApp::setup(){
     worldP1.createBounds();
     worldP1.setIterations(1, 1);
     worldP1.setFPS(60);
+
     
     float w = 100;
     float h = 100;
@@ -30,7 +31,7 @@ void testApp::setup(){
     
     guy.loadImage("image/guy1.png");
     P1.setup(worldP1, 384, 500, guy.getWidth(),guy.getHeight());
-    P1.img = &guy;
+    P1.img = guy;
     
 }
 

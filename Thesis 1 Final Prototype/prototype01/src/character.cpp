@@ -8,7 +8,7 @@
 
 #include "character.h"
 
-void character::setup(ofxBox2d world, float x, float y, float width, float height){
+void character::setup(ofxBox2d &world, float x, float y, float width, float height){
    
     offSetX = width/2;
     offSetY = height/2;
@@ -37,6 +37,6 @@ void character::update(bool L, bool R, float speed, float scale, float dump){
 
 void character::draw(){
     ofSetColor(255, 255, 255);    
-    img->draw(box2d.getPosition().x - offSetX, box2d.getPosition().y - offSetY, box2d.getWidth(),box2d.getHeight());
+    img.draw(box2d.getPosition().x - offSetX, box2d.getPosition().y - offSetY, box2d.getWidth(),box2d.getHeight());
 }
 
