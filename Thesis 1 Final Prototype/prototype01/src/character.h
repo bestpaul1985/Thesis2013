@@ -15,18 +15,23 @@
 class character{
     
 public:
-    void setup(ofxBox2d &world, float x, float y, float width, float height);
-    void update(bool L, bool R,float speed, float scale, float dump);
-    void draw();
+    void setup(ofxBox2dRect &rect, float _speed, float _scale, float _dump);
+    void update(bool L, bool R);
+    void draw(ofxBox2dRect &rect);
     
-
-    ofxBox2dRect box2d;
+    ofImage *img;
+    ofPoint pos;
+    ofPoint frc;
+    float width;
+    float height;
     float density;
     float bounce;
     float friction;
-    ofImage img;
     float offSetX;
     float offSetY;
+    float speed;
+    float scale;
+    float dump;
 };
 
 #endif /* defined(__prototype01__character__) */

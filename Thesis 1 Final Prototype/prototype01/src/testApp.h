@@ -29,6 +29,7 @@ class testApp : public ofxiPhoneApp{
         void deviceOrientationChanged(int newOrientation);
         
         ofxBox2d worldP1;
+        
         directiveButton P1L;
         directiveButton P1R;
         jumpButton P1J;
@@ -38,6 +39,7 @@ class testApp : public ofxiPhoneApp{
         jumpButton P2J;
     
         character P1;
+        ofxBox2dRect Rect1;
         character P2;
     
         ofImage guy;

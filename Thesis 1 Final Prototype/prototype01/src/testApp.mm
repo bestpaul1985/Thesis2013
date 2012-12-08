@@ -14,7 +14,7 @@ void testApp::setup(){
     worldP1.createBounds();
     worldP1.setIterations(1, 1);
     worldP1.setFPS(60);
-
+    
     
     float w = 100;
     float h = 100;
@@ -30,8 +30,10 @@ void testApp::setup(){
     
     
     guy.loadImage("image/guy1.png");
-    P1.setup(worldP1, 384, 500, guy.getWidth(),guy.getHeight());
-    P1.img = guy;
+    P1.img = &guy;
+    Rect1.setup(worldP1.getWorld(), 0,0,guy.getWidth(), guy.getHeight());
+    P1.setup(Rect1,100, 10, 0.98);
+    
     
 }
 
@@ -39,9 +41,9 @@ void testApp::setup(){
 void testApp::update(){
     
     worldP1.update();
-    P1.update(P1L.bPressed, P1R.bPressed, 100, 10, 0.98);
-    
-    
+    P1.update(P1L.bPressed, P1R.bPressed);
+    Rect1.addForce(P1.frc, P1.scale);
+    Rect1.setDamping(P1.dump);
 }
 
 //--------------------------------------------------------------
@@ -53,7 +55,7 @@ void testApp::draw(){
     P2R.draw();
     P2J.draw();
     
-    P1.draw();
+    P1.draw(Rect1);
 }
 
 //--------------------------------------------------------------
