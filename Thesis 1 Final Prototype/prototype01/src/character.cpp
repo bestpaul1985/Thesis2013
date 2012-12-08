@@ -15,8 +15,8 @@ void character::setup(ofxBox2d world, float x, float y, float width, float heigh
     density = 10;
     bounce = 0;
     friction = 0.5;
-    player.setPhysics(density, bounce, friction);
-    player.setup(world.getWorld(), x, y, width,height);
+    box2d.setPhysics(density, bounce, friction);
+    box2d.setup(world.getWorld(), x, y, width,height);
 }
 
 void character::update(){
@@ -24,6 +24,6 @@ void character::update(){
 
 void character::draw(){
     ofSetColor(255, 255, 255);    
-    img->draw(player.getPosition().x - offSetX, player.getPosition().y - offSetY, player.getWidth(),player.getHeight());
+    img->draw(box2d.getPosition().x - offSetX, box2d.getPosition().y - offSetY, box2d.getWidth(),box2d.getHeight());
 }
 

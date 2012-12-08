@@ -20,7 +20,7 @@ public:
     void draw();
     
 
-    ofxBox2dRect player;
+    ofxBox2dRect box2d;
     float density;
     float bounce;
     float friction;

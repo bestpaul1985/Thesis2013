@@ -29,13 +29,24 @@ void testApp::setup(){
     
     
     guy.loadImage("image/guy1.png");
-    P1.setup(worldP1, 0, 0, guy.getWidth(),guy.getHeight());
+    P1.setup(worldP1, 384, 500, guy.getWidth(),guy.getHeight());
     P1.img = &guy;
     
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
+    worldP1.update();
+    ofPoint frcA(0, 0);
+    
+    if (P1L.bPressed) {
+        frcA.x = -100;
+    }
+    
+    if (P1R.bPressed) {
+        frcA.x = 100;
+    }
+    
     
 }
 
