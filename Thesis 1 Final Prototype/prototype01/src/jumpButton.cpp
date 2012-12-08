@@ -48,6 +48,8 @@ void jumpButton::touchDown(int x, int y, int touchId){
     if (rect.inside(x, y)&& (touchId == 1||touchId == 2) && bJumped == false) {
         bPressed = true;
         bJumped = true;
+    }else{
+        bPressed = false;
     }
 }
 

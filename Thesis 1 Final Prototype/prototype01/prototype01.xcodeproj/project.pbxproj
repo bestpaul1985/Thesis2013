@@ -26,6 +26,7 @@
 		3e76a164b41bceb11b15c175088fe1bc /* b2Body.cpp in Sources */ = {isa = PBXBuildFile; fileRef = a296623a714c9f8edb4bca26d13eafef /* b2Body.cpp */; };
 		41ddb078572b368f685e19f89f0cf42e /* b2PolygonContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 993da2bf507b037b97e6fa1653830b15 /* b2PolygonContact.cpp */; };
 		4C03C2BD1673962600D42F2E /* guy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C03C2BB1673962600D42F2E /* guy.cpp */; };
+		4C03C2D71673DF8D00D42F2E /* girl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C03C2D51673DF8C00D42F2E /* girl.cpp */; };
 		4C1E7E6D1672B9A100D79DF5 /* dirctiveButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E7E6B1672B9A100D79DF5 /* dirctiveButton.cpp */; };
 		4C1E7E731672D0D800D79DF5 /* jumpButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E7E711672D0D800D79DF5 /* jumpButton.cpp */; };
 		4cc0fd96de77ff40bbcf8dd893ae88b8 /* del_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ec06dc33990374e7508e4ea9cf41d28 /* del_impl.cpp */; };
@@ -114,6 +115,8 @@
 		469610240a273862d8b39ce4df7f945b /* b2Shape.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2Shape.h; path = ../../../addons/ofxBox2d/libs/Box2D/Collision/Shapes/b2Shape.h; sourceTree = SOURCE_ROOT; };
 		4C03C2BB1673962600D42F2E /* guy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guy.cpp; sourceTree = "<group>"; };
 		4C03C2BC1673962600D42F2E /* guy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guy.h; sourceTree = "<group>"; };
+		4C03C2D51673DF8C00D42F2E /* girl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = girl.cpp; sourceTree = "<group>"; };
+		4C03C2D61673DF8D00D42F2E /* girl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = girl.h; sourceTree = "<group>"; };
 		4C1E7E6B1672B9A100D79DF5 /* dirctiveButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dirctiveButton.cpp; sourceTree = "<group>"; };
 		4C1E7E6C1672B9A100D79DF5 /* dirctiveButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dirctiveButton.h; sourceTree = "<group>"; };
 		4C1E7E711672D0D800D79DF5 /* jumpButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jumpButton.cpp; sourceTree = "<group>"; };
@@ -467,6 +470,8 @@
 				E4D8936C11527B74007E1F53 /* testApp.h */,
 				4C03C2BB1673962600D42F2E /* guy.cpp */,
 				4C03C2BC1673962600D42F2E /* guy.h */,
+				4C03C2D51673DF8C00D42F2E /* girl.cpp */,
+				4C03C2D61673DF8D00D42F2E /* girl.h */,
 				4C1E7E5C1672B11800D79DF5 /* buttons */,
 			);
 			path = src;
@@ -670,6 +675,7 @@
 				4C1E7E6D1672B9A100D79DF5 /* dirctiveButton.cpp in Sources */,
 				4C1E7E731672D0D800D79DF5 /* jumpButton.cpp in Sources */,
 				4C03C2BD1673962600D42F2E /* guy.cpp in Sources */,
+				4C03C2D71673DF8D00D42F2E /* girl.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

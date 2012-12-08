@@ -1,16 +1,17 @@
 //
-//  guy.h
+//  girl.h
 //  prototype01
 //
 //  Created by PengCheng on 12/8/12.
 //
 //
 
-#ifndef __prototype01__guy__
-#define __prototype01__guy__
+#ifndef __prototype01__girl__
+#define __prototype01__girl__
 
 #include "ofMain.h"
-class guy{
+
+class girl{
 public:
     void setup(ofPoint _pos);
     void update(ofPoint _pos);
@@ -23,4 +24,4 @@ public:
     float height;
 };
 
-#endif /* defined(__prototype01__guy__) */
+#endif /* defined(__prototype01__girl__) */

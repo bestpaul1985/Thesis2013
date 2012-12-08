@@ -8,6 +8,7 @@
 #include "dirctiveButton.h"
 #include "jumpButton.h"
 #include "guy.h"
+#include "girl.h"
 
 class testApp : public ofxiPhoneApp{
 	
@@ -28,20 +29,30 @@ class testApp : public ofxiPhoneApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
     
-        //********box2d****************
-        ofxBox2d worldP1;
-        ofxBox2dRect chracater
-        //********buttons****************
-        directiveButton P1L;
-        directiveButton P1R;
-        directiveButton P2L;
-        directiveButton P2R;
-        jumpButton P1J;
-        jumpButton P2J;
-        jumpButton P1F;
-        jumpButton P2F;
-    
-        guy myGuy;
+        //********box2d**************************
+        ofxBox2d                worldP1;
+        ofxBox2d                worldP2;
+        ofxBox2dPolygon         polyLine1;
+        ofxBox2dPolygon         polyLine2;
+        //********buttons**************************
+        directiveButton         P1L;
+        directiveButton         P1R;
+        directiveButton         P2L;
+        directiveButton         P2R;
+        jumpButton              P1J;
+        jumpButton              P2J;
+        jumpButton              P1F;
+        jumpButton              P2F;
+        //******** guy *********************
+        guy                     myGuy;
+        ofxBox2dRect            chracater1;
+        ofPoint                 diffP1;
+        ofPoint                 lastPosP1;
+        //******** girl *********************
+        girl                     myGirl;
+        ofxBox2dRect            chracater2;
+        ofPoint                 diffP2;
+        ofPoint                 lastPosP2;
     
 };
 
