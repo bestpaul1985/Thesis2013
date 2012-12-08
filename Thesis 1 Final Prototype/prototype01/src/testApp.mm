@@ -38,7 +38,7 @@ void testApp::setup(){
 void testApp::update(){
     
 //    worldP1.update();
-    P1.update(P1L.bPressed, P1R.bPressed, 100, 10, 0.98f);
+    P1.update(P1L.bPressed, P1R.bPressed, 100, 10, 0.98);
     
     
 }
