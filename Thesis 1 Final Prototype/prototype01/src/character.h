@@ -1,0 +1,31 @@
+//
+//  character.h
+//  prototype01
+//
+//  Created by PengCheng on 12/7/12.
+//
+//
+
+#ifndef __prototype01__character__
+#define __prototype01__character__
+
+#include "ofMain.h"
+#include "ofxBox2d.h"
+
+class character{
+    
+public:
+    void setup(ofxBox2d world, float x, float y, ofRectangle rect);
+    void update();
+    void draw();
+    
+
+    ofxBox2dRect player;
+    float density;
+    float bounce;
+    float friction;
+    ofImage *img;
+    
+};
+
+#endif /* defined(__prototype01__character__) */
