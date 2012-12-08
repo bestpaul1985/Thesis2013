@@ -15,7 +15,7 @@
 class character{
     
 public:
-    void setup(ofxBox2d world, float x, float y, ofRectangle rect);
+    void setup(ofxBox2d world, float x, float y, float width, float height);
     void update();
     void draw();
     
@@ -25,7 +25,8 @@ public:
     float bounce;
     float friction;
     ofImage *img;
-    
+    float offSetX;
+    float offSetY;
 };
 
 #endif /* defined(__prototype01__character__) */

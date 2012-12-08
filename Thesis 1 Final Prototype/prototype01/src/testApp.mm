@@ -8,6 +8,13 @@ void testApp::setup(){
 
 	
 	ofBackground(30,30,30);
+    
+    worldP1.init();
+    worldP1.setGravity(0,1);
+    worldP1.setFPS(60);
+    worldP1.createBounds(0,ofGetHeight(),ofGetWidth(),ofGetHeight());
+    worldP1.setIterations(1, 1);
+    
     float w = 100;
     float h = 100;
     ofColor color(30,30,30);
@@ -18,11 +25,18 @@ void testApp::setup(){
     P2L.setup(ofGetWidth()-40-w, 30,  w, h, color);
     P2R.setup(ofGetWidth()-70-2*w, 30, w, h, color);
     P2J.setup(40, 30, w, h, color);
-
+    
+    
+    
+    guy.loadImage("image/guy1.png");
+    P1.setup(worldP1, 0, 0, guy.getWidth(),guy.getHeight());
+    P1.img = &guy;
+    
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
+    
 }
 
 //--------------------------------------------------------------
@@ -33,7 +47,7 @@ void testApp::draw(){
     P2L.draw();
     P2R.draw();
     P2J.draw();
-   
+    P1.draw();
 }
 
 //--------------------------------------------------------------

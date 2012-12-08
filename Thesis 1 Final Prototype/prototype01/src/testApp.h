@@ -6,7 +6,7 @@
 #include "ofxBox2d.h"
 #include "dirctiveButton.h"
 #include "jumpButton.h"
-
+#include "character.h"
 class testApp : public ofxiPhoneApp{
 	
     public:
@@ -25,6 +25,9 @@ class testApp : public ofxiPhoneApp{
         void gotFocus();
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
+        
+        ofxBox2d worldP1;
+        ofxBox2d worldP2;
     
         directiveButton P1L;
         directiveButton P1R;
@@ -34,6 +37,11 @@ class testApp : public ofxiPhoneApp{
         directiveButton P2R;
         jumpButton P2J;
     
+        character P1;
+        character P2;
+    
+        ofImage guy;
+        ofImage girl;
     
 };
 

@@ -8,20 +8,22 @@
 
 #include "character.h"
 
-void character::setup(ofxBox2d world, float x, float y, ofRectangle rect){
+void character::setup(ofxBox2d world, float x, float y, float width, float height){
    
-    density = 0.1;
-    bounce = 0.1;
-    friction = 0.1;
+    offSetX = width/2;
+    offSetY = height/2;
+    density = 10;
+    bounce = 0;
+    friction = 0.5;
     player.setPhysics(density, bounce, friction);
-    player.setup(world.getWorld(), rect);
+    player.setup(world.getWorld(), x, y, width,height);
 }
 
 void character::update(){
 }
 
 void character::draw(){
-    
-    img->draw(player.getPosition(),player.getWidth(),player.getHeight());
+    ofSetColor(255, 255, 255);    
+    img->draw(player.getPosition().x - offSetX, player.getPosition().y - offSetY, player.getWidth(),player.getHeight());
 }
 
