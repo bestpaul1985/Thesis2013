@@ -33,7 +33,7 @@ void directiveButton::draw(){
         ofTranslate(rect.getCenter());
         ofRotateZ(angle);
         img.draw(0, 0, rect.getWidth(), rect.getHeight());
-    ofPushMatrix();
+    ofPopMatrix();
     ofSetRectMode(OF_RECTMODE_CENTER);
 //    ofNoFill();
 //    ofRect(rect.getCenter(), rect.getWidth(), rect.getHeight());

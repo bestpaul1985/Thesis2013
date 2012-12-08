@@ -28,11 +28,12 @@ void girl::update(ofPoint _pos){
 //-------------------------------------------
 void girl::draw(){
         
-
-    ofFill();
-    ofSetColor(255, 255, 255);
-    img.draw(pos, width, height);
+    ofPushMatrix();
+        ofTranslate(pos);
+        ofFill();
+        ofSetColor(255, 255, 255);
+        img.draw(0, 0, width, height);
+    ofPopMatrix();
     ofNoFill();
     ofCircle(getCenter, 10);
-    
 }

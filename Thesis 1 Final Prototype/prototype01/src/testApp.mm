@@ -53,13 +53,12 @@ void testApp::setup(){
     myGuy.setup(chracater1.getPosition());
     chracater1.setPhysics(3, 0, 0.5);
     chracater1.setup(worldP1.getWorld(), ofGetWidth()/2, ofGetHeight()/2, myGuy.width/2, myGuy.height/2);
-//  chracater1.bodyDef.fixedRotation = false;
-
+    chracater1.body->SetFixedRotation(true);
     //********** Girl *******************
     myGirl.setup(chracater2.getPosition());
     chracater2.setPhysics(3, 0, 0.5);
     chracater2.setup(worldP2.getWorld(), ofGetWidth()/2, ofGetHeight()/2, myGirl.width/2, myGirl.height/2);
-
+    chracater2.body->SetFixedRotation(true);
 }
 
 //--------------------------------------------------------------
@@ -98,6 +97,23 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
+  
+    
+    
+    myGuy.draw();
+    myGirl.draw();
+    
+    ofNoFill();
+    ofSetColor(255, 255, 255);
+    polyLine1.draw();
+    polyLine2.draw();
+    
+    ofFill();
+    ofSetColor(255, 255, 255,30);
+    chracater1.draw();
+    chracater2.draw();
+    
+   
     P1L.draw();
     P1R.draw();
     P1J.draw();
@@ -106,16 +122,6 @@ void testApp::draw(){
     P2R.draw();
     P2J.draw();
     P2F.draw();
-    
-    
-    myGuy.draw();
-    myGirl.draw();
-    polyLine1.draw();
-    polyLine2.draw();
-    ofNoFill();
-    ofSetColor(255, 255, 255,125);
-    chracater1.draw();
-    chracater2.draw();
    
 }
 
