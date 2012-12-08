@@ -10,10 +10,10 @@ void testApp::setup(){
 	ofBackground(30,30,30);
     
     worldP1.init();
-    worldP1.setGravity(0,1);
-    worldP1.setFPS(60);
-    worldP1.createBounds(0,ofGetHeight(),ofGetWidth(),ofGetHeight());
+    worldP1.setGravity(0, 100);
+    worldP1.createBounds();
     worldP1.setIterations(1, 1);
+    worldP1.setFPS(60);
     
     float w = 100;
     float h = 100;
@@ -36,16 +36,9 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-    worldP1.update();
-    ofPoint frcA(0, 0);
     
-    if (P1L.bPressed) {
-        frcA.x = -100;
-    }
-    
-    if (P1R.bPressed) {
-        frcA.x = 100;
-    }
+//    worldP1.update();
+    P1.update(P1L.bPressed, P1R.bPressed, 100, 10, 0.98f);
     
     
 }

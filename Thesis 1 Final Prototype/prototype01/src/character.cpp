@@ -19,7 +19,20 @@ void character::setup(ofxBox2d world, float x, float y, float width, float heigh
     box2d.setup(world.getWorld(), x, y, width,height);
 }
 
-void character::update(){
+void character::update(bool L, bool R,float speed, float scale, float dump){
+   
+    ofPoint frc(0, 0);
+    
+    if (L) {
+        frc.x = -speed;
+    }
+    
+    if (R) {
+        frc.x = speed;
+    }
+    
+    box2d.addForce(frc, scale);
+    box2d.setDamping(dump);
 }
 
 void character::draw(){
