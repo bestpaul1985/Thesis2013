@@ -19,7 +19,7 @@ void character::setup(ofxBox2d world, float x, float y, float width, float heigh
     box2d.setup(world.getWorld(), x, y, width,height);
 }
 
-void character::update(bool L, bool R,float speed, float scale, float dump){
+void character::update(bool L, bool R, float speed, float scale, float dump){
    
     ofPoint frc(0, 0);
     

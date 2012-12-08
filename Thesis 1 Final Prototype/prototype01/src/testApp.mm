@@ -37,7 +37,7 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
     
-//    worldP1.update();
+    worldP1.update();
     P1.update(P1L.bPressed, P1R.bPressed, 100, 10, 0.98);
     
     
@@ -51,6 +51,7 @@ void testApp::draw(){
     P2L.draw();
     P2R.draw();
     P2J.draw();
+    
     P1.draw();
 }
 
