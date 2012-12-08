@@ -13,15 +13,18 @@
 class directiveButton{
     
 public:
-    void setup(float width, float hight, float x, float y, ofColor color);
+    void setup(float x, float y, float _num, float _angle);
     void draw();
     void touchDown(int x, int y, int touchId);
     void touchMoved(int x, int y, int touchId);
     void touchUp(int x, int y, int touchId);
     
     ofRectangle         rect;
+    ofImage             img;
     ofColor             color;
     bool                bPressed;
+    int                 num;
+    float               angle;
     
     
 };

@@ -25,9 +25,9 @@
 		34bc8bafaa94bd8ccba662d12407e004 /* b2LineJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45eb42f8640cfcae47aa7e08ab94ffbd /* b2LineJoint.cpp */; };
 		3e76a164b41bceb11b15c175088fe1bc /* b2Body.cpp in Sources */ = {isa = PBXBuildFile; fileRef = a296623a714c9f8edb4bca26d13eafef /* b2Body.cpp */; };
 		41ddb078572b368f685e19f89f0cf42e /* b2PolygonContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 993da2bf507b037b97e6fa1653830b15 /* b2PolygonContact.cpp */; };
+		4C03C2BD1673962600D42F2E /* guy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C03C2BB1673962600D42F2E /* guy.cpp */; };
 		4C1E7E6D1672B9A100D79DF5 /* dirctiveButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E7E6B1672B9A100D79DF5 /* dirctiveButton.cpp */; };
 		4C1E7E731672D0D800D79DF5 /* jumpButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E7E711672D0D800D79DF5 /* jumpButton.cpp */; };
-		4C1E7E761672EE5400D79DF5 /* character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E7E741672EE5400D79DF5 /* character.cpp */; };
 		4cc0fd96de77ff40bbcf8dd893ae88b8 /* del_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ec06dc33990374e7508e4ea9cf41d28 /* del_impl.cpp */; };
 		5146aeb9e58fb1b388820c2ae900051e /* b2WorldCallbacks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561370923a365a4a9dc9fb8aa1c415d5 /* b2WorldCallbacks.cpp */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
@@ -112,12 +112,12 @@
 		3ec06dc33990374e7508e4ea9cf41d28 /* del_impl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = del_impl.cpp; path = ../../../addons/ofxBox2d/libs/triangle/del_impl.cpp; sourceTree = SOURCE_ROOT; };
 		45eb42f8640cfcae47aa7e08ab94ffbd /* b2LineJoint.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = b2LineJoint.cpp; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Joints/b2LineJoint.cpp; sourceTree = SOURCE_ROOT; };
 		469610240a273862d8b39ce4df7f945b /* b2Shape.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2Shape.h; path = ../../../addons/ofxBox2d/libs/Box2D/Collision/Shapes/b2Shape.h; sourceTree = SOURCE_ROOT; };
+		4C03C2BB1673962600D42F2E /* guy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guy.cpp; sourceTree = "<group>"; };
+		4C03C2BC1673962600D42F2E /* guy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guy.h; sourceTree = "<group>"; };
 		4C1E7E6B1672B9A100D79DF5 /* dirctiveButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dirctiveButton.cpp; sourceTree = "<group>"; };
 		4C1E7E6C1672B9A100D79DF5 /* dirctiveButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dirctiveButton.h; sourceTree = "<group>"; };
 		4C1E7E711672D0D800D79DF5 /* jumpButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jumpButton.cpp; sourceTree = "<group>"; };
 		4C1E7E721672D0D800D79DF5 /* jumpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jumpButton.h; sourceTree = "<group>"; };
-		4C1E7E741672EE5400D79DF5 /* character.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = character.cpp; sourceTree = "<group>"; };
-		4C1E7E751672EE5400D79DF5 /* character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = character.h; sourceTree = "<group>"; };
 		4c1a083ac6f4f462ebc575655c1e2c66 /* b2CircleContact.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = b2CircleContact.cpp; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Contacts/b2CircleContact.cpp; sourceTree = SOURCE_ROOT; };
 		4c4c77963004e4a4d8ff1d00f9d88bb3 /* b2Joint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2Joint.h; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Joints/b2Joint.h; sourceTree = SOURCE_ROOT; };
 		4edf97d9cfa957d48315b0a9054d1f78 /* dpoint.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = dpoint.hpp; path = ../../../addons/ofxBox2d/libs/triangle/dpoint.hpp; sourceTree = SOURCE_ROOT; };
@@ -465,8 +465,8 @@
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
-				4C1E7E741672EE5400D79DF5 /* character.cpp */,
-				4C1E7E751672EE5400D79DF5 /* character.h */,
+				4C03C2BB1673962600D42F2E /* guy.cpp */,
+				4C03C2BC1673962600D42F2E /* guy.h */,
 				4C1E7E5C1672B11800D79DF5 /* buttons */,
 			);
 			path = src;
@@ -669,7 +669,7 @@
 				4cc0fd96de77ff40bbcf8dd893ae88b8 /* del_impl.cpp in Sources */,
 				4C1E7E6D1672B9A100D79DF5 /* dirctiveButton.cpp in Sources */,
 				4C1E7E731672D0D800D79DF5 /* jumpButton.cpp in Sources */,
-				4C1E7E761672EE5400D79DF5 /* character.cpp in Sources */,
+				4C03C2BD1673962600D42F2E /* guy.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
