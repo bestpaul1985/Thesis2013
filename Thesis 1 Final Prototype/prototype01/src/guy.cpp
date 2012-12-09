@@ -34,5 +34,5 @@ void guy::draw(){
         img.draw(0, 0, width, height);
     ofPopMatrix();
     ofNoFill();
-    ofCircle(getCenter, 10);
+    ofCircle(getCenter, 3);
 }

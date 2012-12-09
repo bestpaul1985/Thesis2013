@@ -50,6 +50,6 @@ void keys::draw(){
         img.draw(0,0, width, height);
     ofPopMatrix();
     ofNoFill();
-    ofCircle(getCenter, 10);
+    ofCircle(getCenter, 3);
     ofSetRectMode(OF_RECTMODE_CORNER);
 }

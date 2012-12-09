@@ -213,14 +213,14 @@ void testApp::draw(){
     
     ofFill();
     ofSetColor(255, 255, 255,30);
-    chracater1.draw();
-    chracater2.draw();
+//    chracater1.draw();
+//    chracater2.draw();
     //**********key 1**************
     key1.draw();
-    keysubstitute1.draw();
+//    keysubstitute1.draw();
     
     key2.draw();
-    keysubstitute2.draw();
+//    keysubstitute2.draw();
     //*********buttons***********
     P1L.draw();
     P1R.draw();
@@ -231,8 +231,8 @@ void testApp::draw(){
     P2J.draw();
     P2F.draw();
     //*********** passing belt *******************
-    beltP1.draw();
-    beltP2.draw();
+//    beltP1.draw();
+//    beltP2.draw();
 }
 
 //--------------------------------------------------------------
