@@ -80,6 +80,13 @@ void testApp::setup(){
     beltP2.addVertex(myGirl.getCenter);
     beltP2.addVertex(myGirl.getCenter);
     
+    //*********** chests *******************
+    myChest1.setup(0);
+    myChest2.setup(1);
+    chestSub1.setPhysics(100, 0, 0.999f);
+    chestSub1.setup(worldP1.getWorld(), ofGetWidth()/2+200 ,ofGetHeight()-200, myChest1.width1/2, myChest1.height1/2);
+    chestSub2.setPhysics(100, 0, 0.999f);
+    chestSub2.setup(worldP2.getWorld(), ofGetWidth()/2-200 ,200, myChest2.width1/2, myChest2.height1/2);
 }
 
 //--------------------------------------------------------------
@@ -204,6 +211,12 @@ void testApp::update(){
     
     beltP2[0].set(myGirl.getCenter.x, myGirl.getCenter.y);
     beltP2[1].set(myGirl.getCenter.x, beltPosP2.y);
+    
+    //*********** chests *******************
+    myChest1.update(chestSub1.getPosition());
+    myChest2.update(chestSub2.getPosition());
+ 
+    
 }
 
 //--------------------------------------------------------------
@@ -227,7 +240,35 @@ void testApp::draw(){
     
     key2.draw();
 //    keysubstitute2.draw();
+    
+    //*********** chests *******************
+    myChest1.draw();
+    myChest2.draw();
     //*********buttons***********
+    if (bFixedButtonP1) {
+        P1L.bFixed = true;
+        P1R.bFixed = true;
+        P1J.bFixed = true;
+        P1F.bFixed = true;
+    }else{
+        P1L.bFixed = false;
+        P1R.bFixed = false;
+        P1J.bFixed = false;
+        P1F.bFixed = false;
+    }
+    
+    if (bFixedButtonP2) {
+        P2L.bFixed = true;
+        P2R.bFixed = true;
+        P2J.bFixed = true;
+        P2F.bFixed = true;
+    }else{
+        P2L.bFixed = false;
+        P2R.bFixed = false;
+        P2J.bFixed = false;
+        P2F.bFixed = false;
+    }
+    
     P1L.draw();
     P1R.draw();
     P1J.draw();
@@ -239,6 +280,8 @@ void testApp::draw(){
     //*********** passing belt *******************
 //    beltP1.draw();
 //    beltP2.draw();
+    
+
 }
 
 //--------------------------------------------------------------
@@ -288,8 +331,14 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     length3 = myGirl.getCenter - key1.getCenter;
     length4 = myGirl.getCenter - key2.getCenter;
 
-    if (P1F.bPressed && length1.length()<100 && length2.length()<100 ) {
+    
+    //****************************** open chest 1********************
+    if ( P1F.bPressed && (myChest1.getCenter-key2.getCenter).length()<100 && keyState2 == 1 && myChest1.open == false) {
         
+        myChest1.open = true;
+        
+    } else if (P1F.bPressed && length1.length()<100 && length2.length()<100 ) {
+
         if (keyState1 != 1 && keyState2 != 1) {
             
             if (length1.length() < length2.length()) {
@@ -394,9 +443,13 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     }
     
     
-    
     //--------------- key 2 --------------
-    if (P2F.bPressed && length3.length()<100 && length4.length()<100 ) {
+    //****************************** open chest 2********************
+    if ( P2F.bPressed && (myChest2.getCenter-key1.getCenter).length()<100 && keyState1 == 2 && myChest2.open == false) {
+        
+        myChest2.open = true;
+        
+    }else if (P2F.bPressed && length3.length()<100 && length4.length()<100 ) {
         
         if (keyState1 != 2 && keyState2 != 2) {
             

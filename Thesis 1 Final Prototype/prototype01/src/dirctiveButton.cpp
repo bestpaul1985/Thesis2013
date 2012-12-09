@@ -32,12 +32,15 @@ void directiveButton::setup(float x, float y, float _num, float _angle, int play
             break;
      
     }
+    
+    bFixed = false;
 }
 //------------------------------------------
 void directiveButton::draw(){
     ofSetRectMode(OF_RECTMODE_CENTER);
     ofFill();
     bPressed==true ? color.set(255,255, 255, 200): color.set(255, 255, 255, 125);
+    if (bFixed) color.set(255, 255, 255,30);
     ofSetColor(color);
     ofPushMatrix();
         ofTranslate(rect.getCenter());

@@ -23,9 +23,11 @@ public:
     ofImage             img;
     ofColor             color;
     bool                bPressed;
+    bool                bFixed;
     int                 num;
     float               angle;
     int                 touchID;
+    
     
 };
 

@@ -10,6 +10,7 @@
 #include "guy.h"
 #include "girl.h"
 #include "keys.h"
+#include "chests.h"
 
 
 class testApp : public ofxiPhoneApp{
@@ -71,11 +72,16 @@ class testApp : public ofxiPhoneApp{
         int                     keyState2;
         bool                    key2UsedP1;
         bool                    key2UsedP2;
-        //********* passing *********************
+        //********* passing belts*********************
         ofPolyline              beltP1;
         ofPolyline              beltP2;
         float                   beltPctP1;
         float                   beltPctP2;
-
+    
+        //********* chests *********************
+        chests                  myChest1;
+        chests                  myChest2;
+        ofxBox2dRect            chestSub1;
+        ofxBox2dRect            chestSub2;
 };
 

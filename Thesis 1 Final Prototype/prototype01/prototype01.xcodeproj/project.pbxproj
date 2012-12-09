@@ -30,6 +30,7 @@
 		4C1E7E6D1672B9A100D79DF5 /* dirctiveButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E7E6B1672B9A100D79DF5 /* dirctiveButton.cpp */; };
 		4C1E7E731672D0D800D79DF5 /* jumpButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E7E711672D0D800D79DF5 /* jumpButton.cpp */; };
 		4C7F1FDA1673EFCB00E3484C /* keys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C7F1FD81673EFCB00E3484C /* keys.cpp */; };
+		4C86CCED1675041D00545C2E /* chests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C86CCEB1675041D00545C2E /* chests.cpp */; };
 		4cc0fd96de77ff40bbcf8dd893ae88b8 /* del_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ec06dc33990374e7508e4ea9cf41d28 /* del_impl.cpp */; };
 		5146aeb9e58fb1b388820c2ae900051e /* b2WorldCallbacks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561370923a365a4a9dc9fb8aa1c415d5 /* b2WorldCallbacks.cpp */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
@@ -124,6 +125,8 @@
 		4C1E7E721672D0D800D79DF5 /* jumpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jumpButton.h; sourceTree = "<group>"; };
 		4C7F1FD81673EFCB00E3484C /* keys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keys.cpp; sourceTree = "<group>"; };
 		4C7F1FD91673EFCB00E3484C /* keys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keys.h; sourceTree = "<group>"; };
+		4C86CCEB1675041D00545C2E /* chests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chests.cpp; sourceTree = "<group>"; };
+		4C86CCEC1675041D00545C2E /* chests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chests.h; sourceTree = "<group>"; };
 		4c1a083ac6f4f462ebc575655c1e2c66 /* b2CircleContact.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = b2CircleContact.cpp; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Contacts/b2CircleContact.cpp; sourceTree = SOURCE_ROOT; };
 		4c4c77963004e4a4d8ff1d00f9d88bb3 /* b2Joint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2Joint.h; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Joints/b2Joint.h; sourceTree = SOURCE_ROOT; };
 		4edf97d9cfa957d48315b0a9054d1f78 /* dpoint.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = dpoint.hpp; path = ../../../addons/ofxBox2d/libs/triangle/dpoint.hpp; sourceTree = SOURCE_ROOT; };
@@ -307,15 +310,6 @@
 			name = buttons;
 			sourceTree = "<group>";
 		};
-		4C86CCB316745E9500545C2E /* keys */ = {
-			isa = PBXGroup;
-			children = (
-				4C7F1FD81673EFCB00E3484C /* keys.cpp */,
-				4C7F1FD91673EFCB00E3484C /* keys.h */,
-			);
-			name = keys;
-			sourceTree = "<group>";
-		};
 		4C86CCBA16745F5D00545C2E /* characters */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,6 +319,17 @@
 				4C03C2D61673DF8D00D42F2E /* girl.h */,
 			);
 			name = characters;
+			sourceTree = "<group>";
+		};
+		4C86CCF716750C8F00545C2E /* items */ = {
+			isa = PBXGroup;
+			children = (
+				4C86CCEB1675041D00545C2E /* chests.cpp */,
+				4C86CCEC1675041D00545C2E /* chests.h */,
+				4C7F1FD81673EFCB00E3484C /* keys.cpp */,
+				4C7F1FD91673EFCB00E3484C /* keys.h */,
+			);
+			name = items;
 			sourceTree = "<group>";
 		};
 		5492a1491d9e6e88ebb3be2b497a1258 /* src */ = {
@@ -491,8 +496,8 @@
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
+				4C86CCF716750C8F00545C2E /* items */,
 				4C86CCBA16745F5D00545C2E /* characters */,
-				4C86CCB316745E9500545C2E /* keys */,
 				4C1E7E5C1672B11800D79DF5 /* buttons */,
 			);
 			path = src;
@@ -698,6 +703,7 @@
 				4C03C2BD1673962600D42F2E /* guy.cpp in Sources */,
 				4C03C2D71673DF8D00D42F2E /* girl.cpp in Sources */,
 				4C7F1FDA1673EFCB00E3484C /* keys.cpp in Sources */,
+				4C86CCED1675041D00545C2E /* chests.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

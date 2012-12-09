@@ -24,6 +24,7 @@ public:
     ofImage             img;
     ofColor             color;
     bool                bPressed;
+    bool                bFixed;
     int                 num;
     bool                bJumped;
     float               angle;
