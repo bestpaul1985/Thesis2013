@@ -69,6 +69,8 @@ void testApp::setup(){
     //*********** passing belt *******************
     beltP1.addVertex(myGuy.getCenter);
     beltP1.addVertex(myGuy.getCenter);
+    beltP2.addVertex(myGirl.getCenter);
+    beltP2.addVertex(myGirl.getCenter);
     
 }
 
@@ -108,42 +110,65 @@ void testApp::update(){
     
     //*********** Accelerometer *******************
     ofPoint gravity = ofxAccelerometer.getForce();
-    float speedP1;
-    ofPoint beltPos;
+    float speedP1, speedP2;
+    ofPoint beltPosP1, beltPosP2;
     if (gravity.y>0.3) {
-        speedP1 = 0.02f;
+        speedP1 = 0.01f;
     }else{
-        speedP1 = -0.02f;
+        speedP1 = -0.01f;
     }
     
-    beltPct += speedP1;
-    if (beltPct>1) {
-        beltPct = 1;
-    }else if(beltPct<0){
-        beltPct =0;
+    if (gravity.y< -0.3) {
+        speedP2 = 0.01f;
+    }else{
+        speedP2 = -0.01f;
+    }
+
+    
+    beltPctP1 += speedP1;
+    if (beltPctP1>1) {
+        beltPctP1 = 1;
+    }else if(beltPctP1<0){
+        beltPctP1 =0;
     }
     
-    beltPos.y = (1-beltPct)*myGuy.getCenter.y + beltPct*myGirl.getCenter.y;
+    beltPctP2 += speedP2;
+    if (beltPctP2>1) {
+        beltPctP2 = 1;
+    }else if(beltPctP2<0){
+        beltPctP2 =0;
+    }
     
-    cout<<gravity.y<<endl;
+    beltPosP1.y = (1-beltPctP1)*myGuy.getCenter.y + beltPctP1*myGirl.getCenter.y;
+    beltPosP2.y = (1-beltPctP2)*myGirl.getCenter.y + beltPctP2*myGuy.getCenter.y;
+    
     //*********** keys *******************
         
     switch (key1State) {
         case 0:
             key1.update(key1substitute.getPosition());
             break;
-        case 1:
+        case 1:{
             ofPoint temp;
             temp.x = myGuy.getCenter.x + 40;
-            temp.y = beltPos.y;
+            temp.y = beltPosP1.y;
             key1.update(temp);
-            break;
+            }break;
+        case 2:{
+            ofPoint temp;
+            temp.x = myGirl.getCenter.x - 40;
+            temp.y = beltPosP1.y;
+            key1.update(temp);
+            }break;
     }
     
     key1substitute.setDamping(0.98f);
     //*********** passing belt *******************
     beltP1[0].set(myGuy.getCenter.x, myGuy.getCenter.y);
-    beltP1[1].set(myGuy.getCenter.x, beltPos.y);
+    beltP1[1].set(myGuy.getCenter.x, beltPosP1.y);
+    
+    beltP2[0].set(myGirl.getCenter.x, myGirl.getCenter.y);
+    beltP2[1].set(myGirl.getCenter.x, beltPosP2.y);
 }
 
 //--------------------------------------------------------------
@@ -178,7 +203,7 @@ void testApp::draw(){
     //*********** passing belt *******************
     
     beltP1.draw();
-   
+    beltP2.draw();
 }
 
 //--------------------------------------------------------------
@@ -216,6 +241,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
         key1State = 1;
         key1substitute.body->SetActive(false);
         key1Used = true;
+        beltPctP1 = 0;
     }else if (P1F.bPressed && key1Used == true) {
         key1State = 0;
         key1substitute.body->SetActive(true);

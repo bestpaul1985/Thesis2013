@@ -67,6 +67,7 @@ class testApp : public ofxiPhoneApp{
         //********* passing *********************
         ofPolyline              beltP1;
         ofPolyline              beltP2;
-        float                   beltPct;
+        float                   beltPctP1;
+        float                   beltPctP2;
 };
 
