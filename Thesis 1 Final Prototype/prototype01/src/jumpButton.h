@@ -14,7 +14,7 @@
 class jumpButton{
     
 public:
-    void setup(float x, float y, float _num,float _angle);
+    void setup(float x, float y, float _num,float _angle, int player);
     void draw();
     void touchDown(int x, int y, int touchId);
     void touchMoved(int x, int y, int touchId);
@@ -27,7 +27,7 @@ public:
     int                 num;
     bool                bJumped;
     float               angle;
-    
+    int                 touchID;
 };
 
 #endif /* defined(__prototype01__jumpButton__) */

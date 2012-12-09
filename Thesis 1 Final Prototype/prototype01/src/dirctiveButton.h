@@ -13,7 +13,7 @@
 class directiveButton{
     
 public:
-    void setup(float x, float y, float _num, float _angle);
+    void setup(float x, float y, float _num, float _angle, int player);
     void draw();
     void touchDown(int x, int y, int touchId);
     void touchMoved(int x, int y, int touchId);
@@ -25,7 +25,7 @@ public:
     bool                bPressed;
     int                 num;
     float               angle;
-    
+    int                 touchID;
     
 };
 

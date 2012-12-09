@@ -40,14 +40,14 @@ void testApp::setup(){
     polyLine2.create(worldP2.getWorld());
     
     //**********buttons****************
-    P1L.setup(10, ofGetHeight()-120, 0, 0);
-    P1R.setup(20+115, ofGetHeight()-120, 1, 0);
-    P1J.setup(ofGetWidth()-190, ofGetHeight()-115, 0, 0);
-    P1F.setup(ofGetWidth()-105, ofGetHeight()-155, 1, 0);
-    P2L.setup(ofGetWidth()-10-101, 120-95, 0, 180);
-    P2R.setup(ofGetWidth()-20-101-115, 120-95, 1, 180);
-    P2J.setup(190-96, 115-83, 0, 180);
-    P2F.setup(105-77, 155-80,  1, 180);
+    P1L.setup(10, ofGetHeight()-120, 0, 0, 0);
+    P1R.setup(20+115, ofGetHeight()-120, 1, 0, 0);
+    P1J.setup(ofGetWidth()-190, ofGetHeight()-115, 0, 0, 0);
+    P1F.setup(ofGetWidth()-105, ofGetHeight()-155, 1, 0, 0);
+    P2L.setup(ofGetWidth()-10-101, 120-95, 0, 180, 1);
+    P2R.setup(ofGetWidth()-20-101-115, 120-95, 1, 180, 1);
+    P2J.setup(190-96, 115-83, 0, 180, 1);
+    P2F.setup(105-77, 155-80,  1, 180, 1);
     
     //********** Guy ******************
     myGuy.setup(chracater1.getPosition());
@@ -59,13 +59,20 @@ void testApp::setup(){
     chracater2.setPhysics(3, 0, 0.5);
     chracater2.setup(worldP2.getWorld(), ofGetWidth()/2, ofGetHeight()/2, myGirl.width/2, myGirl.height/2);
     chracater2.body->SetFixedRotation(true);
+    //********** keys *******************
+    key1.setup(0);
+    key1substitute.setPhysics(3, 0.1, 0.9);
+    key1substitute.setup(worldP1.getWorld(), ofGetWidth()/2+100, ofGetHeight()-155, key1.width/2, key1.height/2);
+    key1State = 0;
+    key1Used = false;
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
+    worldP1.update();
+    worldP2.update();
     
     //*********** box2d P1*******************
-    worldP1.update();
     ofPoint frc1(0,0);
     ofPoint frc2(0,0);
     if (P1L.bPressed) frc1.x = -100;
@@ -74,7 +81,7 @@ void testApp::update(){
     chracater1.setDamping(0.98f);
     
     //*********** box2d P2*******************
-    worldP2.update();
+    
     if (P2L.bPressed) frc2.x = 100;
     if (P2R.bPressed) frc2.x = -100;
     chracater2.addForce(frc2,10);
@@ -93,13 +100,29 @@ void testApp::update(){
     
     //*********** Gril *******************
     myGirl.update(chracater2.getPosition());
+    
+    //*********** Accelerometer *******************
+    ofPoint gravity = ofxAccelerometer.getForce();
+    gravity.x *= 10;
+    //*********** keys *******************
+        
+    switch (key1State) {
+        case 0:
+            key1.update(key1substitute.getPosition());
+            break;
+        case 1:
+            ofPoint temp;
+            temp.x = myGuy.getCenter.x + 40;
+            temp.y = myGuy.getCenter.y;
+            key1.update(temp);
+            break;
+    }
+    
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
   
-    
-    
     myGuy.draw();
     myGirl.draw();
     
@@ -112,8 +135,11 @@ void testApp::draw(){
     ofSetColor(255, 255, 255,30);
     chracater1.draw();
     chracater2.draw();
+    //**********key 1**************
+    key1.draw();
+    key1substitute.draw();
     
-   
+    //*********buttons***********
     P1L.draw();
     P1R.draw();
     P1J.draw();
@@ -152,7 +178,23 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     
     if (P1J.bPressed && fabs(diffP1.y)< 1) chracater1.setVelocity(0, -50);
     if (P2J.bPressed && fabs(diffP2.y)< 1) chracater2.setVelocity(0, 50);
-
+    
+    //**********pick up & drop down ************************
+    ofPoint length;
+    length = myGuy.getCenter - key1.getCenter;
+    if (P1F.bPressed && length.length()<80 && key1Used == false) {
+        key1State = 1;
+        key1substitute.body->SetActive(false);
+        key1Used = true;
+    }else if (P1F.bPressed && key1Used == true) {
+        key1State = 0;
+        key1substitute.body->SetActive(true);
+        key1substitute.setPosition(key1.getCenter);
+        key1substitute.setVelocity(5, 0);
+        key1Used = false;
+    }
+    
+    cout<<P2L.bPressed<<endl;
    
 }
 
@@ -197,6 +239,8 @@ void testApp::touchUp(ofTouchEventArgs & touch){
     P2R.touchUp(touch.x, touch.y, touch.id);
     P2J.touchUp(touch.x, touch.y, touch.id);
     P2F.touchUp(touch.x, touch.y, touch.id);
+    
+
 
 }
 

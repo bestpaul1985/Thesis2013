@@ -9,6 +9,8 @@
 #include "jumpButton.h"
 #include "guy.h"
 #include "girl.h"
+#include "keys.h"
+
 
 class testApp : public ofxiPhoneApp{
 	
@@ -49,11 +51,20 @@ class testApp : public ofxiPhoneApp{
         ofPoint                 diffP1;
         ofPoint                 lastPosP1;
         //******** girl *********************
-        girl                     myGirl;
+        girl                    myGirl;
         ofxBox2dRect            chracater2;
         ofPoint                 diffP2;
         ofPoint                 lastPosP2;
     
+        //******** Keys *********************
+        keys                    key1;
+        ofxBox2dRect            key1substitute;
+    
+        //******** keys state *********************
+        int                     key1State;
+        bool                    key1Used;
+    
+        //********* passing *********************
+        float                   
 };
-
 

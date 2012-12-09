@@ -9,7 +9,7 @@
 #include "jumpButton.h"
 
 //------------------------------------------
-void jumpButton::setup(float x, float y, float _num, float _angle){
+void jumpButton::setup(float x, float y, float _num, float _angle, int player){
     num = _num;
     switch (num) {
         case 0:
@@ -24,6 +24,17 @@ void jumpButton::setup(float x, float y, float _num, float _angle){
     bPressed = false;
     bJumped = false;
     angle = _angle;
+    
+    switch (player) {
+        case 0:
+            touchID = 1;
+            break;
+        case 1:
+            touchID = 2;
+            break;
+            
+    }
+
 }
 //------------------------------------------
 void jumpButton::draw(){
@@ -45,7 +56,7 @@ void jumpButton::draw(){
 
 //------------------------------------------
 void jumpButton::touchDown(int x, int y, int touchId){
-    if (rect.inside(x, y)&& (touchId == 1||touchId == 2) && bJumped == false) {
+    if (rect.inside(x, y)&& touchId == touchID && bJumped == false) {
         bPressed = true;
         bJumped = true;
     }else{
@@ -55,14 +66,14 @@ void jumpButton::touchDown(int x, int y, int touchId){
 
 //------------------------------------------
 void jumpButton::touchMoved(int x, int y, int touchId){
-    if (rect.inside(x, y)==false && (touchId == 1||touchId == 2)&& bJumped == true) {
+    if (rect.inside(x, y)==false && touchId == touchID && bJumped == true) {
         bPressed = false;
     }
 }
 
 //------------------------------------------
 void jumpButton::touchUp(int x, int y, int touchId){
-    if (rect.inside(x, y)&& (touchId == 1||touchId == 2)) {
+    if (rect.inside(x, y)&& touchId == touchID) {
         bPressed = false;
         bJumped = false;
     }

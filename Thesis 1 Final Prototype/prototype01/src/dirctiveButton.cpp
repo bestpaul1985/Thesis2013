@@ -8,7 +8,7 @@
 
 #include "dirctiveButton.h"
 //------------------------------------------
-void directiveButton::setup(float x, float y, float _num, float _angle){
+void directiveButton::setup(float x, float y, float _num, float _angle, int player){
     num = _num;
     switch (num) {
         case 0:
@@ -22,6 +22,16 @@ void directiveButton::setup(float x, float y, float _num, float _angle){
     bPressed = false;
     angle = _angle;
     color.set(255, 255, 255,125);
+    
+    switch (player) {
+        case 0:
+            touchID = 0;
+            break;
+        case 1:
+            touchID = 3;
+            break;
+     
+    }
 }
 //------------------------------------------
 void directiveButton::draw(){
@@ -35,31 +45,34 @@ void directiveButton::draw(){
         img.draw(0, 0, rect.getWidth(), rect.getHeight());
     ofPopMatrix();
     ofSetRectMode(OF_RECTMODE_CENTER);
-//    ofNoFill();
-//    ofRect(rect.getCenter(), rect.getWidth(), rect.getHeight());
-    
 }
 
 //------------------------------------------
 void directiveButton::touchDown(int x, int y, int touchId){
-    if (rect.inside(x, y)&& (touchId == 0||touchId == 3)) {
+    if (rect.inside(x, y)&& touchId == touchID) {
         bPressed = true;
     }
+    
+   
     
 }
 
 //------------------------------------------
 void directiveButton::touchMoved(int x, int y, int touchId){
-    if (rect.inside(x, y)==false &&  (touchId == 0||touchId == 3)) {
+    if (rect.inside(x, y)==false &&  touchId == touchID) {
         bPressed = false;
     }
+    
+   
     
 }
 
 //------------------------------------------
 void directiveButton::touchUp(int x, int y, int touchId){
-    if (rect.inside(x, y)&&  (touchId == 0||touchId == 3)) {
+    if (rect.inside(x, y)&&  touchId == touchID) {
         bPressed = false;
     }
+    
+  
     
 }
