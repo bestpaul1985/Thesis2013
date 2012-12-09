@@ -48,7 +48,8 @@ void testApp::setup(){
     P2R.setup(ofGetWidth()-20-101-115, 120-95, 1, 180, 1);
     P2J.setup(190-96, 115-83, 0, 180, 1);
     P2F.setup(105-77, 155-80,  1, 180, 1);
-    
+    bFixedButtonP1 = false;
+    bFixedButtonP1 = false;
     //********** Guy ******************
     myGuy.setup(chracater1.getPosition());
     chracater1.setPhysics(3, 0, 0.5);
@@ -121,16 +122,21 @@ void testApp::update(){
     ofPoint beltPosP1, beltPosP2;
     if (gravity.y>0.3) {
         speedP1 = 0.01f;
+        bFixedButtonP1 = true;
     }else{
         speedP1 = -0.01f;
+        bFixedButtonP1 = false;
     }
     
     if (gravity.y< -0.3) {
         speedP2 = 0.01f;
+        bFixedButtonP2 = true;
     }else{
         speedP2 = -0.01f;
+        bFixedButtonP2 = false;
     }
-
+    
+  
     
     beltPctP1 += speedP1;
     if (beltPctP1>1) {
@@ -251,14 +257,20 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     if(rect3.inside(touch.x, touch.y))touch.id = 2;
     if(rect4.inside(touch.x, touch.y))touch.id = 3;
     
-    P1L.touchDown(touch.x, touch.y, touch.id);
-    P1R.touchDown(touch.x, touch.y, touch.id);    
-    P1J.touchDown(touch.x, touch.y, touch.id);
-    P1F.touchDown(touch.x, touch.y, touch.id);
-    P2L.touchDown(touch.x, touch.y, touch.id);
-    P2R.touchDown(touch.x, touch.y, touch.id);
-    P2J.touchDown(touch.x, touch.y, touch.id);
-    P2F.touchDown(touch.x, touch.y, touch.id);
+    if (bFixedButtonP1 == false) {
+        P1L.touchDown(touch.x, touch.y, touch.id);
+        P1R.touchDown(touch.x, touch.y, touch.id);
+        P1J.touchDown(touch.x, touch.y, touch.id);
+        P1F.touchDown(touch.x, touch.y, touch.id);
+    }
+    
+    if (bFixedButtonP2 == false) {
+        P2L.touchDown(touch.x, touch.y, touch.id);
+        P2R.touchDown(touch.x, touch.y, touch.id);
+        P2J.touchDown(touch.x, touch.y, touch.id);
+        P2F.touchDown(touch.x, touch.y, touch.id);
+    }
+    
     
     if (P1J.bPressed && fabs(diffP1.y)< 1) chracater1.setVelocity(0, -50);
     if (P2J.bPressed && fabs(diffP2.y)< 1) chracater2.setVelocity(0, 50);
@@ -280,7 +292,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
         
         if (keyState1 != 1 && keyState2 != 1) {
             
-            if (length1.length() > length2.length()) {
+            if (length1.length() < length2.length()) {
                 keyState1 = 1;
                 keysubstitute1.destroy();
                 keysubstitute1.setPhysics(30, 0.1, 0);
@@ -296,6 +308,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
                 key2.angle = 180;
             }
             
+
         }else if(keyState1 != 1 && keyState2 == 1){
             keyState1 = 1;
             keysubstitute1.destroy();
@@ -311,6 +324,8 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.body->SetActive(true);
             key2.angle = 180;
             
+            
+
         }else if(keyState1 == 1 && keyState2 != 1){
             keyState2 = 1;
             keysubstitute2.destroy();
@@ -325,9 +340,11 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
             key2.angle = 180;
+            
+            
         }
         
-        
+        beltPctP1 = 0;
     }else if(P1F.bPressed && length1.length()<100 && length2.length()>100 ){
         
         if (keyState1 != 1) {
@@ -349,6 +366,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.body->SetActive(true);
             key1.angle = 0;
         }
+        beltPctP1 = 0;
 
     }else if(P1F.bPressed && length1.length()>100 && length2.length()<100 ){
         
@@ -371,6 +389,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.body->SetActive(true);
             key2.angle = 180;
         }
+        beltPctP1 = 0;
         
     }
     
@@ -381,7 +400,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
         
         if (keyState1 != 2 && keyState2 != 2) {
             
-            if (length3.length() > length4.length()) {
+            if (length3.length() < length4.length()) {
                 keyState1 = 2;
                 keysubstitute1.destroy();
                 keysubstitute1.setPhysics(30, 0.1, 0);
@@ -429,6 +448,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             
         }
         
+        beltPctP2 = 0;
         
     }else if(P2F.bPressed && length3.length()<100 && length4.length()>100 ){
         
@@ -451,6 +471,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.body->SetActive(true);
             key1.angle = 180;
         }
+        beltPctP2 = 0;
         
     }else if(P2F.bPressed && length3.length()>100 && length4.length()<100 ){
         
@@ -474,11 +495,11 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.body->SetActive(true);
             key2.angle = 0;
         }
+        beltPctP2 = 0;
         
     }
     
-
-
+    
     
 }
 
@@ -493,14 +514,18 @@ void testApp::touchMoved(ofTouchEventArgs & touch){
     if(rect3.inside(touch.x, touch.y))touch.id = 2;
     if(rect4.inside(touch.x, touch.y))touch.id = 3;
     
-    P1L.touchMoved(touch.x, touch.y, touch.id);
-    P1R.touchMoved(touch.x, touch.y, touch.id);
-    P1J.touchMoved(touch.x, touch.y, touch.id);
-    P1F.touchMoved(touch.x, touch.y, touch.id);
-    P2L.touchMoved(touch.x, touch.y, touch.id);
-    P2R.touchMoved(touch.x, touch.y, touch.id);
-    P2J.touchMoved(touch.x, touch.y, touch.id);
-    P2F.touchMoved(touch.x, touch.y, touch.id);
+    if (bFixedButtonP1 == false) {
+        P1L.touchMoved(touch.x, touch.y, touch.id);
+        P1R.touchMoved(touch.x, touch.y, touch.id);
+        P1J.touchMoved(touch.x, touch.y, touch.id);
+        P1F.touchMoved(touch.x, touch.y, touch.id);
+    }
+    if (bFixedButtonP2 == false) {
+        P2L.touchMoved(touch.x, touch.y, touch.id);
+        P2R.touchMoved(touch.x, touch.y, touch.id);
+        P2J.touchMoved(touch.x, touch.y, touch.id);
+        P2F.touchMoved(touch.x, touch.y, touch.id);
+    }
 
 }
 
@@ -515,14 +540,19 @@ void testApp::touchUp(ofTouchEventArgs & touch){
     if(rect3.inside(touch.x, touch.y))touch.id = 2;
     if(rect4.inside(touch.x, touch.y))touch.id = 3;
     
-    P1L.touchUp(touch.x, touch.y, touch.id);
-    P1R.touchUp(touch.x, touch.y, touch.id);
-    P1J.touchUp(touch.x, touch.y, touch.id);
-    P1F.touchUp(touch.x, touch.y, touch.id);
-    P2L.touchUp(touch.x, touch.y, touch.id);
-    P2R.touchUp(touch.x, touch.y, touch.id);
-    P2J.touchUp(touch.x, touch.y, touch.id);
-    P2F.touchUp(touch.x, touch.y, touch.id);
+    if (bFixedButtonP1 == false) {
+        P1L.touchUp(touch.x, touch.y, touch.id);
+        P1R.touchUp(touch.x, touch.y, touch.id);
+        P1J.touchUp(touch.x, touch.y, touch.id);
+        P1F.touchUp(touch.x, touch.y, touch.id);
+    }
+    
+    if (bFixedButtonP2 == false) {
+        P2L.touchUp(touch.x, touch.y, touch.id);
+        P2R.touchUp(touch.x, touch.y, touch.id);
+        P2J.touchUp(touch.x, touch.y, touch.id);
+        P2F.touchUp(touch.x, touch.y, touch.id);
+    }
     
 
 

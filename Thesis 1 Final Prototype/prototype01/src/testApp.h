@@ -45,6 +45,8 @@ class testApp : public ofxiPhoneApp{
         jumpButton              P2J;
         jumpButton              P1F;
         jumpButton              P2F;
+        bool                    bFixedButtonP1;
+        bool                    bFixedButtonP2;
         //******** guy *********************
         guy                     myGuy;
         ofxBox2dRect            chracater1;
