@@ -286,14 +286,12 @@ void testApp::touchDown(ofTouchEventArgs & touch){
                 keysubstitute1.setPhysics(30, 0.1, 0);
                 keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
                 keysubstitute1.body->SetActive(false);
-                key1.angle = 0;
             }else{
                 keyState2 = 1;
                 keysubstitute2.destroy();
                 keysubstitute2.setPhysics(30, 0.1, 0);
                 keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
                 keysubstitute2.body->SetActive(false);
-                key2.angle = 180;
             }
             
         }else if(keyState1 != 1 && keyState2 == 1){
@@ -302,14 +300,12 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setPhysics(30, 0.1, 0);
             keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(false);
-            key1.angle = 0;
             
             keyState2 = 0;
             keysubstitute2.destroy();
             keysubstitute2.setPhysics(30, 0.1, 0);
             keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
-            key2.angle = 180;
             
         }else if(keyState1 == 1 && keyState2 != 1){
             keyState2 = 1;
@@ -317,14 +313,12 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setPhysics(30, 0.1, 0);
             keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(false);
-            key1.angle = 0;
             
             keyState1 = 0;
             keysubstitute1.destroy();
             keysubstitute1.setPhysics(30, 0.1, 0);
             keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
-            key2.angle = 180;
         }
         
         
@@ -338,7 +332,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setPhysics(30, 0.1, 0);
             keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(false);
-            key1.angle = 0;
+       
             
         }else if(keyState1 == 1){
                         
@@ -347,7 +341,6 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setPhysics(30, 0.1, 0);
             keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
-            key1.angle = 0;
         }
 
     }else if(P1F.bPressed && length1.length()>100 && length2.length()<100 ){
@@ -360,7 +353,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setPhysics(30, 0.1, 0);
             keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(false);
-            key2.angle = 180;
+            
             
         }else if(keyState2 == 1){
             
@@ -369,7 +362,6 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setPhysics(30, 0.1, 0);
             keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
-            key2.angle = 180;
         }
         
     }
@@ -387,14 +379,12 @@ void testApp::touchDown(ofTouchEventArgs & touch){
                 keysubstitute1.setPhysics(30, 0.1, 0);
                 keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
                 keysubstitute1.body->SetActive(false);
-                key1.angle = 180;
             }else{
                 keyState2 = 2;
                 keysubstitute2.destroy();
                 keysubstitute2.setPhysics(30, 0.1, 0);
                 keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
                 keysubstitute2.body->SetActive(false);
-                key2.angle = 0;
             }
             
         }else if(keyState1 != 2 && keyState2 == 2){
@@ -403,14 +393,12 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setPhysics(30, 0.1, 0);
             keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(false);
-            key1.angle = 180;
             
             keyState2 = 0;
             keysubstitute2.destroy();
             keysubstitute2.setPhysics(30, 0.1, 0);
             keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
-            key2.angle = 180;
             
         }else if(keyState1 == 2 && keyState2 != 2){
             keyState2 = 2;
@@ -418,15 +406,12 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setPhysics(30, 0.1, 0);
             keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(false);
-            key2.angle = 0;
             
             keyState1 = 0;
             keysubstitute1.destroy();
             keysubstitute1.setPhysics(30, 0.1, 0);
             keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
-            key1.angle = 180;
-            
         }
         
         
@@ -440,7 +425,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setPhysics(30, 0.1, 0);
             keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(false);
-            key1.angle = 180;
+            
             
         }else if(keyState1 == 2){
             
@@ -449,7 +434,6 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setPhysics(30, 0.1, 0);
             keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
-            key1.angle = 180;
         }
         
     }else if(P2F.bPressed && length3.length()>100 && length4.length()<100 ){
@@ -462,7 +446,6 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setPhysics(30, 0.1, 0);
             keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(false);
-            key2.angle = 0;
             
             
         }else if(keyState2 == 2){
@@ -472,7 +455,6 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setPhysics(30, 0.1, 0);
             keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
-            key2.angle = 0;
         }
         
     }
