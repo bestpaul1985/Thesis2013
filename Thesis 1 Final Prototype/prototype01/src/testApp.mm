@@ -61,10 +61,15 @@ void testApp::setup(){
     chracater2.body->SetFixedRotation(true);
     //********** keys *******************
     key1.setup(0);
-    key1substitute.setPhysics(3, 0.1, 0.9);
+    key1substitute.setPhysics(30, 0.1, 0);
     key1substitute.setup(worldP1.getWorld(), ofGetWidth()/2+100, ofGetHeight()-155, key1.width/2, key1.height/2);
     key1State = 0;
     key1Used = false;
+    
+    //*********** passing belt *******************
+    beltP1.addVertex(myGuy.getCenter);
+    beltP1.addVertex(myGuy.getCenter);
+    
 }
 
 //--------------------------------------------------------------
@@ -103,7 +108,24 @@ void testApp::update(){
     
     //*********** Accelerometer *******************
     ofPoint gravity = ofxAccelerometer.getForce();
-    gravity.x *= 10;
+    float speedP1;
+    ofPoint beltPos;
+    if (gravity.y>0.3) {
+        speedP1 = 0.02f;
+    }else{
+        speedP1 = -0.02f;
+    }
+    
+    beltPct += speedP1;
+    if (beltPct>1) {
+        beltPct = 1;
+    }else if(beltPct<0){
+        beltPct =0;
+    }
+    
+    beltPos.y = (1-beltPct)*myGuy.getCenter.y + beltPct*myGirl.getCenter.y;
+    
+    cout<<gravity.y<<endl;
     //*********** keys *******************
         
     switch (key1State) {
@@ -113,11 +135,15 @@ void testApp::update(){
         case 1:
             ofPoint temp;
             temp.x = myGuy.getCenter.x + 40;
-            temp.y = myGuy.getCenter.y;
+            temp.y = beltPos.y;
             key1.update(temp);
             break;
     }
     
+    key1substitute.setDamping(0.98f);
+    //*********** passing belt *******************
+    beltP1[0].set(myGuy.getCenter.x, myGuy.getCenter.y);
+    beltP1[1].set(myGuy.getCenter.x, beltPos.y);
 }
 
 //--------------------------------------------------------------
@@ -148,6 +174,10 @@ void testApp::draw(){
     P2R.draw();
     P2J.draw();
     P2F.draw();
+    
+    //*********** passing belt *******************
+    
+    beltP1.draw();
    
 }
 
@@ -182,7 +212,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     //**********pick up & drop down ************************
     ofPoint length;
     length = myGuy.getCenter - key1.getCenter;
-    if (P1F.bPressed && length.length()<80 && key1Used == false) {
+    if (P1F.bPressed && length.length()<100 && key1Used == false) {
         key1State = 1;
         key1substitute.body->SetActive(false);
         key1Used = true;
@@ -194,8 +224,6 @@ void testApp::touchDown(ofTouchEventArgs & touch){
         key1Used = false;
     }
     
-    cout<<P2L.bPressed<<endl;
-   
 }
 
 //--------------------------------------------------------------

@@ -65,6 +65,8 @@ class testApp : public ofxiPhoneApp{
         bool                    key1Used;
     
         //********* passing *********************
-        float                   
+        ofPolyline              beltP1;
+        ofPolyline              beltP2;
+        float                   beltPct;
 };
 
