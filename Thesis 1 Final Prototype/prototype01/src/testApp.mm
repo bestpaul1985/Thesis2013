@@ -64,8 +64,8 @@ void testApp::setup(){
     key1substitute.setPhysics(30, 0.1, 0);
     key1substitute.setup(worldP1.getWorld(), ofGetWidth()/2+100, ofGetHeight()-155, key1.width/2, key1.height/2);
     key1State = 0;
-    key1Used = false;
-    
+    key1UsedP1 = false;
+    key1UsedP2 = false;
     //*********** passing belt *******************
     beltP1.addVertex(myGuy.getCenter);
     beltP1.addVertex(myGuy.getCenter);
@@ -157,9 +157,12 @@ void testApp::update(){
         case 2:{
             ofPoint temp;
             temp.x = myGirl.getCenter.x - 40;
-            temp.y = beltPosP1.y;
+            temp.y = beltPosP2.y;
             key1.update(temp);
             }break;
+        case 3:{
+            key1.update(key1substitute.getPosition());
+        }break;
     }
     
     key1substitute.setDamping(0.98f);
@@ -237,18 +240,39 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     //**********pick up & drop down ************************
     ofPoint length;
     length = myGuy.getCenter - key1.getCenter;
-    if (P1F.bPressed && length.length()<100 && key1Used == false) {
+    if (P1F.bPressed && length.length()<100 && key1UsedP1 == false) {
         key1State = 1;
         key1substitute.body->SetActive(false);
-        key1Used = true;
+        key1UsedP1 = true;
+        key1UsedP2 = false;
         beltPctP1 = 0;
-    }else if (P1F.bPressed && key1Used == true) {
+    }else if (P1F.bPressed && length.length()<100 && key1UsedP1 == true) {
         key1State = 0;
         key1substitute.body->SetActive(true);
-        key1substitute.setPosition(key1.getCenter);
+        key1substitute.destroy();
+        key1substitute.setPhysics(30, 0.1, 0);
+        key1substitute.setup(worldP1.getWorld(), key1.getCenter.x,key1.getCenter.y,key1.width/2,key1.height/2);
         key1substitute.setVelocity(5, 0);
-        key1Used = false;
+        key1UsedP1 = false;
     }
+    
+    length = myGirl.getCenter - key1.getCenter;
+    if (P2F.bPressed && length.length()<100 && key1UsedP2 == false) {
+        key1State = 2;
+        key1substitute.body->SetActive(false);
+        key1UsedP2 = true;
+        key1UsedP1 = false;
+        beltPctP2 = 0;
+    }else if (P2F.bPressed && length.length()<100 && key1UsedP2 == true) {
+        key1State = 3;
+        key1substitute.body->SetActive(true);
+        key1substitute.destroy();
+        key1substitute.setPhysics(30, 0.1, 0);
+        key1substitute.setup(worldP2.getWorld(), key1.getCenter.x,key1.getCenter.y,key1.width/2,key1.height/2);
+        key1substitute.setVelocity(-5, 0);
+        key1UsedP2 = false;
+    }
+
     
 }
 

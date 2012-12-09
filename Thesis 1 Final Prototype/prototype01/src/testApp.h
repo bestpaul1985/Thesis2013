@@ -62,8 +62,8 @@ class testApp : public ofxiPhoneApp{
     
         //******** keys state *********************
         int                     key1State;
-        bool                    key1Used;
-    
+        bool                    key1UsedP1;
+        bool                    key1UsedP2;
         //********* passing *********************
         ofPolyline              beltP1;
         ofPolyline              beltP2;
