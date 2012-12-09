@@ -25,6 +25,7 @@ public:
     int num;
     float width;
     float height;
+    float angle;
 
 
 };

@@ -21,24 +21,35 @@ void keys::setup(int _num){
     
     width = img.getWidth()/6;
     height = img.getHeight()/6;
+    angle = 0;
 }
 
 
 void keys::update(ofPoint _pos){
-    pos.x = _pos.x - width/2;
-    pos.y = _pos.y - height/2;
+    pos.x = _pos.x;
+    pos.y = _pos.y;
     getCenter.set( _pos.x, _pos.y);
 }
 
 
 void keys::draw(){
-    
+    ofSetRectMode(OF_RECTMODE_CENTER);
     ofPushMatrix();
         ofTranslate(pos);
+        switch (num) {
+            case 0:
+                ofRotateZ(angle);
+                break;
+            case 1:
+                ofRotateZ(angle+180);
+                break;
+        }
+        
         ofFill();
         ofSetColor(255, 255, 255);
         img.draw(0,0, width, height);
     ofPopMatrix();
     ofNoFill();
     ofCircle(getCenter, 10);
+    ofSetRectMode(OF_RECTMODE_CORNER);
 }

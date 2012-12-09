@@ -307,6 +307,26 @@
 			name = buttons;
 			sourceTree = "<group>";
 		};
+		4C86CCB316745E9500545C2E /* keys */ = {
+			isa = PBXGroup;
+			children = (
+				4C7F1FD81673EFCB00E3484C /* keys.cpp */,
+				4C7F1FD91673EFCB00E3484C /* keys.h */,
+			);
+			name = keys;
+			sourceTree = "<group>";
+		};
+		4C86CCBA16745F5D00545C2E /* characters */ = {
+			isa = PBXGroup;
+			children = (
+				4C03C2BB1673962600D42F2E /* guy.cpp */,
+				4C03C2BC1673962600D42F2E /* guy.h */,
+				4C03C2D51673DF8C00D42F2E /* girl.cpp */,
+				4C03C2D61673DF8D00D42F2E /* girl.h */,
+			);
+			name = characters;
+			sourceTree = "<group>";
+		};
 		5492a1491d9e6e88ebb3be2b497a1258 /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -471,12 +491,8 @@
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
-				4C03C2BB1673962600D42F2E /* guy.cpp */,
-				4C03C2BC1673962600D42F2E /* guy.h */,
-				4C03C2D51673DF8C00D42F2E /* girl.cpp */,
-				4C03C2D61673DF8D00D42F2E /* girl.h */,
-				4C7F1FD81673EFCB00E3484C /* keys.cpp */,
-				4C7F1FD91673EFCB00E3484C /* keys.h */,
+				4C86CCBA16745F5D00545C2E /* characters */,
+				4C86CCB316745E9500545C2E /* keys */,
 				4C1E7E5C1672B11800D79DF5 /* buttons */,
 			);
 			path = src;

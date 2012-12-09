@@ -61,11 +61,18 @@ void testApp::setup(){
     chracater2.body->SetFixedRotation(true);
     //********** keys *******************
     key1.setup(0);
-    key1substitute.setPhysics(30, 0.1, 0);
-    key1substitute.setup(worldP1.getWorld(), ofGetWidth()/2+100, ofGetHeight()-155, key1.width/2, key1.height/2);
-    key1State = 0;
+    keysubstitute1.setPhysics(30, 0.1, 0);
+    keysubstitute1.setup(worldP1.getWorld(), ofGetWidth()/2+100, ofGetHeight()-155, key1.width/2, key1.height/2);
+    keyState1 = 0;
     key1UsedP1 = false;
     key1UsedP2 = false;
+    
+    key2.setup(1);
+    keysubstitute2.setPhysics(30, 0.1, 0);
+    keysubstitute2.setup(worldP2.getWorld(), ofGetWidth()/2-100, 155, key2.width/2, key2.height/2);
+    keyState2 = 0;
+    key2UsedP1 = false;
+    key2UsedP2 = false;
     //*********** passing belt *******************
     beltP1.addVertex(myGuy.getCenter);
     beltP1.addVertex(myGuy.getCenter);
@@ -144,9 +151,9 @@ void testApp::update(){
     
     //*********** keys *******************
         
-    switch (key1State) {
+    switch (keyState1) {
         case 0:
-            key1.update(key1substitute.getPosition());
+            key1.update(keysubstitute1.getPosition());
             break;
         case 1:{
             ofPoint temp;
@@ -160,12 +167,31 @@ void testApp::update(){
             temp.y = beltPosP2.y;
             key1.update(temp);
             }break;
-        case 3:{
-            key1.update(key1substitute.getPosition());
+    }
+    
+    keysubstitute1.setDamping(0.98f);
+    
+    switch (keyState2) {
+        case 0:
+            key2.update(keysubstitute2.getPosition());
+            break;
+        case 1:{
+            ofPoint temp;
+            temp.x = myGuy.getCenter.x + 40;
+            temp.y = beltPosP1.y;
+            key2.update(temp);
+        }break;
+        case 2:{
+            ofPoint temp;
+            temp.x = myGirl.getCenter.x - 40;
+            temp.y = beltPosP2.y;
+            key2.update(temp);
         }break;
     }
     
-    key1substitute.setDamping(0.98f);
+    keysubstitute2.setDamping(0.98f);
+    
+    
     //*********** passing belt *******************
     beltP1[0].set(myGuy.getCenter.x, myGuy.getCenter.y);
     beltP1[1].set(myGuy.getCenter.x, beltPosP1.y);
@@ -191,8 +217,10 @@ void testApp::draw(){
     chracater2.draw();
     //**********key 1**************
     key1.draw();
-    key1substitute.draw();
+    keysubstitute1.draw();
     
+    key2.draw();
+    keysubstitute2.draw();
     //*********buttons***********
     P1L.draw();
     P1R.draw();
@@ -202,9 +230,7 @@ void testApp::draw(){
     P2R.draw();
     P2J.draw();
     P2F.draw();
-    
     //*********** passing belt *******************
-    
     beltP1.draw();
     beltP2.draw();
 }
@@ -238,40 +264,202 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     if (P2J.bPressed && fabs(diffP2.y)< 1) chracater2.setVelocity(0, 50);
     
     //**********pick up & drop down ************************
-    ofPoint length;
-    length = myGuy.getCenter - key1.getCenter;
-    if (P1F.bPressed && length.length()<100 && key1UsedP1 == false) {
-        key1State = 1;
-        key1substitute.body->SetActive(false);
-        key1UsedP1 = true;
-        key1UsedP2 = false;
-        beltPctP1 = 0;
-    }else if (P1F.bPressed && length.length()<100 && key1UsedP1 == true) {
-        key1State = 0;
-        key1substitute.body->SetActive(true);
-        key1substitute.destroy();
-        key1substitute.setPhysics(30, 0.1, 0);
-        key1substitute.setup(worldP1.getWorld(), key1.getCenter.x,key1.getCenter.y,key1.width/2,key1.height/2);
-        key1substitute.setVelocity(5, 0);
-        key1UsedP1 = false;
+    
+    //********** key 1 ************************
+    
+    ofPoint length1;
+    ofPoint length2;
+    ofPoint length3;
+    ofPoint length4;
+    length1 = myGuy.getCenter - key1.getCenter;
+    length2 = myGuy.getCenter - key2.getCenter;
+    length3 = myGirl.getCenter - key1.getCenter;
+    length4 = myGirl.getCenter - key2.getCenter;
+
+    if (P1F.bPressed && length1.length()<100 && length2.length()<100 ) {
+        
+        if (keyState1 != 1 && keyState2 != 1) {
+            
+            if (length1.length() > length2.length()) {
+                keyState1 = 1;
+                keysubstitute1.destroy();
+                keysubstitute1.setPhysics(30, 0.1, 0);
+                keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
+                keysubstitute1.body->SetActive(false);
+            }else{
+                keyState2 = 1;
+                keysubstitute2.destroy();
+                keysubstitute2.setPhysics(30, 0.1, 0);
+                keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
+                keysubstitute2.body->SetActive(false);
+            }
+            
+        }else if(keyState1 != 1 && keyState2 == 1){
+            keyState1 = 1;
+            keysubstitute1.destroy();
+            keysubstitute1.setPhysics(30, 0.1, 0);
+            keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.body->SetActive(false);
+            
+            keyState2 = 0;
+            keysubstitute2.destroy();
+            keysubstitute2.setPhysics(30, 0.1, 0);
+            keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.body->SetActive(true);
+            
+        }else if(keyState1 == 1 && keyState2 != 1){
+            keyState2 = 1;
+            keysubstitute2.destroy();
+            keysubstitute2.setPhysics(30, 0.1, 0);
+            keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.body->SetActive(false);
+            
+            keyState1 = 0;
+            keysubstitute1.destroy();
+            keysubstitute1.setPhysics(30, 0.1, 0);
+            keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.body->SetActive(true);
+        }
+        
+        
+    }else if(P1F.bPressed && length1.length()<100 && length2.length()>100 ){
+        
+        if (keyState1 != 1) {
+            
+            
+            keyState1 = 1;
+            keysubstitute1.destroy();
+            keysubstitute1.setPhysics(30, 0.1, 0);
+            keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.body->SetActive(false);
+       
+            
+        }else if(keyState1 == 1){
+                        
+            keyState1 = 0;
+            keysubstitute1.destroy();
+            keysubstitute1.setPhysics(30, 0.1, 0);
+            keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.body->SetActive(true);
+        }
+
+    }else if(P1F.bPressed && length1.length()>100 && length2.length()<100 ){
+        
+        if (keyState2 != 1) {
+            
+            
+            keyState2 = 1;
+            keysubstitute2.destroy();
+            keysubstitute2.setPhysics(30, 0.1, 0);
+            keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.body->SetActive(false);
+            
+            
+        }else if(keyState2 == 1){
+            
+            keyState2 = 0;
+            keysubstitute2.destroy();
+            keysubstitute2.setPhysics(30, 0.1, 0);
+            keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.body->SetActive(true);
+        }
+        
     }
     
-    length = myGirl.getCenter - key1.getCenter;
-    if (P2F.bPressed && length.length()<100 && key1UsedP2 == false) {
-        key1State = 2;
-        key1substitute.body->SetActive(false);
-        key1UsedP2 = true;
-        key1UsedP1 = false;
-        beltPctP2 = 0;
-    }else if (P2F.bPressed && length.length()<100 && key1UsedP2 == true) {
-        key1State = 3;
-        key1substitute.body->SetActive(true);
-        key1substitute.destroy();
-        key1substitute.setPhysics(30, 0.1, 0);
-        key1substitute.setup(worldP2.getWorld(), key1.getCenter.x,key1.getCenter.y,key1.width/2,key1.height/2);
-        key1substitute.setVelocity(-5, 0);
-        key1UsedP2 = false;
+    
+    
+    //--------------- key 2 --------------
+    if (P2F.bPressed && length3.length()<100 && length4.length()<100 ) {
+        
+        if (keyState1 != 2 && keyState2 != 2) {
+            
+            if (length3.length() > length4.length()) {
+                keyState1 = 2;
+                keysubstitute1.destroy();
+                keysubstitute1.setPhysics(30, 0.1, 0);
+                keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
+                keysubstitute1.body->SetActive(false);
+            }else{
+                keyState2 = 2;
+                keysubstitute2.destroy();
+                keysubstitute2.setPhysics(30, 0.1, 0);
+                keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
+                keysubstitute2.body->SetActive(false);
+            }
+            
+        }else if(keyState1 != 2 && keyState2 == 2){
+            keyState1 = 2;
+            keysubstitute1.destroy();
+            keysubstitute1.setPhysics(30, 0.1, 0);
+            keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.body->SetActive(false);
+            
+            keyState2 = 0;
+            keysubstitute2.destroy();
+            keysubstitute2.setPhysics(30, 0.1, 0);
+            keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.body->SetActive(true);
+            
+        }else if(keyState1 == 2 && keyState2 != 2){
+            keyState2 = 2;
+            keysubstitute2.destroy();
+            keysubstitute2.setPhysics(30, 0.1, 0);
+            keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.body->SetActive(false);
+            
+            keyState1 = 0;
+            keysubstitute1.destroy();
+            keysubstitute1.setPhysics(30, 0.1, 0);
+            keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.body->SetActive(true);
+        }
+        
+        
+    }else if(P2F.bPressed && length3.length()<100 && length4.length()>100 ){
+        
+        if (keyState1 != 2) {
+            
+            
+            keyState1 = 2;
+            keysubstitute1.destroy();
+            keysubstitute1.setPhysics(30, 0.1, 0);
+            keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.body->SetActive(false);
+            
+            
+        }else if(keyState1 == 2){
+            
+            keyState1 = 0;
+            keysubstitute1.destroy();
+            keysubstitute1.setPhysics(30, 0.1, 0);
+            keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.body->SetActive(true);
+        }
+        
+    }else if(P2F.bPressed && length3.length()>100 && length4.length()<100 ){
+        
+        if (keyState2 != 2) {
+            
+            
+            keyState2 = 2;
+            keysubstitute2.destroy();
+            keysubstitute2.setPhysics(30, 0.1, 0);
+            keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.body->SetActive(false);
+            
+            
+        }else if(keyState2 == 2){
+            
+            keyState2 = 0;
+            keysubstitute2.destroy();
+            keysubstitute2.setPhysics(30, 0.1, 0);
+            keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.body->SetActive(true);
+        }
+        
     }
+    
+
 
     
 }
