@@ -1,8 +1,5 @@
 #include "testApp.h"
-//static int pts1[] = {0,1024-150,768/2,1024-150,768,1024-150};
-//static int nPts1  = 3*2;
-//static int pts2[] = {0,150,768/2,150,768,150};
-//static int nPts2  = 3*2;
+
 //--------------------------------------------------------------
 void testApp::setup(){	
 	
