@@ -4,7 +4,7 @@
 #include "ofxiPhone.h"
 #include "ofxiPhoneExtras.h"
 #include "ofxBox2d.h"
-
+#include "ofxXmlSettings.h"
 #include "dirctiveButton.h"
 #include "jumpButton.h"
 #include "guy.h"
@@ -31,12 +31,14 @@ class testApp : public ofxiPhoneApp{
         void gotFocus();
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
-    
+        //******** map **************************
+        ofxXmlSettings XML;
+        string message;
+        vector<ofPolyline>          lines;
+        vector<ofxBox2dPolygon>     polyLines;
         //********box2d**************************
         ofxBox2d                worldP1;
         ofxBox2d                worldP2;
-        ofxBox2dPolygon         polyLine1;
-        ofxBox2dPolygon         polyLine2;
         //********buttons**************************
         directiveButton         P1L;
         directiveButton         P1R;
@@ -53,6 +55,7 @@ class testApp : public ofxiPhoneApp{
         ofxBox2dRect            chracater1;
         ofPoint                 diffP1;
         ofPoint                 lastPosP1;
+        ofPoint                 offSet;
         //******** girl *********************
         girl                    myGirl;
         ofxBox2dRect            chracater2;

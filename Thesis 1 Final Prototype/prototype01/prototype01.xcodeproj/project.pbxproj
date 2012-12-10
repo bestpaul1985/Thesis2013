@@ -31,6 +31,10 @@
 		4C1E7E731672D0D800D79DF5 /* jumpButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E7E711672D0D800D79DF5 /* jumpButton.cpp */; };
 		4C7F1FDA1673EFCB00E3484C /* keys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C7F1FD81673EFCB00E3484C /* keys.cpp */; };
 		4C86CCED1675041D00545C2E /* chests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C86CCEB1675041D00545C2E /* chests.cpp */; };
+		4C86CD0F1675268400545C2E /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C86CD081675268400545C2E /* tinyxml.cpp */; };
+		4C86CD101675268400545C2E /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C86CD0A1675268400545C2E /* tinyxmlerror.cpp */; };
+		4C86CD111675268400545C2E /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C86CD0B1675268400545C2E /* tinyxmlparser.cpp */; };
+		4C86CD121675268400545C2E /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C86CD0D1675268400545C2E /* ofxXmlSettings.cpp */; };
 		4cc0fd96de77ff40bbcf8dd893ae88b8 /* del_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3ec06dc33990374e7508e4ea9cf41d28 /* del_impl.cpp */; };
 		5146aeb9e58fb1b388820c2ae900051e /* b2WorldCallbacks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 561370923a365a4a9dc9fb8aa1c415d5 /* b2WorldCallbacks.cpp */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
@@ -127,6 +131,12 @@
 		4C7F1FD91673EFCB00E3484C /* keys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keys.h; sourceTree = "<group>"; };
 		4C86CCEB1675041D00545C2E /* chests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chests.cpp; sourceTree = "<group>"; };
 		4C86CCEC1675041D00545C2E /* chests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chests.h; sourceTree = "<group>"; };
+		4C86CD081675268400545C2E /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
+		4C86CD091675268400545C2E /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
+		4C86CD0A1675268400545C2E /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
+		4C86CD0B1675268400545C2E /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
+		4C86CD0D1675268400545C2E /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
+		4C86CD0E1675268400545C2E /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
 		4c1a083ac6f4f462ebc575655c1e2c66 /* b2CircleContact.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = b2CircleContact.cpp; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Contacts/b2CircleContact.cpp; sourceTree = SOURCE_ROOT; };
 		4c4c77963004e4a4d8ff1d00f9d88bb3 /* b2Joint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2Joint.h; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Joints/b2Joint.h; sourceTree = SOURCE_ROOT; };
 		4edf97d9cfa957d48315b0a9054d1f78 /* dpoint.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = dpoint.hpp; path = ../../../addons/ofxBox2d/libs/triangle/dpoint.hpp; sourceTree = SOURCE_ROOT; };
@@ -332,6 +342,36 @@
 			name = items;
 			sourceTree = "<group>";
 		};
+		4C86CD061675268400545C2E /* ofxXmlSettings */ = {
+			isa = PBXGroup;
+			children = (
+				4C86CD071675268400545C2E /* libs */,
+				4C86CD0C1675268400545C2E /* src */,
+			);
+			name = ofxXmlSettings;
+			path = ../../../addons/ofxXmlSettings;
+			sourceTree = "<group>";
+		};
+		4C86CD071675268400545C2E /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				4C86CD081675268400545C2E /* tinyxml.cpp */,
+				4C86CD091675268400545C2E /* tinyxml.h */,
+				4C86CD0A1675268400545C2E /* tinyxmlerror.cpp */,
+				4C86CD0B1675268400545C2E /* tinyxmlparser.cpp */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		4C86CD0C1675268400545C2E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4C86CD0D1675268400545C2E /* ofxXmlSettings.cpp */,
+				4C86CD0E1675268400545C2E /* ofxXmlSettings.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		5492a1491d9e6e88ebb3be2b497a1258 /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -457,6 +497,7 @@
 		BB16F26B0F2B646B00518274 /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				4C86CD061675268400545C2E /* ofxXmlSettings */,
 				bd1b24c549bfa7d54bc59de3c6921b7c /* ofxBox2d */,
 			);
 			name = addons;
@@ -704,6 +745,10 @@
 				4C03C2D71673DF8D00D42F2E /* girl.cpp in Sources */,
 				4C7F1FDA1673EFCB00E3484C /* keys.cpp in Sources */,
 				4C86CCED1675041D00545C2E /* chests.cpp in Sources */,
+				4C86CD0F1675268400545C2E /* tinyxml.cpp in Sources */,
+				4C86CD101675268400545C2E /* tinyxmlerror.cpp in Sources */,
+				4C86CD111675268400545C2E /* tinyxmlparser.cpp in Sources */,
+				4C86CD121675268400545C2E /* ofxXmlSettings.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

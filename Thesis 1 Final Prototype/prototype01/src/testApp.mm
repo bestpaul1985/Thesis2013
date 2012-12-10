@@ -1,8 +1,8 @@
 #include "testApp.h"
-static int pts1[] = {0,1024-150,768/2,1024-150,768,1024-150};
-static int nPts1  = 3*2;
-static int pts2[] = {0,150,768/2,150,768,150};
-static int nPts2  = 3*2;
+//static int pts1[] = {0,1024-150,768/2,1024-150,768,1024-150};
+//static int nPts1  = 3*2;
+//static int pts2[] = {0,150,768/2,150,768,150};
+//static int nPts2  = 3*2;
 //--------------------------------------------------------------
 void testApp::setup(){	
 	
@@ -13,31 +13,56 @@ void testApp::setup(){
     //***********box2d P1****************
     worldP1.init();
     worldP1.setGravity(0, 100);
-    worldP1.createBounds();
+    //  worldP1.createBounds();
     worldP1.setIterations(1, 1);
     worldP1.setFPS(60);
-    for (int i=0; i<nPts1; i+=2) {
-		float x = pts1[i];
-		float y = pts1[i+1];
-		polyLine1.addVertex(x, y);
-	}
-    polyLine1.setPhysics(0, 0, 0.2);
-    polyLine1.create(worldP1.getWorld());
-    
     //***********box2d P2****************
     worldP2.init();
     worldP2.setGravity(0, -100);
-    worldP2.createBounds();
+    //  worldP2.createBounds();
     worldP2.setIterations(1, 1);
     worldP2.setFPS(60);
     
-    for (int i=0; i<nPts2; i+=2) {
-		float x = pts2[i];
-		float y = pts2[i+1];
-		polyLine2.addVertex(x, y);
+    
+    //************ polyLines ***************
+	
+    
+    if( XML.loadFile(ofxiPhoneGetDocumentsDirectory() + "tutorialLevelP1.xml") ){
+		message = "xml ok";
+	}else if( XML.loadFile("tutorialLevelP1.xml") ){
+		message = "xml ok";
+	}else{
+		message = "unable to load mySettings.xml check data/ folder";
 	}
-    polyLine2.setPhysics(0, 0, 0.2);
-    polyLine2.create(worldP2.getWorld());
+    cout<<message<<endl;
+    
+    if (XML.loadFile("tutorialLevelP1.xml")) {
+        int strokeNum = XML.getNumTags("STROKE");
+        for (int i=0; i<strokeNum; i++) {
+            XML.pushTag("STROKE",i);
+            int ptNum = XML.getNumTags("PT");
+            if (ptNum>0) {
+                ofxBox2dPolygon tempPolyline;
+                for (int j=0; j<ptNum; j++) {
+                    int x = XML.getValue("PT:X", 0, j);
+                    int y = XML.getValue("PT:Y", 0, j);
+                    ofPoint tempP;
+                    tempP.set(x, y);
+                    tempPolyline.addVertex(tempP);
+                }
+                tempPolyline.setPhysics(0, 0, 0.2f);
+                tempPolyline.create(worldP1.getWorld());
+                polyLines.push_back(tempPolyline);
+            }
+            XML.popTag();
+        }
+    }
+	
+    
+    
+    
+    
+
     
     //**********buttons****************
     P1L.setup(10, ofGetHeight()-120, 0, 0, 0);
@@ -52,25 +77,25 @@ void testApp::setup(){
     bFixedButtonP1 = false;
     //********** Guy ******************
     myGuy.setup(chracater1.getPosition());
-    chracater1.setPhysics(3, 0, 0.5);
+    chracater1.setPhysics(3, 0, 0.5f);
     chracater1.setup(worldP1.getWorld(), ofGetWidth()/2, ofGetHeight()/2, myGuy.width/2, myGuy.height/2);
     chracater1.body->SetFixedRotation(true);
     //********** Girl *******************
     myGirl.setup(chracater2.getPosition());
-    chracater2.setPhysics(3, 0, 0.5);
+    chracater2.setPhysics(3, 0, 0.5f);
     chracater2.setup(worldP2.getWorld(), ofGetWidth()/2, ofGetHeight()/2, myGirl.width/2, myGirl.height/2);
     chracater2.body->SetFixedRotation(true);
     //********** keys *******************
     key1.setup(0);
-    keysubstitute1.setPhysics(30, 0.1, 0);
-    keysubstitute1.setup(worldP1.getWorld(), ofGetWidth()/2+100, ofGetHeight()-155, key1.width/2, key1.height/2);
+    keysubstitute1.setPhysics(1000, 0, 0.999f);
+    keysubstitute1.setup(worldP1.getWorld(), ofGetWidth()/2+100, ofGetHeight()/2, key1.width/2, key1.height/2);
     keyState1 = 0;
     key1UsedP1 = false;
     key1UsedP2 = false;
     
     key2.setup(1);
-    keysubstitute2.setPhysics(30, 0.1, 0);
-    keysubstitute2.setup(worldP2.getWorld(), ofGetWidth()/2-100, 155, key2.width/2, key2.height/2);
+    keysubstitute2.setPhysics(1000, 0, 0.999f);
+    keysubstitute2.setup(worldP2.getWorld(), ofGetWidth()/2-100, ofGetHeight()/2, key2.width/2, key2.height/2);
     keyState2 = 0;
     key2UsedP1 = false;
     key2UsedP2 = false;
@@ -112,7 +137,7 @@ void testApp::update(){
     //*********** diffP1 *******************
     diffP1 = chracater1.getPosition()-lastPosP1;
     lastPosP1 = chracater1.getPosition();
-    
+   
     //*********** diffP2 *******************
     diffP2 = chracater2.getPosition()-lastPosP2;
     lastPosP2 = chracater2.getPosition();
@@ -221,26 +246,29 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-  
+    
+    ofPushMatrix();
+    ofTranslate(0, 0);
+    //************** map ******************
+    ofSetColor(255, 255, 255);
+    ofNoFill();
+    for (int i=0; i<polyLines.size(); i++) {
+        polyLines[i].draw();
+    }
+    
+    //************** guy & girl ******************
     myGuy.draw();
     myGirl.draw();
     
-    ofNoFill();
-    ofSetColor(255, 255, 255);
-    polyLine1.draw();
-    polyLine2.draw();
-    
     ofFill();
     ofSetColor(255, 255, 255,30);
-//    chracater1.draw();
-//    chracater2.draw();
+    chracater1.draw();
+    chracater2.draw();
     //**********key 1**************
     key1.draw();
-//    keysubstitute1.draw();
-    
+    keysubstitute1.draw();
     key2.draw();
-//    keysubstitute2.draw();
-    
+    keysubstitute2.draw();
     //*********** chests *******************
     myChest1.draw();
     myChest2.draw();
@@ -278,10 +306,10 @@ void testApp::draw(){
     P2J.draw();
     P2F.draw();
     //*********** passing belt *******************
-//    beltP1.draw();
-//    beltP2.draw();
+    beltP1.draw();
+    beltP2.draw();
     
-
+    ofPopMatrix();
 }
 
 //--------------------------------------------------------------
@@ -315,8 +343,8 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     }
     
     
-    if (P1J.bPressed && fabs(diffP1.y)< 1) chracater1.setVelocity(0, -50);
-    if (P2J.bPressed && fabs(diffP2.y)< 1) chracater2.setVelocity(0, 50);
+    if (P1J.bPressed && fabs(diffP1.y)< 1) chracater1.setVelocity(0, -40);
+    if (P2J.bPressed && fabs(diffP2.y)< 1) chracater2.setVelocity(0, 40);
     
     //**********pick up & drop down ************************
     
