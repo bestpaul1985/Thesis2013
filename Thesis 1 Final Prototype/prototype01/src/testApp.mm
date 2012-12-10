@@ -91,11 +91,15 @@ void testApp::setup(){
     chracater1.setPhysics(3, 0, 0.5f);
     chracater1.setup(worldP1.getWorld(), ofGetWidth()/2, ofGetHeight()/2, myGuy.width/2, myGuy.height/2);
     chracater1.body->SetFixedRotation(true);
+    myGuy.getCenter = chracater1.getPosition();
+    lastPosP1 = chracater1.getPosition();
     //********** Girl *******************
     myGirl.setup(chracater2.getPosition().x, chracater2.getPosition().y);
     chracater2.setPhysics(3, 0, 0.5f);
     chracater2.setup(worldP2.getWorld(), ofGetWidth()/2, ofGetHeight()/2, myGirl.width/2, myGirl.height/2);
     chracater2.body->SetFixedRotation(true);
+    myGirl.getCenter = chracater2.getPosition();
+    lastPosP2 = chracater2.getPosition();
     //********** keys *******************
     key1.setup(0);
     keysubstitute1.setPhysics(1, 0, 0.999f);
@@ -174,40 +178,67 @@ void testApp::update(){
 
     //*********** Guy *******************
    
-//    if (chracater1.getPosition().x > 0&& chracater1.getPosition().x <384 ) {
-//        
-//         myGuy.update(myGuy.getCenter.x + diffP1.x ,chracater1.getPosition().y);
-//        
-//    }else if( chracater1.getPosition().x > (2469-384)&& chracater1.getPosition().x <2469 ){
-//        
-//         myGuy.update(myGuy.getCenter.x + diffP1.x,chracater1.getPosition().y);
-//        
-//    }else{
-//        
-//         myGuy.update(384,chracater1.getPosition().y);
-//         offSet = chracater1.getPosition() - myGuy.getCenter;
-//    }
+    if (chracater1.getPosition().x > 0&& chracater1.getPosition().x <184 ) {
+        
+         myGuy.update(myGuy.getCenter.x + diffP1.x ,chracater1.getPosition().y);
+        
+    }else if( chracater1.getPosition().x > (2469-184)&& chracater1.getPosition().x <2469 ){
+        
+         myGuy.update(myGuy.getCenter.x + diffP1.x,chracater1.getPosition().y);
+        
+    }else{
+        
+        if(myGuy.getCenter.x <= 584&& myGuy.getCenter.x >=184){
+            myGuy.update(myGuy.getCenter.x + diffP1.x, chracater1.getPosition().y);
+            
+        }
+        
+        if(myGuy.getCenter.x > 584){
+            myGuy.update(584, chracater1.getPosition().y);
+            offSet = chracater1.getPosition() - myGuy.getCenter;
+        }
+        
+        if(myGuy.getCenter.x < 184){
+            myGuy.update(184, chracater1.getPosition().y);
+            offSet = chracater1.getPosition() - myGuy.getCenter;
+        }
+    }
     
-    myGuy.update(384,chracater1.getPosition().y);
-    offSet = chracater1.getPosition() - myGuy.getCenter;
+
+//    myGuy.update(384,chracater1.getPosition().y);
+//    offSet = chracater1.getPosition() - myGuy.getCenter;
     //*********** Gril *******************
 
-//    if (chracater2.getPosition().x < 768&& chracater2.getPosition().x > 384 ) {
-//        
-//        myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
-//        
-//    }else if( chracater2.getPosition().x > 768-3000 && chracater2.getPosition().x <768-3000 + 384 ){
-//        
-//        myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
-//        
-//    }else{
-//        
-//        myGirl.update(384,chracater2.getPosition().y);
-//        offSet2 = chracater2.getPosition() - myGirl.getCenter;
-//    }
+    if (chracater2.getPosition().x < 768 && chracater2.getPosition().x > 584 ) {
+        
+        myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
+        
+    }else if( chracater2.getPosition().x > -3000+768 && chracater2.getPosition().x < -3000+768+184){
+        
+        myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
+        
+    }else{
+        
+        if(myGirl.getCenter.x <= 584 && myGirl.getCenter.x >=184){
+            myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
+            cout<<myGirl.getCenter<<endl;
+        }
+        
+        if(myGirl.getCenter.x > 584){
+            myGirl.update(584, chracater2.getPosition().y);
+            offSet2 = chracater2.getPosition() - myGirl.getCenter;
+        }
+        
+        if(myGirl.getCenter.x < 184){
+            myGirl.update(184, chracater2.getPosition().y);
+            offSet2 = chracater2.getPosition() - myGirl.getCenter;
+            
+            
+        }
+    }
     
-    myGirl.update(384,chracater2.getPosition().y);
-    offSet2 = chracater2.getPosition() - myGirl.getCenter;
+//    myGirl.update(384,chracater2.getPosition().y);
+//    offSet2 = chracater2.getPosition() - myGirl.getCenter;
   
     //*********** Accelerometer *******************
     ofPoint gravity = ofxAccelerometer.getForce();
@@ -389,6 +420,7 @@ void testApp::draw(){
     //************** girl ******************
     invP2.draw();
     myGirl.draw();
+    
     ofPushMatrix();
         ofTranslate(-offSet2.x,0);
         ofSetColor(255, 255, 255);
