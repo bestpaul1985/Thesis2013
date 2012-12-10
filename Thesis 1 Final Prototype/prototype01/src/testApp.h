@@ -12,7 +12,8 @@
 #include "keys.h"
 #include "chests.h"
 #include "elevator.h"
-
+#include "inventory.h"
+#include "rope.h"
 class testApp : public ofxiPhoneApp{
 	
     public:
@@ -91,7 +92,11 @@ class testApp : public ofxiPhoneApp{
         //********** eleveter *****************
         elevator                myEleP1;
         elevator                myEleP2;
-        
-        
+        //********** inventory *****************
+        inventory               invP1;
+        inventory               invP2;
+        //********** rope *********************
+        rope                    rope1;
+        rope                    rope2;
 };
 

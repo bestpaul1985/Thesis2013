@@ -18,7 +18,7 @@ void directiveButton::setup(float x, float y, float _num, float _angle, int play
             img.loadImage("image/dright.png");
             break;
     }
-    rect.set(x, y, img.getWidth()/3, img.getHeight()/3);
+    rect.set(x, y, img.getWidth()/3.5, img.getHeight()/3.5);
     bPressed = false;
     angle = _angle;
     color.set(255, 255, 255,125);

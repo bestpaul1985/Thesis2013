@@ -30,7 +30,7 @@ void guy::draw(){
     ofSetColor(255, 255, 255);
     img.draw(getCenter, width, height);
     
-    ofNoFill();
-    ofCircle(getCenter, 3);
+//    ofNoFill();
+//    ofCircle(getCenter, 3);
 
 }

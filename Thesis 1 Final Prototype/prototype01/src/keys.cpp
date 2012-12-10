@@ -22,13 +22,18 @@ void keys::setup(int _num){
     width = img.getWidth()/6;
     height = img.getHeight()/6;
     angle = 0;
+    bfixed = false;
 }
 
 
 void keys::update(ofPoint _pos){
-    pos.x = _pos.x;
-    pos.y = _pos.y;
-    getCenter.set( _pos.x, _pos.y);
+    
+    
+        pos.x = _pos.x;
+        pos.y = _pos.y;
+        getCenter.set( _pos.x, _pos.y);
+    
+  
 }
 
 
@@ -47,9 +52,12 @@ void keys::draw(){
         
         ofFill();
         ofSetColor(255, 255, 255);
+    if (bfixed == false) {
         img.draw(0,0, width, height);
+    }
+
     ofPopMatrix();
-    ofNoFill();
-    ofCircle(getCenter, 3);
-    ofSetRectMode(OF_RECTMODE_CORNER);
+//    ofNoFill();
+//    ofCircle(getCenter, 3);
+//    ofSetRectMode(OF_RECTMODE_CORNER);
 }

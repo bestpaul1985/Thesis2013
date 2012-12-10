@@ -19,7 +19,7 @@ void jumpButton::setup(float x, float y, float _num, float _angle, int player){
             img.loadImage("image/bbutton.png");
             break;
     }
-    rect.set(x, y, img.getWidth()/3, img.getHeight()/3);
+    rect.set(x, y, img.getWidth()/3.5, img.getHeight()/3.5);
     color.set(255, 255, 255,125);
     bPressed = false;
     bJumped = false;

@@ -127,6 +127,15 @@ void testApp::setup(){
     //********* elevter *******************
     myEleP1.setup(100, 800 , 0);
     myEleP2.setup(668, 224 , 1);
+    
+    //********* inventory *******************
+    invP1.setup(384+10, 950, 0);
+    invP2.setup(384-10, 74, 1);
+    
+    //********* rope *******************
+    rope1.setup(chestSub1.getPosition().x, chestSub1.getPosition().y, 0);
+    rope2.setup(chestSub2.getPosition().x, chestSub2.getPosition().y, 1);
+
 }
 
 //--------------------------------------------------------------
@@ -295,7 +304,11 @@ void testApp::update(){
     //*********** chests *******************
     myChest1.update(chestSub1.getPosition());
     myChest2.update(chestSub2.getPosition());
- 
+    
+    //*********** rope ********************
+    if (myChest1.open) {
+        rope1.pos = chestSub1.getPosition();
+    }
     
 }
 
@@ -312,9 +325,12 @@ void testApp::draw(){
         }
         myChest1.draw();
         myEleP1.draw();
+        rope1.draw();
     ofPopMatrix();
   
     myGuy.draw();
+    invP1.draw();
+    
 //    ofFill();
 //    ofSetColor(255, 255, 255,30);
 //    chracater1.draw();
@@ -329,9 +345,12 @@ void testApp::draw(){
         }
         myChest2.draw();
         myEleP2.draw();
+        rope2.draw();
     ofPopMatrix();
     
     myGirl.draw();
+    invP2.draw();
+    
 //    ofFill();
 //    ofSetColor(255, 255, 255,30);
 //    chracater2.draw();
@@ -469,6 +488,8 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     if ( P1F.bPressed && (chestSub1.getPosition()-keysubstitute2.getPosition()).length()<100 && keyState2 == 1 && myChest1.open == false) {
         
         myChest1.open = true;
+        keysubstitute2.destroy();
+        key2.bfixed = true;
         
     } else if (P1F.bPressed && length1.length()<100 && length2.length()<100 ) {
 
@@ -581,6 +602,8 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     if ( P2F.bPressed && (chestSub2.getPosition()-keysubstitute1.getPosition()).length()<100 && keyState1 == 2 && myChest2.open == false) {
         
         myChest2.open = true;
+        keysubstitute1.destroy();
+        key1.bfixed = true;
         
     }else if (P2F.bPressed && length3.length()<100 && length4.length()<100 ) {
         

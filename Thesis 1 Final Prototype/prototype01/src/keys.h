@@ -26,7 +26,7 @@ public:
     float width;
     float height;
     float angle;
-
+    bool  bfixed;
 
 };
 
