@@ -1,7 +1,7 @@
 <STROKE>
     <PT name="0">
-        <X>46</X>
-        <Y>669</Y>
+        <X>3</X>
+        <Y>513</Y>
     </PT>
     <PT name="1">
         <X>46</X>
@@ -70,29 +70,33 @@
         <Y>7</Y>
     </PT>
 </STROKE>
-<STROKE></STROKE>
-<STROKE></STROKE>
-<STROKE></STROKE>
-<STROKE></STROKE>
-<STROKE></STROKE>
-<STROKE></STROKE>
 <STROKE>
     <PT name="0">
-        <X>2301</X>
-        <Y>632</Y>
+        <X>2401</X>
+        <Y>634</Y>
     </PT>
     <PT name="1">
-        <X>2438</X>
-        <Y>630</Y>
+        <X>2290</X>
+        <Y>636</Y>
+    </PT>
+    <PT name="2">
+        <X>2289</X>
+        <Y>672</Y>
+    </PT>
+    <PT name="3">
+        <X>2404</X>
+        <Y>675</Y>
+    </PT>
+    <PT name="4">
+        <X>2402</X>
+        <Y>638</Y>
     </PT>
 </STROKE>
-<STROKE>
-    <PT name="0">
-        <X>3</X>
-        <Y>504</Y>
-    </PT>
-    <PT name="1">
-        <X>6</X>
-        <Y>6</Y>
-    </PT>
-</STROKE>
+<STROKE></STROKE>
+<STROKE></STROKE>
+<STROKE></STROKE>
+<STROKE></STROKE>
+<STROKE></STROKE>
+<STROKE></STROKE>
+<STROKE></STROKE>
+<STROKE></STROKE>

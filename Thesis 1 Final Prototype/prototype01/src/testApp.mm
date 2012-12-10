@@ -27,15 +27,6 @@ void testApp::setup(){
     //************ polyLines ***************
 	
     
-    if( XML.loadFile(ofxiPhoneGetDocumentsDirectory() + "tutorialLevelP1.xml") ){
-		message = "xml ok";
-	}else if( XML.loadFile("tutorialLevelP1.xml") ){
-		message = "xml ok";
-	}else{
-		message = "unable to load mySettings.xml check data/ folder";
-	}
-    cout<<message<<endl;
-    
     if (XML.loadFile("tutorialLevelP1.xml")) {
         int strokeNum = XML.getNumTags("STROKE");
         for (int i=0; i<strokeNum; i++) {
@@ -52,15 +43,35 @@ void testApp::setup(){
                 }
                 tempPolyline.setPhysics(0, 0, 0.2f);
                 tempPolyline.create(worldP1.getWorld());
-                polyLines.push_back(tempPolyline);
+                polyLines1.push_back(tempPolyline);
             }
             XML.popTag();
         }
     }
 	
+    if (XML2.loadFile("tutorialLevelP2.xml")) {
+        int strokeNum = XML2.getNumTags("STROKE");
+        for (int i=0; i<strokeNum; i++) {
+            XML2.pushTag("STROKE",i);
+            int ptNum = XML2.getNumTags("PT");
+            if (ptNum>0) {
+                ofxBox2dPolygon tempPolyline;
+                for (int j=0; j<ptNum; j++) {
+                    int x = XML2.getValue("PT:X", 0, j);
+                    int y = XML2.getValue("PT:Y", 0, j);
+                    ofPoint tempP;
+                    tempP.set(x+768, y);
+                    tempPolyline.addVertex(tempP);
+                }
+                tempPolyline.setPhysics(0, 0, 0.2f);
+                tempPolyline.create(worldP2.getWorld());
+                polyLines2.push_back(tempPolyline);
+            }
+            XML2.popTag();
+        }
+    }
     
-    
-    
+   
     
 
     
@@ -76,12 +87,12 @@ void testApp::setup(){
     bFixedButtonP1 = false;
     bFixedButtonP1 = false;
     //********** Guy ******************
-    myGuy.setup(chracater1.getPosition());
+    myGuy.setup(chracater1.getPosition().x,chracater1.getPosition().y);
     chracater1.setPhysics(3, 0, 0.5f);
     chracater1.setup(worldP1.getWorld(), ofGetWidth()/2, ofGetHeight()/2, myGuy.width/2, myGuy.height/2);
     chracater1.body->SetFixedRotation(true);
     //********** Girl *******************
-    myGirl.setup(chracater2.getPosition());
+    myGirl.setup(chracater2.getPosition().x, chracater2.getPosition().y);
     chracater2.setPhysics(3, 0, 0.5f);
     chracater2.setup(worldP2.getWorld(), ofGetWidth()/2, ofGetHeight()/2, myGirl.width/2, myGirl.height/2);
     chracater2.body->SetFixedRotation(true);
@@ -112,6 +123,10 @@ void testApp::setup(){
     chestSub1.setup(worldP1.getWorld(), ofGetWidth()/2+200 ,ofGetHeight()-200, myChest1.width1/2, myChest1.height1/2);
     chestSub2.setPhysics(100, 0, 0.999f);
     chestSub2.setup(worldP2.getWorld(), ofGetWidth()/2-200 ,200, myChest2.width1/2, myChest2.height1/2);
+    
+    //********* elevter *******************
+    myEleP1.setup(100, 800 , 0);
+    myEleP2.setup(668, 224 , 1);
 }
 
 //--------------------------------------------------------------
@@ -137,17 +152,49 @@ void testApp::update(){
     //*********** diffP1 *******************
     diffP1 = chracater1.getPosition()-lastPosP1;
     lastPosP1 = chracater1.getPosition();
-   
+    
     //*********** diffP2 *******************
     diffP2 = chracater2.getPosition()-lastPosP2;
     lastPosP2 = chracater2.getPosition();
     
+
     //*********** Guy *******************
-    myGuy.update(chracater1.getPosition());
+   
+//    if (chracater1.getPosition().x > 0&& chracater1.getPosition().x <384 ) {
+//        
+//         myGuy.update(myGuy.getCenter.x + diffP1.x ,chracater1.getPosition().y);
+//        
+//    }else if( chracater1.getPosition().x > (2469-384)&& chracater1.getPosition().x <2469 ){
+//        
+//         myGuy.update(myGuy.getCenter.x + diffP1.x,chracater1.getPosition().y);
+//        
+//    }else{
+//        
+//         myGuy.update(384,chracater1.getPosition().y);
+//         offSet = chracater1.getPosition() - myGuy.getCenter;
+//    }
     
+    myGuy.update(384,chracater1.getPosition().y);
+    offSet = chracater1.getPosition() - myGuy.getCenter;
     //*********** Gril *******************
-    myGirl.update(chracater2.getPosition());
+
+//    if (chracater2.getPosition().x < 768&& chracater2.getPosition().x > 384 ) {
+//        
+//        myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
+//        
+//    }else if( chracater2.getPosition().x > 768-3000 && chracater2.getPosition().x <768-3000 + 384 ){
+//        
+//        myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
+//        
+//    }else{
+//        
+//        myGirl.update(384,chracater2.getPosition().y);
+//        offSet2 = chracater2.getPosition() - myGirl.getCenter;
+//    }
     
+    myGirl.update(384,chracater2.getPosition().y);
+    offSet2 = chracater2.getPosition() - myGirl.getCenter;
+  
     //*********** Accelerometer *******************
     ofPoint gravity = ofxAccelerometer.getForce();
     float speedP1, speedP2;
@@ -168,7 +215,7 @@ void testApp::update(){
         bFixedButtonP2 = false;
     }
     
-  
+    
     
     beltPctP1 += speedP1;
     if (beltPctP1>1) {
@@ -195,15 +242,17 @@ void testApp::update(){
             break;
         case 1:{
             ofPoint temp;
-            temp.x = myGuy.getCenter.x + 40;
+            temp.x = chracater1.getPosition().x + 40;
             temp.y = beltPosP1.y;
             key1.update(temp);
+            keysubstitute1.setPosition(chracater1.getPosition().x +40, beltPosP1.y);
             }break;
         case 2:{
             ofPoint temp;
-            temp.x = myGirl.getCenter.x - 40;
+            temp.x = chracater2.getPosition().x - 40;
             temp.y = beltPosP2.y;
             key1.update(temp);
+            keysubstitute1.setPosition(chracater2.getPosition().x -40, beltPosP2.y);
             }break;
     }
     
@@ -211,19 +260,25 @@ void testApp::update(){
     
     switch (keyState2) {
         case 0:
+          
             key2.update(keysubstitute2.getPosition());
+            
             break;
         case 1:{
             ofPoint temp;
-            temp.x = myGuy.getCenter.x + 40;
+            temp.x = chracater1.getPosition().x + 40;
             temp.y = beltPosP1.y;
             key2.update(temp);
+            keysubstitute2.setPosition(chracater1.getPosition().x + 40, beltPosP1.y);
         }break;
         case 2:{
             ofPoint temp;
-            temp.x = myGirl.getCenter.x - 40;
+            temp.x = chracater2.getPosition().x - 40;
             temp.y = beltPosP2.y;
             key2.update(temp);
+            keysubstitute2.setPosition(chracater2.getPosition().x - 40, beltPosP2.y);
+            
+            cout<<chracater2.getPosition().x <<endl;
         }break;
     }
     
@@ -246,32 +301,67 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
+
+    //************** guy ******************
+    ofPushMatrix();
+        ofTranslate(-offSet.x,0);
+        ofSetColor(255, 255, 255);
+        ofNoFill();
+        for (int i=0; i<polyLines1.size(); i++) {
+            polyLines1[i].draw();
+        }
+        myChest1.draw();
+        myEleP1.draw();
+    ofPopMatrix();
+  
+    myGuy.draw();
+//    ofFill();
+//    ofSetColor(255, 255, 255,30);
+//    chracater1.draw();
+//    keysubstitute1.draw();
+    //************** girl ******************
+    ofPushMatrix();
+        ofTranslate(-offSet2.x,0);
+        ofSetColor(255, 255, 255);
+        ofNoFill();
+        for (int i=0; i<polyLines2.size(); i++) {
+            polyLines2[i].draw();
+        }
+        myChest2.draw();
+        myEleP2.draw();
+    ofPopMatrix();
+    
+    myGirl.draw();
+//    ofFill();
+//    ofSetColor(255, 255, 255,30);
+//    chracater2.draw();
+//    keysubstitute2.draw();
+    //************** key *****************
+    ofPoint temOffSet;
+    ofPoint temOffSet2;
+    if (keysubstitute1.getWorld() == worldP1.getWorld()) {
+        temOffSet = offSet;
+    }else{
+        temOffSet = offSet2;
+    };
     
     ofPushMatrix();
-    ofTranslate(0, 0);
-    //************** map ******************
-    ofSetColor(255, 255, 255);
-    ofNoFill();
-    for (int i=0; i<polyLines.size(); i++) {
-        polyLines[i].draw();
-    }
+        ofTranslate(-temOffSet.x,0);
+        key1.draw();
+    ofPopMatrix();
     
-    //************** guy & girl ******************
-    myGuy.draw();
-    myGirl.draw();
+    if (keysubstitute2.getWorld() == worldP1.getWorld()) {
+        temOffSet2 = offSet;
+    }else{
+        temOffSet2 = offSet2;
+    };
     
-    ofFill();
-    ofSetColor(255, 255, 255,30);
-    chracater1.draw();
-    chracater2.draw();
-    //**********key 1**************
-    key1.draw();
-    keysubstitute1.draw();
-    key2.draw();
-    keysubstitute2.draw();
-    //*********** chests *******************
-    myChest1.draw();
-    myChest2.draw();
+    ofPushMatrix();
+        ofTranslate(-temOffSet2.x,0);
+        key2.draw();
+    ofPopMatrix();
+    
+    
     //*********buttons***********
     if (bFixedButtonP1) {
         P1L.bFixed = true;
@@ -306,10 +396,10 @@ void testApp::draw(){
     P2J.draw();
     P2F.draw();
     //*********** passing belt *******************
-    beltP1.draw();
-    beltP2.draw();
+//    beltP1.draw();
+//    beltP2.draw();
     
-    ofPopMatrix();
+   
 }
 
 //--------------------------------------------------------------
@@ -354,14 +444,29 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     ofPoint length2;
     ofPoint length3;
     ofPoint length4;
-    length1 = myGuy.getCenter - key1.getCenter;
-    length2 = myGuy.getCenter - key2.getCenter;
-    length3 = myGirl.getCenter - key1.getCenter;
-    length4 = myGirl.getCenter - key2.getCenter;
+    
+    if (keysubstitute1.getWorld() == worldP1.getWorld()){
+        length1 = myGuy.getCenter - key1.getCenter + offSet;
+        length3 = myGirl.getCenter - key1.getCenter + offSet;
+    }else{
+        length1 = myGuy.getCenter - key1.getCenter + offSet2;
+        length3 = myGirl.getCenter - key1.getCenter + offSet2;
+    }
+    
+    if (keysubstitute2.getWorld() == worldP1.getWorld()){
+        length2 = myGuy.getCenter - key2.getCenter + offSet;
+        length4 = myGirl.getCenter - key2.getCenter + offSet;
+    }else{
+        length2 = myGuy.getCenter - key2.getCenter + offSet2;
+        length4 = myGirl.getCenter - key2.getCenter + offSet2;
+    }
+   
+  
+
 
     
     //****************************** open chest 1********************
-    if ( P1F.bPressed && (myChest1.getCenter-key2.getCenter).length()<100 && keyState2 == 1 && myChest1.open == false) {
+    if ( P1F.bPressed && (chestSub1.getPosition()-keysubstitute2.getPosition()).length()<100 && keyState2 == 1 && myChest1.open == false) {
         
         myChest1.open = true;
         
@@ -373,14 +478,14 @@ void testApp::touchDown(ofTouchEventArgs & touch){
                 keyState1 = 1;
                 keysubstitute1.destroy();
                 keysubstitute1.setPhysics(30, 0.1, 0);
-                keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
+                keysubstitute1.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key1.width/2, key1.height/2);
                 keysubstitute1.body->SetActive(false);
                 key1.angle = 0;
             }else{
                 keyState2 = 1;
                 keysubstitute2.destroy();
                 keysubstitute2.setPhysics(30, 0.1, 0);
-                keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
+                keysubstitute2.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key2.width/2, key2.height/2);
                 keysubstitute2.body->SetActive(false);
                 key2.angle = 180;
             }
@@ -390,14 +495,14 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState1 = 1;
             keysubstitute1.destroy();
             keysubstitute1.setPhysics(30, 0.1, 0);
-            keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(false);
             key1.angle = 0;
             
             keyState2 = 0;
             keysubstitute2.destroy();
             keysubstitute2.setPhysics(30, 0.1, 0);
-            keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
             key2.angle = 180;
             
@@ -407,14 +512,14 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState2 = 1;
             keysubstitute2.destroy();
             keysubstitute2.setPhysics(30, 0.1, 0);
-            keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(false);
             key1.angle = 0;
             
             keyState1 = 0;
             keysubstitute1.destroy();
             keysubstitute1.setPhysics(30, 0.1, 0);
-            keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
             key2.angle = 180;
             
@@ -430,7 +535,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState1 = 1;
             keysubstitute1.destroy();
             keysubstitute1.setPhysics(30, 0.1, 0);
-            keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(false);
             key1.angle = 0;
             
@@ -439,7 +544,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState1 = 0;
             keysubstitute1.destroy();
             keysubstitute1.setPhysics(30, 0.1, 0);
-            keysubstitute1.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
             key1.angle = 0;
         }
@@ -453,7 +558,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState2 = 1;
             keysubstitute2.destroy();
             keysubstitute2.setPhysics(30, 0.1, 0);
-            keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(false);
             key2.angle = 180;
             
@@ -462,7 +567,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState2 = 0;
             keysubstitute2.destroy();
             keysubstitute2.setPhysics(30, 0.1, 0);
-            keysubstitute2.setup(worldP1.getWorld(), myGuy.getCenter.x, myGuy.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
             key2.angle = 180;
         }
@@ -473,7 +578,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     
     //--------------- key 2 --------------
     //****************************** open chest 2********************
-    if ( P2F.bPressed && (myChest2.getCenter-key1.getCenter).length()<100 && keyState1 == 2 && myChest2.open == false) {
+    if ( P2F.bPressed && (chestSub2.getPosition()-keysubstitute1.getPosition()).length()<100 && keyState1 == 2 && myChest2.open == false) {
         
         myChest2.open = true;
         
@@ -485,14 +590,14 @@ void testApp::touchDown(ofTouchEventArgs & touch){
                 keyState1 = 2;
                 keysubstitute1.destroy();
                 keysubstitute1.setPhysics(30, 0.1, 0);
-                keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
+                keysubstitute1.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key1.width/2, key1.height/2);
                 keysubstitute1.body->SetActive(false);
                 key1.angle = 180;
             }else{
                 keyState2 = 2;
                 keysubstitute2.destroy();
                 keysubstitute2.setPhysics(30, 0.1, 0);
-                keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
+                keysubstitute2.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key2.width/2, key2.height/2);
                 keysubstitute2.body->SetActive(false);
                 key2.angle = 0;
             }
@@ -501,14 +606,14 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState1 = 2;
             keysubstitute1.destroy();
             keysubstitute1.setPhysics(30, 0.1, 0);
-            keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(false);
             key1.angle = 180;
             
             keyState2 = 0;
             keysubstitute2.destroy();
             keysubstitute2.setPhysics(30, 0.1, 0);
-            keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
             key2.angle = 180;
             
@@ -516,14 +621,14 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState2 = 2;
             keysubstitute2.destroy();
             keysubstitute2.setPhysics(30, 0.1, 0);
-            keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(false);
             key2.angle = 0;
             
             keyState1 = 0;
             keysubstitute1.destroy();
             keysubstitute1.setPhysics(30, 0.1, 0);
-            keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
             key1.angle = 180;
             
@@ -539,7 +644,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState1 = 2;
             keysubstitute1.destroy();
             keysubstitute1.setPhysics(30, 0.1, 0);
-            keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(false);
             key1.angle = 180;
             
@@ -548,7 +653,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState1 = 0;
             keysubstitute1.destroy();
             keysubstitute1.setPhysics(30, 0.1, 0);
-            keysubstitute1.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key1.width/2, key1.height/2);
+            keysubstitute1.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
             key1.angle = 180;
         }
@@ -562,7 +667,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState2 = 2;
             keysubstitute2.destroy();
             keysubstitute2.setPhysics(30, 0.1, 0);
-            keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(false);
             key2.angle = 0;
             
@@ -572,7 +677,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keyState2 = 0;
             keysubstitute2.destroy();
             keysubstitute2.setPhysics(30, 0.1, 0);
-            keysubstitute2.setup(worldP2.getWorld(), myGirl.getCenter.x, myGirl.getCenter.y, key2.width/2, key2.height/2);
+            keysubstitute2.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
             key2.angle = 0;
         }

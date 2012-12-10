@@ -46,7 +46,7 @@ void chests::draw(){
         ofFill();
         img1.draw(pos, width1, height1);
     }else{
-        ofSetColor(255, 255, 255, 125);
+        ofSetColor(255, 255, 255, 30);
         ofFill();
         img2.draw(pos, width2, height2);
     }

@@ -11,7 +11,7 @@
 #include "girl.h"
 #include "keys.h"
 #include "chests.h"
-
+#include "elevator.h"
 
 class testApp : public ofxiPhoneApp{
 	
@@ -33,9 +33,10 @@ class testApp : public ofxiPhoneApp{
         void deviceOrientationChanged(int newOrientation);
         //******** map **************************
         ofxXmlSettings XML;
+        ofxXmlSettings XML2;
         string message;
-        vector<ofPolyline>          lines;
-        vector<ofxBox2dPolygon>     polyLines;
+        vector<ofxBox2dPolygon>     polyLines1;
+        vector<ofxBox2dPolygon>     polyLines2;
         //********box2d**************************
         ofxBox2d                worldP1;
         ofxBox2d                worldP2;
@@ -61,7 +62,7 @@ class testApp : public ofxiPhoneApp{
         ofxBox2dRect            chracater2;
         ofPoint                 diffP2;
         ofPoint                 lastPosP2;
-    
+        ofPoint                 offSet2;
         //******** Keys *********************
         keys                    key1;
         ofxBox2dRect            keysubstitute1;
@@ -86,5 +87,11 @@ class testApp : public ofxiPhoneApp{
         chests                  myChest2;
         ofxBox2dRect            chestSub1;
         ofxBox2dRect            chestSub2;
+    
+        //********** eleveter *****************
+        elevator                myEleP1;
+        elevator                myEleP2;
+        
+        
 };
 

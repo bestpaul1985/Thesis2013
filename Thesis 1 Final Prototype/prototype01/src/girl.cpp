@@ -9,31 +9,29 @@
 #include "girl.h"
 
 //-------------------------------------------
-void girl::setup(ofPoint _pos){
+void girl::setup(float x, float y){
     
     img.loadImage("image/girl1.png");
     width = img.getWidth()/4;
     height = img.getHeight()/4;
-    pos.x = _pos.x - width/2;
-    pos.y = _pos.y - height/2;
+    getCenter.set(x, y);
 }
 
 //-------------------------------------------
-void girl::update(ofPoint _pos){
-    pos.x = _pos.x - width/2;
-    pos.y = _pos.y - height/2;
-    getCenter.set( _pos.x, _pos.y);
+void girl::update(float x, float y){
+    
+    getCenter.set(x, y);
 }
 
 //-------------------------------------------
 void girl::draw(){
-        
-    ofPushMatrix();
-        ofTranslate(pos);
-        ofFill();
-        ofSetColor(255, 255, 255);
-        img.draw(0, 0, width, height);
-    ofPopMatrix();
+    
+    ofSetRectMode(OF_RECTMODE_CENTER);
+    ofFill();
+    ofSetColor(255, 255, 255);
+    img.draw(getCenter, width, height);
+    
     ofNoFill();
     ofCircle(getCenter, 3);
+    
 }

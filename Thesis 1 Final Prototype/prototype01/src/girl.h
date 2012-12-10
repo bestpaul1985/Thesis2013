@@ -13,12 +13,11 @@
 
 class girl{
 public:
-    void setup(ofPoint _pos);
-    void update(ofPoint _pos);
+    void setup(float x, float y);
+    void update(float x, float y);
     void draw();
     
     ofImage img;
-    ofPoint pos;
     ofPoint getCenter;
     float width;
     float height;
