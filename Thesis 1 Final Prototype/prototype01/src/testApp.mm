@@ -86,28 +86,28 @@ void testApp::setup(){
     //********** Guy ******************
     myGuy.setup(chracater1.getPosition().x,chracater1.getPosition().y);
     chracater1.setPhysics(3, 0, 0.5f);
-    chracater1.setup(worldP1.getWorld(), ofGetWidth()/2, ofGetHeight()/2, myGuy.width/2, myGuy.height/2);
+    chracater1.setup(worldP1.getWorld(), 200, 800, myGuy.width/2, myGuy.height/2);
     chracater1.body->SetFixedRotation(true);
     myGuy.getCenter = chracater1.getPosition();
     lastPosP1 = chracater1.getPosition();
     //********** Girl *******************
     myGirl.setup(chracater2.getPosition().x, chracater2.getPosition().y);
     chracater2.setPhysics(3, 0, 0.5f);
-    chracater2.setup(worldP2.getWorld(), ofGetWidth()/2, ofGetHeight()/2, myGirl.width/2, myGirl.height/2);
+    chracater2.setup(worldP2.getWorld(), 568, 224, myGirl.width/2, myGirl.height/2);
     chracater2.body->SetFixedRotation(true);
     myGirl.getCenter = chracater2.getPosition();
     lastPosP2 = chracater2.getPosition();
     //********** keys *******************
     key1.setup(0);
     keysubstitute1.setPhysics(1, 0, 0.999f);
-    keysubstitute1.setup(worldP1.getWorld(), ofGetWidth()/2+100, ofGetHeight()/2, key1.width/2, key1.height/2);
+    keysubstitute1.setup(worldP1.getWorld(), ofGetWidth()/2, 800, key1.width/2, key1.height/2);
     keyState1 = 0;
     key1UsedP1 = false;
     key1UsedP2 = false;
     
     key2.setup(1);
     keysubstitute2.setPhysics(1, 0, 0.999f);
-    keysubstitute2.setup(worldP2.getWorld(), ofGetWidth()/2-100, ofGetHeight()/2, key2.width/2, key2.height/2);
+    keysubstitute2.setup(worldP2.getWorld(), ofGetWidth()/2, 224, key2.width/2, key2.height/2);
     keyState2 = 0;
     key2UsedP1 = false;
     key2UsedP2 = false;
@@ -174,29 +174,31 @@ void testApp::update(){
     
 
     //*********** Guy *******************
-   
-    if (chracater1.getPosition().x > 0&& chracater1.getPosition().x <184 ) {
+    float min = 384-100;
+    float max = 384+100;
+    
+    if (chracater1.getPosition().x > 0&& chracater1.getPosition().x <min ) {
         
          myGuy.update(myGuy.getCenter.x + diffP1.x ,chracater1.getPosition().y);
         
-    }else if( chracater1.getPosition().x > (2469-184)&& chracater1.getPosition().x <2469 ){
+    }else if( chracater1.getPosition().x > (2469-max)&& chracater1.getPosition().x <2469 ){
         
          myGuy.update(myGuy.getCenter.x + diffP1.x,chracater1.getPosition().y);
         
     }else{
         
-        if(myGuy.getCenter.x <= 584&& myGuy.getCenter.x >=184){
+        if(myGuy.getCenter.x <= max && myGuy.getCenter.x >=min){
             myGuy.update(myGuy.getCenter.x + diffP1.x, chracater1.getPosition().y);
             
         }
         
-        if(myGuy.getCenter.x > 584){
-            myGuy.update(584, chracater1.getPosition().y);
+        if(myGuy.getCenter.x > max){
+            myGuy.update(max, chracater1.getPosition().y);
             offSet = chracater1.getPosition() - myGuy.getCenter;
         }
         
-        if(myGuy.getCenter.x < 184){
-            myGuy.update(184, chracater1.getPosition().y);
+        if(myGuy.getCenter.x < min){
+            myGuy.update(min, chracater1.getPosition().y);
             offSet = chracater1.getPosition() - myGuy.getCenter;
         }
     }
@@ -205,29 +207,32 @@ void testApp::update(){
 //    myGuy.update(384,chracater1.getPosition().y);
 //    offSet = chracater1.getPosition() - myGuy.getCenter;
     //*********** Gril *******************
-
-    if (chracater2.getPosition().x < 768 && chracater2.getPosition().x > 584 ) {
+    
+    min = 384-150;
+    max = 384+150;
+    
+    if (chracater2.getPosition().x < 768 && chracater2.getPosition().x > max ) {
         
         myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
         
-    }else if( chracater2.getPosition().x > -3000+768 && chracater2.getPosition().x < -3000+768+184){
+    }else if( chracater2.getPosition().x > -3000+768 && chracater2.getPosition().x < -3000+max){
         
         myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
         
     }else{
         
-        if(myGirl.getCenter.x <= 584 && myGirl.getCenter.x >=184){
+        if(myGirl.getCenter.x <= max && myGirl.getCenter.x >=min){
             myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
             cout<<myGirl.getCenter<<endl;
         }
         
-        if(myGirl.getCenter.x > 584){
-            myGirl.update(584, chracater2.getPosition().y);
+        if(myGirl.getCenter.x > max){
+            myGirl.update(max, chracater2.getPosition().y);
             offSet2 = chracater2.getPosition() - myGirl.getCenter;
         }
         
-        if(myGirl.getCenter.x < 184){
-            myGirl.update(184, chracater2.getPosition().y);
+        if(myGirl.getCenter.x < min){
+            myGirl.update(min, chracater2.getPosition().y);
             offSet2 = chracater2.getPosition() - myGirl.getCenter;
             
             
@@ -395,7 +400,15 @@ void testApp::draw(){
     
     //************** guy ******************
     invP1.draw();
+    ofPushMatrix();
+        ofTranslate(-offSet.x,0);
+        ofSetColor(255, 255, 255);
+        ofNoFill();
+        myEleP1.draw();
+    ofPopMatrix();
+
     myGuy.draw();
+    
     ofPushMatrix();
         ofTranslate(-offSet.x,0);
         ofSetColor(255, 255, 255);
@@ -404,7 +417,6 @@ void testApp::draw(){
             polyLines1[i].draw();
         }
         myChest1.draw();
-        myEleP1.draw();
         rope1.draw();
     ofPopMatrix();
   
@@ -416,6 +428,13 @@ void testApp::draw(){
 //    keysubstitute1.draw();
     //************** girl ******************
     invP2.draw();
+    ofPushMatrix();
+        ofTranslate(-offSet2.x,0);
+        ofSetColor(255, 255, 255);
+        ofNoFill();
+        myEleP2.draw();
+    ofPopMatrix();
+    
     myGirl.draw();
     
     ofPushMatrix();
@@ -426,7 +445,6 @@ void testApp::draw(){
             polyLines2[i].draw();
         }
         myChest2.draw();
-        myEleP2.draw();
         rope2.draw();
     ofPopMatrix();
     
@@ -497,8 +515,8 @@ void testApp::draw(){
     P2J.draw();
     P2F.draw();
     //*********** passing belt *******************
-//    beltP1.draw();
-//    beltP2.draw();
+    beltP1.draw();
+    beltP2.draw();
     
 }
 
