@@ -98,14 +98,14 @@ void testApp::setup(){
     chracater2.body->SetFixedRotation(true);
     //********** keys *******************
     key1.setup(0);
-    keysubstitute1.setPhysics(1000, 0, 0.999f);
+    keysubstitute1.setPhysics(1, 0, 0.999f);
     keysubstitute1.setup(worldP1.getWorld(), ofGetWidth()/2+100, ofGetHeight()/2, key1.width/2, key1.height/2);
     keyState1 = 0;
     key1UsedP1 = false;
     key1UsedP2 = false;
     
     key2.setup(1);
-    keysubstitute2.setPhysics(1000, 0, 0.999f);
+    keysubstitute2.setPhysics(1, 0, 0.999f);
     keysubstitute2.setup(worldP2.getWorld(), ofGetWidth()/2-100, ofGetHeight()/2, key2.width/2, key2.height/2);
     keyState2 = 0;
     key2UsedP1 = false;
@@ -129,13 +129,15 @@ void testApp::setup(){
     myEleP2.setup(668, 224 , 1);
     
     //********* inventory *******************
-    invP1.setup(384+10, 950, 0);
-    invP2.setup(384-10, 74, 1);
+    invP1.setup(394, 950, 0);
+    invP2.setup(374, 74, 1);
     
     //********* rope *******************
     rope1.setup(chestSub1.getPosition().x, chestSub1.getPosition().y, 0);
     rope2.setup(chestSub2.getPosition().x, chestSub2.getPosition().y, 1);
-
+    bRope1 = true;
+    posRope1.setInitialCondition(chestSub1.getPosition().x, chestSub1.getPosition().y, 0, 0);
+    posRope1.damping = 0.05f;
 }
 
 //--------------------------------------------------------------
@@ -263,6 +265,9 @@ void testApp::update(){
             key1.update(temp);
             keysubstitute1.setPosition(chracater2.getPosition().x -40, beltPosP2.y);
             }break;
+        case 3:{
+            keysubstitute1.setPosition(-100, -100);
+        }break;
     }
     
     keysubstitute1.setDamping(0.98f);
@@ -286,8 +291,9 @@ void testApp::update(){
             temp.y = beltPosP2.y;
             key2.update(temp);
             keysubstitute2.setPosition(chracater2.getPosition().x - 40, beltPosP2.y);
-            
-            cout<<chracater2.getPosition().x <<endl;
+        }break;
+        case 3:{
+            keysubstitute2.setPosition(-100, -100);
         }break;
     }
     
@@ -306,16 +312,38 @@ void testApp::update(){
     myChest2.update(chestSub2.getPosition());
     
     //*********** rope ********************
-    if (myChest1.open) {
-        rope1.pos = chestSub1.getPosition();
+    
+    if (myChest1.open && bRope1) {
+         posRope1.setInitialCondition(chestSub1.getPosition().x, chestSub1.getPosition().y, 15, -20);
+         bRope1 = false;
+         rope1.bFixed = false;
+         rope1.bScale = true;
     }
+   
+    if (bRope1 == false) {
+        
+        posRope1.resetForce();
+        posRope1.addAttractionForce(chracater1.getPosition().x,chracater1.getPosition().y , 3000, 0.9);
+        posRope1.addForce(0, 0);
+        posRope1.addDampingForce();
+        posRope1.update();
+        rope1.pos = posRope1.pos;
+        if ((rope1.pos-chracater1.getPosition()).length()<10) {
+            rope1.bFixed = true;
+            rope1.bScale = false;
+            invP1.num = 2;
+        }
+    }
+    
     
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-
+    
     //************** guy ******************
+    invP1.draw();
+    myGuy.draw();
     ofPushMatrix();
         ofTranslate(-offSet.x,0);
         ofSetColor(255, 255, 255);
@@ -328,14 +356,15 @@ void testApp::draw(){
         rope1.draw();
     ofPopMatrix();
   
-    myGuy.draw();
-    invP1.draw();
+        
     
 //    ofFill();
 //    ofSetColor(255, 255, 255,30);
 //    chracater1.draw();
 //    keysubstitute1.draw();
     //************** girl ******************
+    invP2.draw();
+    myGirl.draw();
     ofPushMatrix();
         ofTranslate(-offSet2.x,0);
         ofSetColor(255, 255, 255);
@@ -348,8 +377,8 @@ void testApp::draw(){
         rope2.draw();
     ofPopMatrix();
     
-    myGirl.draw();
-    invP2.draw();
+ 
+    
     
 //    ofFill();
 //    ofSetColor(255, 255, 255,30);
@@ -418,7 +447,6 @@ void testApp::draw(){
 //    beltP1.draw();
 //    beltP2.draw();
     
-   
 }
 
 //--------------------------------------------------------------
@@ -488,8 +516,9 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     if ( P1F.bPressed && (chestSub1.getPosition()-keysubstitute2.getPosition()).length()<100 && keyState2 == 1 && myChest1.open == false) {
         
         myChest1.open = true;
-        keysubstitute2.destroy();
+        keysubstitute2.body->SetActive(false);
         key2.bfixed = true;
+        keyState2 = 3;
         
     } else if (P1F.bPressed && length1.length()<100 && length2.length()<100 ) {
 
@@ -602,9 +631,9 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     if ( P2F.bPressed && (chestSub2.getPosition()-keysubstitute1.getPosition()).length()<100 && keyState1 == 2 && myChest2.open == false) {
         
         myChest2.open = true;
-        keysubstitute1.destroy();
+        keysubstitute1.body->SetActive(false);
         key1.bfixed = true;
-        
+        keyState1 = 3;
     }else if (P2F.bPressed && length3.length()<100 && length4.length()<100 ) {
         
         if (keyState1 != 2 && keyState2 != 2) {

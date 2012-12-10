@@ -14,6 +14,7 @@
 #include "elevator.h"
 #include "inventory.h"
 #include "rope.h"
+#include "particle.h"
 class testApp : public ofxiPhoneApp{
 	
     public:
@@ -98,5 +99,9 @@ class testApp : public ofxiPhoneApp{
         //********** rope *********************
         rope                    rope1;
         rope                    rope2;
+        bool                    bRope1;
+        particle                posRope1;
+   
+
 };
 

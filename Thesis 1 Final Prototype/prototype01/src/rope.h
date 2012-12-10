@@ -16,9 +16,12 @@ public:
     void draw();
     
     ofPoint pos;
+    float pct;
     int num;
     ofImage img;
     float width;
     float height;
+    bool bFixed;
+    bool bScale;
 };
 #endif /* defined(__prototype01__rope__) */

@@ -32,6 +32,7 @@
 		4C78E39E1675C18300CB74B8 /* elevator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C78E39C1675C18200CB74B8 /* elevator.cpp */; };
 		4C78E3A21675CE8400CB74B8 /* inventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C78E3A01675CE8400CB74B8 /* inventory.cpp */; };
 		4C78E3A51675D69800CB74B8 /* rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C78E3A31675D69800CB74B8 /* rope.cpp */; };
+		4C78E3C41676576E00CB74B8 /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C78E3C21676576D00CB74B8 /* particle.cpp */; };
 		4C7F1FDA1673EFCB00E3484C /* keys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C7F1FD81673EFCB00E3484C /* keys.cpp */; };
 		4C86CCED1675041D00545C2E /* chests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C86CCEB1675041D00545C2E /* chests.cpp */; };
 		4C86CD0F1675268400545C2E /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C86CD081675268400545C2E /* tinyxml.cpp */; };
@@ -136,6 +137,8 @@
 		4C78E3A11675CE8400CB74B8 /* inventory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inventory.h; sourceTree = "<group>"; };
 		4C78E3A31675D69800CB74B8 /* rope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rope.cpp; sourceTree = "<group>"; };
 		4C78E3A41675D69800CB74B8 /* rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rope.h; sourceTree = "<group>"; };
+		4C78E3C21676576D00CB74B8 /* particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = particle.cpp; sourceTree = "<group>"; };
+		4C78E3C31676576E00CB74B8 /* particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particle.h; sourceTree = "<group>"; };
 		4C7F1FD81673EFCB00E3484C /* keys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keys.cpp; sourceTree = "<group>"; };
 		4C7F1FD91673EFCB00E3484C /* keys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keys.h; sourceTree = "<group>"; };
 		4C86CCEB1675041D00545C2E /* chests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chests.cpp; sourceTree = "<group>"; };
@@ -552,6 +555,8 @@
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
+				4C78E3C21676576D00CB74B8 /* particle.cpp */,
+				4C78E3C31676576E00CB74B8 /* particle.h */,
 				4C86CCF716750C8F00545C2E /* items */,
 				4C86CCBA16745F5D00545C2E /* characters */,
 				4C1E7E5C1672B11800D79DF5 /* buttons */,
@@ -767,6 +772,7 @@
 				4C78E39E1675C18300CB74B8 /* elevator.cpp in Sources */,
 				4C78E3A21675CE8400CB74B8 /* inventory.cpp in Sources */,
 				4C78E3A51675D69800CB74B8 /* rope.cpp in Sources */,
+				4C78E3C41676576E00CB74B8 /* particle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

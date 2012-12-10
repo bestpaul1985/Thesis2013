@@ -21,10 +21,29 @@ void rope::setup(float x, float y, int _num){
     pos.set(x, y);
     width = img.getWidth()/4;
     height = img.getHeight()/4;
+    bFixed = true;
+    bScale = false;
+    pct = 0;
 }
 
 void rope::draw(){
-    ofSetRectMode(OF_RECTMODE_CENTER);
-    ofSetColor(255, 255, 255);
-    img.draw(pos,width,height);
+    
+    float w = width;
+    float h = height;
+    if (bScale) {
+        float speed = 0.01f;
+        pct += speed;
+        if (pct>1) {
+            pct = 1;
+        }
+        float temPct = powf(pct, 0.3);
+        w = (1-temPct)* width/2 + temPct * width;
+        h = (1-temPct)* height/2 + temPct * height;
+    }
+    
+    if (bFixed == false) {
+        ofSetRectMode(OF_RECTMODE_CENTER);
+        ofSetColor(255, 255, 255);
+        img.draw(pos,w,h);
+    }
 }
