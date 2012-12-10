@@ -136,8 +136,11 @@ void testApp::setup(){
     rope1.setup(chestSub1.getPosition().x, chestSub1.getPosition().y, 0);
     rope2.setup(chestSub2.getPosition().x, chestSub2.getPosition().y, 1);
     bRope1 = true;
+    bRope2 = true;
     posRope1.setInitialCondition(chestSub1.getPosition().x, chestSub1.getPosition().y, 0, 0);
     posRope1.damping = 0.05f;
+    posRope2.setInitialCondition(chestSub2.getPosition().x, chestSub2.getPosition().y, 0, 0);
+    posRope2.damping = 0.05f;
 }
 
 //--------------------------------------------------------------
@@ -319,6 +322,13 @@ void testApp::update(){
          rope1.bFixed = false;
          rope1.bScale = true;
     }
+    
+    if (myChest2.open && bRope2) {
+        posRope2.setInitialCondition(chestSub2.getPosition().x, chestSub2.getPosition().y, -15, 20);
+        bRope2 = false;
+        rope2.bFixed = false;
+        rope2.bScale = true;
+    }
    
     if (bRope1 == false) {
         
@@ -335,6 +345,20 @@ void testApp::update(){
         }
     }
     
+    if (bRope2 == false) {
+        
+        posRope2.resetForce();
+        posRope2.addAttractionForce(chracater2.getPosition().x,chracater2.getPosition().y , 3000, 0.9);
+        posRope2.addForce(0, 0);
+        posRope2.addDampingForce();
+        posRope2.update();
+        rope2.pos = posRope2.pos;
+        if ((rope2.pos-chracater2.getPosition()).length()<10) {
+            rope2.bFixed = true;
+            rope2.bScale = false;
+            invP2.num = 3;
+        }
+    }
     
 }
 

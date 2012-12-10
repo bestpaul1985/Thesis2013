@@ -100,8 +100,9 @@ class testApp : public ofxiPhoneApp{
         rope                    rope1;
         rope                    rope2;
         bool                    bRope1;
+        bool                    bRope2;
         particle                posRope1;
-   
+        particle                posRope2;
 
 };
 
