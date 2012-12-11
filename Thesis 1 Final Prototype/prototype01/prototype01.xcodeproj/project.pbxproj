@@ -25,6 +25,8 @@
 		34bc8bafaa94bd8ccba662d12407e004 /* b2LineJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45eb42f8640cfcae47aa7e08ab94ffbd /* b2LineJoint.cpp */; };
 		3e76a164b41bceb11b15c175088fe1bc /* b2Body.cpp in Sources */ = {isa = PBXBuildFile; fileRef = a296623a714c9f8edb4bca26d13eafef /* b2Body.cpp */; };
 		41ddb078572b368f685e19f89f0cf42e /* b2PolygonContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 993da2bf507b037b97e6fa1653830b15 /* b2PolygonContact.cpp */; };
+		476475691677714C006C92B0 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 476475681677714C006C92B0 /* Default-Portrait~ipad.png */; };
+		4764756B167771A7006C92B0 /* logo72.png in Resources */ = {isa = PBXBuildFile; fileRef = 4764756A167771A7006C92B0 /* logo72.png */; };
 		4C03C2BD1673962600D42F2E /* guy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C03C2BB1673962600D42F2E /* guy.cpp */; };
 		4C03C2D71673DF8D00D42F2E /* girl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C03C2D51673DF8C00D42F2E /* girl.cpp */; };
 		4C1E7E6D1672B9A100D79DF5 /* dirctiveButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E7E6B1672B9A100D79DF5 /* dirctiveButton.cpp */; };
@@ -124,6 +126,8 @@
 		3ec06dc33990374e7508e4ea9cf41d28 /* del_impl.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = del_impl.cpp; path = ../../../addons/ofxBox2d/libs/triangle/del_impl.cpp; sourceTree = SOURCE_ROOT; };
 		45eb42f8640cfcae47aa7e08ab94ffbd /* b2LineJoint.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = b2LineJoint.cpp; path = ../../../addons/ofxBox2d/libs/Box2D/Dynamics/Joints/b2LineJoint.cpp; sourceTree = SOURCE_ROOT; };
 		469610240a273862d8b39ce4df7f945b /* b2Shape.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = b2Shape.h; path = ../../../addons/ofxBox2d/libs/Box2D/Collision/Shapes/b2Shape.h; sourceTree = SOURCE_ROOT; };
+		476475681677714C006C92B0 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		4764756A167771A7006C92B0 /* logo72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo72.png; sourceTree = "<group>"; };
 		4C03C2BB1673962600D42F2E /* guy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = guy.cpp; sourceTree = "<group>"; };
 		4C03C2BC1673962600D42F2E /* guy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = guy.h; sourceTree = "<group>"; };
 		4C03C2D51673DF8C00D42F2E /* girl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = girl.cpp; sourceTree = "<group>"; };
@@ -295,6 +299,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				4764756A167771A7006C92B0 /* logo72.png */,
+				476475681677714C006C92B0 /* Default-Portrait~ipad.png */,
 				E4D8936A11527B74007E1F53 /* src */,
 				BB24E1F710DAA51900E9C588 /* openFrameworks */,
 				BB16F26B0F2B646B00518274 /* addons */,
@@ -694,6 +700,8 @@
 				BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */,
 				E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */,
 				E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */,
+				476475691677714C006C92B0 /* Default-Portrait~ipad.png in Resources */,
+				4764756B167771A7006C92B0 /* logo72.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
