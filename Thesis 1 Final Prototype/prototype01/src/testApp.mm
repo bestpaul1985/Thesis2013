@@ -622,7 +622,6 @@ void testApp::draw(){
         }
         myChest1.draw();
         rope1.draw();
-        ofCircle(posClimb2+ climbUp2, 30);
     ofPopMatrix();
   
         
