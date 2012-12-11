@@ -65,7 +65,7 @@ void testApp::setup(){
                     int x = XML2.getValue("PT:X", 0, j);
                     int y = XML2.getValue("PT:Y", 0, j);
                     ofPoint tempP;
-                    tempP.set(x+768, y);
+                    tempP.set(x-2220, y-1514);
                     tempPolyline.addVertex(tempP);
                 }
                 tempPolyline.setPhysics(0, 0, 0.2f);
