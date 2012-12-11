@@ -28,6 +28,7 @@ void chests::setup(int _num){
     height2 = img2.getHeight()/6;
     
     open = false;
+    bFixed = false;
 }
 
 //----------------------------------------
@@ -39,16 +40,18 @@ void chests::update(ofPoint _pos){
 
 //----------------------------------------
 void chests::draw(){
+    if (bFixed == false) {
     
-    ofSetRectMode(OF_RECTMODE_CENTER);
-    if (open == false) {
-        ofSetColor(255, 255, 255);
-        ofFill();
-        img1.draw(pos, width1, height1);
-    }else{
-        ofSetColor(255, 255, 255, 30);
-        ofFill();
-        img2.draw(pos, width2, height2);
+        ofSetRectMode(OF_RECTMODE_CENTER);
+        if (open == false) {
+            ofSetColor(255, 255, 255);
+            ofFill();
+            img1.draw(pos, width1, height1);
+        }else{
+            ofSetColor(255, 255, 255, 30);
+            ofFill();
+            img2.draw(pos, width2, height2);
+        }
+        ofSetRectMode(OF_RECTMODE_CORNER);
     }
-    ofSetRectMode(OF_RECTMODE_CORNER);
 }

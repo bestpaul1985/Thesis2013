@@ -15,6 +15,7 @@
 #include "inventory.h"
 #include "rope.h"
 #include "particle.h"
+#include "ropeMesh.h"
 class testApp : public ofxiPhoneApp{
 	
     public:
@@ -83,7 +84,10 @@ class testApp : public ofxiPhoneApp{
         ofPolyline              beltP2;
         float                   beltPctP1;
         float                   beltPctP2;
-    
+        ofPoint                 beltLastPosP1;
+        ofPoint                 beltLastPosP2;
+        ofPoint                 beltPosP1, beltPosP2;
+        ofPoint                 beltPosRopeP1, beltPosRopeP2;
         //********* chests *********************
         chests                  myChest1;
         chests                  myChest2;
@@ -96,13 +100,19 @@ class testApp : public ofxiPhoneApp{
         //********** inventory *****************
         inventory               invP1;
         inventory               invP2;
-        //********** rope *********************
+        //********** rope icon *********************
         rope                    rope1;
         rope                    rope2;
         bool                    bRope1;
         bool                    bRope2;
         particle                posRope1;
         particle                posRope2;
-
+        //********** rope mesh *********************
+        ofPolyline              ropeStroke1;
+        ropeMesh                ropeMesh1;
+        bool                    bRopeInUse1;
+        bool                    bClimb;
+        ofPoint                 posClimb;
+        float                   climbUp;
 };
 

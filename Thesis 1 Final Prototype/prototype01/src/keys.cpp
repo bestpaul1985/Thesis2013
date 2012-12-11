@@ -19,8 +19,8 @@ void keys::setup(int _num){
             break;
     }
     
-    width = img.getWidth()/6;
-    height = img.getHeight()/6;
+    width = img.getWidth()/8;
+    height = img.getHeight()/8;
     angle = 0;
     bfixed = false;
 }

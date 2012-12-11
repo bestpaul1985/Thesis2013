@@ -29,6 +29,7 @@
 		4C03C2D71673DF8D00D42F2E /* girl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C03C2D51673DF8C00D42F2E /* girl.cpp */; };
 		4C1E7E6D1672B9A100D79DF5 /* dirctiveButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E7E6B1672B9A100D79DF5 /* dirctiveButton.cpp */; };
 		4C1E7E731672D0D800D79DF5 /* jumpButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C1E7E711672D0D800D79DF5 /* jumpButton.cpp */; };
+		4C5712341676943C0076D86A /* ropeMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C5712321676943C0076D86A /* ropeMesh.cpp */; };
 		4C78E39E1675C18300CB74B8 /* elevator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C78E39C1675C18200CB74B8 /* elevator.cpp */; };
 		4C78E3A21675CE8400CB74B8 /* inventory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C78E3A01675CE8400CB74B8 /* inventory.cpp */; };
 		4C78E3A51675D69800CB74B8 /* rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C78E3A31675D69800CB74B8 /* rope.cpp */; };
@@ -131,6 +132,8 @@
 		4C1E7E6C1672B9A100D79DF5 /* dirctiveButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dirctiveButton.h; sourceTree = "<group>"; };
 		4C1E7E711672D0D800D79DF5 /* jumpButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jumpButton.cpp; sourceTree = "<group>"; };
 		4C1E7E721672D0D800D79DF5 /* jumpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jumpButton.h; sourceTree = "<group>"; };
+		4C5712321676943C0076D86A /* ropeMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ropeMesh.cpp; sourceTree = "<group>"; };
+		4C5712331676943C0076D86A /* ropeMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ropeMesh.h; sourceTree = "<group>"; };
 		4C78E39C1675C18200CB74B8 /* elevator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = elevator.cpp; sourceTree = "<group>"; };
 		4C78E39D1675C18300CB74B8 /* elevator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = elevator.h; sourceTree = "<group>"; };
 		4C78E3A01675CE8400CB74B8 /* inventory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = inventory.cpp; sourceTree = "<group>"; };
@@ -356,6 +359,8 @@
 				4C78E3A11675CE8400CB74B8 /* inventory.h */,
 				4C78E3A31675D69800CB74B8 /* rope.cpp */,
 				4C78E3A41675D69800CB74B8 /* rope.h */,
+				4C5712321676943C0076D86A /* ropeMesh.cpp */,
+				4C5712331676943C0076D86A /* ropeMesh.h */,
 			);
 			name = items;
 			sourceTree = "<group>";
@@ -773,6 +778,7 @@
 				4C78E3A21675CE8400CB74B8 /* inventory.cpp in Sources */,
 				4C78E3A51675D69800CB74B8 /* rope.cpp in Sources */,
 				4C78E3C41676576E00CB74B8 /* particle.cpp in Sources */,
+				4C5712341676943C0076D86A /* ropeMesh.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

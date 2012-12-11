@@ -17,10 +17,13 @@ public:
     void update(float x, float y);
     void draw();
     
-    ofImage img;
+    ofImage img[4];
     ofPoint getCenter;
     float width;
     float height;
+    bool  bReverse;
+    int num;
+
 };
 
 #endif /* defined(__prototype01__girl__) */

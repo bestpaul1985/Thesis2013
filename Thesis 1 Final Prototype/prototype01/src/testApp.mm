@@ -11,17 +11,24 @@ void testApp::setup(){
     worldP1.init();
     worldP1.setGravity(0, 100);
     //  worldP1.createBounds();
+    ofPoint one(0,ofGetHeight());
+    ofPoint two(3000,ofGetHeight());
+    worldP1.createGround(one, two);
     worldP1.setIterations(1, 1);
     worldP1.setFPS(60);
     //***********box2d P2****************
     worldP2.init();
     worldP2.setGravity(0, -100);
     //  worldP2.createBounds();
+     one.set(-3000,0);
+     two.set(1000,0);
+
+    worldP2.createGround(one, two);
     worldP2.setIterations(1, 1);
     worldP2.setFPS(60);
     
     
-    //************ polyLines ***************
+    //************ MAP ***************
 	
     
     if (XML.loadFile("tutorialLevelP1.xml")) {
@@ -68,10 +75,6 @@ void testApp::setup(){
         }
     }
     
-   
-    
-
-    
     //**********buttons****************
     P1L.setup(10, ofGetHeight()-120, 0, 0, 0);
     P1R.setup(20+115, ofGetHeight()-120, 1, 0, 0);
@@ -116,13 +119,22 @@ void testApp::setup(){
     beltP1.addVertex(myGuy.getCenter);
     beltP2.addVertex(myGirl.getCenter);
     beltP2.addVertex(myGirl.getCenter);
-    
+    beltLastPosP1 = myGuy.getCenter;
+    beltLastPosP2 = myGirl.getCenter;
+    beltPosP1.set(myGuy.getCenter.x+30, myGuy.getCenter.y);
+    beltPosP2.set(myGirl.getCenter.x-30, myGirl.getCenter.y);
+    beltPosRopeP1.set(myGuy.getCenter.x+30, myGuy.getCenter.y);
+    beltPosRopeP2.set(myGirl.getCenter.x-30, myGirl.getCenter.y);
+    beltPctP1 = 0;
+    beltPctP2 = 0;
     //*********** chests *******************
     myChest1.setup(0);
     myChest2.setup(1);
-    chestSub1.setPhysics(100, 0, 0.999f);
+    chestSub1.setPhysics(100, 0, 0.1f);
+    chestSub1.isFixed();
     chestSub1.setup(worldP1.getWorld(), ofGetWidth()/2+200 ,ofGetHeight()-200, myChest1.width1/2, myChest1.height1/2);
-    chestSub2.setPhysics(100, 0, 0.999f);
+    chestSub2.setPhysics(100, 0, 0.1f);
+    chestSub2.isFixed();
     chestSub2.setup(worldP2.getWorld(), ofGetWidth()/2-200 ,200, myChest2.width1/2, myChest2.height1/2);
     
     //********* elevter *******************
@@ -142,6 +154,10 @@ void testApp::setup(){
     posRope1.damping = 0.05f;
     posRope2.setInitialCondition(chestSub2.getPosition().x, chestSub2.getPosition().y, 0, 0);
     posRope2.damping = 0.05f;
+    bRopeInUse1 = false;
+    bClimb = false;
+    posClimb.set(0, 0);
+    climbUp = 150;
 }
 
 //--------------------------------------------------------------
@@ -152,100 +168,135 @@ void testApp::update(){
     //*********** box2d P1*******************
     ofPoint frc1(0,0);
     ofPoint frc2(0,0);
-    if (P1L.bPressed) frc1.x = -100;
-    if (P1R.bPressed) frc1.x = 100;
+    
+    
+    if (P1L.bPressed){
+        frc1.x = -100;
+        myGuy.bReverse=true;
+    }
+    if (P1R.bPressed){
+        frc1.x = 100;
+        myGuy.bReverse=false;
+    }
+
     chracater1.addForce(frc1,10);
     chracater1.setDamping(0.98f);
     
+   
+    
     //*********** box2d P2*******************
     
-    if (P2L.bPressed) frc2.x = 100;
-    if (P2R.bPressed) frc2.x = -100;
+    if (P2L.bPressed) {
+        frc2.x = 100;
+        myGirl.bReverse=true;
+    }
+    if (P2R.bPressed){
+        frc2.x = -100;
+        myGirl.bReverse=false;
+    }
     chracater2.addForce(frc2,10);
-    chracater2.setDamping(0.98f);
+   
+    if(bClimb){
+        cout<<"2"<<endl;
+        if (P2F.bPressed) {
+            climbUp +=5;
+        }
+        if (climbUp>300) {
+            climbUp = 300;
+        }
+        chracater2.addAttractionPoint(posClimb.x,posClimb.y+climbUp, 100);
+        if ((ropeStroke1.getClosestPoint(myGirl.getCenter)- myGirl.getCenter).length() > 20) {
+            cout<<"3"<<endl;
+            bClimb = false;
+            climbUp = 150;
+        }
+        chracater2.setDamping(0.8f);
+    }else{
+        chracater2.setDamping(0.98f);
+    }
+    
+    
+    //now
+    
     
     //*********** diffP1 *******************
     diffP1 = chracater1.getPosition()-lastPosP1;
-    lastPosP1 = chracater1.getPosition();
-    
     //*********** diffP2 *******************
     diffP2 = chracater2.getPosition()-lastPosP2;
-    lastPosP2 = chracater2.getPosition();
-    
-
     //*********** Guy *******************
-    float min = 384-100;
-    float max = 384+100;
-    
-    if (chracater1.getPosition().x > 0&& chracater1.getPosition().x <min ) {
-        
-         myGuy.update(myGuy.getCenter.x + diffP1.x ,chracater1.getPosition().y);
-        
-    }else if( chracater1.getPosition().x > (2469-max)&& chracater1.getPosition().x <2469 ){
-        
-         myGuy.update(myGuy.getCenter.x + diffP1.x,chracater1.getPosition().y);
-        
-    }else{
-        
-        if(myGuy.getCenter.x <= max && myGuy.getCenter.x >=min){
-            myGuy.update(myGuy.getCenter.x + diffP1.x, chracater1.getPosition().y);
+    float min = 384-50;
+    float max = 384+50;
+    if (bFixedButtonP2 == true) {
             
+        if (chracater1.getPosition().x > 0&& chracater1.getPosition().x <min ) {
+            
+             myGuy.update(myGuy.getCenter.x + diffP1.x ,chracater1.getPosition().y);
+            
+        }else if( chracater1.getPosition().x > (3000-max)&& chracater1.getPosition().x <3000 ){
+            
+             myGuy.update(myGuy.getCenter.x + diffP1.x,chracater1.getPosition().y);
+            
+        }else{
+            
+            if(myGuy.getCenter.x <= max && myGuy.getCenter.x >=min){
+                myGuy.update(myGuy.getCenter.x + diffP1.x, chracater1.getPosition().y);
+                
+            }
+            
+            if(myGuy.getCenter.x > max){
+                myGuy.update(max, chracater1.getPosition().y);
+                offSet = chracater1.getPosition() - myGuy.getCenter;
+            }
+            
+            if(myGuy.getCenter.x < min){
+                myGuy.update(min, chracater1.getPosition().y);
+                offSet = chracater1.getPosition() - myGuy.getCenter;
+            }
         }
-        
-        if(myGuy.getCenter.x > max){
-            myGuy.update(max, chracater1.getPosition().y);
-            offSet = chracater1.getPosition() - myGuy.getCenter;
-        }
-        
-        if(myGuy.getCenter.x < min){
-            myGuy.update(min, chracater1.getPosition().y);
-            offSet = chracater1.getPosition() - myGuy.getCenter;
-        }
+    }else{
+        myGuy.update(384,chracater1.getPosition().y);
+        offSet = chracater1.getPosition() - myGuy.getCenter;
     }
     
 
-//    myGuy.update(384,chracater1.getPosition().y);
-//    offSet = chracater1.getPosition() - myGuy.getCenter;
     //*********** Gril *******************
-    
-    min = 384-150;
-    max = 384+150;
-    
-    if (chracater2.getPosition().x < 768 && chracater2.getPosition().x > max ) {
-        
-        myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
-        
-    }else if( chracater2.getPosition().x > -3000+768 && chracater2.getPosition().x < -3000+max){
-        
-        myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
-        
-    }else{
-        
-        if(myGirl.getCenter.x <= max && myGirl.getCenter.x >=min){
+
+    if (bFixedButtonP1 == true) {
+        if (chracater2.getPosition().x < 768 && chracater2.getPosition().x > max ) {
+            
             myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
-            cout<<myGirl.getCenter<<endl;
-        }
-        
-        if(myGirl.getCenter.x > max){
-            myGirl.update(max, chracater2.getPosition().y);
-            offSet2 = chracater2.getPosition() - myGirl.getCenter;
-        }
-        
-        if(myGirl.getCenter.x < min){
-            myGirl.update(min, chracater2.getPosition().y);
-            offSet2 = chracater2.getPosition() - myGirl.getCenter;
             
+        }else if( chracater2.getPosition().x > 768-2400 && chracater2.getPosition().x < max-2400){
             
+            myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
+            
+        }else{
+            
+            if(myGirl.getCenter.x <= max && myGirl.getCenter.x >=min){
+                myGirl.update(myGirl.getCenter.x + diffP2.x, chracater2.getPosition().y);
+            }
+            
+            if(myGirl.getCenter.x > max){
+                myGirl.update(max, chracater2.getPosition().y);
+                offSet2 = chracater2.getPosition() - myGirl.getCenter;
+            }
+            
+            if(myGirl.getCenter.x < min){
+                myGirl.update(min, chracater2.getPosition().y);
+                offSet2 = chracater2.getPosition() - myGirl.getCenter;
+                
+                
+            }
         }
+    }else{
+        myGirl.update(384,chracater2.getPosition().y);
+        offSet2 = chracater2.getPosition() - myGirl.getCenter;
     }
-    
-//    myGirl.update(384,chracater2.getPosition().y);
-//    offSet2 = chracater2.getPosition() - myGirl.getCenter;
-  
     //*********** Accelerometer *******************
     ofPoint gravity = ofxAccelerometer.getForce();
     float speedP1, speedP2;
-    ofPoint beltPosP1, beltPosP2;
+    
+    ofxBox2dRect rect1;
     if (gravity.y>0.3) {
         speedP1 = 0.01f;
         bFixedButtonP1 = true;
@@ -253,7 +304,7 @@ void testApp::update(){
         speedP1 = -0.01f;
         bFixedButtonP1 = false;
     }
-    
+
     if (gravity.y< -0.3) {
         speedP2 = 0.01f;
         bFixedButtonP2 = true;
@@ -261,8 +312,6 @@ void testApp::update(){
         speedP2 = -0.01f;
         bFixedButtonP2 = false;
     }
-    
-    
     
     beltPctP1 += speedP1;
     if (beltPctP1>1) {
@@ -278,28 +327,56 @@ void testApp::update(){
         beltPctP2 =0;
     }
     
+ 
     beltPosP1.y = (1-beltPctP1)*myGuy.getCenter.y + beltPctP1*myGirl.getCenter.y;
     beltPosP2.y = (1-beltPctP2)*myGirl.getCenter.y + beltPctP2*myGuy.getCenter.y;
-    
+    beltPosRopeP1.y = (1-beltPctP1)*myGuy.getCenter.y;
+    beltPosRopeP2.y = (1-beltPctP2)*myGirl.getCenter.y + beltPctP2*1024;
     //*********** keys *******************
-        
+   
+    
+
     switch (keyState1) {
         case 0:
             key1.update(keysubstitute1.getPosition());
             break;
         case 1:{
+            float keyoffset1;
+            
+            if (myGuy.bReverse == false) {
+                keyoffset1 = 25;
+            }else{
+                keyoffset1 = -25;
+            }
             ofPoint temp;
-            temp.x = chracater1.getPosition().x + 40;
-            temp.y = beltPosP1.y;
+            temp.x = chracater1.getPosition().x + keyoffset1;
+            temp.y = beltPosP1.y+20;
             key1.update(temp);
             keysubstitute1.setPosition(chracater1.getPosition().x +40, beltPosP1.y);
+            if (myGuy.bReverse == false) {
+                key1.angle =0;
+            }else{
+                key1.angle =180;
+            }
+            
             }break;
         case 2:{
+            float keyoffset1;
+            if (myGirl.bReverse == false) {
+                keyoffset1 = 25;
+            }else{
+                keyoffset1 = -25;
+            }
             ofPoint temp;
-            temp.x = chracater2.getPosition().x - 40;
-            temp.y = beltPosP2.y;
+            temp.x = chracater2.getPosition().x - keyoffset1;
+            temp.y = beltPosP2.y-20;
             key1.update(temp);
             keysubstitute1.setPosition(chracater2.getPosition().x -40, beltPosP2.y);
+            if (myGirl.bReverse == false) {
+                key1.angle =180;
+            }else{
+                key1.angle =0;
+            }
             }break;
         case 3:{
             keysubstitute1.setPosition(-100, -100);
@@ -315,18 +392,42 @@ void testApp::update(){
             
             break;
         case 1:{
+            float keyoffset2;
+            if (myGuy.bReverse == false) {
+                keyoffset2 = 25;
+            }else{
+                keyoffset2 = -25;
+            }
+            
             ofPoint temp;
-            temp.x = chracater1.getPosition().x + 40;
-            temp.y = beltPosP1.y;
+            temp.x = chracater1.getPosition().x + keyoffset2;
+            temp.y = beltPosP1.y+20;
             key2.update(temp);
             keysubstitute2.setPosition(chracater1.getPosition().x + 40, beltPosP1.y);
+            if (myGuy.bReverse == false) {
+                key2.angle =180;
+            }else{
+                key2.angle =0;
+            }
         }break;
         case 2:{
+            
+            float keyoffset2;
+            if (myGirl.bReverse == false) {
+                keyoffset2 = 25;
+            }else{
+                keyoffset2 = -25;
+            }
             ofPoint temp;
-            temp.x = chracater2.getPosition().x - 40;
-            temp.y = beltPosP2.y;
+            temp.x = chracater2.getPosition().x - keyoffset2;
+            temp.y = beltPosP2.y-20;
             key2.update(temp);
             keysubstitute2.setPosition(chracater2.getPosition().x - 40, beltPosP2.y);
+            if (myGirl.bReverse == false) {
+                key2.angle =0;
+            }else{
+                key2.angle =180;
+            }
         }break;
         case 3:{
             keysubstitute2.setPosition(-100, -100);
@@ -375,6 +476,9 @@ void testApp::update(){
             rope1.bFixed = true;
             rope1.bScale = false;
             invP1.num = 2;
+            bRopeInUse1 = true;
+            myChest1.bFixed = true;
+            chestSub1.body->SetActive(false);
         }
     }
     
@@ -390,16 +494,43 @@ void testApp::update(){
             rope2.bFixed = true;
             rope2.bScale = false;
             invP2.num = 3;
+            myChest2.bFixed = true;
+            chestSub2.body->SetActive(false);
         }
     }
     
+    //*********** rope mesh ********************
+    
+    if (bRopeInUse1) {
+        float beltDiff1 = beltPosRopeP1.y - myGuy.getCenter.y;
+        
+        if (fabs(beltDiff1) > 10){
+            int num = fabs(beltDiff1/10);
+            ropeStroke1.clear();
+            for (int i=0; i<num; i++) {
+                ropeStroke1.addVertex(myGuy.getCenter.x, myGuy.getCenter.y - 10*i);
+            }
+        }else{
+            ropeStroke1.clear();
+            for(int i=0; i<4; i++){
+                ropeStroke1.addVertex(myGuy.getCenter.x, myGuy.getCenter.y - 10*i);
+            }
+        }
+    
+    }
+    
+    
+
+    //*********** get lastPos ***************
+    lastPosP1 = chracater1.getPosition();
+    lastPosP2 = chracater2.getPosition();
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
     
     //************** guy ******************
-    invP1.draw();
+    
     ofPushMatrix();
         ofTranslate(-offSet.x,0);
         ofSetColor(255, 255, 255);
@@ -408,7 +539,8 @@ void testApp::draw(){
     ofPopMatrix();
 
     myGuy.draw();
-    
+    ropeMesh1.draw(ropeStroke1);
+    invP1.draw();
     ofPushMatrix();
         ofTranslate(-offSet.x,0);
         ofSetColor(255, 255, 255);
@@ -427,7 +559,7 @@ void testApp::draw(){
 //    chracater1.draw();
 //    keysubstitute1.draw();
     //************** girl ******************
-    invP2.draw();
+    
     ofPushMatrix();
         ofTranslate(-offSet2.x,0);
         ofSetColor(255, 255, 255);
@@ -436,7 +568,7 @@ void testApp::draw(){
     ofPopMatrix();
     
     myGirl.draw();
-    
+    invP2.draw();
     ofPushMatrix();
         ofTranslate(-offSet2.x,0);
         ofSetColor(255, 255, 255);
@@ -446,6 +578,7 @@ void testApp::draw(){
         }
         myChest2.draw();
         rope2.draw();
+        ofCircle(posClimb.x, posClimb.y+climbUp, 30);
     ofPopMatrix();
     
  
@@ -515,9 +648,10 @@ void testApp::draw(){
     P2J.draw();
     P2F.draw();
     //*********** passing belt *******************
-    beltP1.draw();
-    beltP2.draw();
-    
+//    beltP1.draw();
+//    beltP2.draw();
+//    ofLine(myGuy.getCenter.x+30,myGuy.getCenter.y, myGuy.getCenter.x+30, beltPosRopeP1.y);
+
 }
 
 //--------------------------------------------------------------
@@ -808,8 +942,17 @@ void testApp::touchDown(ofTouchEventArgs & touch){
         
     }
     
+    if(P2F.bPressed && (ropeStroke1.getClosestPoint(myGirl.getCenter)- myGirl.getCenter).length() < 20 && bRopeInUse1){
+        bClimb = true;
+        posClimb = chracater2.getPosition();
+        cout<<"1"<<endl;
+    }
     
-    
+    if(P2J.bPressed && (ropeStroke1.getClosestPoint(myGirl.getCenter)- myGirl.getCenter).length() < 20 && bRopeInUse1){
+        bClimb = false;
+        climbUp = 150;
+        cout<<"4"<<endl;
+    }
 }
 
 //--------------------------------------------------------------

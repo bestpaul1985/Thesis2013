@@ -29,8 +29,8 @@ public:
     
     float width2;
     float height2;
-    
     bool  open;
+    bool  bFixed;
     
 
 };
