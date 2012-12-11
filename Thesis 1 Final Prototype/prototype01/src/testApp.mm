@@ -1062,8 +1062,8 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     }
     
     //****************************** use inventory ********************
-    ofRectangle select1(423,927,53,47);
-    ofRectangle select2(293,54,53,47);
+    ofRectangle select1(426,943,48,44);
+    ofRectangle select2(295,41,48,44);
     if (select1.inside(touch.x, touch.y)&& bRopeIconAnimationDone1 == true ) {
         bRopeInUse1 = true;
         bRopeIconAnimationDone1 = false;
