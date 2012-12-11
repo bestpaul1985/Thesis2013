@@ -19,7 +19,7 @@ public:
     
     ofPoint pos;
     int num;
-    ofImage img[4];
+    ofImage img[6];
     
     float width;
     float height;

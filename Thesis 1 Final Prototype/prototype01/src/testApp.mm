@@ -146,20 +146,39 @@ void testApp::setup(){
     invP2.setup(374, 74, 1);
     
     //********* rope *******************
+    
     rope1.setup(chestSub1.getPosition().x, chestSub1.getPosition().y, 0);
     rope2.setup(chestSub2.getPosition().x, chestSub2.getPosition().y, 1);
+   
+    posRope1.setInitialCondition(chestSub1.getPosition().x, chestSub1.getPosition().y, 0, 0);
+    posRope2.setInitialCondition(chestSub2.getPosition().x, chestSub2.getPosition().y, 0, 0);
+   
+    posRope1.damping = 0.05f;
+    posRope2.damping = 0.05f;
+    
+    posClimb.set(0, 0);
+    posClimb2.set(0, 0);
+    
+    climbUp = 150;
+    climbUp2 = -150;
+    
+    bRopeIconAnimationDone1 = false;
+    bRopeIconAnimationDone2 = false;
+    
+    bRopeInUse1 = false;
+    bRopeInUse2 = false;
+    
+    bClimb = false;
+    bClimb2 = false;
+    
     bRope1 = true;
     bRope2 = true;
-    posRope1.setInitialCondition(chestSub1.getPosition().x, chestSub1.getPosition().y, 0, 0);
-    posRope1.damping = 0.05f;
-    posRope2.setInitialCondition(chestSub2.getPosition().x, chestSub2.getPosition().y, 0, 0);
-    posRope2.damping = 0.05f;
-    bRopeIconAnimationDone = false;
-    bRopeInUse1 = false;
-    bClimb = false;
-    posClimb.set(0, 0);
-    climbUp = 150;
+   
     ropeMesh1.setup();
+    ropeMesh2.setup();
+    
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -182,9 +201,31 @@ void testApp::update(){
     }
 
     chracater1.addForce(frc1,10);
-    chracater1.setDamping(0.98f);
-    
    
+    
+    if(bClimb2){
+        cout<<"2"<<endl;
+        if (P2F.bPressed) {
+            climbUp2 -=5;
+        }
+        if (climbUp2<-180) {
+            climbUp2 = -180;
+        }
+        chracater1.addAttractionPoint(posClimb2.x , posClimb2.y+climbUp2, 100);
+        if ((ropeStroke2.getClosestPoint(myGuy.getCenter)- myGuy.getCenter).length() > myGuy.height/2+20) {
+            cout<<"3"<<endl;
+            bClimb2 = false;
+            climbUp2 = -150;
+            bRopeInUse2 = false;
+            invP2.num = 3;
+            ropeStroke2.clear();
+            ropeMesh2.mesh.clear();
+        }
+        chracater1.setDamping(0.8f);
+    }else{
+        chracater1.setDamping(0.98f);
+    }
+
     
     //*********** box2d P2*******************
     
@@ -203,8 +244,8 @@ void testApp::update(){
         if (P2F.bPressed) {
             climbUp +=5;
         }
-        if (climbUp>300) {
-            climbUp = 300;
+        if (climbUp>180) {
+            climbUp = 180;
         }
         chracater2.addAttractionPoint(posClimb.x,posClimb.y+climbUp, 100);
         if ((ropeStroke1.getClosestPoint(myGirl.getCenter)- myGirl.getCenter).length() > myGirl.height/2+20) {
@@ -212,6 +253,7 @@ void testApp::update(){
             bClimb = false;
             climbUp = 150;
             bRopeInUse1 = false;
+            invP1.num = 2;
             ropeStroke1.clear();
             ropeMesh1.mesh.clear();
         }
@@ -221,7 +263,7 @@ void testApp::update(){
     }
     
     
-    //now
+   
     
     
     //*********** diffP1 *******************
@@ -333,12 +375,13 @@ void testApp::update(){
     }
     
     ofPoint ropeMeshPos;
- 
+    ofPoint ropeMeshPos2;
     beltPosP1.y = (1-beltPctP1)*myGuy.getCenter.y + beltPctP1*myGirl.getCenter.y;
     beltPosP2.y = (1-beltPctP2)*myGirl.getCenter.y + beltPctP2*myGuy.getCenter.y;
     beltPosRopeP1.y = (1-beltPctP1)*myGuy.getCenter.y;
     beltPosRopeP2.y = (1-beltPctP2)*myGirl.getCenter.y + beltPctP2*1024;
     ropeMeshPos.y = (1-beltPctP1)*myGuy.getCenter.y + beltPctP1*(myGirl.getCenter.y+myGirl.height/2-15);
+    ropeMeshPos2.y = (1-beltPctP2)*myGirl.getCenter.y + beltPctP2*(myGuy.getCenter.y - myGuy.height/2 + 15);
     //*********** keys *******************
    
     
@@ -471,7 +514,7 @@ void testApp::update(){
         rope2.bScale = true;
     }
    
-    if (bRope1 == false&&bRopeIconAnimationDone==false) {
+    if (bRope1 == false&&bRopeIconAnimationDone1==false) {
         
         posRope1.resetForce();
         posRope1.addAttractionForce(chracater1.getPosition().x,chracater1.getPosition().y , 3000, 0.9);
@@ -482,15 +525,15 @@ void testApp::update(){
         if ((rope1.pos-chracater1.getPosition()).length()<10) {
             rope1.bFixed = true;
             rope1.bScale = false;
-            invP1.num = 2;
             bRopeInUse1 = true;
+            invP1.num = 4;
             myChest1.bFixed = true;
             chestSub1.body->SetActive(false);
-            bRopeIconAnimationDone = true;
+            bRopeIconAnimationDone1 = true;
         }
     }
     
-    if (bRope2 == false) {
+    if (bRope2 == false&&bRopeIconAnimationDone2==false) {
         
         posRope2.resetForce();
         posRope2.addAttractionForce(chracater2.getPosition().x,chracater2.getPosition().y , 3000, 0.9);
@@ -501,9 +544,11 @@ void testApp::update(){
         if ((rope2.pos-chracater2.getPosition()).length()<10) {
             rope2.bFixed = true;
             rope2.bScale = false;
-            invP2.num = 3;
+            bRopeInUse2 = true;
+            invP2.num = 5;
             myChest2.bFixed = true;
             chestSub2.body->SetActive(false);
+            bRopeIconAnimationDone2 = true;
         }
     }
     
@@ -529,7 +574,25 @@ void testApp::update(){
     
     }
     
-    
+    if (bRopeInUse2) {
+        float beltDiff2 = ropeMeshPos2.y - myGirl.getCenter.y;
+        
+        if (fabs(beltDiff2) > 10){
+            int num = fabs(beltDiff2/10);
+            ropeStroke2.clear();
+            for (int i=0; i<num; i++) {
+                ropeStroke2.addVertex(myGirl.getCenter.x, myGirl.getCenter.y + 10*i);
+            }
+            
+            
+        }else{
+            ropeStroke2.clear();
+            for(int i=0; i<4; i++){
+                ropeStroke2.addVertex(myGirl.getCenter.x, myGirl.getCenter.y-10);
+            }
+        }
+        
+    }
 
     //*********** get lastPos ***************
     lastPosP1 = chracater1.getPosition();
@@ -559,6 +622,7 @@ void testApp::draw(){
         }
         myChest1.draw();
         rope1.draw();
+        ofCircle(posClimb2+ climbUp2, 30);
     ofPopMatrix();
   
         
@@ -577,7 +641,7 @@ void testApp::draw(){
     ofPopMatrix();
     
     myGirl.draw();
-    ropeMesh1.draw(ropeStroke1);
+    
     invP2.draw();
     ofPushMatrix();
         ofTranslate(-offSet2.x,0);
@@ -590,7 +654,8 @@ void testApp::draw(){
         rope2.draw();
     ofPopMatrix();
     
- 
+    ropeMesh1.draw(ropeStroke1);
+    ropeMesh2.draw(ropeStroke2);
     
     
 //    ofFill();
@@ -660,7 +725,7 @@ void testApp::draw(){
 //    beltP1.draw();
 //    beltP2.draw();
 //    ofLine(myGuy.getCenter.x,myGuy.getCenter.y, myGuy.getCenter.x, beltPosRopeP1.y);
-
+    
 }
 
 //--------------------------------------------------------------
@@ -950,7 +1015,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
         beltPctP2 = 0;
         
     }
-    
+    //****************************** use rope ********************
     if(P2F.bPressed && (ropeStroke1.getClosestPoint(myGirl.getCenter)- myGirl.getCenter).length() < myGirl.height/2+20 && bRopeInUse1){
         bClimb = true;
         posClimb = chracater2.getPosition();
@@ -961,9 +1026,43 @@ void testApp::touchDown(ofTouchEventArgs & touch){
         bClimb = false;
         climbUp = 150;
         bRopeInUse1 = false;
+        invP1.num = 2;
         ropeStroke1.clear();
         ropeMesh1.mesh.clear();
         cout<<"4"<<endl;
+    }
+    
+    if(P1F.bPressed && (ropeStroke2.getClosestPoint(myGuy.getCenter)- myGuy.getCenter).length() < myGuy.height/2+20 && bRopeInUse2){
+        bClimb2 = true;
+        posClimb2 = chracater1.getPosition();
+        cout<<"1"<<endl;
+    }
+    
+    if(P1J.bPressed && (ropeStroke2.getClosestPoint(myGuy.getCenter)- myGuy.getCenter).length() < myGuy.height/2+20 && bRopeInUse2){
+        bClimb2 = false;
+        climbUp2 = -150;
+        bRopeInUse2 = false;
+        invP2.num = 3;
+        ropeStroke2.clear();
+        ropeMesh2.mesh.clear();
+        cout<<"4"<<endl;
+    }
+    
+    //****************************** use inventory ********************
+    ofRectangle select1(423,927,53,47);
+    ofRectangle select2(293,54,53,47);
+    if (select1.inside(touch.x, touch.y)&& bRopeIconAnimationDone1 == true ) {
+        bRopeInUse1 = true;
+        bRopeIconAnimationDone1 = false;
+        beltPctP1 = 0;
+        invP1.num = 4;
+    }
+    
+    if (select2.inside(touch.x, touch.y)&& bRopeIconAnimationDone2 == true ) {
+        bRopeInUse2 = true;
+        bRopeIconAnimationDone2 = false;
+        beltPctP2 = 0;
+        invP2.num = 5;
     }
 }
 

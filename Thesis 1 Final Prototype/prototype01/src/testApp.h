@@ -105,7 +105,8 @@ class testApp : public ofxiPhoneApp{
         rope                    rope2;
         bool                    bRope1;
         bool                    bRope2;
-        bool                    bRopeIconAnimationDone;
+        bool                    bRopeIconAnimationDone1;
+        bool                    bRopeIconAnimationDone2;
         particle                posRope1;
         particle                posRope2;
         //********** rope mesh *********************
@@ -115,5 +116,11 @@ class testApp : public ofxiPhoneApp{
         bool                    bClimb;
         ofPoint                 posClimb;
         float                   climbUp;
+        ofPolyline              ropeStroke2;
+        ropeMesh                ropeMesh2;
+        bool                    bRopeInUse2;
+        bool                    bClimb2;
+        ofPoint                 posClimb2;
+        float                   climbUp2;
 };
 
