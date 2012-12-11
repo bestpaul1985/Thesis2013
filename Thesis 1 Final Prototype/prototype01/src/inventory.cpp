@@ -23,7 +23,7 @@ void inventory::setup(float x, float y, int _num){
 
 void inventory::draw(){
     ofSetRectMode(OF_RECTMODE_CENTER);
-    ofSetColor(255, 255, 255);
+    ofSetColor(255, 255, 255, 200);
     img[num].draw(pos, width, height);
     
 }

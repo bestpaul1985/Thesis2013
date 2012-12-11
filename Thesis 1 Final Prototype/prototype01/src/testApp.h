@@ -37,6 +37,7 @@ class testApp : public ofxiPhoneApp{
     
         ofImage bgImg;
         ofImage bgP1;
+        ofImage bgP2;
         //******** map **************************
         ofxXmlSettings XML;
         ofxXmlSettings XML2;

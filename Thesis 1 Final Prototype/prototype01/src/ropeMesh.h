@@ -15,8 +15,10 @@ public:
     void setup();
     void draw(ofPolyline stroke);
     ofMesh mesh;
-    ofImage top;
+    ofImage top[2];
     float width;
     float height;
+    int num;
+    
 };
 #endif /* defined(__prototype01__ropeMesh__) */

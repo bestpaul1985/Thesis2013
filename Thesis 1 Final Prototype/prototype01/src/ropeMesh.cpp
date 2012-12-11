@@ -8,9 +8,12 @@
 
 #include "ropeMesh.h"
 void ropeMesh::setup(){
-    top.loadImage("image/top.png");
-    width = top.getWidth()/4.5;
-    height = top.getHeight()/4.5;
+    num = 0;
+    top[0].loadImage("image/top.png");
+    top[1].loadImage("image/top2.png");
+
+    width = top[0].getWidth()/5;
+    height = top[0].getHeight()/5;
 }
 
 
@@ -62,7 +65,7 @@ void ropeMesh::draw(ofPolyline stroke){
         mesh.draw();
         ofSetRectMode(OF_RECTMODE_CENTER);
         if (stroke.size()>0) {
-             top.draw(stroke.getVertices()[stroke.size()-1], width, height);
+             top[num].draw(stroke.getVertices()[stroke.size()-1], width, height);
         }
     }
     

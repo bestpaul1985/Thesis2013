@@ -8,6 +8,7 @@ void testApp::setup(){
 	ofBackground(30,30,30);
     bgImg.loadImage("image/back.jpg");
     bgP1.loadImage("image/terraingrey.png");
+    bgP2.loadImage("image/terrainbrown.png");
     //***********box2d P1****************
     worldP1.init();
     worldP1.setGravity(0, 100);
@@ -21,8 +22,8 @@ void testApp::setup(){
     worldP2.init();
     worldP2.setGravity(0, -100);
     //  worldP2.createBounds();
-     one.set(-3000,0);
-     two.set(1000,0);
+    one.set(-3000,0);
+    two.set(1000,0);
 
     worldP2.createGround(one, two);
     worldP2.setIterations(1, 1);
@@ -133,18 +134,18 @@ void testApp::setup(){
     myChest2.setup(1);
     chestSub1.setPhysics(0, 0, 0);
     chestSub1.isFixed();
-    chestSub1.setup(worldP1.getWorld(), ofGetWidth()/2+200 ,ofGetHeight()-150, myChest1.width1/2, myChest1.height1/2);
+    chestSub1.setup(worldP1.getWorld(), ofGetWidth()/2+200 ,ofGetHeight()-165, myChest1.width1/2, myChest1.height1/2);
     chestSub2.setPhysics(0, 0, 0);
     chestSub2.isFixed();
-    chestSub2.setup(worldP2.getWorld(), ofGetWidth()/2-200 ,150, myChest2.width1/2, myChest2.height1/2);
+    chestSub2.setup(worldP2.getWorld(), ofGetWidth()/2-200 ,165, myChest2.width1/2, myChest2.height1/2);
     
     //********* elevter *******************
     myEleP1.setup(100, 800 , 0);
-    myEleP2.setup(668, 224 , 1);
+    myEleP2.setup(668, 165 , 1);
     
     //********* inventory *******************
-    invP1.setup(394, 950, 0);
-    invP2.setup(374, 74, 1);
+    invP1.setup(394, 960, 0);
+    invP2.setup(374, 64, 1);
     
     //********* rope *******************
     
@@ -177,7 +178,7 @@ void testApp::setup(){
    
     ropeMesh1.setup();
     ropeMesh2.setup();
-    
+    ropeMesh2.num = 1;
     
     
 }
@@ -605,18 +606,37 @@ void testApp::draw(){
     ofSetColor(255, 255, 255);
     ofFill();
     bgImg.draw(0, 0);
+    ofPushMatrix();
+        ofTranslate(-offSet.x,0);
+        bgP1.draw(1971.5-2220,2377.5-1514);
+    ofPopMatrix();
+    ofPushMatrix();
+        ofTranslate(-offSet2.x,0);
+        bgP2.draw(67-2220,587-1514);
+    ofPopMatrix();
        //************** guy ******************
     
     ofPushMatrix();
         ofTranslate(-offSet.x,0);
         ofSetColor(255, 255, 255);
         ofNoFill();
-        bgP1.draw(1971.5-2220,2377.5-1514);
         myEleP1.draw();
     ofPopMatrix();
-
+     //************** girl ******************
+    ofPushMatrix();
+        ofTranslate(-offSet2.x,0);
+        ofSetColor(255, 255, 255);
+        ofNoFill();
+        bgP2.draw(67-2220,587-1514);
+        myEleP2.draw();
+    ofPopMatrix();
+    
     myGuy.draw();
     invP1.draw();
+    myGirl.draw();
+    invP2.draw();
+    
+    
     ofPushMatrix();
         ofTranslate(-offSet.x,0);
         ofSetColor(255, 255, 255);
@@ -634,25 +654,15 @@ void testApp::draw(){
 //    ofSetColor(255, 255, 255,30);
 //    chracater1.draw();
 //    keysubstitute1.draw();
-    //************** girl ******************
-    
+   
+   
     ofPushMatrix();
         ofTranslate(-offSet2.x,0);
         ofSetColor(255, 255, 255);
         ofNoFill();
-        myEleP2.draw();
-    ofPopMatrix();
-    
-    myGirl.draw();
-    
-    invP2.draw();
-    ofPushMatrix();
-        ofTranslate(-offSet2.x,0);
-        ofSetColor(255, 255, 255);
-        ofNoFill();
-        for (int i=0; i<polyLines2.size(); i++) {
-            polyLines2[i].draw();
-        }
+//        for (int i=0; i<polyLines2.size(); i++) {
+//            polyLines2[i].draw();
+//        }
         myChest2.draw();
         rope2.draw();
     ofPopMatrix();
