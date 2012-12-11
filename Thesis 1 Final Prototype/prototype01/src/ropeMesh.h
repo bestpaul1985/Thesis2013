@@ -12,8 +12,11 @@
 #include "ofMain.h"
 class ropeMesh{
 public:
-
+    void setup();
     void draw(ofPolyline stroke);
     ofMesh mesh;
+    ofImage top;
+    float width;
+    float height;
 };
 #endif /* defined(__prototype01__ropeMesh__) */
