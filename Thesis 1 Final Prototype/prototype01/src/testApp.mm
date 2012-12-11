@@ -134,10 +134,10 @@ void testApp::setup(){
     myChest2.setup(1);
     chestSub1.setPhysics(0, 0, 0);
     chestSub1.isFixed();
-    chestSub1.setup(worldP1.getWorld(), ofGetWidth()/2+200 ,ofGetHeight()-165, myChest1.width1/2, myChest1.height1/2);
+    chestSub1.setup(worldP1.getWorld(), ofGetWidth()/2+200 ,ofGetHeight()-175, myChest1.width1/2, myChest1.height1/2);
     chestSub2.setPhysics(0, 0, 0);
     chestSub2.isFixed();
-    chestSub2.setup(worldP2.getWorld(), ofGetWidth()/2-200 ,165, myChest2.width1/2, myChest2.height1/2);
+    chestSub2.setup(worldP2.getWorld(), ofGetWidth()/2-200 ,155, myChest2.width1/2, myChest2.height1/2);
     
     //********* elevter *******************
     myEleP1.setup(100, 800 , 0);
@@ -569,8 +569,8 @@ void testApp::update(){
             
         }else{
             ropeStroke1.clear();
-            for(int i=0; i<4; i++){
-                ropeStroke1.addVertex(myGuy.getCenter.x, myGuy.getCenter.y+10);
+            for(int i=4; i>0; i--){
+                ropeStroke1.addVertex(myGuy.getCenter.x, myGuy.getCenter.y+10*i);
             }
         }
     
@@ -589,8 +589,8 @@ void testApp::update(){
             
         }else{
             ropeStroke2.clear();
-            for(int i=0; i<4; i++){
-                ropeStroke2.addVertex(myGirl.getCenter.x, myGirl.getCenter.y-10);
+            for(int i=4; i>0; i--){
+                ropeStroke2.addVertex(myGirl.getCenter.x, myGirl.getCenter.y-10*i);
             }
         }
         

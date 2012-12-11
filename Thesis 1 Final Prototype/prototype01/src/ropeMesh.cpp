@@ -12,8 +12,8 @@ void ropeMesh::setup(){
     top[0].loadImage("image/top.png");
     top[1].loadImage("image/top2.png");
 
-    width = top[0].getWidth()/5;
-    height = top[0].getHeight()/5;
+    width = top[0].getWidth()/6;
+    height = top[0].getHeight()/6;
 }
 
 
