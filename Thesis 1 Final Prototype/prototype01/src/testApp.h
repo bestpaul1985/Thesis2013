@@ -34,6 +34,9 @@ class testApp : public ofxiPhoneApp{
         void gotFocus();
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
+    
+        ofImage bgImg;
+        ofImage bgP1;
         //******** map **************************
         ofxXmlSettings XML;
         ofxXmlSettings XML2;

@@ -50,7 +50,7 @@ void ropeMesh::draw(ofPolyline stroke){
             offsetB.y = ptb.y - width * sin(angle);
             
             ofSetColor(123,94,65);
-            ofNoFill();
+          
             ofLine(offsetA, offsetB);
             
             mesh.addVertex(offsetA);

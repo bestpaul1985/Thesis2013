@@ -6,7 +6,8 @@ void testApp::setup(){
 	ofxAccelerometer.setup();
 	ofEnableAlphaBlending();
 	ofBackground(30,30,30);
-    
+    bgImg.loadImage("image/back.jpg");
+    bgP1.loadImage("image/terraingrey.png");
     //***********box2d P1****************
     worldP1.init();
     worldP1.setGravity(0, 100);
@@ -42,7 +43,7 @@ void testApp::setup(){
                     int x = XML.getValue("PT:X", 0, j);
                     int y = XML.getValue("PT:Y", 0, j);
                     ofPoint tempP;
-                    tempP.set(x, y);
+                    tempP.set(x-2220, y-1514);
                     tempPolyline.addVertex(tempP);
                 }
                 tempPolyline.setPhysics(0, 0, 0.2f);
@@ -130,12 +131,12 @@ void testApp::setup(){
     //*********** chests *******************
     myChest1.setup(0);
     myChest2.setup(1);
-    chestSub1.setPhysics(100, 0, 0.1f);
+    chestSub1.setPhysics(0, 0, 0);
     chestSub1.isFixed();
-    chestSub1.setup(worldP1.getWorld(), ofGetWidth()/2+200 ,ofGetHeight()-200, myChest1.width1/2, myChest1.height1/2);
-    chestSub2.setPhysics(100, 0, 0.1f);
+    chestSub1.setup(worldP1.getWorld(), ofGetWidth()/2+200 ,ofGetHeight()-150, myChest1.width1/2, myChest1.height1/2);
+    chestSub2.setPhysics(0, 0, 0);
     chestSub2.isFixed();
-    chestSub2.setup(worldP2.getWorld(), ofGetWidth()/2-200 ,200, myChest2.width1/2, myChest2.height1/2);
+    chestSub2.setup(worldP2.getWorld(), ofGetWidth()/2-200 ,150, myChest2.width1/2, myChest2.height1/2);
     
     //********* elevter *******************
     myEleP1.setup(100, 800 , 0);
@@ -601,13 +602,16 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    
-    //************** guy ******************
+    ofSetColor(255, 255, 255);
+    ofFill();
+    bgImg.draw(0, 0);
+       //************** guy ******************
     
     ofPushMatrix();
         ofTranslate(-offSet.x,0);
         ofSetColor(255, 255, 255);
         ofNoFill();
+        bgP1.draw(1971.5-2220,2377.5-1514);
         myEleP1.draw();
     ofPopMatrix();
 
@@ -617,9 +621,9 @@ void testApp::draw(){
         ofTranslate(-offSet.x,0);
         ofSetColor(255, 255, 255);
         ofNoFill();
-        for (int i=0; i<polyLines1.size(); i++) {
-            polyLines1[i].draw();
-        }
+//        for (int i=0; i<polyLines1.size(); i++) {
+//            polyLines1[i].draw();
+//        }
         myChest1.draw();
         rope1.draw();
     ofPopMatrix();
