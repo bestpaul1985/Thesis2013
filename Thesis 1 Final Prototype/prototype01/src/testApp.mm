@@ -10,7 +10,7 @@ void testApp::setup(){
     bgP1.loadImage("image/terraingrey.png");
     bgP2.loadImage("image/terrainbrown.png");
     //*********** Sound ****************
-    bgm.loadSound("sound/takkreverse.mp3");
+    bgm.loadSound("sound/takkreverse.wav");
     bgm.setMultiPlay(false);
     bgm.setLoop(true);
     bgm.play();
