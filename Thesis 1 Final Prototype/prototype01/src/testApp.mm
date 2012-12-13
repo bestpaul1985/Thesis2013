@@ -15,9 +15,14 @@ void testApp::setup(){
     bgm.setLoop(true);
     bgm.play();
     bgm.setVolume(0.1f);
-    jumpSound1.loadSound("sound/synth.caf");
-    jumpSound1.setMultiPlay(false);
-
+    jumpSound.loadSound("sound/Jump.wav");
+    jumpSound.setMultiPlay(true);
+    pickUpKeySound.loadSound("sound/Pickup_Key.wav");
+    pickUpKeySound.setMultiPlay(true);
+    pickUpRopeSound.loadSound("sound/Pickup_Rope.wav");
+    pickUpRopeSound.setMultiPlay(true);
+    useRopeSound.loadSound("Use_rope.wav");
+    useRopeSound.setMultiPlay(true);
     //***********box2d P1****************
     worldP1.init();
     worldP1.setGravity(0, 100);
@@ -197,6 +202,11 @@ void testApp::update(){
     worldP1.update();
     worldP2.update();
     ofSoundUpdate();
+    
+    if (bRopeSound) {
+        pickUpRopeSound.play();
+        bRopeSound = false;
+    }
     //*********** box2d P1*******************
     ofPoint frc1(0,0);
     ofPoint frc2(0,0);
@@ -516,6 +526,7 @@ void testApp::update(){
          bRope1 = false;
          rope1.bFixed = false;
          rope1.bScale = true;
+         pickUpRopeSound.play();
     }
     
     if (myChest2.open && bRope2) {
@@ -523,6 +534,7 @@ void testApp::update(){
         bRope2 = false;
         rope2.bFixed = false;
         rope2.bScale = true;
+        pickUpRopeSound.play();
     }
    
     if (bRope1 == false&&bRopeIconAnimationDone1==false) {
@@ -566,6 +578,7 @@ void testApp::update(){
     //*********** rope mesh ********************
     
     if (bRopeInUse1) {
+
         float beltDiff1 = ropeMeshPos.y - myGuy.getCenter.y;
         
         if (fabs(beltDiff1) > 10){
@@ -573,6 +586,7 @@ void testApp::update(){
             ropeStroke1.clear();
             for (int i=0; i<num; i++) {
                 ropeStroke1.addVertex(myGuy.getCenter.x, myGuy.getCenter.y - 10*i);
+                useRopeSound.play();
             }
             
             
@@ -593,6 +607,8 @@ void testApp::update(){
             ropeStroke2.clear();
             for (int i=0; i<num; i++) {
                 ropeStroke2.addVertex(myGirl.getCenter.x, myGirl.getCenter.y + 10*i);
+                useRopeSound.play();
+
             }
             
             
@@ -786,12 +802,11 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     
     if (P1J.bPressed && fabs(diffP1.y)< 1){
         chracater1.setVelocity(0, -40);
-        jumpSound1.play();
-        cout<<jumpSound1.getIsPlaying()<<endl;
+        jumpSound.play();
     }
     if (P2J.bPressed && fabs(diffP2.y)< 1) {
         chracater2.setVelocity(0, 40);
-        jumpSound2.play();
+        jumpSound.play();
     }
     
     //**********pick up & drop down ************************
@@ -842,6 +857,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
                 keysubstitute1.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key1.width/2, key1.height/2);
                 keysubstitute1.body->SetActive(false);
                 key1.angle = 0;
+                pickUpKeySound.play();
             }else{
                 keyState2 = 1;
                 keysubstitute2.destroy();
@@ -849,6 +865,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
                 keysubstitute2.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key2.width/2, key2.height/2);
                 keysubstitute2.body->SetActive(false);
                 key2.angle = 180;
+                pickUpKeySound.play();
             }
             
 
@@ -866,7 +883,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
             key2.angle = 180;
-            
+            pickUpKeySound.play();
             
 
         }else if(keyState1 == 1 && keyState2 != 1){
@@ -883,7 +900,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
             key2.angle = 180;
-            
+            pickUpKeySound.play();
             
         }
         
@@ -899,7 +916,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(false);
             key1.angle = 0;
-            
+            pickUpKeySound.play();
         }else if(keyState1 == 1){
                         
             keyState1 = 0;
@@ -908,6 +925,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
             key1.angle = 0;
+            pickUpKeySound.play();
         }
         beltPctP1 = 0;
 
@@ -922,6 +940,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(false);
             key2.angle = 180;
+            pickUpKeySound.play();
             
         }else if(keyState2 == 1){
             
@@ -931,6 +950,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setup(worldP1.getWorld(), chracater1.getPosition().x, chracater1.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
             key2.angle = 180;
+            pickUpKeySound.play();
         }
         beltPctP1 = 0;
         
@@ -956,6 +976,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
                 keysubstitute1.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key1.width/2, key1.height/2);
                 keysubstitute1.body->SetActive(false);
                 key1.angle = 180;
+                pickUpKeySound.play();
             }else{
                 keyState2 = 2;
                 keysubstitute2.destroy();
@@ -963,6 +984,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
                 keysubstitute2.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key2.width/2, key2.height/2);
                 keysubstitute2.body->SetActive(false);
                 key2.angle = 0;
+                pickUpKeySound.play();
             }
             
         }else if(keyState1 != 2 && keyState2 == 2){
@@ -979,6 +1001,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
             key2.angle = 180;
+            pickUpKeySound.play();
             
         }else if(keyState1 == 2 && keyState2 != 2){
             keyState2 = 2;
@@ -994,6 +1017,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
             key1.angle = 180;
+            pickUpKeySound.play();
             
         }
         
@@ -1010,6 +1034,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(false);
             key1.angle = 180;
+            pickUpKeySound.play();
             
         }else if(keyState1 == 2){
             
@@ -1019,6 +1044,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute1.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key1.width/2, key1.height/2);
             keysubstitute1.body->SetActive(true);
             key1.angle = 180;
+            pickUpKeySound.play();
         }
         beltPctP2 = 0;
         
@@ -1033,7 +1059,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(false);
             key2.angle = 0;
-            
+            pickUpKeySound.play();
             
         }else if(keyState2 == 2){
             
@@ -1043,6 +1069,7 @@ void testApp::touchDown(ofTouchEventArgs & touch){
             keysubstitute2.setup(worldP2.getWorld(), chracater2.getPosition().x, chracater2.getPosition().y, key2.width/2, key2.height/2);
             keysubstitute2.body->SetActive(true);
             key2.angle = 0;
+            pickUpKeySound.play();
         }
         beltPctP2 = 0;
         
