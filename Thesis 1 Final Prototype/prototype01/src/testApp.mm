@@ -9,6 +9,10 @@ void testApp::setup(){
     bgImg.loadImage("image/back.jpg");
     bgP1.loadImage("image/terraingrey.png");
     bgP2.loadImage("image/terrainbrown.png");
+    
+    bgm.loadSound("sound/takkreverse.mp3");
+    bgm.setLoop(true);
+
     //***********box2d P1****************
     worldP1.init();
     worldP1.setGravity(0, 100);
@@ -603,6 +607,9 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
+    
+    bgm.play();
+    
     ofSetColor(255, 255, 255);
     ofFill();
     bgImg.draw(0, 0);
