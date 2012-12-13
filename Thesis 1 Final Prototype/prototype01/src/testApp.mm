@@ -11,18 +11,18 @@ void testApp::setup(){
     bgP2.loadImage("image/terrainbrown.png");
     //*********** Sound ****************
     bgm.loadSound("sound/takkreverse.wav");
-    bgm.setMultiPlay(false);
     bgm.setLoop(true);
     bgm.play();
-    bgm.setVolume(0.1f);
+    bgm.setVolume(0.5f);
     jumpSound.loadSound("sound/Jump.wav");
     jumpSound.setMultiPlay(true);
     pickUpKeySound.loadSound("sound/Pickup_Key.wav");
     pickUpKeySound.setMultiPlay(true);
     pickUpRopeSound.loadSound("sound/Pickup_Rope.wav");
     pickUpRopeSound.setMultiPlay(true);
-    useRopeSound.loadSound("Use_rope.wav");
-    useRopeSound.setMultiPlay(true);
+    useRopeSound.loadSound("sound/Use_rope.wav");
+    useRopeSound.setMultiPlay(false);
+ 
     //***********box2d P1****************
     worldP1.init();
     worldP1.setGravity(0, 100);
@@ -203,10 +203,7 @@ void testApp::update(){
     worldP2.update();
     ofSoundUpdate();
     
-    if (bRopeSound) {
-        pickUpRopeSound.play();
-        bRopeSound = false;
-    }
+
     //*********** box2d P1*******************
     ofPoint frc1(0,0);
     ofPoint frc2(0,0);
@@ -586,8 +583,10 @@ void testApp::update(){
             ropeStroke1.clear();
             for (int i=0; i<num; i++) {
                 ropeStroke1.addVertex(myGuy.getCenter.x, myGuy.getCenter.y - 10*i);
-                useRopeSound.play();
             }
+
+            
+                useRopeSound.play();
             
             
         }else{
@@ -595,6 +594,7 @@ void testApp::update(){
             for(int i=4; i>0; i--){
                 ropeStroke1.addVertex(myGuy.getCenter.x, myGuy.getCenter.y+10*i);
             }
+           
         }
     
     }
@@ -607,16 +607,17 @@ void testApp::update(){
             ropeStroke2.clear();
             for (int i=0; i<num; i++) {
                 ropeStroke2.addVertex(myGirl.getCenter.x, myGirl.getCenter.y + 10*i);
-                useRopeSound.play();
-
+                
             }
             
-            
+            useRopeSound.play();
         }else{
             ropeStroke2.clear();
             for(int i=4; i>0; i--){
                 ropeStroke2.addVertex(myGirl.getCenter.x, myGirl.getCenter.y-10*i);
             }
+          
+
         }
         
     }

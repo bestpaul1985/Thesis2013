@@ -35,16 +35,17 @@ class testApp : public ofxiPhoneApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
     
-        ofImage bgImg;
-        ofImage bgP1;
-        ofImage bgP2;
+        ofImage                     bgImg;
+        ofImage                     bgP1;
+        ofImage                     bgP2;
     
-        ofSoundPlayer bgm;
-        ofSoundPlayer jumpSound;
-        ofSoundPlayer pickUpKeySound;
-        ofSoundPlayer pickUpRopeSound;
-        ofSoundPlayer useRopeSound;
-        bool bRopeSound;
+        ofSoundPlayer               bgm;
+        ofSoundPlayer               jumpSound;
+        ofSoundPlayer               pickUpKeySound;
+        ofSoundPlayer               pickUpRopeSound;
+        ofSoundPlayer               useRopeSound;
+      
+
         //******** map **************************
         ofxXmlSettings XML;
         ofxXmlSettings XML2;
