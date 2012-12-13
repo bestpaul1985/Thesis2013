@@ -9,9 +9,14 @@ void testApp::setup(){
     bgImg.loadImage("image/back.jpg");
     bgP1.loadImage("image/terraingrey.png");
     bgP2.loadImage("image/terrainbrown.png");
-    
+    //*********** Sound ****************
     bgm.loadSound("sound/takkreverse.mp3");
+    bgm.setMultiPlay(false);
     bgm.setLoop(true);
+    bgm.play();
+    bgm.setVolume(0.1f);
+    jumpSound1.loadSound("sound/synth.caf");
+    jumpSound1.setMultiPlay(false);
 
     //***********box2d P1****************
     worldP1.init();
@@ -191,7 +196,7 @@ void testApp::setup(){
 void testApp::update(){
     worldP1.update();
     worldP2.update();
-    
+    ofSoundUpdate();
     //*********** box2d P1*******************
     ofPoint frc1(0,0);
     ofPoint frc2(0,0);
@@ -608,7 +613,7 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
     
-    bgm.play();
+    
     
     ofSetColor(255, 255, 255);
     ofFill();
@@ -779,8 +784,15 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     }
     
     
-    if (P1J.bPressed && fabs(diffP1.y)< 1) chracater1.setVelocity(0, -40);
-    if (P2J.bPressed && fabs(diffP2.y)< 1) chracater2.setVelocity(0, 40);
+    if (P1J.bPressed && fabs(diffP1.y)< 1){
+        chracater1.setVelocity(0, -40);
+        jumpSound1.play();
+        cout<<jumpSound1.getIsPlaying()<<endl;
+    }
+    if (P2J.bPressed && fabs(diffP2.y)< 1) {
+        chracater2.setVelocity(0, 40);
+        jumpSound2.play();
+    }
     
     //**********pick up & drop down ************************
     

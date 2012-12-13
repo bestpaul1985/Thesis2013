@@ -40,7 +40,8 @@ class testApp : public ofxiPhoneApp{
         ofImage bgP2;
     
         ofSoundPlayer bgm;
-    
+        ofSoundPlayer jumpSound1;
+        ofSoundPlayer jumpSound2;
         //******** map **************************
         ofxXmlSettings XML;
         ofxXmlSettings XML2;
