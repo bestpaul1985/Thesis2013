@@ -50,9 +50,9 @@ void guy::draw(){
             case 1:
                 img[2].draw(getCenter, width, height);
                 break;
-        }
-    
     }
+
+}
     
     
 //    ofNoFill();

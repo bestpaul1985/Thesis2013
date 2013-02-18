@@ -73,6 +73,7 @@
 		4725F1B616D1A4A400698DF4 /* chellenge6.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4725F1B416D1A4A400698DF4 /* chellenge6.cpp */; };
 		4725F1C316D1C35800698DF4 /* soundInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4725F1C116D1C35800698DF4 /* soundInput.cpp */; };
 		4725F1C616D1C36700698DF4 /* compassInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4725F1C416D1C36700698DF4 /* compassInput.cpp */; };
+		4725F1CC16D216E200698DF4 /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4725F1CA16D216E100698DF4 /* particle.cpp */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
 		53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
@@ -246,6 +247,8 @@
 		4725F1C216D1C35800698DF4 /* soundInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soundInput.h; sourceTree = "<group>"; };
 		4725F1C416D1C36700698DF4 /* compassInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compassInput.cpp; sourceTree = "<group>"; };
 		4725F1C516D1C36700698DF4 /* compassInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compassInput.h; sourceTree = "<group>"; };
+		4725F1CA16D216E100698DF4 /* particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = particle.cpp; sourceTree = "<group>"; };
+		4725F1CB16D216E100698DF4 /* particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particle.h; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		BB16EBD10F2B2A9500518274 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -725,6 +728,8 @@
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
+				4725F1CA16D216E100698DF4 /* particle.cpp */,
+				4725F1CB16D216E100698DF4 /* particle.h */,
 				4725F17316D1A3B900698DF4 /* character */,
 				4725F17916D1A3B900698DF4 /* gameplay */,
 				4725F18616D1A3B900698DF4 /* item */,
@@ -895,6 +900,7 @@
 				4725F1B616D1A4A400698DF4 /* chellenge6.cpp in Sources */,
 				4725F1C316D1C35800698DF4 /* soundInput.cpp in Sources */,
 				4725F1C616D1C36700698DF4 /* compassInput.cpp in Sources */,
+				4725F1CC16D216E200698DF4 /* particle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
