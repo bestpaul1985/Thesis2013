@@ -5,7 +5,7 @@ void testApp::setup(){
 	// initialize the accelerometer
 	ofxAccelerometer.setup();
     
-	ofSetFrameRate(30);
+	ofSetFrameRate(60);
     
     //default rotation
 	//ofxiPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
