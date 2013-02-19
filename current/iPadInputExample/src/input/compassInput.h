@@ -15,7 +15,7 @@
 class compassInput{
 public:
     
-    void drawTriangle(int x, int y);
+    void drawTriangle(int x, int y, float scale);
 
     float heading;
     float sinheading;

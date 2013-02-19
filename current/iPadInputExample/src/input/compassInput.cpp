@@ -9,13 +9,14 @@
 #include "compassInput.h"
 
 
-void compassInput::drawTriangle(int x, int y){
+
+void compassInput::drawTriangle(int x, int y,float scale){
     
     // compass triangle
     ofPushMatrix();
-    ofTranslate (x,y);
+    ofTranslate(x, y);
+    ofScale(scale, scale);
     ofRotateZ   (heading);
-	ofSetColor(200);
 	float size  = 20;
 	ofPoint ptA = ofPoint( cos(TWO_PI/3)    * size, sin(TWO_PI/3)   * size);
 	ofPoint ptB = ofPoint( cos(2*TWO_PI/3)  * size, sin(2*TWO_PI/3) * size);

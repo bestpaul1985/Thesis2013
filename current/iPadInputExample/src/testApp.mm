@@ -36,8 +36,6 @@ void testApp::setup(){
 void testApp::update(){
     
     
-    //update compass
-    compass.heading = ofLerpDegrees(compass.heading, -coreLocation->getTrueHeading(), 0.7);
     
     //Accellerometer input
 //    float angle = 180 - RAD_TO_DEG * atan2( ofxAccelerometer.getForce().y, ofxAccelerometer.getForce().x );
@@ -54,18 +52,24 @@ void testApp::update(){
     
     
     
-    if (mScreen ==0) {
+    if      (mScreen == 0) {
         startscreen.update();
+    }
+    else if (mScreen == 1) {
+        
+        soundIn.updateVolCircle();
+        //update compass
+        compass.heading = ofLerpDegrees(compass.heading, -coreLocation->getTrueHeading(), 0.7);
     }
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
     
-    if      (mScreen ==0) {
+    if      (mScreen == 0) {
         startscreen.draw();
     }
-    else if (mScreen ==1) {
+    else if (mScreen == 1) {
         //timelog messages
         ofSetColor(255);
         ofDrawBitmapString(ofToString(eventString) , 20, 50);
@@ -76,7 +80,9 @@ void testApp::draw(){
         ofDrawBitmapString("Accellerometer y:   "   + ofToString(ofxAccelerometer.getForce().y) , 20, 95);
         
         // compass triangle
-        compass.drawTriangle(ofGetWidth()/2, ofGetHeight()/2);
+        
+        ofSetHexColor(0x47e8a2);
+        compass.drawTriangle(ofGetWidth()/2, ofGetHeight()/2,2);
         
         //soundwave
         soundIn.drawScopeOpen(20, 100);
@@ -86,13 +92,18 @@ void testApp::draw(){
         soundIn.drawLog();
         soundIn.drawScopeClose();
         
+        //sound volume circle
+        ofSetColor(245, 58, 135);
+        soundIn.drawVolCircle(ofGetWidth()/2, ofGetHeight()/3,10);
+        
         //pause button
         ofSetHexColor(0x3897e0);
-        pauseB.set(20, ofGetHeight()-60, 40, 40);
+        int buttonWidth = 60;
+        pauseB.set(ofGetWidth()/2-buttonWidth/2, ofGetHeight()*2/3, buttonWidth, buttonWidth);
         ofRect(pauseB);
     }
     
-    else if (mScreen ==2){
+    else if (mScreen == 2){
         pausemenu.draw();
     }
 }
@@ -134,8 +145,10 @@ void testApp::audioIn(float * input, int bufferSize, int nChannels){
 	// samples are "interleaved"
 	for(int i = 0; i < bufferSize; i++){
 		buffer[i] = input[i];
+        soundIn.curVol += buffer[i]*buffer[i];
+        soundIn.numCounted++;
 	}
-	soundIn.bufferCounter++;
+	soundIn.volumeFeedback();
     
 }
 

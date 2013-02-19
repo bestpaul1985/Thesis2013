@@ -15,19 +15,36 @@
 class soundInput{
 public:
     void setup();
+    //draw soundwave
     void drawScopeOpen(int x, int y);
     void drawWave(int i, float buffer);
     void drawLog();
     void drawScopeClose();
+    
+    int intx, inty;
+    int height;
+    
+    //sound setup
     void bufferSizeCheck(int bufferSize);
+    void volumeFeedback();
     
     int	initialBufferSize;
     int	sampleRate;
     int	drawCounter;
     int bufferCounter;
     
-    int intx, inty;
-    int height;
+    //draw volume circle
+    void updateVolCircle();
+    void drawVolCircle(int x, int y, float scale);
+    
+    
+    //volume feedback
+    float curVol;
+	int numCounted;
+    float smoothedVol;
+    float scaledVol;
+
 };
+
 
 #endif /* defined(__rylic__soundInput__) */

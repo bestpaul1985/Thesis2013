@@ -16,8 +16,14 @@ void soundInput::setup(){
 	drawCounter = 0;
 	bufferCounter = 0;
     height = 200;
+
+    curVol = 0.0;
+	numCounted = 0;
 }
 
+
+//for drawing soundWave
+//--------------------------------------------------------------
 void soundInput::drawScopeOpen(int x, int y){
     ofPushMatrix();
     ofTranslate(x, y);
@@ -46,6 +52,26 @@ void soundInput::drawScopeClose(){
     ofPopMatrix();
 }
 
+//for drawing circle volume input
+//--------------------------------------------------------------
+void soundInput::updateVolCircle(){
+	//lets scale the vol up to a 0-1 range
+	scaledVol = ofMap(smoothedVol, 0.0, 0.17, 0.0, 1.0, true);
+}
+
+void soundInput::drawVolCircle(int x, int y, float scale){
+    ofPushMatrix();
+    ofTranslate(x, y);
+    ofScale(scale, scale);
+    ofFill();
+    ofCircle(0, 0, scaledVol * 190.0f);
+    ofPopMatrix();
+}
+
+
+
+//for within audioIn void
+//--------------------------------------------------------------
 void soundInput::bufferSizeCheck(int bufferSize){
     if(initialBufferSize != bufferSize){
 		ofLog(OF_LOG_ERROR,
@@ -53,4 +79,17 @@ void soundInput::bufferSizeCheck(int bufferSize){
               initialBufferSize, bufferSize);
 		return;
 	}
+}
+
+void soundInput::volumeFeedback(){
+    //this is how we get the mean of rms :)
+	curVol /= (float)numCounted;
+	
+	// this is how we get the root of rms :)
+	curVol = sqrt( curVol );
+	
+	smoothedVol *= 0.93;
+	smoothedVol += 0.07 * curVol;
+	
+	bufferCounter++;
 }
