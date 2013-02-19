@@ -11,14 +11,17 @@ void baseCharacter::setup(float x, float y){
     center.pos.set(x, y);
     bReverse = false;
     num = 0;
+    
+    jump.loadSound("sound/Jump.wav");
+    jump.setMultiPlay(true);
 }
 
-//-------------------------------------------
+
 void baseCharacter::update(float x, float y){
     center.pos.set(x, y);
 }
 
-//-------------------------------------------
+
 void baseCharacter::draw(){
     
     ofSetRectMode(OF_RECTMODE_CENTER);
@@ -36,4 +39,9 @@ void baseCharacter::draw(){
         ofSetColor(0);
         ofRect(center.pos.x-20, center.pos.y, 4, 90);
     }
+}
+
+
+void baseCharacter::jumpSound(){
+    jump.play();
 }

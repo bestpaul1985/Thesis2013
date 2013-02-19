@@ -10,5 +10,16 @@
 #define __iPadInputExample__girl__
 
 #include <iostream>
+#include "ofMain.h"
+#include "baseCharacter.h"
 
+class girl : public baseCharacter {
+public:
+    void setupSprite();
+    void draw();
+    
+    //sprite array
+    ofImage img[4];
+    
+};
 #endif /* defined(__iPadInputExample__girl__) */

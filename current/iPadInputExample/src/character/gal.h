@@ -10,5 +10,16 @@
 #define __iPadInputExample__gal__
 
 #include <iostream>
+#include "ofMain.h"
+#include "baseCharacter.h"
 
+class gal : public baseCharacter {
+public:
+    void setupSprite();
+    void draw();
+    
+    //sprite array
+    ofImage img[4];
+    
+};
 #endif /* defined(__iPadInputExample__gal__) */

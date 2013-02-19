@@ -74,6 +74,11 @@
 		4725F1C316D1C35800698DF4 /* soundInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4725F1C116D1C35800698DF4 /* soundInput.cpp */; };
 		4725F1C616D1C36700698DF4 /* compassInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4725F1C416D1C36700698DF4 /* compassInput.cpp */; };
 		4725F1CC16D216E200698DF4 /* particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4725F1CA16D216E100698DF4 /* particle.cpp */; };
+		4725F1CF16D2255500698DF4 /* baseWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4725F1CD16D2255500698DF4 /* baseWorld.cpp */; };
+		473A006E16D2F38200219A8C /* key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 473A006C16D2F38200219A8C /* key.cpp */; };
+		473A007116D2F38900219A8C /* rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 473A006F16D2F38900219A8C /* rope.cpp */; };
+		473A007416D2F39000219A8C /* waterGun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 473A007216D2F39000219A8C /* waterGun.cpp */; };
+		473A007716D303BE00219A8C /* dualWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 473A007516D303BD00219A8C /* dualWorld.cpp */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
 		53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
@@ -249,6 +254,16 @@
 		4725F1C516D1C36700698DF4 /* compassInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compassInput.h; sourceTree = "<group>"; };
 		4725F1CA16D216E100698DF4 /* particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = particle.cpp; sourceTree = "<group>"; };
 		4725F1CB16D216E100698DF4 /* particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particle.h; sourceTree = "<group>"; };
+		4725F1CD16D2255500698DF4 /* baseWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = baseWorld.cpp; sourceTree = "<group>"; };
+		4725F1CE16D2255500698DF4 /* baseWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseWorld.h; sourceTree = "<group>"; };
+		473A006C16D2F38200219A8C /* key.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = key.cpp; sourceTree = "<group>"; };
+		473A006D16D2F38200219A8C /* key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = key.h; sourceTree = "<group>"; };
+		473A006F16D2F38900219A8C /* rope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rope.cpp; sourceTree = "<group>"; };
+		473A007016D2F38900219A8C /* rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rope.h; sourceTree = "<group>"; };
+		473A007216D2F39000219A8C /* waterGun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = waterGun.cpp; sourceTree = "<group>"; };
+		473A007316D2F39000219A8C /* waterGun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waterGun.h; sourceTree = "<group>"; };
+		473A007516D303BD00219A8C /* dualWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dualWorld.cpp; sourceTree = "<group>"; };
+		473A007616D303BD00219A8C /* dualWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dualWorld.h; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		BB16EBD10F2B2A9500518274 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -575,6 +590,10 @@
 		4725F17A16D1A3B900698DF4 /* baseWorld */ = {
 			isa = PBXGroup;
 			children = (
+				473A007516D303BD00219A8C /* dualWorld.cpp */,
+				473A007616D303BD00219A8C /* dualWorld.h */,
+				4725F1CD16D2255500698DF4 /* baseWorld.cpp */,
+				4725F1CE16D2255500698DF4 /* baseWorld.h */,
 				4725F19C16D1A43600698DF4 /* baseItem.cpp */,
 				4725F19D16D1A43600698DF4 /* baseItem.h */,
 				4725F19F16D1A43E00698DF4 /* baseObject.cpp */,
@@ -614,32 +633,14 @@
 		4725F18616D1A3B900698DF4 /* item */ = {
 			isa = PBXGroup;
 			children = (
-				4725F18716D1A3B900698DF4 /* key */,
-				4725F18816D1A3B900698DF4 /* rope */,
-				4725F18916D1A3B900698DF4 /* waterGun */,
+				473A006C16D2F38200219A8C /* key.cpp */,
+				473A006D16D2F38200219A8C /* key.h */,
+				473A006F16D2F38900219A8C /* rope.cpp */,
+				473A007016D2F38900219A8C /* rope.h */,
+				473A007216D2F39000219A8C /* waterGun.cpp */,
+				473A007316D2F39000219A8C /* waterGun.h */,
 			);
 			path = item;
-			sourceTree = "<group>";
-		};
-		4725F18716D1A3B900698DF4 /* key */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = key;
-			sourceTree = "<group>";
-		};
-		4725F18816D1A3B900698DF4 /* rope */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = rope;
-			sourceTree = "<group>";
-		};
-		4725F18916D1A3B900698DF4 /* waterGun */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = waterGun;
 			sourceTree = "<group>";
 		};
 		4725F18A16D1A3B900698DF4 /* mainUI */ = {
@@ -901,6 +902,11 @@
 				4725F1C316D1C35800698DF4 /* soundInput.cpp in Sources */,
 				4725F1C616D1C36700698DF4 /* compassInput.cpp in Sources */,
 				4725F1CC16D216E200698DF4 /* particle.cpp in Sources */,
+				4725F1CF16D2255500698DF4 /* baseWorld.cpp in Sources */,
+				473A006E16D2F38200219A8C /* key.cpp in Sources */,
+				473A007116D2F38900219A8C /* rope.cpp in Sources */,
+				473A007416D2F39000219A8C /* waterGun.cpp in Sources */,
+				473A007716D303BE00219A8C /* dualWorld.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

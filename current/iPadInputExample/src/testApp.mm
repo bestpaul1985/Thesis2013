@@ -40,7 +40,16 @@ void testApp::update(){
     
     //Accellerometer input
 //    float angle = 180 - RAD_TO_DEG * atan2( ofxAccelerometer.getForce().y, ofxAccelerometer.getForce().x );
-
+    
+    
+    //Mirror output
+    if (ofGetFrameNum()<10)
+    {   if (!ofxiPhoneExternalDisplay::isMirroring())
+        {
+            ofxiPhoneExternalDisplay::mirrorOn();
+            ofxiPhoneExternalDisplay::isMirroring();
+        }
+    }
 }
 
 //--------------------------------------------------------------

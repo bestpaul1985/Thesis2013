@@ -20,7 +20,6 @@ public:
     
     //sprite array
     ofImage img[4];
-    //mode number
-    int num;
+    
 };
 #endif /* defined(__iPadInputExample__guy__) */
