@@ -24,12 +24,32 @@ void challenge1::loadMap(){
                     tempPolyline.addVertex(tempP);
                 }
                 tempPolyline.setPhysics(0, 0, 0.2f);
-                tempPolyline.create(world.getWorld());
-                polyLines.push_back(tempPolyline);
+                tempPolyline.create(world1.world.getWorld());
+                polyLines1.push_back(tempPolyline);
             }
             XML.popTag();
         }
     }
-    
+    if (XML2.loadFile("tutorialLevelP2.xml")) {
+        int strokeNum = XML2.getNumTags("STROKE");
+        for (int i=0; i<strokeNum; i++) {
+            XML2.pushTag("STROKE",i);
+            int ptNum = XML2.getNumTags("PT");
+            if (ptNum>0) {
+                ofxBox2dPolygon tempPolyline;
+                for (int j=0; j<ptNum; j++) {
+                    int x = XML2.getValue("PT:X", 0, j);
+                    int y = XML2.getValue("PT:Y", 0, j);
+                    ofPoint tempP;
+                    tempP.set(x-2220, y-1514);
+                    tempPolyline.addVertex(tempP);
+                }
+                tempPolyline.setPhysics(0, 0, 0.2f);
+                tempPolyline.create(world2.world.getWorld());
+                polyLines2.push_back(tempPolyline);
+            }
+            XML2.popTag();
+        }
+    }
     
 }

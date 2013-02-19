@@ -26,7 +26,8 @@ void testApp::setup(){
 	compass.hasGPS = coreLocation->startLocation();
 	compass.heading = 0.0;
     
-    
+    mScreen = 0;
+    startscreen.setup();
 	ofBackground(77);
     
 }
@@ -50,47 +51,68 @@ void testApp::update(){
             ofxiPhoneExternalDisplay::isMirroring();
         }
     }
+    
+    
+    
+    if (mScreen ==0) {
+        startscreen.update();
+    }
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
     
-    //timelog messages
-    ofSetColor(255);
-    ofDrawBitmapString("time:   " +
-                       ofToString(ofGetHours()) +
-                       ":" +
-                       ofToString(ofGetMinutes()) +
-                       ":" +
-                       ofToString(ofGetSeconds()) , 20, 20);
-    ofDrawBitmapString("elapsed time:   "+ ofToString(ofGetElapsedTimeMillis()), 20, 35);
-    ofDrawBitmapString(ofToString(eventString) , 20, 50);
+    if      (mScreen ==0) {
+        startscreen.draw();
+    }
+    else if (mScreen ==1) {
+        //timelog messages
+        ofSetColor(255);
+        ofDrawBitmapString(ofToString(eventString) , 20, 50);
+        
+        //orientation + accellerometer
+        ofDrawBitmapString("orientation no:     "   + ofToString(orientation) , 20, 65);
+        ofDrawBitmapString("Accellerometer x:   "   + ofToString(ofxAccelerometer.getForce().x) , 20, 80);
+        ofDrawBitmapString("Accellerometer y:   "   + ofToString(ofxAccelerometer.getForce().y) , 20, 95);
+        
+        // compass triangle
+        compass.drawTriangle(ofGetWidth()/2, ofGetHeight()/2);
+        
+        //soundwave
+        soundIn.drawScopeOpen(20, 100);
+        for(int i = 0; i < soundIn.initialBufferSize; i++){
+            soundIn.drawWave(i, buffer[i]);
+        }
+        soundIn.drawLog();
+        soundIn.drawScopeClose();
+        
+        //pause button
+        ofSetHexColor(0x3897e0);
+        pauseB.set(20, ofGetHeight()-60, 40, 40);
+        ofRect(pauseB);
+    }
     
-    
-    //orientation + accellerometer
-    ofDrawBitmapString("orientation no:   "+ ofToString(orientation) , 20, 65);
-    ofDrawBitmapString("Accellerometer x:   "+ ofToString(ofxAccelerometer.getForce().x) , 20, 80);
-    ofDrawBitmapString("Accellerometer y:   "+ ofToString(ofxAccelerometer.getForce().y) , 20, 95);
-    
-    
-    // compass triangle
-    compass.drawTriangle(ofGetWidth()/2, ofGetHeight()/2);
-    
-    
-    //soundwave
-    soundIn.drawScopeOpen(20, 100);
-	for(int i = 0; i < soundIn.initialBufferSize; i++){
-        soundIn.drawWave(i, buffer[i]);
-	}
-    soundIn.drawLog();
-    soundIn.drawScopeClose();
-
+    else if (mScreen ==2){
+        pausemenu.draw();
+    }
 }
 
 
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs & touch){
 	sprintf(eventString, "touchDown = (%2.0f, %2.0f - id %i)", touch.x, touch.y, touch.id);
+    
+    if (mScreen==0 && touch.x !=0) {
+        mScreen = 1;
+    }
+    else if (mScreen ==1){
+        if (pauseB.inside(touch.x, touch.y)) {
+            mScreen = 2;
+        }
+    }
+    else if (mScreen==2 && touch.x !=0){
+        mScreen = 1;
+    }
 }
 
 //--------------------------------------------------------------

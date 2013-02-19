@@ -7,3 +7,8 @@
 //
 
 #include "dualWorld.h"
+
+
+void dualWorld::setup(){
+    
+}

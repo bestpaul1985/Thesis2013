@@ -9,6 +9,10 @@
 #include "compassInput.h"
 #include "soundInput.h"
 
+//mainUIs
+#include "startScreen.h"
+#include "pauseMenu.h"
+
 
 class testApp : public ofxiPhoneApp{
 	
@@ -45,6 +49,13 @@ class testApp : public ofxiPhoneApp{
         //orientation
         int orientation;
     
+    
+    
+        //screenMode
+        int mScreen;
+        startScreen startscreen;
+        pauseMenu pausemenu;
+        ofRectangle pauseB;
     
     
 

@@ -14,5 +14,16 @@
 #include "ofMain.h"
 #include "baseWorld.h"
 
+class dualWorld{
+public:
+
+    void setup();
+    
+    baseWorld world1;
+    baseWorld world2;
+    
+    
+
+};
 
 #endif /* defined(__rylic__dualWorld__) */
