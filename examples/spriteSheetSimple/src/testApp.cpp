@@ -46,6 +46,7 @@ void testApp::update(){
 void testApp::draw(){
 
 	spriteRenderer->draw();
+    
 }
 
 
