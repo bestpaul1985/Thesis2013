@@ -19,7 +19,7 @@ public:
     void setup(float x, float y);
     void update(float x, float y);
     virtual void draw();
-    void jumpSound();
+    void playJumpSound();
     
     //initial data
     particle center;

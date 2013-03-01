@@ -17,11 +17,14 @@
 
 class key{
     
+    void setup();
+    void playPickUpSound();
+    void playUseSound();
     
+    // sound
+    ofSoundPlayer               pickUpSound;
+    ofSoundPlayer               useSound;
     
-    ofxBox2dRect            keysubstitute1;
-    int                     keyState1;
-    bool                    key1UsedP1;
 };
 
 #endif /* defined(__rylic__key__) */

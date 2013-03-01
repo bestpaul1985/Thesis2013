@@ -42,6 +42,6 @@ void baseCharacter::draw(){
 }
 
 
-void baseCharacter::jumpSound(){
+void baseCharacter::playJumpSound(){
     jump.play();
 }

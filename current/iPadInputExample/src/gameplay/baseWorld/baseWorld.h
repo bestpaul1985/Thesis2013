@@ -19,12 +19,17 @@ class baseWorld {
 public:
     
     void setup();
-    void callCharacter(int x, int y);
+    void callP1     (baseCharacter p1, int x, int y);
+    void callP2     (baseCharacter p2, int x, int y);
+    virtual void loadMap();
+    virtual void loadImage();
+    virtual void loadSound();
     
-    //********box2d**************************
-    ofxBox2d                world;
+    // box2d
+    ofxBox2d            world1,world2;
     
-    baseCharacter character;
+    // load characters
+    baseCharacter       p1,p2;
     
 };
 #endif /* defined(__rylic__baseWorld__) */

@@ -10,5 +10,17 @@
 #define __rylic__rope__
 
 #include <iostream>
+#include "ofMain.h"
+#include "ofxBox2d.h"
+
+class rope{
+    
+    void setup();
+    void playPickUpSound();
+    void playUseSound();
+    
+    ofSoundPlayer               pickUpSound;
+    ofSoundPlayer               useSound;
+};
 
 #endif /* defined(__rylic__rope__) */

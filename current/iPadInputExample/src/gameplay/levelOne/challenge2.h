@@ -19,7 +19,7 @@ public:
     
     void loadMap();
     
-    //******** map **************************
+    // map
     ofxXmlSettings XML;
     string message;
     vector<ofxBox2dPolygon>     polyLines;

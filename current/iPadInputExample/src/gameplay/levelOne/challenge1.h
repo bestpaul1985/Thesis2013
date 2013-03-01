@@ -11,18 +11,28 @@
 
 #include <iostream>
 #include "ofMain.h"
-#include "dualWorld.h"
 #include "ofxXmlSettings.h"
+#include "baseWorld.h"
 
-class challenge1 : public dualWorld{
+class challenge1 : public baseWorld{
 public:
     
     void loadMap();
+    void loadImage();
+    void loadSound();
     
-    //******** map **************************
-    ofxXmlSettings XML;
-    ofxXmlSettings XML2;
-    string message;
+    // background images
+    ofImage                     bgImg;
+    ofImage                     bgP1;
+    ofImage                     bgP2;
+    
+    // background music
+    ofSoundPlayer               bgm;
+    
+    // map
+    ofxXmlSettings              XML;
+    ofxXmlSettings              XML2;
+    string                      message;
     vector<ofxBox2dPolygon>     polyLines1;
     vector<ofxBox2dPolygon>     polyLines2;
     

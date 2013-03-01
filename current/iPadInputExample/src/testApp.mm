@@ -26,9 +26,10 @@ void testApp::setup(){
 	compass.hasGPS = coreLocation->startLocation();
 	compass.heading = 0.0;
     
+    //draw
     mScreen = 0;
     startscreen.setup();
-	ofBackground(77);
+	ofBackground(30);
     
 }
 

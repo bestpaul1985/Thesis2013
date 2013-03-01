@@ -14,7 +14,7 @@
 #include "pauseMenu.h"
 
 
-class testApp : public ofxiPhoneApp{
+class testApp : public ofxiPhoneApp, public ofxiPhoneExternalDisplay{
 	
     public:
         void setup();

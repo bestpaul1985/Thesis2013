@@ -10,5 +10,16 @@
 #define __iPadInputExample__baseItem__
 
 #include <iostream>
+#include "ofMain.h"
+#include "ofxBox2d.h"
+#include "baseObject.h"
 
+class baseItem {
+public:
+    virtual void setup();
+    virtual void playPickUpSound();
+    virtual void playUseSound();
+    
+    baseObject objectSubstitute;
+};
 #endif /* defined(__iPadInputExample__baseItem__) */

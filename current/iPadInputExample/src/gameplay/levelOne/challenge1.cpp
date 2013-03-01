@@ -24,7 +24,7 @@ void challenge1::loadMap(){
                     tempPolyline.addVertex(tempP);
                 }
                 tempPolyline.setPhysics(0, 0, 0.2f);
-                tempPolyline.create(world1.world.getWorld());
+                tempPolyline.create(world1.getWorld());
                 polyLines1.push_back(tempPolyline);
             }
             XML.popTag();
@@ -45,7 +45,7 @@ void challenge1::loadMap(){
                     tempPolyline.addVertex(tempP);
                 }
                 tempPolyline.setPhysics(0, 0, 0.2f);
-                tempPolyline.create(world2.world.getWorld());
+                tempPolyline.create(world2.getWorld());
                 polyLines2.push_back(tempPolyline);
             }
             XML2.popTag();
@@ -53,3 +53,18 @@ void challenge1::loadMap(){
     }
     
 }
+
+void challenge1::loadImage(){
+    bgImg.loadImage("image/back.jpg");
+    bgP1.loadImage("image/terraingrey.png");
+    bgP2.loadImage("image/terrainbrown.png");
+}
+
+void challenge1::loadSound(){
+    bgm.loadSound("sound/takkreverse.wav");
+    bgm.setLoop(true);
+    bgm.play();
+    bgm.setVolume(0.5f);
+}
+
+

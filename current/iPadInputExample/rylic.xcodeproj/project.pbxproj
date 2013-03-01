@@ -78,7 +78,6 @@
 		473A006E16D2F38200219A8C /* key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 473A006C16D2F38200219A8C /* key.cpp */; };
 		473A007116D2F38900219A8C /* rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 473A006F16D2F38900219A8C /* rope.cpp */; };
 		473A007416D2F39000219A8C /* waterGun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 473A007216D2F39000219A8C /* waterGun.cpp */; };
-		473A007716D303BE00219A8C /* dualWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 473A007516D303BD00219A8C /* dualWorld.cpp */; };
 		473A007A16D328F400219A8C /* startScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 473A007816D328F400219A8C /* startScreen.cpp */; };
 		473A007D16D337B500219A8C /* pauseMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 473A007B16D337B500219A8C /* pauseMenu.cpp */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
@@ -264,8 +263,6 @@
 		473A007016D2F38900219A8C /* rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rope.h; sourceTree = "<group>"; };
 		473A007216D2F39000219A8C /* waterGun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = waterGun.cpp; sourceTree = "<group>"; };
 		473A007316D2F39000219A8C /* waterGun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waterGun.h; sourceTree = "<group>"; };
-		473A007516D303BD00219A8C /* dualWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dualWorld.cpp; sourceTree = "<group>"; };
-		473A007616D303BD00219A8C /* dualWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dualWorld.h; sourceTree = "<group>"; };
 		473A007816D328F400219A8C /* startScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = startScreen.cpp; sourceTree = "<group>"; };
 		473A007916D328F400219A8C /* startScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = startScreen.h; sourceTree = "<group>"; };
 		473A007B16D337B500219A8C /* pauseMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pauseMenu.cpp; sourceTree = "<group>"; };
@@ -596,8 +593,6 @@
 		4725F17A16D1A3B900698DF4 /* baseWorld */ = {
 			isa = PBXGroup;
 			children = (
-				473A007516D303BD00219A8C /* dualWorld.cpp */,
-				473A007616D303BD00219A8C /* dualWorld.h */,
 				4725F1CD16D2255500698DF4 /* baseWorld.cpp */,
 				4725F1CE16D2255500698DF4 /* baseWorld.h */,
 				4725F19F16D1A43E00698DF4 /* baseObject.cpp */,
@@ -916,7 +911,6 @@
 				473A006E16D2F38200219A8C /* key.cpp in Sources */,
 				473A007116D2F38900219A8C /* rope.cpp in Sources */,
 				473A007416D2F39000219A8C /* waterGun.cpp in Sources */,
-				473A007716D303BE00219A8C /* dualWorld.cpp in Sources */,
 				473A007A16D328F400219A8C /* startScreen.cpp in Sources */,
 				473A007D16D337B500219A8C /* pauseMenu.cpp in Sources */,
 			);
