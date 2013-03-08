@@ -60,3 +60,15 @@ void baseWorld::callP2(baseCharacter p2, int x, int y){
     
 }
 
+void baseWorld::loadMap(){
+    
+}
+
+void baseWorld::loadImage(){
+    
+}
+
+void baseWorld::loadSound(){
+    
+}
+

@@ -1,19 +1,10 @@
-#ifndef _TEST_APP
-#define _TEST_APP
-
+#pragma once
 
 #include "ofMain.h"
-
-#include "ofxSpriteSheetRenderer.h"
-
-static animation_t walkAnimation = {   0,  0,  4,  1,  1,  75, 0,  -1, -1, 1 };
-
-
-struct basicSprite {
-	animation_t animation;
-	ofPoint pos;
-	float speed;
-};
+#include "baseScene.h"
+#include "circleScene.h"
+#include "squareScene.h"
+#include "imageScene.h"
 
 class testApp : public ofBaseApp{
 
@@ -29,10 +20,11 @@ class testApp : public ofBaseApp{
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
-
+		void dragEvent(ofDragInfo dragInfo);
+		void gotMessage(ofMessage msg);
 	
-	ofxSpriteSheetRenderer * spriteRenderer;
-	vector <basicSprite * > sprites;
+		baseScene  * scenes[3];
+		int currentScene;
+	
+		
 };
-
-#endif
