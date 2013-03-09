@@ -1,11 +1,11 @@
 #include "testApp.h"
 static int w = 768;
 static int h = 1024;
-
-static int pts_A[] = {0,100,    0,0,    w,0,    w,100};
+static int offset = 10;
+static int pts_A[] = {0+offset,100,    offset,offset,    w-offset, offset,    w-offset,100};
 static int nPts_A  = 4*2;
 
-static int pts_B[] = {0,h-100,  0,h,    w,h,    w,h-100};
+static int pts_B[] = {0+offset,h-100,  offset,h-offset,    w-offset,h-offset,    w-offset,h-100};
 static int nPts_B  = 4*2;
 
 
@@ -15,7 +15,7 @@ void testApp::setup(){
 	ofxAccelerometer.setup();
     
 	//If you want a landscape oreintation 
-	//iPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_RIGHT);
+	iPhoneSetOrientation(OFXIPHONE_ORIENTATION_PORTRAIT);
 	
 	ofBackground(30);
     ofEnableAlphaBlending();
@@ -82,19 +82,42 @@ void testApp::setup(){
 void testApp::update(){
 
     world_A.update();
-    
     world_B.update();
     
+    // update dummy location
     charDummy_A.setPosition(char_A.getPosition().x, char_A.getPosition().y);
     charDummy_B.setPosition(char_B.getPosition().x, char_B.getPosition().y);
-    ofPoint pos;
+   
+    // points for ropeEnd
     ofPoint accelFrc = ofxAccelerometer.getForce();
-    if (accelFrc.y > 0.3) {
-        pos.x = ofMap(accelFrc.x, -1, 1, 0, 768);
-        pos.y = ofMap(accelFrc.y, 0.3, 0.6, char_B.getPosition().y, 1024);
-        ropeEnd_B.setPosition(-pos.x, pos.y);
+    ofPoint pos;
+    
+    // ropeEnd B calculation
+    pos = char_B.getPosition();
+    if(accelFrc.y>0.15){
+        if      (accelFrc.x >= 0)   pos.x = ofMap(accelFrc.x, 0, 0.6, char_B.getPosition().x, 768,true);
+        else if (accelFrc.x < 0)    pos.x = ofMap(accelFrc.x, 0, -0.6, char_B.getPosition().x, 0,true);
+        
+        accelFrc.y = ofClamp(accelFrc.y, 0.15, 0.6);
+        pos.y -= ofMap(accelFrc.y, 0.15, 0.6, 0, char_B.getPosition().y);
     }
-    cout<<accelFrc.y<<"  "<< pos<<endl;
+    ropeEnd_B.setPosition(pos.x,pos.y);
+    
+    
+    // ropeEnd A calculation
+    pos = char_A.getPosition();
+    if(accelFrc.y<-0.15){
+        if      (accelFrc.x >= 0)   pos.x = ofMap(accelFrc.x, 0, 0.6, char_A.getPosition().x, 768,true);
+        else if (accelFrc.x < 0)    pos.x = ofMap(accelFrc.x, 0, -0.6, char_A.getPosition().x, 0,true);
+        
+        accelFrc.y = ofClamp(accelFrc.y,-0.6,-0.15);
+        pos.y += ofMap(accelFrc.y, -0.15, -0.6,  0, 1024-char_A.getPosition().y);
+        
+    }
+     ropeEnd_A.setPosition(pos.x,pos.y);
+   
+    
+    
 }
 
 //--------------------------------------------------------------
