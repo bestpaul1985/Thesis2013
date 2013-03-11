@@ -32,6 +32,8 @@ class testApp : public ofxiPhoneApp{
     
     ofxBox2dJoint   rope_A,     rope_B;
     ofxBox2dCircle  ropeEnd_A,  ropeEnd_B;
+    //for ropeEnd Xeno
+    ofPoint accelXeno_A, accelXeno_B;
     
     
 //    ofPoint         Rope_AStart, Rope_AEnd;

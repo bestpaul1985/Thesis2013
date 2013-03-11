@@ -42,9 +42,9 @@ void testApp::setup(){
     charDummy_B.setPhysics(0, 0, 0);
     charDummy_B.setup(world_A.getWorld(), w*2/3, h/2, 60, 60);
     
-    ropeEnd_A.setPhysics(0.0, 0.0, 0.0);
+    ropeEnd_A.setPhysics(1, 0.1, 0.1);
     ropeEnd_A.setup(world_B.getWorld(), w/2, h/2, 5);
-    ropeEnd_A.setPhysics(0.0, 0.0, 0.0);
+    ropeEnd_B.setPhysics(1, 0.1, 0.1);
     ropeEnd_B.setup(world_A.getWorld(), w/2, h/2, 5);
     
     rope_A.setup(world_B.getWorld(), charDummy_A.body, ropeEnd_A.body);
@@ -90,32 +90,61 @@ void testApp::update(){
    
     // points for ropeEnd
     ofPoint accelFrc = ofxAccelerometer.getForce();
-    ofPoint pos;
+    ofPoint pos_A, pos_B;
+    float dist;
+    float catchUpSpeed = 0.09f;
+    float strength = 8.0f;
+    float damping  = 0.7f;
+    
+    dist = ofDist(accelXeno_B.x,accelXeno_B.y, char_B.getPosition().x, char_B.getPosition().y);
     
     // ropeEnd B calculation
-    pos = char_B.getPosition();
+    pos_B = char_B.getPosition();
     if(accelFrc.y>0.15){
-        if      (accelFrc.x >= 0)   pos.x = ofMap(accelFrc.x, 0, 0.6, char_B.getPosition().x, 768,true);
-        else if (accelFrc.x < 0)    pos.x = ofMap(accelFrc.x, 0, -0.6, char_B.getPosition().x, 0,true);
-        
+        //set X
+        if      (accelFrc.x >= 0)   pos_B.x = ofMap(accelFrc.x, 0, 0.6, char_B.getPosition().x, 768,true);
+        else if (accelFrc.x < 0)    pos_B.x = ofMap(accelFrc.x, 0, -0.6, char_B.getPosition().x, 0,true);
+        //set Y
         accelFrc.y = ofClamp(accelFrc.y, 0.15, 0.6);
-        pos.y -= ofMap(accelFrc.y, 0.15, 0.6, 0, char_B.getPosition().y);
+        pos_B.y -= ofMap(accelFrc.y, 0.15, 0.6, 0, char_B.getPosition().y);
+        // Xeno to pos
+        accelXeno_B = catchUpSpeed * pos_B + (1-catchUpSpeed) * accelXeno_B;
+//        ropeEnd_B.setPosition(accelXeno_B);
+        ropeEnd_B.addAttractionPoint(accelXeno_B,strength);
+        ropeEnd_B.setDamping(damping);
+        rope_B.setLength(dist);
+        
     }
-    ropeEnd_B.setPosition(pos.x,pos.y);
+    else {
+        if (dist > 50) {
+            accelXeno_B = catchUpSpeed * pos_B + (1-catchUpSpeed) * accelXeno_B;
+            ropeEnd_B.setPosition(accelXeno_B);
+        }
+        else ropeEnd_B.setPosition(pos_B.x,pos_B.y);
+    }
     
     
     // ropeEnd A calculation
-    pos = char_A.getPosition();
+    pos_A = char_A.getPosition();
     if(accelFrc.y<-0.15){
-        if      (accelFrc.x >= 0)   pos.x = ofMap(accelFrc.x, 0, 0.6, char_A.getPosition().x, 768,true);
-        else if (accelFrc.x < 0)    pos.x = ofMap(accelFrc.x, 0, -0.6, char_A.getPosition().x, 0,true);
-        
+        //set X
+        if      (accelFrc.x >= 0)   pos_A.x = ofMap(accelFrc.x, 0, 0.6, char_A.getPosition().x, 768,true);
+        else if (accelFrc.x < 0)    pos_A.x = ofMap(accelFrc.x, 0, -0.6, char_A.getPosition().x, 0,true);
+        //set Y
         accelFrc.y = ofClamp(accelFrc.y,-0.6,-0.15);
-        pos.y += ofMap(accelFrc.y, -0.15, -0.6,  0, 1024-char_A.getPosition().y);
-        
+        pos_A.y += ofMap(accelFrc.y, -0.15, -0.6,  0, 1024-char_A.getPosition().y);
+        // Xeno to pos
+        accelXeno_A = catchUpSpeed * pos_A + (1-catchUpSpeed) * accelXeno_A;
+        ropeEnd_A.setPosition(accelXeno_A);
     }
-     ropeEnd_A.setPosition(pos.x,pos.y);
-   
+    else{
+        dist = ofDist(accelXeno_A.x,accelXeno_A.y, char_A.getPosition().x, char_A.getPosition().y);
+        if (dist > 50) {
+            accelXeno_A = catchUpSpeed * pos_A + (1-catchUpSpeed) * accelXeno_A;
+            ropeEnd_A.setPosition(accelXeno_A);
+        }
+        else ropeEnd_A.setPosition(pos_A.x,pos_A.y);
+    }
     
     
 }
@@ -151,6 +180,11 @@ void testApp::draw(){
     ofSetColor(255);
     ground_A.draw();
     ground_B.draw();
+    
+    
+    ofSetColor(255, 100);
+    ofCircle(accelXeno_A,20);
+    ofCircle(accelXeno_B, 20);
 }
 
 //--------------------------------------------------------------
