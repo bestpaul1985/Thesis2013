@@ -52,7 +52,14 @@ void testApp::setup() {
 
 //--------------------------------------------------------------
 void testApp::update() {
-	box2d.update();	
+	box2d.update();
+//    circles[circles.size()-1].setPosition(mouseX, mouseY);
+    float dist = ofDist(mouseX, mouseY, anchor.getPosition().x, anchor.getPosition().y);
+    jointLength = dist/joints.size();
+    for (int i=0 ; i< joints.size(); i++) {
+        joints[i].setLength(jointLength);
+    }
+    circles[circles.size()-1].setPosition(mouseX, mouseY);
 }
 
 

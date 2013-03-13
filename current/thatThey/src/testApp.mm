@@ -107,6 +107,7 @@ void testApp::update(){
         //set Y
         accelFrc.y = ofClamp(accelFrc.y, 0.15, 0.6);
         pos_B.y -= ofMap(accelFrc.y, 0.15, 0.6, 0, char_B.getPosition().y);
+        
         // Xeno to pos
         accelXeno_B = catchUpSpeed * pos_B + (1-catchUpSpeed) * accelXeno_B;
 //        ropeEnd_B.setPosition(accelXeno_B);
