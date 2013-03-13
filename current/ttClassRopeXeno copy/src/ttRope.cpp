@@ -62,6 +62,7 @@ void ttRope::controlRopeA(){
         //        ropeEnd.setPosition(accXeno);
         ropeEnd.addAttractionPoint(accXeno, strength);
         ropeEnd.setDamping(damping);
+        ropeCall = true;
     }
     else{
         dist = ofDist(accXeno.x,accXeno.y, charPos.x, charPos.y);
@@ -69,7 +70,10 @@ void ttRope::controlRopeA(){
             accXeno = catchUpSpeed * pos_A + (1-catchUpSpeed) * accXeno;
             ropeEnd.setPosition(accXeno);
         }
-        else ropeEnd.setPosition(pos_A.x,pos_A.y);
+        else {
+            ropeEnd.setPosition(pos_A.x,pos_A.y);
+            ropeCall = false;
+        }
     }
     
 }
@@ -91,6 +95,7 @@ void ttRope::controlRopeB(){
         //        ropeEnd_B.setPosition(accelXeno_B);
         ropeEnd.addAttractionPoint(accXeno,strength);
         ropeEnd.setDamping(damping);
+        ropeCall = true;
         
     }
     else {
@@ -98,7 +103,10 @@ void ttRope::controlRopeB(){
             accXeno = catchUpSpeed * pos_B + (1-catchUpSpeed) * accXeno;
             ropeEnd.setPosition(accXeno);
         }
-        else ropeEnd.setPosition(pos_B.x,pos_B.y);
+        else {
+            ropeEnd.setPosition(pos_B.x,pos_B.y);
+            ropeCall = false;
+        }
     }
 
 
@@ -108,26 +116,30 @@ void ttRope::controlRopeB(){
 void ttRope::ropeBody(ofxBox2d &dummyWorld){
     float dist = ofDist(ropeEnd.getPosition().x, ropeEnd.getPosition().y, charPos.x, charPos.y);
     if (dist > 50) {
-        // add chainRect
-        for (int i=0; i<3; i++) {
-            ofxBox2dRect rect;
-            rect.setPhysics(1.0, 0.1, 0.1);
-            rect.setup(dummyWorld.getWorld(), charPos.x, charPos.y, ropeChainSize, ropeChainSize);
-            ropeChain.push_back(rect);
-        }
-        
-        // now connect each circle with a joint
-        for (int i=0; i<ropeChain.size(); i++) {
-            ofxBox2dJoint joint;
-            // if this is the first point connect to the character.
-            if(i == 0)  joint.setup(dummyWorld.getWorld(), ropeEnd.body,        ropeChain[i].body);
-            else        joint.setup(dummyWorld.getWorld(), ropeChain[i-1].body, ropeChain[i].body);
+        if (ropeCall == true) {
+
+            // add chainRect
+            for (int i=0; i<3; i++) {
+                ofxBox2dRect rect;
+                rect.setPhysics(1.0, 0.1, 0.1);
+                rect.setup(dummyWorld.getWorld(), charPos.x, charPos.y, ropeChainSize, ropeChainSize);
+                ropeChain.push_back(rect);
+            }
             
-            joint.setLength(jointLength);
-            joints.push_back(joint);
+            // now connect each circle with a joint
+            for (int i=0; i<ropeChain.size(); i++) {
+                ofxBox2dJoint joint;
+                // if this is the first point connect to the character.
+                if(i == 0)  joint.setup(dummyWorld.getWorld(), ropeEnd.body,        ropeChain[i].body);
+                else        joint.setup(dummyWorld.getWorld(), ropeChain[i-1].body, ropeChain[i].body);
+                
+                joint.setLength(jointLength);
+                joints.push_back(joint);
+            }
+            ropeCalled = true;
+            ropeCall   = false;
         }
         
-        ropeCalled = true;
     
         
         

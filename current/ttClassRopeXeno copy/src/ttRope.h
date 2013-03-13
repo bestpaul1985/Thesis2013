@@ -37,7 +37,7 @@ public:
     vector <ofxBox2dJoint>  joints;
     int             jointLength, ropeChainSize;
     
-    bool            ropeCalled;
+    bool            ropeCall, ropeCalled;
     
     
 };
