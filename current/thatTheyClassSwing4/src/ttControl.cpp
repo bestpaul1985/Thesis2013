@@ -11,6 +11,8 @@
 ttControl::ttControl(){
     bSmallLeft = false;
     bSmallRight = false;
+    bSwingRight =false;
+    bSwingLeft = false;
     bLeft = false;
     bRight = false;
     diff.set(0, 0);
@@ -93,26 +95,38 @@ void ttControl::touchMove(int x, int y, int TouchId){
 }
 //-------------------------------------------------
 void ttControl::touchUp(int x, int y, int TouchId){
-    if (touchId == TouchId) {
-        if (Directional_Touch_Area.inside(x, y)) {
-            if (charNum == 0) {
+    if (touchId == TouchId && charNum == 0) {
+            if (Directional_Touch_Area.inside(x, y)){
                 if (dis> 10 && diff.x >0){
                     bLeft = true;
-                }else if(dis > 10 && diff.x < 0){
-                    bRight = true;
-                }
-            }
-            
-            if(charNum == 1){
-                if (dis> 10 && diff.x >0){
-                    bRight = true;
-                }else if(dis > 10 && diff.x < 0){
-                    bLeft = true;
+                    bSwingLeft = true;
                 }
                 
-            }
+                if(dis > 10 && diff.x < 0){
+                    bRight = true;
+                    bSwingRight = true;
+                }
         }
         touchId = -1;
     }
-   
+          
+    
+    if (touchId == TouchId && charNum == 1) {
+       
+            if (Directional_Touch_Area.inside(x, y)){
+                if (dis> 10 && diff.x >0){
+                    bRight = true;
+                    bSwingRight = true;
+                }
+                
+                if(dis > 10 && diff.x < 0){
+                    bLeft = true;
+                    bSwingLeft = true;
+                }
+            }
+        touchId = -1;
+    }
+        
 }
+   
+

@@ -22,9 +22,10 @@ void ttChar::setup(ofxBox2d &characterWorld,
                    bool &smallLeft,
                    bool &smallRight,
                    bool &left,
-                   bool &right,
+                   bool &right,ofPoint SetPos,
                    int iCharNum){
     
+    setPos = SetPos;
     bSmallLeft = &smallLeft;
     bSmallRight = &smallRight;
     bLeft = &left;
@@ -43,7 +44,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
 void ttChar::update(){
     character.body->SetFixedRotation(true);
     Dummy.body->SetFixedRotation(true);
-    character.setDamping(0.95f);
+    character.setDamping(0.97f);
 
     float x =100;
     float scale = 55;

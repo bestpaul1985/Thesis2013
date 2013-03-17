@@ -15,7 +15,16 @@
 class ttChar{
 public:
     ttChar();
-    void setup(ofxBox2d &characterWorld, ofxBox2d&dummyWorld,ofPoint &Move,bool &smallLeft,bool &smallRight, bool &left, bool &right, ofPoint SetPos, int iCharNum);
+    void setup(ofxBox2d &characterWorld,
+               ofxBox2d&dummyWorld,
+               ofPoint &Move,
+               bool &smallLeft,
+               bool &smallRight,
+               bool &left,
+               bool &right,
+               bool &fixedMove,
+               ofPoint SetPos,
+               int iCharNum);
     void update();
     void draw();
 
@@ -32,6 +41,7 @@ public:
     bool           *bRight;
     bool           *bSmallLeft;
     bool           *bSmallRight;
+    bool           *bFixedMove;
     int            charNum;
     
    
