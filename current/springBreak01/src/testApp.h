@@ -19,8 +19,7 @@ class testApp : public ofxiPhoneApp{
         void update();
         void draw();
         void exit();
-    
-        void setupViewports();
+
         void drawScene(int iCameraDraw);
     
         void touchDown(ofTouchEventArgs & touch);

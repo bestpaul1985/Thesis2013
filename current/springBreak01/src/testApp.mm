@@ -36,6 +36,7 @@ void testApp::setup(){
     ofAddListener(world_B.contactStartEvents,this, &testApp::contactStart_worldB);
     ofAddListener(world_B.contactEndEvents,this, &testApp::contactStart_worldB);
     
+    
     control_A.setup(0);
     control_B.setup(1);
 
@@ -65,7 +66,7 @@ void testApp::setup(){
     cam_A.setNearClip(-1);
     cam_A.setFarClip(-100);
     cam_A.enableOrtho();
-    cam_A.setPosition(camPos_A.x,camPos_A.y, -100);
+    cam_A.setPosition(camPos_A.x,camPos_A.y, -1);
     cam_A.setScale(1, -1, 1);
     
     camPos_B.set(0, h);
@@ -76,6 +77,8 @@ void testApp::setup(){
     cam_B.setScale(1, -1, 1);
     
     //rope
+    rope_A.setup(char_A, char_B, 0);
+    rope_B.setup(char_A, char_B, 1);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -122,8 +125,8 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-
-        
+    
+    
     cam_A.begin();
     drawScene(0);
     cam_A.end();
@@ -132,10 +135,16 @@ void testApp::draw(){
     drawScene(1);
     cam_B.end();
     
-    
-//    control_A.draw();
-//    control_B.draw();
-    
+    rope_A.update();
+    rope_A.cameraUpdate(cam_A, cam_B);
+    rope_A.accelerometerUpdate(ofxAccelerometer.getForce());
+
+    rope_B.update();
+    rope_B.cameraUpdate(cam_A, cam_B);
+    rope_B.accelerometerUpdate(ofxAccelerometer.getForce());
+
+    rope_A.draw();
+    rope_B.draw();
     
     ofDrawBitmapStringHighlight("Rope_A\nworld: " + ofToString(char_A.getPos,0) + "\n" +
                        "Screen: " + ofToString(cam_A.worldToScreen(char_A.getPos),0) + "\n" +
@@ -145,7 +154,9 @@ void testApp::draw(){
                        "Screen: " + ofToString(cam_B.worldToScreen(char_B.getPos),0) + "\n" +
                        "camPos: " + ofToString(camPos_B,0), 570,950);
     
-      
+    //    control_A.draw();
+    //    control_B.draw();
+    
     
 }
 //-------------------------------------------------------------
