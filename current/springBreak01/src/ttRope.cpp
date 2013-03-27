@@ -28,16 +28,11 @@ void ttRope::draw(ofCamera cam_A, ofCamera cam_B){
         ofPoint worldB;
         worldB =  cam_B.screenToWorld(screenA);
 
-       
-
-       
-      
-        
         if (frc->y>-0.13) {
              rope.setPosition(worldB.x, worldB.y);
         }else{
-        
-        
+            float y = rope.getPosition().y;
+            rope.setPosition(worldB.x, y);
         }
         
         ofPoint diff;
@@ -49,7 +44,5 @@ void ttRope::draw(ofCamera cam_A, ofCamera cam_B){
         cout<<"screenA: "<<screenA <<"  worldB: "<< worldB <<" diff:"<<diff<<endl;
     }
     
-   
-   
     
 }
