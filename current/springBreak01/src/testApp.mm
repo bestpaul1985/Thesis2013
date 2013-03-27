@@ -50,27 +50,6 @@ void testApp::setup(){
                  ofPoint(384,700),
                  1);
     
-    
-//    char_A.setup(world_A, world_B,
-//                 control_A.diff,
-//                 control_A.bSmallLeft,
-//                 control_A.bSmallRight,
-//                 control_A.bLeft,
-//                 control_A.bRight,
-//                 ofPoint(384,500),
-//                 0);
-    
-//    char_B.setup(world_B, world_A,
-//                 control_B.diff,
-//                 control_B.bSmallLeft,
-//                 control_B.bSmallRight,
-//                 control_B.bLeft,
-//                 control_B.bRight,
-//                 ofPoint(384,700),
-//                 1);
- 
- 
-  
     //camera
     camPos_A.set(0, h);
     cam_A.setNearClip(-1);
@@ -89,6 +68,8 @@ void testApp::setup(){
     //rope
     rope_A.setup(char_A, char_B, 0);
     rope_B.setup(char_A, char_B, 1);
+    rope_A.setupContactListener();
+    rope_B.setupContactListener();
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){

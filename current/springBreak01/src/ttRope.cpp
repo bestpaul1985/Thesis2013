@@ -10,8 +10,6 @@
 
 void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
     
-  
-    
     char_A = &chraA;
     char_B = &chraB;
     ropeNum = num;
@@ -51,7 +49,7 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
     }
 }
 //----------------------------------------------------------
-void ttRope::contactListenerSetup(){
+void ttRope::setupContactListener(){
 
     ofAddListener(world.contactStartEvents, this, &ttRope::contactStart);
     ofAddListener(world.contactEndEvents, this, &ttRope::contactEnd);
@@ -59,6 +57,11 @@ void ttRope::contactListenerSetup(){
 //----------------------------------------------------------
 void ttRope::contactStart(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
+        ttSetData  * aData = (ttSetData*)e.a->GetBody()->GetUserData();
+        ttSetData  * bData = (ttSetData*)e.b->GetBody()->GetUserData();
+        
+        cout<<aData<<endl;
+        
     }
 }
 

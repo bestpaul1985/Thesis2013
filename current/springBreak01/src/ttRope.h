@@ -16,7 +16,7 @@
 class ttRope{
 public:
     void setup(ttChar &chraA, ttChar &chraB, int num);
-    void contactListenerSetup();
+    void setupContactListener();
     void update();
     void cameraUpdate(ofCamera cam_A, ofCamera cam_B);
     void accelerometerUpdate(ofPoint Acc);
