@@ -17,6 +17,7 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
     ropeScreen.set(0, 0);
     startTime = ofGetElapsedTimeMillis();
     duration = 100;
+    bFixRope = false;
     
     if (ropeNum == 0) {
         world.init();
@@ -26,8 +27,9 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
         world.registerGrabbing();
         start.setup(world.getWorld(), char_A->getPos.x, char_A->getPos.y, 10,10);
         dummy.setup(world.getWorld(), char_B->getPos.x,char_B->getPos.y,char_B->setWidth,char_B->setHeight);
-       
-        dummy.setData(new ttSetData);
+        b2Fixture *f = dummy.body->GetFixtureList();
+        f->SetSensor(true);
+        dummy.setData(new ttSetData());
         ttSetData* sd = (ttSetData*) dummy.getData();
         sd->name = "char";
         sd->bHit = false;
@@ -41,7 +43,8 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
         world.registerGrabbing();
         start.setup(world.getWorld(), char_B->getPos.x, char_B->getPos.y, 10,10);
         dummy.setup(world.getWorld(), char_A->getPos.x,char_A->getPos.y,char_A->setWidth,char_A->setHeight);
-        
+        b2Fixture *f = dummy.body->GetFixtureList();
+        f->SetSensor(true);
         dummy.setData(new ttSetData());
         ttSetData* sd = (ttSetData*) dummy.getData();
         sd->name = "char";
@@ -60,7 +63,13 @@ void ttRope::contactStart(ofxBox2dContactArgs &e){
         ttSetData  * aData = (ttSetData*)e.a->GetBody()->GetUserData();
         ttSetData  * bData = (ttSetData*)e.b->GetBody()->GetUserData();
         
-        cout<<aData<<endl;
+        
+        
+        if (bData->name == "rope"&& aData->name == "char") {
+            aData->bHit = true;
+            bData->bHit = true;
+        }
+        
         
     }
 }
@@ -68,11 +77,40 @@ void ttRope::contactStart(ofxBox2dContactArgs &e){
 //----------------------------------------------------------
 void ttRope::contactEnd(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
+        
+        ttSetData  * aData = (ttSetData*)e.a->GetBody()->GetUserData();
+        ttSetData  * bData = (ttSetData*)e.b->GetBody()->GetUserData();
+        
+       	if(aData) {
+			aData->bHit = false;
+		}
+		
+		if(bData) {
+			bData->bHit = false;
+		}
     }
 }
 //----------------------------------------------------------
 void ttRope::update(){
     world.update();
+    
+    if (!bFixRope) {
+        int counter = 0;
+        ttSetData* dummyData = (ttSetData*) dummy.getData();
+        for(int i =0; i<rects.size();i++){
+            ttSetData* ropeData = (ttSetData*) rects[i].getData();
+            if (ropeData->bHit && dummyData->bHit) {
+                counter++;
+            }
+        }
+        
+        if (counter>0) {
+            bFixRope = true;
+        }
+    
+        
+    }
+    
 }
 //----------------------------------------------------------
 void ttRope::cameraUpdate(ofCamera cam_A, ofCamera cam_B){
@@ -96,7 +134,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
     
     if (ropeNum == 0) {
         if (frc.y<-0.15) {
-            if (joints.size()<7) {
+            if (joints.size()<9 && !bFixRope) {
                 
                 if (joints.empty()&& ofGetElapsedTimeMillis() - startTime > duration) {
                     ofxBox2dRect rect;
@@ -104,7 +142,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                     rect.setup(world.getWorld(), start.getPosition().x, start.getPosition().y+20, 2.5, 30);
                     rect.setData(new ttSetData());
                     ttSetData* sd = (ttSetData*) rect.getData();
-                    sd->name = "char";
+                    sd->name = "rope";
                     sd->bHit = false;
                     rects.push_back(rect);
                     
@@ -127,7 +165,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                     rect.setup(world.getWorld(), rects.back().getPosition().x, rects.back().getPosition().y+20, 2.5, 30);
                     rect.setData(new ttSetData());
                     ttSetData* sd = (ttSetData*) rect.getData();
-                    sd->name = "char";
+                    sd->name = "rope";
                     sd->bHit = false;
                     rects.push_back(rect);
                     
@@ -174,11 +212,13 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                 void* sd = rects.back().body->GetUserData();
                 if (sd != NULL) {
                     delete sd;
-                    rects.front().body->SetUserData(NULL);
+                    rects.back().body->SetUserData(NULL);
                 }
                 world.getWorld()->DestroyBody(rects.back().body);
                 joints.clear();
                 rects.clear();
+                
+                bFixRope = false;
             }
 
         }
@@ -186,7 +226,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
     
     if (ropeNum == 1) {
         if (frc.y>0.15) {
-            if (joints.size()<7) {
+            if (joints.size()<9&& !bFixRope) {
                 
                 if (joints.empty()&& ofGetElapsedTimeMillis() - startTime > duration) {
                     ofxBox2dRect rect;
@@ -194,7 +234,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                     rect.setup(world.getWorld(), start.getPosition().x, start.getPosition().y-26, 2.5, 30);
                     rect.setData(new ttSetData());
                     ttSetData* sd = (ttSetData*) rect.getData();
-                    sd->name = "char";
+                    sd->name = "rope";
                     sd->bHit = false;
                     rects.push_back(rect);
                     
@@ -217,7 +257,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                     rect.setup(world.getWorld(), rects.back().getPosition().x, rects.back().getPosition().y-26, 2.5, 30);
                     rect.setData(new ttSetData());
                     ttSetData* sd = (ttSetData*) rect.getData();
-                    sd->name = "char";
+                    sd->name = "rope";
                     sd->bHit = false;
                     rects.push_back(rect);
                     
@@ -263,11 +303,13 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                 void* sd = rects.back().body->GetUserData();
                 if (sd != NULL) {
                     delete sd;
-                    rects.front().body->SetUserData(NULL);
+                    rects.back().body->SetUserData(NULL);
                 }
                 world.getWorld()->DestroyBody(rects.back().body);
                 joints.clear();
                 rects.clear();
+                
+                bFixRope = false;
             }
             
         }
@@ -287,6 +329,11 @@ void ttRope::draw(){
         rects[i].draw();
     }
     ofPopStyle();
+    
+    
+    ttSetData* sd = (ttSetData*) dummy.getData();
+
+
 }
 
 

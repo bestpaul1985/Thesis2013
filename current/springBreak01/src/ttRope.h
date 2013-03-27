@@ -30,14 +30,15 @@ public:
     ofxBox2d world;
     ttChar *char_A;
     ttChar *char_B;
-    int ropeNum;
-    
     ofxBox2dRect start;
     vector<ofxBox2dRect>    rects;
     vector<b2RevoluteJoint*> joints;
+    
+    int ropeNum;
     float startTime;
     float duration;
     
+    bool bFixRope;
 };
 
 #endif /* defined(__springBreak01__ttRope__) */
