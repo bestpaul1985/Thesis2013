@@ -76,8 +76,6 @@ void testApp::setup(){
     cam_B.setScale(1, -1, 1);
     
     //rope
-    rope_A.setup(world_B, char_A, char_B, ofxAccelerometer.getForce(), 0);
-    rope_B.setup(world_A, char_A, char_B, ofxAccelerometer.getForce(), 1);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -134,8 +132,6 @@ void testApp::draw(){
     drawScene(1);
     cam_B.end();
     
-    rope_A.draw(cam_A,cam_B);
-    rope_B.draw(cam_A,cam_B);
     
 //    control_A.draw();
 //    control_B.draw();

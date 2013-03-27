@@ -14,14 +14,17 @@
 #include "ttChar.h"
 class ttRope{
 public:
-    void setup(ofxBox2d &world,ttChar &chra_A,ttChar &chra_B, ofPoint &accFrc,int num);
-    void draw(ofCamera cam_A,ofCamera cam_B);
+    void setup(ttChar &chraA, ttChar &chraB, int num);
+    void accelerometerUpdate(ofPoint Acc);
+    void update();
+    void draw();
     
+    ofxBox2dRect dummy, ropeEnd;
+    ofPoint frc;
+    ofxBox2d world;
     ttChar *char_A;
     ttChar *char_B;
-    ofxBox2dRect rope;
-    ofPoint *frc;
-    int charNum;
+    int ropeNum;
 };
 
 #endif /* defined(__springBreak01__ttRope__) */
