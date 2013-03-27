@@ -23,6 +23,7 @@ public:
                bool &smallRight,
                bool &left,
                bool &right,
+               bool &fixedMove,
                ofPoint SetPos,
                int iCharNum);
     void update();
@@ -42,7 +43,7 @@ public:
     bool           *bRight;
     bool           *bSmallLeft;
     bool           *bSmallRight;
-    bool           bFixedMove;
+    bool           *bFixedMove;
     int            charNum;
     
    
