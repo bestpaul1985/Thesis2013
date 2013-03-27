@@ -17,35 +17,32 @@ class ttChar{
 public:
     ttChar();
     void setup(ofxBox2d &characterWorld,
-               ofxBox2d&dummyWorld,
-               ofPoint &Move,
-               bool &smallLeft,
-               bool &smallRight,
-               bool &left,
-               bool &right,
+               ofxBox2d &dummyWorld,
+               ttControl &ctrl,
                ofPoint SetPos,
                int iCharNum);
+    
     void update();
     void draw();
+    void drawBox2dObject();
 
     ofxBox2dRect    character;
     ofxBox2dRect    Dummy;
     
     ofPoint         setPos;
     ofPoint         getPos;
-    ofPoint          *move;
     
     float           setWidth;
     float           setHeight;
     
-    bool           *bLeft;
-    bool           *bRight;
-    bool           *bSmallLeft;
-    bool           *bSmallRight;
-    bool           bFixedMove;
-    int            charNum;
+    bool            bFixedMove;
+    int             charNum;
     
-   
+    ttControl       *control;
+    ofImage         sprite[20];
+    
+    float             adjustedHeight;
+    bool            mirrorLeft;
 };
 
 #endif /* defined(__thatThey__ttChar__) */

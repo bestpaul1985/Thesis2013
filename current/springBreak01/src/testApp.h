@@ -62,6 +62,8 @@ class testApp : public ofxiPhoneApp{
     
         //rope
         ttRope rope_A,rope_B;
+    
+    
 };
 
 

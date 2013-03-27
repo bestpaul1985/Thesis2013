@@ -27,8 +27,8 @@ void testApp::setup(){
     world_B.setIterations(1, 1);
     world_B.registerGrabbing();
     //Map
-    ground_A.setup("level01_A.txt", world_A);
-    ground_B.setup("level01_B.txt", world_B);
+    ground_A.setup("levelTxt/level01_A.txt", world_A);
+    ground_B.setup("levelTxt/level01_B.txt", world_B);
     
     // register the listener so that we get the events
 	ofAddListener(world_A.contactStartEvents, this, &testApp::contactStart_worldA);
@@ -40,24 +40,34 @@ void testApp::setup(){
     control_A.setup(0);
     control_B.setup(1);
 
-    
     char_A.setup(world_A, world_B,
-                 control_A.diff,
-                 control_A.bSmallLeft,
-                 control_A.bSmallRight,
-                 control_A.bLeft,
-                 control_A.bRight,
+                 control_A,
                  ofPoint(384,500),
                  0);
     
     char_B.setup(world_B, world_A,
-                 control_B.diff,
-                 control_B.bSmallLeft,
-                 control_B.bSmallRight,
-                 control_B.bLeft,
-                 control_B.bRight,
+                 control_B,
                  ofPoint(384,700),
                  1);
+    
+    
+//    char_A.setup(world_A, world_B,
+//                 control_A.diff,
+//                 control_A.bSmallLeft,
+//                 control_A.bSmallRight,
+//                 control_A.bLeft,
+//                 control_A.bRight,
+//                 ofPoint(384,500),
+//                 0);
+    
+//    char_B.setup(world_B, world_A,
+//                 control_B.diff,
+//                 control_B.bSmallLeft,
+//                 control_B.bSmallRight,
+//                 control_B.bLeft,
+//                 control_B.bRight,
+//                 ofPoint(384,700),
+//                 1);
  
  
   
@@ -163,13 +173,14 @@ void testApp::draw(){
 void testApp::drawScene(int iCameraDraw){
 
     if (iCameraDraw == 0) {
+//        char_A.drawBox2dObject();
         char_A.draw();
-        ofSetColor(255);
+        
         ofSetColor(ofColor::blueViolet);
         ground_A.draw();
     }else if(iCameraDraw == 1){
+//        char_B.drawBox2dObject();
         char_B.draw();
-        ofSetColor(255);
         
         ofSetColor(ofColor::blueViolet);
         ground_B.draw();
