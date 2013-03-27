@@ -39,15 +39,26 @@ void testApp::setup(){
     control_A.setup(0);
     control_B.setup(1);
 
+    
     char_A.setup(world_A, world_B,
-                 control_A,
+                 control_A.diff,
+                 control_A.bSmallLeft,
+                 control_A.bSmallRight,
+                 control_A.bLeft,
+                 control_A.bRight,
                  ofPoint(384,500),
                  0);
     
-    char_B.setup(world_A, world_B,
-                 control_B,
+    char_B.setup(world_B, world_A,
+                 control_B.diff,
+                 control_B.bSmallLeft,
+                 control_B.bSmallRight,
+                 control_B.bLeft,
+                 control_B.bRight,
                  ofPoint(384,700),
                  1);
+ 
+ 
   
     //camera
     camPos_A.set(0, h);

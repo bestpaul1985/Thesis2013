@@ -20,6 +20,7 @@ public:
     void setup(ofxBox2d &characterWorld,
                ofxBox2d&dummyWorld,
                ttControl&cont,
+               ofPoint &Move,
 //               bool &smallLeft,
 //               bool &smallRight,
 //               bool &left,
