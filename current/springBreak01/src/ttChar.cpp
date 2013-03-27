@@ -10,8 +10,8 @@
 
 ttChar::ttChar(){
     
-    setWidth = 15;
-    setHeight = 30;
+    setWidth = 30;
+    setHeight = 60;
     setPos.set(384, 512);
 
 }
@@ -23,6 +23,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
                    bool &smallRight,
                    bool &left,
                    bool &right,
+                   bool &fixedMove,
                    ofPoint SetPos,
                    int iCharNum){
     
@@ -32,12 +33,12 @@ void ttChar::setup(ofxBox2d &characterWorld,
     bSmallRight = &smallRight;
     bLeft = &left;
     bRight = &right;
-    bFixedMove = false;
+    bFixedMove = &fixedMove;
     setPos = SetPos;
     getPos = SetPos;
     charNum = iCharNum;
  
-    character.setPhysics(1000.0f, 0.0f, 0.3f);
+    character.setPhysics(20.0f, 0.0f, 0.3f);
     character.setup(characterWorld.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
 
     character.setData(new ttSetData);
@@ -70,7 +71,7 @@ void ttChar::update(){
     float scale = 55;
     float smallMove;
     
-    if (bFixedMove==true) {
+    if (*bFixedMove==true) {
         *bSmallLeft = false;
         *bSmallRight = false;
         *bLeft = false;
@@ -134,13 +135,14 @@ void ttChar::update(){
     }
 
     getPos = character.getPosition();
-
+//    Dummy.setPosition(getPos);
    
 }
 //----------------------------------------------
 void ttChar::draw(){
     
-
+//    ofSetColor(255, 30, 220,100);
+//    Dummy.draw();
     ofSetColor(255, 30, 220,100);
     character.draw();
     

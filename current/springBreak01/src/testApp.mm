@@ -46,6 +46,7 @@ void testApp::setup(){
                  control_A.bSmallRight,
                  control_A.bLeft,
                  control_A.bRight,
+                 rope_A.bFixedMove,
                  ofPoint(384,500),
                  0);
     
@@ -55,10 +56,21 @@ void testApp::setup(){
                  control_B.bSmallRight,
                  control_B.bLeft,
                  control_B.bRight,
+                 rope_B.bFixedMove,
                  ofPoint(384,700),
                  1);
  
+    
+    rope_A.setup(world_B,char_A.getPos,0);
+    rope_B.setup(world_A,char_B.getPos,1);
+    
  
+    item[0].setPhysics(1, 0, 0);
+    item[0].isFixed();
+    item[0].setup(world_A.getWorld(), w/3, h/3, 20, 20);
+    item[1].setPhysics(1, 0, 0);
+    item[1].setup(world_B.getWorld(), w/3, h/3, 20, 20);
+    
   
     //camera
     camPos_A.set(0, h);
@@ -74,10 +86,10 @@ void testApp::setup(){
     cam_B.enableOrtho();
     cam_B.setPosition(camPos_B.x,camPos_B.y, -1);
     cam_B.setScale(1, -1, 1);
-    
-    //rope
-    rope_A.setup(world_B, char_A, char_B, ofxAccelerometer.getForce(), 0);
-    rope_B.setup(world_A, char_A, char_B, ofxAccelerometer.getForce(), 1);
+
+  
+    dummy.setPhysics(20.0f, 0.0f, 0.2f);
+    dummy.setup(world_B.getWorld(),500,500, 30,30);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -116,16 +128,24 @@ void testApp::update(){
     //Character
     char_A.update();
     char_B.update();
+    
+    ofPoint newPos(char_B.getPos.x,char_A.getPos.y);
+    rope_A.update(ofxAccelerometer.getForce(), newPos);
+    
+    
+    newPos.set(char_A.getPos.x,char_B.getPos.y);
+    rope_B.update(ofxAccelerometer.getForce(), newPos);
 
     cam_A.setPosition(char_A.getPos.x- w/2,camPos_A.y, -1);
     cam_B.setPosition(char_B.getPos.x- w/2,camPos_B.y, -1);
-   
+    
+    ofPoint screenPos = cam_A.worldToScreen(char_A.getPos);
+    ofPoint worldpos = cam_B.screenToWorld(screenPos);
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
 
-        
     cam_A.begin();
     drawScene(0);
     cam_A.end();
@@ -134,20 +154,19 @@ void testApp::draw(){
     drawScene(1);
     cam_B.end();
     
-    rope_A.draw(cam_A,cam_B);
-    rope_B.draw(cam_A,cam_B);
+    control_A.draw();
+    control_B.draw();
     
-//    control_A.draw();
-//    control_B.draw();
+    
     
     
     ofDrawBitmapStringHighlight("Rope_A\nworld: " + ofToString(char_A.getPos,0) + "\n" +
                        "Screen: " + ofToString(cam_A.worldToScreen(char_A.getPos),0) + "\n" +
                        "camPos: " + ofToString(camPos_A,0), 50,50);
     
-    ofDrawBitmapStringHighlight("Rope_B\nworld: " + ofToString(char_B.getPos,0) + "\n" +
-                       "Screen: " + ofToString(cam_B.worldToScreen(char_B.getPos),0) + "\n" +
-                       "camPos: " + ofToString(camPos_B,0), 570,950);
+    ofDrawBitmapStringHighlight("Rope_B\nworld: " + ofToString(char_B.getPos,1) + "\n" +
+                       "Screen: " + ofToString(cam_B.worldToScreen(char_B.getPos),1) + "\n" +
+                       "camPos: " + ofToString(camPos_B,1), 600,950);
     
       
     
@@ -157,14 +176,19 @@ void testApp::drawScene(int iCameraDraw){
 
     if (iCameraDraw == 0) {
         char_A.draw();
+//        rope_B.draw();
+//        ropeJoint_B.draw();
+        item[0].draw();
         ofSetColor(255);
-        ofSetColor(ofColor::blueViolet);
         ground_A.draw();
     }else if(iCameraDraw == 1){
         char_B.draw();
-        ofSetColor(255);
-        
+//        rope_A.draw();
+//        ofRect(finalPos.x, finalPos.y,30, 30);
+//        ropeJoint_A.draw();
+//        dummy.draw();
         ofSetColor(ofColor::blueViolet);
+        item[1].draw();
         ground_B.draw();
     }
 

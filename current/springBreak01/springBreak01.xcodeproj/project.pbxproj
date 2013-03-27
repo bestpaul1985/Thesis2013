@@ -57,7 +57,6 @@
 		4C18806016F68ACE005A8FE7 /* ofxBox2dRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C18803216F68ACD005A8FE7 /* ofxBox2dRect.cpp */; };
 		4CCD3A7816F3D9A00095BCB1 /* ttControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD3A7616F3D9A00095BCB1 /* ttControl.cpp */; };
 		4CFEE4C317022C0E007399D9 /* ground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEE4C117022C0E007399D9 /* ground.cpp */; };
-		4CFEE4C717027DFC007399D9 /* ttRope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEE4C517027DFC007399D9 /* ttRope.cpp */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
 		53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
@@ -202,8 +201,6 @@
 		4CCD3B2B16F563B80095BCB1 /* ttSetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttSetData.h; sourceTree = "<group>"; };
 		4CFEE4C117022C0E007399D9 /* ground.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ground.cpp; sourceTree = "<group>"; };
 		4CFEE4C217022C0E007399D9 /* ground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ground.h; sourceTree = "<group>"; };
-		4CFEE4C517027DFC007399D9 /* ttRope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttRope.cpp; sourceTree = "<group>"; };
-		4CFEE4C617027DFC007399D9 /* ttRope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttRope.h; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		BB16EBD10F2B2A9500518274 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -529,8 +526,6 @@
 				4CCD3A7716F3D9A00095BCB1 /* ttControl.h */,
 				4CFEE4C117022C0E007399D9 /* ground.cpp */,
 				4CFEE4C217022C0E007399D9 /* ground.h */,
-				4CFEE4C517027DFC007399D9 /* ttRope.cpp */,
-				4CFEE4C617027DFC007399D9 /* ttRope.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -680,7 +675,6 @@
 				4C18805F16F68ACE005A8FE7 /* ofxBox2dPolygon.cpp in Sources */,
 				4C18806016F68ACE005A8FE7 /* ofxBox2dRect.cpp in Sources */,
 				4CFEE4C317022C0E007399D9 /* ground.cpp in Sources */,
-				4CFEE4C717027DFC007399D9 /* ttRope.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
