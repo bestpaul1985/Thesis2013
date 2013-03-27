@@ -18,6 +18,7 @@ ttChar::ttChar(){
 //----------------------------------------------
 void ttChar::setup(ofxBox2d &characterWorld,
                    ofxBox2d &dummyWorld,
+                   ofPoint &Move,
                    ttControl&cont,
 //                   bool &smallLeft,
 //                   bool &smallRight,
@@ -27,7 +28,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
                    int iCharNum){
     
     control = &cont;
-    *move = control->diff;
+    move = &Move;
 //    bSmallLeft = &smallLeft;
 //    bSmallRight = &smallRight;
 //    bLeft = &left;
