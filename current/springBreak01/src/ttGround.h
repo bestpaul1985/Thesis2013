@@ -11,7 +11,7 @@
 
 #include "ofMain.h"
 #include "ofxBox2d.h"
-class ground{
+class ttGround{
     public:
     void setup(string levelTxt,ofxBox2d &world);
     void draw();

@@ -32,8 +32,8 @@ void ttChar::setup(ofxBox2d &characterWorld,
  
     character.setPhysics(1000.0f, 0.0f, 0.3f);
     character.setup(characterWorld.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
-<<<<<<< HEAD
-=======
+
+    //<<<<<<< HEAD=======
 
     character.setData(new ttSetData);
     ttSetData* sd = (ttSetData*)character.getData();
@@ -85,9 +85,8 @@ void ttChar::setup(ofxBox2d &characterWorld,
         sprite[19].loadImage("sprites/boy/boy_19.png");
         
     }
-    sd->bHit = false;
-    sd->bHooked = false;
->>>>>>> characterSprite
+ 
+//>>>>>>> characterSprite
     
     character.body->SetFixedRotation(true);
     character.body->SetLinearDamping(0.5);

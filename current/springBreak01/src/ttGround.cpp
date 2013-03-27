@@ -6,10 +6,10 @@
 //
 //
 
-#include "ground.h"
+#include "ttGround.h"
 
 
-void ground::setup(string levelTxt, ofxBox2d &world){
+void ttGround::setup(string levelTxt, ofxBox2d &world){
     ifstream f;
 	f.open(ofToDataPath(levelTxt).c_str());
 	vector <string> strLines;
@@ -38,7 +38,7 @@ void ground::setup(string levelTxt, ofxBox2d &world){
 }
 
 
-void ground::draw(){
+void ttGround::draw(){
     
     for (int i=0; i<ground.size(); i++) {
 		ground[i].draw();

@@ -10,7 +10,7 @@
 #include "ttRopeBasic.h"
 #include "ttSetData.h"
 #include "ttControl.h"
-#include "ground.h"
+#include "ttGround.h"
 #include "ttRope.h"
 class testApp : public ofxiPhoneApp{
 	
@@ -53,7 +53,7 @@ class testApp : public ofxiPhoneApp{
         ttControl control_A;
         ttControl control_B;
     
-        ground  ground_A, ground_B;
+        ttGround  ground_A, ground_B;
     
         ofCamera cam_A, cam_B;
         ofRectangle view_A,view_B;
