@@ -33,7 +33,6 @@ void ttChar::setup(ofxBox2d &characterWorld,
     character.setPhysics(1000.0f, 0.0f, 0.3f);
     character.setup(characterWorld.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
 
-    //<<<<<<< HEAD=======
 
     character.setData(new ttSetData);
     ttSetData* sd = (ttSetData*)character.getData();
@@ -86,7 +85,6 @@ void ttChar::setup(ofxBox2d &characterWorld,
         
     }
  
-//>>>>>>> characterSprite
     
     character.body->SetFixedRotation(true);
     character.body->SetLinearDamping(0.5);
@@ -185,6 +183,7 @@ void ttChar::draw(){
     if (charNum == 0) ofScale(-1, 1);
     //turn left flip
     if (mirrorLeft) ofScale(1, -1);
+    
     
     if (control->bRight || control->bLeft) {
         sprite[0].draw(0,0, adjustedHeight, adjustedHeight);
