@@ -19,12 +19,12 @@ public:
     ttChar();
     void setup(ofxBox2d &characterWorld,
                ofxBox2d&dummyWorld,
-//               ttControl&cont,
+               ttControl&cont,
                ofPoint &Move,
-               bool &smallLeft,
-               bool &smallRight,
-               bool &left,
-               bool &right,
+//               bool &smallLeft,
+//               bool &smallRight,
+//               bool &left,
+//               bool &right,
                ofPoint SetPos,
                int iCharNum);
     void update();
