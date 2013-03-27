@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef __springBreak01__ground__
-#define __springBreak01__ground__
+#ifndef __springBreak01__ttGround__
+#define __springBreak01__ttGround__
 
 #include "ofMain.h"
 #include "ofxBox2d.h"
