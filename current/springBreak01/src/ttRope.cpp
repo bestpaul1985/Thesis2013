@@ -41,7 +41,7 @@ void ttRope::draw(ofCamera cam_A, ofCamera cam_B){
         ofTranslate(diff.x, 0);
         rope.draw();
         ofPopMatrix();
-//        cout<<"screenA: "<<screenA <<"  worldB: "<< worldB <<" diff:"<<diff<<endl;
+        cout<<"screenA: "<<screenA <<"  worldB: "<< worldB <<" diff:"<<diff<<endl;
     }
     
     
