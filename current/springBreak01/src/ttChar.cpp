@@ -19,19 +19,20 @@ ttChar::ttChar(){
 void ttChar::setup(ofxBox2d &characterWorld,
                    ofxBox2d &dummyWorld,
                    ofPoint &Move,
-                   bool &smallLeft,
-                   bool &smallRight,
-                   bool &left,
-                   bool &right,
+                   ttControl&cont,
+//                   bool &smallLeft,
+//                   bool &smallRight,
+//                   bool &left,
+//                   bool &right,
                    ofPoint SetPos,
                    int iCharNum){
     
-    
+    control = &cont;
     move = &Move;
-    bSmallLeft = &smallLeft;
-    bSmallRight = &smallRight;
-    bLeft = &left;
-    bRight = &right;
+//    bSmallLeft = &smallLeft;
+//    bSmallRight = &smallRight;
+//    bLeft = &left;
+//    bRight = &right;
     bFixedMove = false;
     setPos = SetPos;
     getPos = SetPos;
@@ -85,9 +86,9 @@ void ttChar::update(){
         
         if (charNum == 0) {
 
-            if (*bSmallLeft == true) {
+            if (control->bSmallLeft == true) {
                 character.setVelocity(smallMove, 0);
-                *bSmallLeft = false;
+                control->bSmallLeft = false;
             }
             
             if(*bSmallRight == true){

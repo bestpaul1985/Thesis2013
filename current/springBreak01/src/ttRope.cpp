@@ -35,6 +35,9 @@ void ttRope::draw(ofCamera cam_A, ofCamera cam_B){
         
         if (frc->y>-0.13) {
              rope.setPosition(worldB.x, worldB.y);
+        }else{
+        
+        
         }
         
         ofPoint diff;

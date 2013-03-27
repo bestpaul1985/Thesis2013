@@ -13,16 +13,18 @@
 #include "ofxBox2d.h"
 #include "ttSetData.h"
 #include "ttRopeJoint.h"
+#include "ttControl.cpp"
 class ttChar{
 public:
     ttChar();
     void setup(ofxBox2d &characterWorld,
                ofxBox2d&dummyWorld,
+               ttControl&cont,
                ofPoint &Move,
-               bool &smallLeft,
-               bool &smallRight,
-               bool &left,
-               bool &right,
+//               bool &smallLeft,
+//               bool &smallRight,
+//               bool &left,
+//               bool &right,
                ofPoint SetPos,
                int iCharNum);
     void update();
@@ -30,7 +32,7 @@ public:
 
     ofxBox2dRect    character;
     ofxBox2dRect    Dummy;
-    
+    ttControl       *control;
     ofPoint         setPos;
     ofPoint         getPos;
     ofPoint          *move;
