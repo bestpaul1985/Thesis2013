@@ -39,24 +39,6 @@ void ttChar::setup(ofxBox2d &characterWorld,
  
     character.setPhysics(1000.0f, 0.0f, 0.3f);
     character.setup(characterWorld.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
-
-    character.setData(new ttSetData);
-    b2Filter filter;
-    ttSetData* sd = (ttSetData*)character.getData();
-    if (charNum == 0) {
-        sd->name = "char_A";
-        filter.categoryBits = 0x0004;
-        filter.maskBits = 0x0001|0x0002|0x0004;
-
-        character.setFilterData(filter);
-    }else{
-        sd->name = "char_B";
-        filter.categoryBits = 0x0004;
-        filter.maskBits = 0x0001|0x0002|0x0004;
-        character.setFilterData(filter);
-    }
-    sd->bHit = false;
-    sd->bHooked = false;
     
     character.body->SetFixedRotation(true);
     character.body->SetLinearDamping(0.5);

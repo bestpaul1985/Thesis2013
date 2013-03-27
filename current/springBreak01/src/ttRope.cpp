@@ -28,6 +28,12 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
         world.registerGrabbing();
         start.setup(world.getWorld(), char_A->getPos.x, char_A->getPos.y, 10,10);
         dummy.setup(world.getWorld(), char_B->getPos.x,char_B->getPos.y,char_B->setWidth,char_B->setHeight);
+       
+        dummy.setData(new ttSetData);
+        ttSetData* sd = (ttSetData*) dummy.getData();
+        sd->name = "char";
+        sd->bHit = false;
+        sd->ID = 0;
     }
     else
     {
@@ -38,14 +44,31 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
         world.registerGrabbing();
         start.setup(world.getWorld(), char_B->getPos.x, char_B->getPos.y, 10,10);
         dummy.setup(world.getWorld(), char_A->getPos.x,char_A->getPos.y,char_A->setWidth,char_A->setHeight);
+        
+        dummy.setData(new ttSetData());
+        ttSetData* sd = (ttSetData*) dummy.getData();
+        sd->name = "char";
+        sd->bHit = false;
+        sd->ID = 0;
     }
 }
 //----------------------------------------------------------
 void ttRope::contactListenerSetup(){
 
-
+    ofAddListener(world.contactStartEvents, this, &ttRope::contactStart);
+    ofAddListener(world.contactEndEvents, this, &ttRope::contactEnd);
+}
+//----------------------------------------------------------
+void ttRope::contactStart(ofxBox2dContactArgs &e){
+    if(e.a != NULL && e.b != NULL) {
+    }
 }
 
+//----------------------------------------------------------
+void ttRope::contactEnd(ofxBox2dContactArgs &e){
+    if(e.a != NULL && e.b != NULL) {
+    }
+}
 //----------------------------------------------------------
 void ttRope::update(){
     world.update();
@@ -56,8 +79,9 @@ void ttRope::cameraUpdate(ofCamera cam_A, ofCamera cam_B){
     if (ropeNum == 0) {
         dumScreen = cam_B.worldToScreen(char_B->getPos);
         ropeScreen = cam_A.worldToScreen(char_A->getPos);
-        
-    }else{
+    }
+    else
+    {
         dumScreen = cam_A.worldToScreen(char_A->getPos);
         ropeScreen = cam_B.worldToScreen(char_B->getPos);
     }
@@ -77,6 +101,10 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                     ofxBox2dRect rect;
                     rect.setPhysics(20.0f, 0.0f, 0.2f);
                     rect.setup(world.getWorld(), start.getPosition().x, start.getPosition().y+20, 2.5, 30);
+                    rect.setData(new ttSetData());
+                    ttSetData* sd = (ttSetData*) rect.getData();
+                    sd->name = "char";
+                    sd->bHit = false;
                     rects.push_back(rect);
                     
                     b2RevoluteJointDef revoluteJointDef;
@@ -96,6 +124,10 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                     ofxBox2dRect rect;
                     rect.setPhysics(20.0f, 0.0f, 0.2f);
                     rect.setup(world.getWorld(), rects.back().getPosition().x, rects.back().getPosition().y+20, 2.5, 30);
+                    rect.setData(new ttSetData());
+                    ttSetData* sd = (ttSetData*) rect.getData();
+                    sd->name = "char";
+                    sd->bHit = false;
                     rects.push_back(rect);
                     
                     b2RevoluteJointDef revoluteJointDef;
@@ -114,7 +146,13 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
             
             if (joints.size()>1)
             {
+               
                 world.getWorld()->DestroyJoint(joints.front());
+                void* sd = rects.front().body->GetUserData();
+                if (sd != NULL) {
+                    delete sd;
+                    rects.front().body->SetUserData(NULL);
+                }
                 world.getWorld()->DestroyBody(rects.front().body);
                 joints.erase(joints.begin());
                 rects.erase(rects.begin());
@@ -132,6 +170,11 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
             else if(joints.size()==1)
             {
                 world.getWorld()->DestroyJoint(joints.back());
+                void* sd = rects.back().body->GetUserData();
+                if (sd != NULL) {
+                    delete sd;
+                    rects.front().body->SetUserData(NULL);
+                }
                 world.getWorld()->DestroyBody(rects.back().body);
                 joints.clear();
                 rects.clear();
@@ -148,6 +191,10 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                     ofxBox2dRect rect;
                     rect.setPhysics(20.0f, 0.0f, 0.2f);
                     rect.setup(world.getWorld(), start.getPosition().x, start.getPosition().y-26, 2.5, 30);
+                    rect.setData(new ttSetData());
+                    ttSetData* sd = (ttSetData*) rect.getData();
+                    sd->name = "char";
+                    sd->bHit = false;
                     rects.push_back(rect);
                     
                     b2RevoluteJointDef revoluteJointDef;
@@ -167,6 +214,10 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                     ofxBox2dRect rect;
                     rect.setPhysics(20.0f, 0.0f, 0.2f);
                     rect.setup(world.getWorld(), rects.back().getPosition().x, rects.back().getPosition().y-26, 2.5, 30);
+                    rect.setData(new ttSetData());
+                    ttSetData* sd = (ttSetData*) rect.getData();
+                    sd->name = "char";
+                    sd->bHit = false;
                     rects.push_back(rect);
                     
                     b2RevoluteJointDef revoluteJointDef;
@@ -186,6 +237,11 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
             if (joints.size()>1)
             {
                 world.getWorld()->DestroyJoint(joints.front());
+                void* sd = rects.front().body->GetUserData();
+                if (sd != NULL) {
+                    delete sd;
+                    rects.front().body->SetUserData(NULL);
+                }
                 world.getWorld()->DestroyBody(rects.front().body);
                 joints.erase(joints.begin());
                 rects.erase(rects.begin());
@@ -203,6 +259,11 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
             else if(joints.size()==1)
             {
                 world.getWorld()->DestroyJoint(joints.back());
+                void* sd = rects.back().body->GetUserData();
+                if (sd != NULL) {
+                    delete sd;
+                    rects.front().body->SetUserData(NULL);
+                }
                 world.getWorld()->DestroyBody(rects.back().body);
                 joints.clear();
                 rects.clear();

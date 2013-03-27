@@ -13,12 +13,7 @@
 class ttSetData{
 public:
     string name;
-    int	 ID;
 	bool bHit;
-    bool bLast;
-    bool bHooked;
-    bool bHooking;
-    
 };
 
 #endif /* defined(__ttContactListener__ttSetData__) */

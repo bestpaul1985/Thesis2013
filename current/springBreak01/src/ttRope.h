@@ -12,6 +12,7 @@
 #include "ofMain.h"
 #include "ofxBox2d.h"
 #include "ttChar.h"
+#include "ttSetData.h"
 class ttRope{
 public:
     void setup(ttChar &chraA, ttChar &chraB, int num);
