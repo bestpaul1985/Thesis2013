@@ -322,7 +322,7 @@ void ttRope::draw(){
     ofPushStyle();
     ofSetColor(30, 255, 220,50);
     ofSetLineWidth(3);
-    dummy.draw();
+//    dummy.draw();
     start.draw();
     
     for (int i =0; i<rects.size(); i++) {

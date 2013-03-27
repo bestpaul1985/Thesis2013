@@ -39,9 +39,9 @@ public:
     int             charNum;
     
     ttControl       *control;
-    ofImage         sprite[20];
+    vector<ofImage> sprite;
     
-    float             adjustedHeight;
+    float           adjustedHeight;
     bool            mirrorLeft;
 };
 
