@@ -33,7 +33,6 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
         ttSetData* sd = (ttSetData*) dummy.getData();
         sd->name = "char";
         sd->bHit = false;
-        sd->ID = 0;
     }
     else
     {
@@ -49,7 +48,6 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
         ttSetData* sd = (ttSetData*) dummy.getData();
         sd->name = "char";
         sd->bHit = false;
-        sd->ID = 0;
     }
 }
 //----------------------------------------------------------
