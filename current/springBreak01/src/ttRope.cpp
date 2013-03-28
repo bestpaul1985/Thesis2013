@@ -128,12 +128,12 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
     if (ropeNum == 0&& !bFixRope) {
        //rope_A add
         if (frc.y<-0.15) {
-            if (joints.size()<20 && !bFixRope) {
+            if (joints.size()<20) {
                 
                 if (joints.empty()&& ofGetElapsedTimeMillis() - startTime > duration) {
                     ofxBox2dRect rect;
                     rect.setPhysics(20.0f, 0.0f, 0.2f);
-                    rect.setup(world.getWorld(), start.getPosition().x, start.getPosition().y+20, 2.5, 30);
+                    rect.setup(world.getWorld(), start.getPosition().x, start.getPosition().y+30, 2.5, 30);
                     rect.setData(new ttSetData());
                     ttSetData* sd = (ttSetData*) rect.getData();
                     sd->name = "rope";
@@ -141,7 +141,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                     rects.push_back(rect);
                     
                     b2RevoluteJointDef revoluteJointDef;
-                    revoluteJointDef.Initialize(start.body, rects[0].body, start.body->GetWorldCenter());
+                    revoluteJointDef.Initialize(start.body, rects.back().body, start.body->GetWorldCenter());
                     b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
                     revoluteJointDef.localAnchorA.Set(p.x, p.y);
                     p = screenPtToWorldPt(ofPoint(0,30));
@@ -156,7 +156,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
 
                     ofxBox2dRect rect;
                     rect.setPhysics(20.0f, 0.0f, 0.2f);
-                    rect.setup(world.getWorld(), rects.back().getPosition().x, rects.back().getPosition().y+20, 2.5, 30);
+                    rect.setup(world.getWorld(), rects.back().getPosition().x, rects.back().getPosition().y+30, 2.5, 30);
                     rect.setData(new ttSetData());
                     ttSetData* sd = (ttSetData*) rect.getData();
                     sd->name = "rope";
@@ -193,8 +193,9 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                 rects.front().setPosition(pos.x, pos.y-20);
                 b2RevoluteJointDef revoluteJointDef;
                 revoluteJointDef.Initialize(start.body, rects.front().body, start.body->GetWorldCenter());
-                b2Vec2 p = screenPtToWorldPt(ofPoint(0,9));
+                b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
                 revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                p = screenPtToWorldPt(ofPoint(0,30));
                 revoluteJointDef.localAnchorB.Set(p.x, -p.y);
                 joints.front() = (b2RevoluteJoint*)world.getWorld()->CreateJoint(&revoluteJointDef);
                 
@@ -320,6 +321,8 @@ void ttRope::swing(){
             if (swingNum ==0) {
                 b2Fixture *f = dummy.body->GetFixtureList();
                 f->SetSensor(false);
+                dummy.addForce(ofPoint(ofRandom(-1,1),-45), 1000);
+
                 b2RevoluteJointDef revoluteJointDef;
                 revoluteJointDef.Initialize(rects.back().body, dummy.body, dummy.body->GetWorldCenter());
                 b2Vec2 p = screenPtToWorldPt(ofPoint(0,30));
@@ -327,7 +330,7 @@ void ttRope::swing(){
                 p = screenPtToWorldPt(ofPoint(0,30));
                 revoluteJointDef.localAnchorB.Set(p.x, -p.y);
                 joints.push_back((b2RevoluteJoint*)world.getWorld()->CreateJoint(&revoluteJointDef));
-                dummy.addForce(ofPoint(0,-10), 1000);
+               
                 swingNum = 1;
                 cout<<"2"<<endl;
             }
@@ -336,7 +339,7 @@ void ttRope::swing(){
             if (swingNum==1) {
                 if (rects.size()>5) {
                     
-                    if (ofGetElapsedTimeMillis()-startTime>duration*5) {
+                    if (ofGetElapsedTimeMillis()-startTime>duration) {
                         
                         world.getWorld()->DestroyJoint(joints.front());
                         void* sd = rects.front().body->GetUserData();
@@ -352,8 +355,9 @@ void ttRope::swing(){
                         rects.front().setPosition(pos.x, pos.y-30);
                         b2RevoluteJointDef revoluteJointDef;
                         revoluteJointDef.Initialize(start.body, rects.front().body, start.body->GetWorldCenter());
-                        b2Vec2 p = screenPtToWorldPt(ofPoint(0,9));
+                        b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
                         revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                        p = screenPtToWorldPt(ofPoint(0,30));
                         revoluteJointDef.localAnchorB.Set(p.x, -p.y);
                         joints.front() = (b2RevoluteJoint*)world.getWorld()->CreateJoint(&revoluteJointDef);
                         startTime = ofGetElapsedTimeMillis();
@@ -376,7 +380,7 @@ void ttRope::draw(){
     ofSetLineWidth(3);
     dummy.draw();
     start.draw();
-    
+    ofSetColor(120, 255, 220,200);
     for (int i =0; i<rects.size(); i++) {
         rects[i].draw();
     }
