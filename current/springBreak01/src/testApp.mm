@@ -27,8 +27,8 @@ void testApp::setup(){
     world_B.setIterations(1, 1);
     world_B.registerGrabbing();
     //Map
-    ground_A.setup("levelTxt/level01_A.txt", world_A);
-    ground_B.setup("levelTxt/level01_B.txt", world_B);
+    ground_A.setup(1, 0, world_A);
+    ground_B.setup(1, 1, world_B);
     
     // register the listener so that we get the events
 	ofAddListener(world_A.contactStartEvents, this, &testApp::contactStart_worldA);
@@ -116,6 +116,9 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
+    ofColor dark(80);
+    ofBackgroundGradient(dark, ofColor::black);
+
     rope_A.cameraUpdate(cam_A, cam_B);
     rope_B.cameraUpdate(cam_A, cam_B);
     
@@ -153,16 +156,14 @@ void testApp::drawScene(int iCameraDraw){
 
     if (iCameraDraw == 0) {
 //        char_A.drawBox2dObject();
-        char_A.draw();
-        
-        ofSetColor(ofColor::blueViolet);
         ground_A.draw();
+        ground_A.drawPolyLine();
+        char_A.draw();
     }else if(iCameraDraw == 1){
 //        char_B.drawBox2dObject();
-        char_B.draw();
-        
-        ofSetColor(ofColor::blueViolet);
         ground_B.draw();
+        ground_B.drawPolyLine();
+        char_B.draw();
     }
 
 

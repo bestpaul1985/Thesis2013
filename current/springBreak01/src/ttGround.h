@@ -13,11 +13,15 @@
 #include "ofxBox2d.h"
 class ttGround{
     public:
-    void setup(string levelTxt,ofxBox2d &world);
+    void setup(int levelNum, int charNum, ofxBox2d &world);
     void draw();
+    void drawPolyLine();
     
     vector <ofPolyline>			lines;
     vector <ofxBox2dPolygon>	ground;
+    
+    vector<ofImage> bgImg;
+    int levelNo, charNo;
 };
 
 #endif /* defined(__springBreak01__ground__) */
