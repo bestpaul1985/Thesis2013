@@ -94,10 +94,10 @@ void ttGround::draw(){
             if (charNo == 0) {
                 
                 ofSetColor(255,255);
-                bgImg[i].draw(-1000 + (imgMul*i)-i ,0, imgMul, 495);
+                bgImg[i].draw(-1000 + (imgMul*i)-i ,-300, imgMul, 495);
             }
             if (charNo == 1) {
-                bgImg[i].draw(-1000 + (imgMul*i)-i ,530, imgMul, 495);
+                bgImg[i].draw(-1000 + (imgMul*i)-i ,-200, imgMul, 495);
             }
         }
     }
