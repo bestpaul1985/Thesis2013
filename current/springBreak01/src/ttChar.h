@@ -43,14 +43,6 @@ public:
     
     float           adjustedHeight;
     bool            mirrorLeft;
-    bool            holdingCtrl;
-    
-    int             frameIndex;
-    int             counter;
-    
-    float           startTime;
 };
-
-
 
 #endif /* defined(__thatThey__ttChar__) */
