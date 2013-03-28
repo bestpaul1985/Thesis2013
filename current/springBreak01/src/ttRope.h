@@ -21,7 +21,7 @@ public:
     void cameraUpdate(ofCamera cam_A, ofCamera cam_B);
     void accelerometerUpdate(ofPoint Acc);
     void draw();
-    
+    void swing();
     void contactStart(ofxBox2dContactArgs &e);
     void contactEnd(ofxBox2dContactArgs &e);
     
@@ -37,8 +37,8 @@ public:
     int ropeNum;
     float startTime;
     float duration;
-    
     bool bFixRope;
+    int swingNum;
 };
 
 #endif /* defined(__springBreak01__ttRope__) */

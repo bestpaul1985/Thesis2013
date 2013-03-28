@@ -14,6 +14,7 @@ class ttSetData{
 public:
     string name;
 	bool bHit;
+    bool bHook;
 };
 
 #endif /* defined(__ttContactListener__ttSetData__) */

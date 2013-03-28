@@ -107,8 +107,6 @@ void ttRope::update(){
         if (counter>0) {
             bFixRope = true;
         }
-    
-        
     }
     
 }
@@ -134,7 +132,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
     
     if (ropeNum == 0) {
         if (frc.y<-0.15) {
-            if (joints.size()<9 && !bFixRope) {
+            if (joints.size()<20 && !bFixRope) {
                 
                 if (joints.empty()&& ofGetElapsedTimeMillis() - startTime > duration) {
                     ofxBox2dRect rect;
@@ -185,7 +183,6 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
             
             if (joints.size()>1)
             {
-               
                 world.getWorld()->DestroyJoint(joints.front());
                 void* sd = rects.front().body->GetUserData();
                 if (sd != NULL) {
@@ -226,7 +223,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
     
     if (ropeNum == 1) {
         if (frc.y>0.15) {
-            if (joints.size()<9&& !bFixRope) {
+            if (joints.size()<20 && !bFixRope) {
                 
                 if (joints.empty()&& ofGetElapsedTimeMillis() - startTime > duration) {
                     ofxBox2dRect rect;
