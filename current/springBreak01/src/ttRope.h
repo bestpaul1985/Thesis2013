@@ -13,9 +13,10 @@
 #include "ofxBox2d.h"
 #include "ttChar.h"
 #include "ttSetData.h"
+#include "ttControl.h"
 class ttRope{
 public:
-    void setup(ttChar &chraA, ttChar &chraB, int num);
+    void setup(ttChar &chraA, ttChar &chraB,ttControl &cont_A,ttControl &cont_B, int num);
     void setupContactListener();
     void update();
     void cameraUpdate(ofCamera cam_A, ofCamera cam_B);
@@ -24,22 +25,34 @@ public:
     void swing();
     void contactStart(ofxBox2dContactArgs &e);
     void contactEnd(ofxBox2dContactArgs &e);
+
     
-    ofxBox2dRect dummy;
-    ofPoint frc, dumScreen, ropeScreen;
-    ofxBox2d world;
     ttChar *char_A;
     ttChar *char_B;
+    ttControl *control_A;
+    ttControl *control_B;
+    ofxBox2d world;
+    ofxBox2dRect dummy;
     ofxBox2dRect start;
     vector<ofxBox2dRect>    rects;
     vector<b2RevoluteJoint*> joints;
+    ofxBox2dJoint          swingJoint;
     
-    int ropeNum;
+    ofRectangle Directional_Touch_Area;
+  
+    ofPoint frc, dumScreen, ropeScreen;
+    ofPoint preTouchPos;
+    ofPoint diff;
+    ofPoint prePos;
     float startTime;
     float duration;
+    float dis;
     bool bFixRope;
     bool bSwing;
+    
     int swingNum;
+    int touchId;
+    int ropeNum;
 };
 
 #endif /* defined(__springBreak01__ttRope__) */

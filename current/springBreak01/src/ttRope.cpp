@@ -8,12 +8,14 @@
 
 #include "ttRope.h"
 
-void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
+void ttRope::setup(ttChar &chraA, ttChar &chraB,ttControl &cont_A,ttControl &cont_B,int num){
     
     char_A = &chraA;
     char_B = &chraB;
+    control_A = &cont_A;
+    control_B = &cont_B;
     ropeNum = num;
-    
+    //postion
     dumScreen.set(0, 0);
     ropeScreen.set(0, 0);
     startTime = ofGetElapsedTimeMillis();
@@ -22,13 +24,26 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
     bFixRope = false;
     bSwing = false;
     
+    //touch
+    touchId = -1;
+    float w = ofGetWidth();
+    float h = ofGetHeight();
+    float width = w;
+    float height = h/2;
+    dis = 0;
+    if (ropeNum == 0) {
+        Directional_Touch_Area.set(w-width, 0, width, height);
+    }else if(ropeNum == 1){
+        Directional_Touch_Area.set(0, h-height, width, height);
+    }
+    //rope
     if (ropeNum == 0) {
         world.init();
         world.setFPS(60);
         world.setGravity(0,9.8);
         world.setIterations(1, 1);
         world.registerGrabbing();
-        start.setup(world.getWorld(), char_A->getPos.x, char_A->getPos.y, 10,10);
+        start.setup(world.getWorld(), char_A->getPos.x, char_A->getPos.y, 1,1);
         dummy.setPhysics(20.0f, 0.0f, 0.0f);
         dummy.setup(world.getWorld(), char_B->getPos.x,char_B->getPos.y,char_B->setWidth,char_B->setHeight);
         dummy.body->SetFixedRotation(true);
@@ -38,6 +53,7 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
         ttSetData* sd = (ttSetData*) dummy.getData();
         sd->name = "char";
         sd->bHit = false;
+        prePos = start.getPosition();
     }
     else
     {
@@ -46,7 +62,7 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
         world.setGravity(0,-9.8);
         world.setIterations(1, 1);
         world.registerGrabbing();
-        start.setup(world.getWorld(), char_B->getPos.x, char_B->getPos.y, 10,10);
+        start.setup(world.getWorld(), char_B->getPos.x, char_B->getPos.y, 1,1);
         dummy.setPhysics(20.0f, 0.0f, 0.0f);
         dummy.setup(world.getWorld(), char_A->getPos.x,char_A->getPos.y,char_A->setWidth,char_A->setHeight);
         dummy.body->SetFixedRotation(true);
@@ -56,6 +72,7 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
         ttSetData* sd = (ttSetData*) dummy.getData();
         sd->name = "char";
         sd->bHit = false;
+        prePos = start.getPosition();
     }
 }
 //----------------------------------------------------------
@@ -76,6 +93,11 @@ void ttRope::contactStart(ofxBox2dContactArgs &e){
                 bData->bHit = true;
                 bSwing = true;
                 bFixRope = true;
+                if (ropeNum == 0) {
+                    char_B->bFixedMove = true;
+                }else{
+                    char_A->bFixedMove = true;
+                }
             }
         }
       
@@ -118,8 +140,17 @@ void ttRope::cameraUpdate(ofCamera cam_A, ofCamera cam_B){
     
     if (!bSwing) {
         dummy.setPosition(dumScreen);
+    }else{
+        
+            ofPoint pos = cam_B.screenToWorld(dummy.getPosition());
+            char_B->character.setPosition(pos);
+            char_B->character.setAngle(dummy.body->GetAngle());
     }
+    
+    
+    
     start.setPosition(ropeScreen);
+    
 }
 //----------------------------------------------------------
 void ttRope::accelerometerUpdate(ofPoint Acc){
@@ -128,6 +159,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
     if (ropeNum == 0&& !bFixRope) {
        //rope_A add
         if (frc.y<-0.15) {
+            char_A->bFixedMove = true;
             if (joints.size()<20) {
                 
                 if (joints.empty()&& ofGetElapsedTimeMillis() - startTime > duration) {
@@ -176,7 +208,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
         }
         //rope_A delete
         if (frc.y>=-0.15){
-            
+            char_A->bFixedMove = false;
             if (joints.size()>1)
             {
                 world.getWorld()->DestroyJoint(joints.front());
@@ -319,10 +351,15 @@ void ttRope::swing(){
 
         if (bSwing) {
             if (swingNum ==0) {
+                
                 b2Fixture *f = dummy.body->GetFixtureList();
                 f->SetSensor(false);
-                dummy.addForce(ofPoint(ofRandom(-1,1),-45), 1000);
-
+                dummy.addForce(ofPoint(ofRandom(-1,1),-40), 1000);
+                dummy.setDamping(0.5);
+                swingJoint.setup(world.getWorld(), start.body, dummy.body);
+                swingJoint.setLength(450);
+                swingJoint.setDamping(0.9);
+                
                 b2RevoluteJointDef revoluteJointDef;
                 revoluteJointDef.Initialize(rects.back().body, dummy.body, dummy.body->GetWorldCenter());
                 b2Vec2 p = screenPtToWorldPt(ofPoint(0,30));
@@ -330,14 +367,12 @@ void ttRope::swing(){
                 p = screenPtToWorldPt(ofPoint(0,30));
                 revoluteJointDef.localAnchorB.Set(p.x, -p.y);
                 joints.push_back((b2RevoluteJoint*)world.getWorld()->CreateJoint(&revoluteJointDef));
-               
                 swingNum = 1;
-                cout<<"2"<<endl;
             }
             
             
             if (swingNum==1) {
-                if (rects.size()>5) {
+                if (rects.size()>7) {
                     
                     if (ofGetElapsedTimeMillis()-startTime>duration) {
                         
@@ -362,12 +397,25 @@ void ttRope::swing(){
                         joints.front() = (b2RevoluteJoint*)world.getWorld()->CreateJoint(&revoluteJointDef);
                         startTime = ofGetElapsedTimeMillis();
                     }
-                  
-
                 }else{
                     swingNum = 2;
-                    cout<<"3"<<endl;
                 }
+            }
+            
+            if (swingNum ==2) {
+                if (control_A->bSwingLeft) {
+                    dummy.addForce(ofPoint(5,0), 1000);
+                    control_A->bSwingLeft = false;
+                }
+                if (control_A->bSwingRight) {
+                    dummy.addForce(ofPoint(-5,0), 1000);
+                    control_A->bSwingRight = false;
+                    
+                }
+                float diffX = dummy.getPosition().x - prePos.x;
+                float diffY = dummy.getPosition().y - prePos.y;
+                float angleTo = atan2(diffY, diffX);
+                dummy.setAngle(-PI/2 + angleTo);
             }
         }
     }
@@ -389,10 +437,6 @@ void ttRope::draw(){
     
     cout<<bSwing<<endl;
 }
-
-
-
-
 
 
 

@@ -42,7 +42,7 @@ void testApp::setup(){
 
     char_A.setup(world_A, world_B,
                  control_A,
-                 ofPoint(384,500),
+                 ofPoint(384,380),
                  0);
     
     char_B.setup(world_B, world_A,
@@ -66,8 +66,8 @@ void testApp::setup(){
     cam_B.setScale(1, -1, 1);
     
     //rope
-    rope_A.setup(char_A, char_B, 0);
-    rope_B.setup(char_A, char_B, 1);
+    rope_A.setup(char_A, char_B,control_A,control_B, 0);
+    rope_B.setup(char_A, char_B,control_A,control_B, 1);
     rope_A.setupContactListener();
     rope_B.setupContactListener();
 }
@@ -116,7 +116,8 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    
+    rope_A.cameraUpdate(cam_A, cam_B);
+    rope_B.cameraUpdate(cam_A, cam_B);
     
     cam_A.begin();
     drawScene(0);
@@ -127,11 +128,8 @@ void testApp::draw(){
     cam_B.end();
     
     rope_A.update();
-    rope_A.cameraUpdate(cam_A, cam_B);
     rope_A.accelerometerUpdate(ofxAccelerometer.getForce());
-
     rope_B.update();
-    rope_B.cameraUpdate(cam_A, cam_B);
     rope_B.accelerometerUpdate(ofxAccelerometer.getForce());
 
     rope_A.draw();
@@ -178,22 +176,18 @@ void testApp::exit(){
 void testApp::touchDown(ofTouchEventArgs & touch){
     control_A.touchDown(touch.x, touch.y,touch.id);
     control_B.touchDown(touch.x, touch.y,touch.id);
-    
-
 }
 
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
     control_A.touchMove(touch.x, touch.y,touch.id);
     control_B.touchMove(touch.x, touch.y,touch.id);
-
 }
 
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
     control_A.touchUp(touch.x, touch.y,touch.id);
     control_B.touchUp(touch.x, touch.y,touch.id);
-
 }
 
 //--------------------------------------------------------------
