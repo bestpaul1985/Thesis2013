@@ -46,10 +46,7 @@ class testApp : public ofxiPhoneApp{
     
         ttChar  char_A;
         ttChar  char_B;
-
-//        ttRopeBasic rope_A;
-//        ttRopeBasic rope_B;
-    
+   
         ttControl control_A;
         ttControl control_B;
     

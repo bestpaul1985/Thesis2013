@@ -338,9 +338,7 @@ void ttRope::swing(){
             
             if (swingNum==1) {
                 if (rects.size()>5) {
-                    
                     if (ofGetElapsedTimeMillis()-startTime>duration) {
-                        
                         world.getWorld()->DestroyJoint(joints.front());
                         void* sd = rects.front().body->GetUserData();
                         if (sd != NULL) {
@@ -362,11 +360,8 @@ void ttRope::swing(){
                         joints.front() = (b2RevoluteJoint*)world.getWorld()->CreateJoint(&revoluteJointDef);
                         startTime = ofGetElapsedTimeMillis();
                     }
-                  
-
                 }else{
                     swingNum = 2;
-                    cout<<"3"<<endl;
                 }
             }
         }

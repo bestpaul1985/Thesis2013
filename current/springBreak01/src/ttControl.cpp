@@ -22,7 +22,7 @@ ttControl::ttControl(){
 
 //------------------------------------------------
 void ttControl::setup(int iCharNum){
-
+    
     w = ofGetWidth();
     h = ofGetHeight();
     width = w;
@@ -52,6 +52,7 @@ void ttControl::draw(){
 //------------------------------------------------
 void ttControl::touchDown(int x, int y, int TouchId){
     
+    
     if (Directional_Touch_Area.inside(x, y)) {
         preTouchPos.set(x, y);
         diff.set(0,0);
@@ -61,6 +62,7 @@ void ttControl::touchDown(int x, int y, int TouchId){
         }
     }
     
+        
 }
 
 //------------------------------------------------
@@ -88,13 +90,14 @@ void ttControl::touchMove(int x, int y, int TouchId){
                     bSmallLeft = true;
                 }
             }
-            
         }
-
     }
+    
 }
 //-------------------------------------------------
 void ttControl::touchUp(int x, int y, int TouchId){
+    
+
     if (touchId == TouchId && charNum == 0) {
             if (Directional_Touch_Area.inside(x, y)){
                 if (dis> 10 && diff.x >0){
@@ -126,7 +129,7 @@ void ttControl::touchUp(int x, int y, int TouchId){
             }
         touchId = -1;
     }
-        
+    
 }
    
 
