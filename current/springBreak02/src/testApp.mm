@@ -129,7 +129,7 @@ void testApp::drawScene(int iDraw){
     if (iDraw == 0) {
         
         ofPushMatrix();
-        ofTranslate(-offSet_A.x+384, 0);
+        ofTranslate(-offSet_A.x+384, 334);
         ground_A.draw();
         ground_A.drawPolyLine();
         char_A.drawBox2dObject();
@@ -141,7 +141,7 @@ void testApp::drawScene(int iDraw){
     }else if(iDraw == 1){
         
         ofPushMatrix();
-        ofTranslate(-offSet_B.x+384, 0);
+        ofTranslate(-offSet_B.x+384, 740);
         ground_B.draw();
         ground_B.drawPolyLine();
         char_B.drawBox2dObject();
