@@ -89,12 +89,16 @@ void ttGround::draw(){
     ofSetColor(255,255);
     for (int i = 0 ; i< bgImg.size(); i++) {
         if (levelNo == 1) {
-            float imgMul = bgImg[0].width/bgImg[0].height*(ofGetHeight()/2);
+//            float imgMul = bgImg[0].width*(ofGetHeight()/2)/bgImg[0].height;
+            float imgMul = 717;
             if (charNo == 0) {
-                bgImg[i].draw(-800 + (imgMul*i)-i ,0, imgMul, ofGetHeight()/2);
+                ofSetColor(255,255);
+                bgImg[i].draw(-1000 + (imgMul*i)-i ,0, imgMul, 495);
+                ofSetHexColor(0x3b525a);
+                ofRect(-1010, 0, 7000, 17);
             }
             if (charNo == 1) {
-                bgImg[i].draw(-800 + (imgMul*i)-i ,ofGetHeight()/2+20, imgMul, ofGetHeight()/2);
+                bgImg[i].draw(-1000 + (imgMul*i)-i ,530, imgMul, 495);
             }
         }
     }
