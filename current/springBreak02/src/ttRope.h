@@ -26,6 +26,7 @@ public:
     ofxBox2dJoint joint;
     
     float length;
+    int ropeNum;
     
 };
 

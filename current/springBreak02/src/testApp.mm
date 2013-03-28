@@ -134,9 +134,10 @@ void testApp::drawScene(int iDraw){
         ground_A.drawPolyLine();
         char_A.drawBox2dObject();
         char_A.draw();
+        rope_A.draw();
         ofPopMatrix();
         
-        rope_A.draw();
+        
         
     }else if(iDraw == 1){
         
