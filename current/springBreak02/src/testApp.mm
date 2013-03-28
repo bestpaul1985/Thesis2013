@@ -1,14 +1,10 @@
 #include "testApp.h"
-static int w = 768;
-static int h = 1024;
-
 
 //--------------------------------------------------------------
 void testApp::setup(){	
 	// initialize the accelerometer
 	ofxAccelerometer.setup();
     ofxAccelerometer.setForceSmoothing(0.95f);
-	//If you want a landscape oreintation 
 	iPhoneSetOrientation(OFXIPHONE_ORIENTATION_PORTRAIT);
 	
 	ofBackground(30);
@@ -49,21 +45,6 @@ void testApp::setup(){
                  control_B,
                  ofPoint(384,700),
                  1);
-    
-    //camera
-    camPos_A.set(0, h);
-    cam_A.setNearClip(-1);
-    cam_A.setFarClip(-100);
-    cam_A.enableOrtho();
-    cam_A.setPosition(camPos_A.x,camPos_A.y, -1);
-    cam_A.setScale(1, -1, 1);
-    
-    camPos_B.set(0, h);
-    cam_B.setNearClip(-1);
-    cam_B.setFarClip(-100);
-    cam_B.enableOrtho();
-    cam_B.setPosition(camPos_B.x,camPos_B.y, -1);
-    cam_B.setScale(1, -1, 1);
     
     //rope
     rope_A.setup(char_A, char_B,control_A,control_B, 0);
@@ -108,10 +89,6 @@ void testApp::update(){
     //Character
     char_A.update();
     char_B.update();
-
-    cam_A.setPosition(char_A.getPos.x- w/2,camPos_A.y, -1);
-    cam_B.setPosition(char_B.getPos.x- w/2,camPos_B.y, -1);
-   
 }
 
 //--------------------------------------------------------------
@@ -119,16 +96,8 @@ void testApp::draw(){
     ofColor dark(80);
     ofBackgroundGradient(dark, ofColor::black);
 
-    rope_A.cameraUpdate(cam_A, cam_B);
-    rope_B.cameraUpdate(cam_A, cam_B);
-    
-    cam_A.begin();
     drawScene(0);
-    cam_A.end();
-    
-    cam_B.begin();
     drawScene(1);
-    cam_B.end();
     
     rope_A.update();
     rope_A.accelerometerUpdate(ofxAccelerometer.getForce());
