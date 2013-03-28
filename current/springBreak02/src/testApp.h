@@ -7,7 +7,6 @@
 #include "ofxiPhoneExtras.h"
 #include "ofxBox2d.h"
 #include "ttChar.h"
-#include "ttRopeBasic.h"
 #include "ttSetData.h"
 #include "ttControl.h"
 #include "ttGround.h"

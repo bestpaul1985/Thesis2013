@@ -12,7 +12,7 @@
 #include "ofMain.h"
 #include "ofxBox2d.h"
 #include "ttSetData.h"
-#include "ttRopeJoint.h"
+#include "ttControl.h"
 class ttChar{
 public:
     ttChar();

@@ -118,7 +118,6 @@ void testApp::draw(){
     //    control_A.draw();
     //    control_B.draw();
     
-    
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int iCameraDraw){
