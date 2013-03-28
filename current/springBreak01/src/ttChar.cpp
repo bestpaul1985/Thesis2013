@@ -29,7 +29,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
     charNum = iCharNum;
     
     mirrorLeft = false;
- 
+    startTime = ofGetElapsedTimeMillis();
     character.setPhysics(1000.0f, 0.0f, 0.3f);
     character.setup(characterWorld.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
 
@@ -68,6 +68,8 @@ void ttChar::setup(ofxBox2d &characterWorld,
     character.body->SetLinearDamping(0.5);
     
     adjustedHeight = 85;
+    counter = 0;
+    frameIndex =0;
 }
 
 
@@ -99,12 +101,14 @@ void ttChar::update(){
                 character.setVelocity(smallMove, 0);
                 control->bSmallLeft = false;
                 mirrorLeft = true;
+                holdingCtrl = true;
             }
             
             else if(control->bSmallRight == true){
                 character.setVelocity(smallMove, 0);
                 control->bSmallRight = false;
                 mirrorLeft = false;
+                holdingCtrl = true;
             }
 
             else if (control->bLeft == true) {
@@ -112,13 +116,16 @@ void ttChar::update(){
                 character.addForce(ofVec2f(x,0), scale);
                 control->bLeft = false;
                 mirrorLeft = true;
+                holdingCtrl = false;
             }
             else if(control->bRight == true){
                 character.setVelocity(-20, 0);
                 character.addForce(ofVec2f(-x,0), scale);
                 control->bRight = false;
                 mirrorLeft = false;
+                holdingCtrl = false;
             }
+            else holdingCtrl = false;
         }
 
         if(charNum  == 1){
@@ -127,12 +134,14 @@ void ttChar::update(){
                 character.setVelocity(smallMove, 0);
                 control->bSmallLeft = false;
                 mirrorLeft = true;
+                holdingCtrl = true;
             }
             
             else if(control->bSmallRight == true){
                 character.setVelocity(smallMove, 0);
                 control->bSmallRight = false;
                 mirrorLeft = false;
+                holdingCtrl = true; 
             }
 
             else if (control->bLeft == true) {
@@ -140,6 +149,7 @@ void ttChar::update(){
                 character.addForce(ofVec2f(-x,0), scale);
                 control->bLeft = false;
                 mirrorLeft = true;
+                holdingCtrl = false;
             }
 
             else if(control->bRight == true){
@@ -147,7 +157,9 @@ void ttChar::update(){
                 character.addForce(ofVec2f(x,0), scale);
                 control->bRight = false;
                 mirrorLeft = false;
+                holdingCtrl = false;
             }
+            else holdingCtrl = false;
         }
     }
 
@@ -170,15 +182,64 @@ void ttChar::draw(){
         character.draw();
     }
     
-    int frameIndex = 0;
-    frameIndex = (int) (ofGetElapsedTimef() * 24) % sprite.size();
+//    float map = ofMap(character.getVelocity().length(), 0, 20, 0.001, 1.0);
+//    frameIndex = (int)(ofGetElapsedTimef()*character.getVelocity().length())%sprite.size();
+//    sprite[frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
+//    cout << character.getVelocity().length() << endl;
     
-    if      (character.getVelocity().lengthSquared() >  0) {
-        sprite[frameIndex].draw (0,0, adjustedHeight, adjustedHeight);
+    
+    
+//    if (character.getVelocity().length() > 5) {
+//        frameIndex = (int) (ofGetElapsedTimeMillis()*character.getVelocity().length() / 2000) %sprite.size();
+//        sprite[frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
+//    }
+//    else if(1 <= character.getVelocity().length() < 5){
+//        frameIndex = (int) (ofGetElapsedTimeMillis()*character.getVelocity().length() / 2000) %sprite.size();
+//        sprite[frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
+//    }
+//    else if(character.getVelocity().length() < 1){
+//        frameIndex = (int) (ofGetElapsedTimeMillis()*character.getVelocity().length() / 2000) %sprite.size();
+//        sprite[frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
+//    }
+//    
+    
+    if (character.getVelocity().length()>0&&ofGetElapsedTimeMillis()-startTime>0) {
+        startTime = ofGetElapsedTimeMillis();
+        
     }
-    else{
-        sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
+    
+    if (ofGetElapsedTimeMillis()-startTime <  1000) {
+        float v = ofClamp(character.getVelocity().length(), 1, 10);
+        frameIndex = (int) (ofGetElapsedTimeMillis()*v / 2000) %sprite.size();
+        sprite[frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
+    }else{
+        sprite[frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
     }
+    
+    if (charNum == 0) {
+        cout << character.getVelocity().x << endl;
+        
+    }
+
+            
+//method1
+//    if (character.getVelocity().length() < 5) {
+//        sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
+//    }
+//
+//    else if (character.getVelocity().length() > 5) {
+//        frameIndex = (int) (ofGetElapsedTimef() * character.getVelocity().length()/10) % sprite.size();
+//        sprite[frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
+//    }
+//    
+//    else if (character.getVelocity().length() < 5) {
+//        
+//    }
+//    
+//    else if (holdingCtrl) {
+//        frameIndex = (int) (ofGetElapsedTimef() * character.getVelocity().length()/5) % sprite.size();
+//        sprite[frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
+//    }
     
     ofPopMatrix();
     ofSetRectMode(OF_RECTMODE_CORNER);
