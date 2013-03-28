@@ -13,6 +13,7 @@
 		47A165F317041B1E00286F73 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F217041B1E00286F73 /* Default-Portrait@2x~ipad.png */; };
 		47A165F517041B8300286F73 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F417041B8300286F73 /* Default-Portrait~ipad.png */; };
 		4C02C60A16EEDC210051C0DB /* ttChar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C02C60816EEDC210051C0DB /* ttChar.cpp */; };
+		4C273B921704B36B001D53EB /* ttRope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C273B901704B36B001D53EB /* ttRope.cpp */; };
 		4CB26E5E170407F4005E11E7 /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4CB26DF6170407F3005E11E7 /* install.xml */; };
 		4CB26E5F170407F4005E11E7 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26DFB170407F3005E11E7 /* b2BroadPhase.cpp */; };
 		4CB26E60170407F4005E11E7 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26DFD170407F3005E11E7 /* b2CollideCircle.cpp */; };
@@ -58,7 +59,6 @@
 		4CB26E88170407F4005E11E7 /* ofxBox2dRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26E5A170407F4005E11E7 /* ofxBox2dRect.cpp */; };
 		4CCD3A7816F3D9A00095BCB1 /* ttControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD3A7616F3D9A00095BCB1 /* ttControl.cpp */; };
 		4CFEE4C317022C0E007399D9 /* ttGround.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEE4C117022C0E007399D9 /* ttGround.cpp */; };
-		4CFEE4C717027DFC007399D9 /* ttRope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEE4C517027DFC007399D9 /* ttRope.cpp */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
 		53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
@@ -104,6 +104,8 @@
 		47A165F417041B8300286F73 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		4C02C60816EEDC210051C0DB /* ttChar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttChar.cpp; sourceTree = "<group>"; };
 		4C02C60916EEDC210051C0DB /* ttChar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttChar.h; sourceTree = "<group>"; };
+		4C273B901704B36B001D53EB /* ttRope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttRope.cpp; sourceTree = "<group>"; };
+		4C273B911704B36B001D53EB /* ttRope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttRope.h; sourceTree = "<group>"; };
 		4CB26DF6170407F3005E11E7 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		4CB26DF9170407F3005E11E7 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		4CB26DFB170407F3005E11E7 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -203,8 +205,6 @@
 		4CCD3B2B16F563B80095BCB1 /* ttSetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttSetData.h; sourceTree = "<group>"; };
 		4CFEE4C117022C0E007399D9 /* ttGround.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttGround.cpp; sourceTree = "<group>"; };
 		4CFEE4C217022C0E007399D9 /* ttGround.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttGround.h; sourceTree = "<group>"; };
-		4CFEE4C517027DFC007399D9 /* ttRope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttRope.cpp; sourceTree = "<group>"; };
-		4CFEE4C617027DFC007399D9 /* ttRope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttRope.h; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		BB16EBD10F2B2A9500518274 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -528,9 +528,9 @@
 				4CCD3A7716F3D9A00095BCB1 /* ttControl.h */,
 				4CFEE4C117022C0E007399D9 /* ttGround.cpp */,
 				4CFEE4C217022C0E007399D9 /* ttGround.h */,
-				4CFEE4C517027DFC007399D9 /* ttRope.cpp */,
-				4CFEE4C617027DFC007399D9 /* ttRope.h */,
 				4CCD3B2B16F563B80095BCB1 /* ttSetData.h */,
+				4C273B901704B36B001D53EB /* ttRope.cpp */,
+				4C273B911704B36B001D53EB /* ttRope.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -639,7 +639,6 @@
 				4C02C60A16EEDC210051C0DB /* ttChar.cpp in Sources */,
 				4CCD3A7816F3D9A00095BCB1 /* ttControl.cpp in Sources */,
 				4CFEE4C317022C0E007399D9 /* ttGround.cpp in Sources */,
-				4CFEE4C717027DFC007399D9 /* ttRope.cpp in Sources */,
 				4CB26E5F170407F4005E11E7 /* b2BroadPhase.cpp in Sources */,
 				4CB26E60170407F4005E11E7 /* b2CollideCircle.cpp in Sources */,
 				4CB26E61170407F4005E11E7 /* b2CollidePolygon.cpp in Sources */,
@@ -682,6 +681,7 @@
 				4CB26E86170407F4005E11E7 /* ofxBox2dJoint.cpp in Sources */,
 				4CB26E87170407F4005E11E7 /* ofxBox2dPolygon.cpp in Sources */,
 				4CB26E88170407F4005E11E7 /* ofxBox2dRect.cpp in Sources */,
+				4C273B921704B36B001D53EB /* ttRope.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

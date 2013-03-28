@@ -38,12 +38,12 @@ void testApp::setup(){
 
     char_A.setup(world_A, world_B,
                  control_A,
-                 ofPoint(384,331),
+                 ofPoint(0,0),
                  0);
     
     char_B.setup(world_B, world_A,
                  control_B,
-                 ofPoint(384,740),
+                 ofPoint(0,0),
                  1);
     
     
@@ -51,12 +51,11 @@ void testApp::setup(){
     currentPos_B = char_B.getPos;
     orgPos_A = currentPos_A;
     orgPos_B = currentPos_B;
+    offSet_A = currentPos_A-orgPos_A;
+    offSet_B = currentPos_B-orgPos_B;
     
     //rope
-//    rope_A.setup(char_A, char_B,control_A,control_B, 0);
-//    rope_B.setup(char_A, char_B,control_A,control_B, 1);
-//    rope_A.setupContactListener();
-//    rope_B.setupContactListener();
+    rope_A.setup(offSet_A);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -96,8 +95,15 @@ void testApp::update(){
     char_A.update();
     char_B.update();
     
+    //offset
     currentPos_A = char_A.getPos;
     currentPos_B = char_B.getPos;
+    offSet_A = currentPos_A-orgPos_A;
+    offSet_B = currentPos_B-orgPos_B;
+    
+    //rope
+    rope_A.updateAccelerometer(ofxAccelerometer.getForce());
+    rope_A.update();
 }
 
 //--------------------------------------------------------------
@@ -105,19 +111,9 @@ void testApp::draw(){
     ofColor dark(80);
     ofBackgroundGradient(dark, ofColor::black);
     
-    
-    
     drawScene(0);
     drawScene(1);
-   
-    
-//    rope_A.update();
-//    rope_A.accelerometerUpdate(ofxAccelerometer.getForce());
-//    rope_B.update();
-//    rope_B.accelerometerUpdate(ofxAccelerometer.getForce());
-//
-//    rope_A.draw();
-//    rope_B.draw();
+
     
     ofDrawBitmapStringHighlight("Rope_A\nworld: " + ofToString(char_A.getPos,0) + "\n" +
                        "Screen: " + ofToString(cam_A.worldToScreen(char_A.getPos),0) + "\n" +
@@ -133,19 +129,19 @@ void testApp::drawScene(int iDraw){
     if (iDraw == 0) {
         
         ofPushMatrix();
-        ofPoint diff = currentPos_A-orgPos_A;
-        ofTranslate(-diff.x, 0);
+        ofTranslate(-offSet_A.x+384, 0);
         ground_A.draw();
         ground_A.drawPolyLine();
         char_A.drawBox2dObject();
         char_A.draw();
         ofPopMatrix();
         
+        rope_A.draw();
         
     }else if(iDraw == 1){
+        
         ofPushMatrix();
-        ofPoint diff = currentPos_B-orgPos_B;
-        ofTranslate(-diff.x, 0);
+        ofTranslate(-offSet_B.x+384, 0);
         ground_B.draw();
         ground_B.drawPolyLine();
         char_B.drawBox2dObject();
