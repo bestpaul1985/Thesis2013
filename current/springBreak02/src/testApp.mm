@@ -38,19 +38,25 @@ void testApp::setup(){
 
     char_A.setup(world_A, world_B,
                  control_A,
-                 ofPoint(384,380),
+                 ofPoint(384,331),
                  0);
     
     char_B.setup(world_B, world_A,
                  control_B,
-                 ofPoint(384,700),
+                 ofPoint(384,740),
                  1);
     
+    
+    currentPos_A = char_A.getPos;
+    currentPos_B = char_B.getPos;
+    orgPos_A = currentPos_A;
+    orgPos_B = currentPos_B;
+    
     //rope
-    rope_A.setup(char_A, char_B,control_A,control_B, 0);
-    rope_B.setup(char_A, char_B,control_A,control_B, 1);
-    rope_A.setupContactListener();
-    rope_B.setupContactListener();
+//    rope_A.setup(char_A, char_B,control_A,control_B, 0);
+//    rope_B.setup(char_A, char_B,control_A,control_B, 1);
+//    rope_A.setupContactListener();
+//    rope_B.setupContactListener();
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -89,23 +95,29 @@ void testApp::update(){
     //Character
     char_A.update();
     char_B.update();
+    
+    currentPos_A = char_A.getPos;
+    currentPos_B = char_B.getPos;
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
     ofColor dark(80);
     ofBackgroundGradient(dark, ofColor::black);
-
+    
+    
+    
     drawScene(0);
     drawScene(1);
+   
     
-    rope_A.update();
-    rope_A.accelerometerUpdate(ofxAccelerometer.getForce());
-    rope_B.update();
-    rope_B.accelerometerUpdate(ofxAccelerometer.getForce());
-
-    rope_A.draw();
-    rope_B.draw();
+//    rope_A.update();
+//    rope_A.accelerometerUpdate(ofxAccelerometer.getForce());
+//    rope_B.update();
+//    rope_B.accelerometerUpdate(ofxAccelerometer.getForce());
+//
+//    rope_A.draw();
+//    rope_B.draw();
     
     ofDrawBitmapStringHighlight("Rope_A\nworld: " + ofToString(char_A.getPos,0) + "\n" +
                        "Screen: " + ofToString(cam_A.worldToScreen(char_A.getPos),0) + "\n" +
@@ -114,24 +126,31 @@ void testApp::draw(){
     ofDrawBitmapStringHighlight("Rope_B\nworld: " + ofToString(char_B.getPos,0) + "\n" +
                        "Screen: " + ofToString(cam_B.worldToScreen(char_B.getPos),0) + "\n" +
                        "camPos: " + ofToString(camPos_B,0), 570,950);
-    
-    //    control_A.draw();
-    //    control_B.draw();
-    
 }
 //-------------------------------------------------------------
-void testApp::drawScene(int iCameraDraw){
+void testApp::drawScene(int iDraw){
 
-    if (iCameraDraw == 0) {
-//        char_A.drawBox2dObject();
+    if (iDraw == 0) {
+        
+        ofPushMatrix();
+        ofPoint diff = currentPos_A-orgPos_A;
+        ofTranslate(-diff.x, 0);
         ground_A.draw();
         ground_A.drawPolyLine();
+        char_A.drawBox2dObject();
         char_A.draw();
-    }else if(iCameraDraw == 1){
-//        char_B.drawBox2dObject();
+        ofPopMatrix();
+        
+        
+    }else if(iDraw == 1){
+        ofPushMatrix();
+        ofPoint diff = currentPos_B-orgPos_B;
+        ofTranslate(-diff.x, 0);
         ground_B.draw();
         ground_B.drawPolyLine();
+        char_B.drawBox2dObject();
         char_B.draw();
+        ofPopMatrix();
     }
 
 

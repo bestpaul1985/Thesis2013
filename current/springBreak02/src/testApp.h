@@ -46,9 +46,6 @@ class testApp : public ofxiPhoneApp{
         ttChar  char_A;
         ttChar  char_B;
 
-//        ttRopeBasic rope_A;
-//        ttRopeBasic rope_B;
-    
         ttControl control_A;
         ttControl control_B;
     
@@ -59,6 +56,7 @@ class testApp : public ofxiPhoneApp{
         ofPoint preTouch_A,preTouch_B;
         ofPoint camPos_A,camPos_B;
     
+        ofPoint orgPos_A, orgPos_B, currentPos_A, currentPos_B;
         //rope
         ttRope rope_A,rope_B;
 };
