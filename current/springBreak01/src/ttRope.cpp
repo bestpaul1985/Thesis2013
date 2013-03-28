@@ -13,11 +13,14 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
     char_A = &chraA;
     char_B = &chraB;
     ropeNum = num;
+    
     dumScreen.set(0, 0);
     ropeScreen.set(0, 0);
     startTime = ofGetElapsedTimeMillis();
     duration = 100;
+    swingNum = 0;
     bFixRope = false;
+    bSwing = false;
     
     if (ropeNum == 0) {
         world.init();
@@ -26,7 +29,9 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
         world.setIterations(1, 1);
         world.registerGrabbing();
         start.setup(world.getWorld(), char_A->getPos.x, char_A->getPos.y, 10,10);
+        dummy.setPhysics(20.0f, 0.0f, 0.0f);
         dummy.setup(world.getWorld(), char_B->getPos.x,char_B->getPos.y,char_B->setWidth,char_B->setHeight);
+        dummy.body->SetFixedRotation(true);
         b2Fixture *f = dummy.body->GetFixtureList();
         f->SetSensor(true);
         dummy.setData(new ttSetData());
@@ -42,7 +47,9 @@ void ttRope::setup(ttChar &chraA, ttChar &chraB, int num){
         world.setIterations(1, 1);
         world.registerGrabbing();
         start.setup(world.getWorld(), char_B->getPos.x, char_B->getPos.y, 10,10);
+        dummy.setPhysics(20.0f, 0.0f, 0.0f);
         dummy.setup(world.getWorld(), char_A->getPos.x,char_A->getPos.y,char_A->setWidth,char_A->setHeight);
+        dummy.body->SetFixedRotation(true);
         b2Fixture *f = dummy.body->GetFixtureList();
         f->SetSensor(true);
         dummy.setData(new ttSetData());
@@ -63,14 +70,15 @@ void ttRope::contactStart(ofxBox2dContactArgs &e){
         ttSetData  * aData = (ttSetData*)e.a->GetBody()->GetUserData();
         ttSetData  * bData = (ttSetData*)e.b->GetBody()->GetUserData();
         
-        
-        
-        if (bData->name == "rope"&& aData->name == "char") {
-            aData->bHit = true;
-            bData->bHit = true;
+        if (aData && bData) {
+            if (bData->name == "rope"&& aData->name == "char") {
+                aData->bHit = true;
+                bData->bHit = true;
+                bSwing = true;
+                bFixRope = true;
+            }
         }
-        
-        
+      
     }
 }
 
@@ -93,22 +101,7 @@ void ttRope::contactEnd(ofxBox2dContactArgs &e){
 //----------------------------------------------------------
 void ttRope::update(){
     world.update();
-    
-    if (!bFixRope) {
-        int counter = 0;
-        ttSetData* dummyData = (ttSetData*) dummy.getData();
-        for(int i =0; i<rects.size();i++){
-            ttSetData* ropeData = (ttSetData*) rects[i].getData();
-            if (ropeData->bHit && dummyData->bHit) {
-                counter++;
-            }
-        }
-        
-        if (counter>0) {
-            bFixRope = true;
-        }
-    }
-    
+    swing();
 }
 //----------------------------------------------------------
 void ttRope::cameraUpdate(ofCamera cam_A, ofCamera cam_B){
@@ -123,14 +116,17 @@ void ttRope::cameraUpdate(ofCamera cam_A, ofCamera cam_B){
         ropeScreen = cam_B.worldToScreen(char_B->getPos);
     }
     
-    dummy.setPosition(dumScreen);
+    if (!bSwing) {
+        dummy.setPosition(dumScreen);
+    }
     start.setPosition(ropeScreen);
 }
 //----------------------------------------------------------
 void ttRope::accelerometerUpdate(ofPoint Acc){
     frc = Acc;
     
-    if (ropeNum == 0) {
+    if (ropeNum == 0&& !bFixRope) {
+       //rope_A add
         if (frc.y<-0.15) {
             if (joints.size()<20 && !bFixRope) {
                 
@@ -178,7 +174,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                 }
             }
         }
-        
+        //rope_A delete
         if (frc.y>=-0.15){
             
             if (joints.size()>1)
@@ -221,9 +217,10 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
         }
     }
     
-    if (ropeNum == 1) {
+    if (ropeNum == 1&& !bFixRope) {
         if (frc.y>0.15) {
-            if (joints.size()<20 && !bFixRope) {
+            //rope_B add
+            if (joints.size()<20 ) {
                 
                 if (joints.empty()&& ofGetElapsedTimeMillis() - startTime > duration) {
                     ofxBox2dRect rect;
@@ -269,7 +266,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                 }
             }
         }
-        
+        //rope_B delete
         if (frc.y<=0.15){
             
             if (joints.size()>1)
@@ -285,7 +282,7 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
                 rects.erase(rects.begin());
                 
                 ofPoint pos = rects.front().getPosition();
-                rects.front().setPosition(pos.x, pos.y-20);
+                rects.front().setPosition(pos.x, pos.y+20);
                 b2RevoluteJointDef revoluteJointDef;
                 revoluteJointDef.Initialize(start.body, rects.front().body, start.body->GetWorldCenter());
                 b2Vec2 p = screenPtToWorldPt(ofPoint(0,9));
@@ -315,11 +312,69 @@ void ttRope::accelerometerUpdate(ofPoint Acc){
 }
 
 //----------------------------------------------------------
+void ttRope::swing(){
+    
+    if (ropeNum==0) {
+
+        if (bSwing) {
+            if (swingNum ==0) {
+                b2Fixture *f = dummy.body->GetFixtureList();
+                f->SetSensor(false);
+                b2RevoluteJointDef revoluteJointDef;
+                revoluteJointDef.Initialize(rects.back().body, dummy.body, dummy.body->GetWorldCenter());
+                b2Vec2 p = screenPtToWorldPt(ofPoint(0,30));
+                revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                p = screenPtToWorldPt(ofPoint(0,30));
+                revoluteJointDef.localAnchorB.Set(p.x, -p.y);
+                joints.push_back((b2RevoluteJoint*)world.getWorld()->CreateJoint(&revoluteJointDef));
+                dummy.addForce(ofPoint(0,-10), 1000);
+                swingNum = 1;
+                cout<<"2"<<endl;
+            }
+            
+            
+            if (swingNum==1) {
+                if (rects.size()>5) {
+                    
+                    if (ofGetElapsedTimeMillis()-startTime>duration*5) {
+                        
+                        world.getWorld()->DestroyJoint(joints.front());
+                        void* sd = rects.front().body->GetUserData();
+                        if (sd != NULL) {
+                            delete sd;
+                            rects.front().body->SetUserData(NULL);
+                        }
+                        world.getWorld()->DestroyBody(rects.front().body);
+                        joints.erase(joints.begin());
+                        rects.erase(rects.begin());
+                        
+                        ofPoint pos = rects.front().getPosition();
+                        rects.front().setPosition(pos.x, pos.y-30);
+                        b2RevoluteJointDef revoluteJointDef;
+                        revoluteJointDef.Initialize(start.body, rects.front().body, start.body->GetWorldCenter());
+                        b2Vec2 p = screenPtToWorldPt(ofPoint(0,9));
+                        revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                        revoluteJointDef.localAnchorB.Set(p.x, -p.y);
+                        joints.front() = (b2RevoluteJoint*)world.getWorld()->CreateJoint(&revoluteJointDef);
+                        startTime = ofGetElapsedTimeMillis();
+                    }
+                  
+
+                }else{
+                    swingNum = 2;
+                    cout<<"3"<<endl;
+                }
+            }
+        }
+    }
+
+}
+//----------------------------------------------------------
 void ttRope::draw(){
     ofPushStyle();
     ofSetColor(30, 255, 220,50);
     ofSetLineWidth(3);
-//    dummy.draw();
+    dummy.draw();
     start.draw();
     
     for (int i =0; i<rects.size(); i++) {
@@ -328,9 +383,7 @@ void ttRope::draw(){
     ofPopStyle();
     
     
-    ttSetData* sd = (ttSetData*) dummy.getData();
-
-
+    cout<<bSwing<<endl;
 }
 
 

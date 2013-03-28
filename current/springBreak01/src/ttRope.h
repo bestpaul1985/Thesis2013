@@ -38,6 +38,7 @@ public:
     float startTime;
     float duration;
     bool bFixRope;
+    bool bSwing;
     int swingNum;
 };
 
