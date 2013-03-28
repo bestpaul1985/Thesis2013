@@ -24,6 +24,7 @@ public:
     
     void update();
     void draw();
+    void swing();
     void drawBox2dObject();
 
     ofxBox2dRect    character;
@@ -34,15 +35,16 @@ public:
     
     float           setWidth;
     float           setHeight;
-    
+    float           adjustedHeight;
     bool            bFixedMove;
+    bool            bSwing;
+    bool            mirrorLeft;
     int             charNum;
-    
     ttControl       *control;
     vector<ofImage> sprite;
     
-    float           adjustedHeight;
-    bool            mirrorLeft;
+   
+   
 };
 
 #endif /* defined(__thatThey__ttChar__) */

@@ -4,7 +4,7 @@
 void testApp::setup(){	
 	// initialize the accelerometer
 	ofxAccelerometer.setup();
-    ofxAccelerometer.setForceSmoothing(0.95f);
+    ofxAccelerometer.setForceSmoothing(0.55f);
 	iPhoneSetOrientation(OFXIPHONE_ORIENTATION_PORTRAIT);
 	
 	ofBackground(30);
@@ -49,13 +49,16 @@ void testApp::setup(){
     
     currentPos_A = char_A.getPos;
     currentPos_B = char_B.getPos;
-    orgPos_A = currentPos_A;
-    orgPos_B = currentPos_B;
+    orgPos_A.set(0.00, -12.55);
+    orgPos_B.set(0.00, 9.55);
+    
     offSet_A = currentPos_A-orgPos_A;
     offSet_B = currentPos_B-orgPos_B;
     
+    translate_A.set(384,200);
+    translate_B.set(384,824);
     //rope
-    rope_A.setup(offSet_A);
+    rope_A.setup();
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -102,8 +105,16 @@ void testApp::update(){
     offSet_B = currentPos_B-orgPos_B;
     
     //rope
+   
+    rope_A.update(translate_A,translate_B,offSet_A,offSet_B);
     rope_A.updateAccelerometer(ofxAccelerometer.getForce());
-    rope_A.update();
+    if (rope_A.bHooked) {
+        char_B.bFixedMove = true;
+    }
+    if (rope_A.bRopeInUse) {
+        char_A.bFixedMove = true;
+    }
+    
 }
 
 //--------------------------------------------------------------
@@ -112,16 +123,9 @@ void testApp::draw(){
     ofBackgroundGradient(dark, ofColor::black);
     
     drawScene(0);
-    drawScene(1);
 
-    
-    ofDrawBitmapStringHighlight("Rope_A\nworld: " + ofToString(char_A.getPos,0) + "\n" +
-                       "Screen: " + ofToString(cam_A.worldToScreen(char_A.getPos),0) + "\n" +
-                       "camPos: " + ofToString(camPos_A,0), 50,50);
-    
-    ofDrawBitmapStringHighlight("Rope_B\nworld: " + ofToString(char_B.getPos,0) + "\n" +
-                       "Screen: " + ofToString(cam_B.worldToScreen(char_B.getPos),0) + "\n" +
-                       "camPos: " + ofToString(camPos_B,0), 570,950);
+    ofDrawBitmapStringHighlight("offSet_A: " + ofToString(offSet_A,2)+"\n\translate_A: "+ofToString(translate_A), 50,50);
+    ofDrawBitmapStringHighlight("offSet_B: " + ofToString(offSet_B,2)+"\n\translate_B: "+ofToString(translate_B), 550,950);
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int iDraw){
@@ -129,25 +133,22 @@ void testApp::drawScene(int iDraw){
     if (iDraw == 0) {
         
         ofPushMatrix();
-        ofTranslate(-offSet_A.x+384, 334);
+        ofTranslate(translate_A.x-offSet_A.x,translate_A.y);
         ground_A.draw();
         ground_A.drawPolyLine();
         char_A.drawBox2dObject();
         char_A.draw();
-        rope_A.draw();
         ofPopMatrix();
         
-        
-        
-    }else if(iDraw == 1){
-        
         ofPushMatrix();
-        ofTranslate(-offSet_B.x+384, 740);
+        ofTranslate(translate_B.x-offSet_B.x,translate_B.y);
         ground_B.draw();
         ground_B.drawPolyLine();
         char_B.drawBox2dObject();
         char_B.draw();
         ofPopMatrix();
+        
+        rope_A.draw();
     }
 
 

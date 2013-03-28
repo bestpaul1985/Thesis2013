@@ -27,7 +27,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
     setPos = SetPos;
     getPos = SetPos;
     charNum = iCharNum;
-    
+    bSwing = false;
     mirrorLeft = false;
  
     character.setPhysics(1000.0f, 0.0f, 0.3f);
@@ -182,10 +182,19 @@ void ttChar::draw(){
     
     ofPopMatrix();
     ofSetRectMode(OF_RECTMODE_CORNER);
-    
+}
+//-----------------------------------------------
+void ttChar::swing(){
+
+    if (bSwing) {
+        
+        
+        
+        
+        
+    }
 
 }
-
 
 //----------------------------------------------
 void ttChar::drawBox2dObject(){

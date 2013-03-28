@@ -13,20 +13,23 @@
 #include "ofxBox2d.h"
 class ttRope{
 public:
-    void setup(ofPoint &offset);
+    void setup();
     void updateAccelerometer(ofPoint acc);
-    void update();
+    void update(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB);
     void draw();
     
-    ofPoint *offSet;
-    
+    ofPoint translate_A, translate_B;
+    ofPoint offset_A, offset_B;
     ofxBox2d world;
     ofxBox2dRect start;
     ofxBox2dRect end;
     ofxBox2dJoint joint;
     
+    ofPoint endPos;
     float length;
     int ropeNum;
+    bool bHooked;
+    bool bRopeInUse;
     
 };
 
