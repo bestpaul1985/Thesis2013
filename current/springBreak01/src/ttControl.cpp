@@ -37,12 +37,6 @@ void ttControl::setup(int iCharNum){
 
 }
 //------------------------------------------------
-void ttControl::ropeInfo(ttRope &Rope_A, ttRope &Rope_B){
-    rope_A = &Rope_A;
-    rope_B = &Rope_B;
-
-}
-//------------------------------------------------
 
 void ttControl::draw(){
     
@@ -57,8 +51,7 @@ void ttControl::draw(){
 }
 //------------------------------------------------
 void ttControl::touchDown(int x, int y, int TouchId){
-   
-
+    
     if (Directional_Touch_Area.inside(x, y)) {
         preTouchPos.set(x, y);
         diff.set(0,0);
@@ -79,7 +72,6 @@ void ttControl::touchMove(int x, int y, int TouchId){
             dis = touchPos.distance(preTouchPos);
             diff = touchPos - preTouchPos;
             preTouchPos = touchPos;
-            
             
             if (charNum == 0) {
                 if (dis< 10 && diff.x >0){
@@ -103,7 +95,6 @@ void ttControl::touchMove(int x, int y, int TouchId){
 }
 //-------------------------------------------------
 void ttControl::touchUp(int x, int y, int TouchId){
-   
     if (touchId == TouchId && charNum == 0) {
             if (Directional_Touch_Area.inside(x, y)){
                 if (dis> 10 && diff.x >0){

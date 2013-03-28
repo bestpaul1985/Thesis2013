@@ -10,14 +10,11 @@
 #define __thatTheyClass__ttControl__
 
 #include "ofMain.h"
-#include "ttRope.h"
-
 class ttControl{
 
 public:
     ttControl();
     void setup(int iCharNum);
-    void ropeInfo(ttRope &Rope_A, ttRope &Rope_B);
     void draw();
     void touchDown(int x, int y, int TouchId);
     void touchMove(int x, int y, int TouchId);
@@ -27,8 +24,7 @@ public:
     ofPoint preTouchPos;
     ofPoint diff;
 
-    ttRope *rope_A;
-    ttRope *rope_B;
+    
     float w;
     float h;
     float width;
