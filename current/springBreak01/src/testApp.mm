@@ -37,10 +37,9 @@ void testApp::setup(){
     ofAddListener(world_B.contactEndEvents,this, &testApp::contactStart_worldB);
     
     
-    //control
     control_A.setup(0);
     control_B.setup(1);
-    //characters
+
     char_A.setup(world_A, world_B,
                  control_A,
                  ofPoint(384,500),
@@ -50,6 +49,7 @@ void testApp::setup(){
                  control_B,
                  ofPoint(384,700),
                  1);
+    
     //camera
     camPos_A.set(0, h);
     cam_A.setNearClip(-1);
@@ -70,9 +70,6 @@ void testApp::setup(){
     rope_B.setup(char_A, char_B, 1);
     rope_A.setupContactListener();
     rope_B.setupContactListener();
-    
-
-
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){

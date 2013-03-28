@@ -10,8 +10,6 @@
 #define __thatTheyClass__ttControl__
 
 #include "ofMain.h"
-#include "ttRope.h"
-
 class ttControl{
 
 public:
@@ -41,7 +39,7 @@ public:
     bool bSwingLeft;
     bool bSwingRight;
     int touchId;
-    int *swingNum;
+   
 };
 
 #endif /* defined(__thatTheyClass__ttControl__) */
