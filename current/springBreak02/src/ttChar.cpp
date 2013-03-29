@@ -16,7 +16,8 @@ ttChar::ttChar(){
     step = 0;
 }
 //----------------------------------------------
-void ttChar::setup(ofxBox2d &World,
+void ttChar::setup(ofxBox2d &characterWorld,
+                   ofxBox2d &dummyWorld,
                    ttControl &ctrl_A,
                    ttControl &ctrl_B,
                    ofPoint SetPos,
@@ -31,9 +32,9 @@ void ttChar::setup(ofxBox2d &World,
     charNum = iCharNum;
     bSwing = false;
     mirrorLeft = false;
-    world = World;
+    world = characterWorld;
     character.setPhysics(200.f, 0.0f, 1.f);
-    character.setup(World.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
+    character.setup(characterWorld.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
     character.body->SetLinearDamping(b2dNum(.9));
    
     character.setData(new ttSetData);
@@ -179,6 +180,7 @@ void ttChar::update(){
                     }
                     
                     else if(control_B->bRight == true){
+                        cout<<"ok"<<endl;
                         character.setVelocity(20, 0);
                         character.addForce(ofVec2f(x,0), scale);
                         control_B->bRight = false;
@@ -241,22 +243,21 @@ void ttChar::draw(){
 
 //-----------------------------------------------
 void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB){
-   
     if (charNum == 0) {
         if (bSwing) {
             if (step == 0) {
-                
                 ofPoint startPos;
-                startPos.x = offsetA.x;
-                startPos.y = translateB.y+offsetB.y-translateA.y;
+                startPos.x = offsetB.x;
+                startPos.y = translateA.y+offsetA.y-translateB.y;
                 start.setup(world.getWorld(), startPos.x, startPos.y, 10);
                 float length;
                 joint.setup(world.getWorld(), start.body, character.body);
-                length = translateB.y+offsetB.y-translateA.y-offsetA.y-150;
+                length = translateB.y+offsetB.y-translateA.y-offsetA.y-180;
                 joint.setLength(length);
                 character.setVelocity(0,-3);
-                character.body->SetLinearDamping(0.f);
+                character.body->SetLinearDamping(b2dNum(0.0f));
                 step = 1;
+                //                cout<<length<<endl;
             }
         }
         else
@@ -264,7 +265,7 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
             if (step == 1) {
                 joint.destroy();
                 world.getWorld()->DestroyBody(start.body);
-                character.body->SetLinearDamping(0.5);
+                character.body->SetLinearDamping(b2dNum(0.9f));
                 step = 0;
                 
             }
@@ -276,19 +277,20 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
             float diffX = character.getPosition().x - start.getPosition().x;
             float diffY = character.getPosition().y - start.getPosition().y;
             float angleTo = atan2(diffY, diffX)*RAD_TO_DEG;
-            if (control_A->bSwingLeft ) {
-                character.addForce(ofPoint(55,0), 1200);
-                control_A->bSwingLeft = false;
-            }else if(control_A->bSwingRight ){
+            
+            if (control_B->bSwingLeft ) {
                 character.addForce(ofPoint(-55,0), 1200);
+                control_B->bSwingLeft = false;
+            }else if(control_A->bSwingRight ){
+                character.addForce(ofPoint(55,0), 1200);
                 control_A->bSwingRight = false;
             }
             
             if (angleTo>150) {
-                character.setVelocity(10, 0);
+                character.setVelocity(-10, 0);
                 
             }else if(angleTo<30){
-                character.setVelocity(-10, 0);
+                character.setVelocity(10, 0);
                 
             }
             
@@ -310,7 +312,7 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
                 length = translateB.y+offsetB.y-translateA.y-offsetA.y-150;
                 joint.setLength(length);
                 character.setVelocity(0,-3);
-                character.body->SetLinearDamping(0.f);
+                character.body->SetLinearDamping(b2dNum(0.0f));
                 step = 1;
             }
         }
@@ -319,7 +321,7 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
             if (step == 1) {
                 joint.destroy();
                 world.getWorld()->DestroyBody(start.body);
-                character.body->SetLinearDamping(0.5);
+                character.body->SetLinearDamping(b2dNum(0.9f));
                 step = 0;
                
             }
@@ -360,8 +362,8 @@ void ttChar::drawBox2dObject(){
     ofSetColor(255, 30, 220,100);
     character.draw();
     
-    if (step>0) {
-        start.draw();
-        joint.draw();
-    }
+//    if (step>0) {
+//        start.draw();
+//        joint.draw();
+//    }
 }

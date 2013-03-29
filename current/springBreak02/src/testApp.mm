@@ -36,13 +36,13 @@ void testApp::setup(){
     control_A.setup(0);
     control_B.setup(1);
     //char
-    char_A.setup(world_A,
+    char_A.setup(world_A, world_B,
                  control_A,
                  control_B,
                  ofPoint(0,0),
                  0);
     
-    char_B.setup(world_B,
+    char_B.setup(world_B, world_A,
                  control_A,
                  control_B,
                  ofPoint(0,0),
@@ -60,8 +60,7 @@ void testApp::setup(){
     translate_A.set(384,250);
     translate_B.set(384,774);
     //rope
-    rope_A.setup(0);
-    rope_B.setup(1);
+    rope_A.setup();
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -108,19 +107,13 @@ void testApp::update(){
     if (!rope_A.bHooked) {
         offSet_B = currentPos_B-orgPos_B;
     }
-    
-    if (!rope_B.bHooked) {
-        offSet_A = currentPos_A-orgPos_A;
-    }
+    offSet_A = currentPos_A-orgPos_A;
     
     
-    
-    //ropes
+    //rope
     rope_A.update(translate_A,translate_B,offSet_A,offSet_B);
     rope_A.updateAccelerometer(ofxAccelerometer.getForce());
-    rope_B.update(translate_A,translate_B,offSet_A,offSet_B);
-    rope_B.updateAccelerometer(ofxAccelerometer.getForce());
-    //ropeA
+    
     if (rope_A.bRopeInUse) {
         char_A.bFixedMove = true;
         
@@ -148,30 +141,6 @@ void testApp::update(){
         rope_A.endPos.set(0, 0);
     }
     
-    //ropeB
-    if (rope_B.bRopeInUse) {
-        char_B.bFixedMove = true;
-        
-    }else{
-        char_B.bFixedMove = false;
-        control_A.bHooked = false;
-    }
-    
-    if (rope_B.bHooked) {
-        char_A.bFixedMove = true;
-        char_A.bSwing = true;
-        control_A.bHooked = true;
-        ofPoint pos;
-        pos.x = currentPos_A.x - offSet_A.x;
-        pos.y = char_A.start.getPosition().y - char_A.getPos.y;
-        rope_A.endPos.set(pos.x, -pos.y);
-    }else{
-        char_A.bFixedMove = false;
-        char_A.bSwing = false;
-    }
-
-    //swing
-    char_A.swing(translate_A, translate_B, offSet_A, offSet_B);
     char_B.swing(translate_A, translate_B, offSet_A, offSet_B);
 }
 
@@ -182,8 +151,8 @@ void testApp::draw(){
     
     drawScene(0);
 
-    ofDrawBitmapStringHighlight("offSet_A: " + ofToString(offSet_A,1)+"\ntranslate_A: "+ofToString(translate_A,1)+"\nchar_A: "+ofToString(char_A.getPos,1), 50,50);
-    ofDrawBitmapStringHighlight("offSet_B: " + ofToString(offSet_B,1)+"\ntranslate_B: "+ofToString(translate_B,1)+"\nchar_B: "+ofToString(char_B.getPos,1), 530,950);
+    ofDrawBitmapStringHighlight("offSet_A: " + ofToString(offSet_A,2)+"\ntranslate_A: "+ofToString(translate_A)+"\nchar_A: "+ofToString(char_A.getPos), 50,50);
+    ofDrawBitmapStringHighlight("offSet_B: " + ofToString(offSet_B,2)+"\ntranslate_B: "+ofToString(translate_B)+"\nchar_B: "+ofToString(char_B.getPos), 530,950);
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int iDraw){
@@ -194,7 +163,7 @@ void testApp::drawScene(int iDraw){
         ofTranslate(translate_A.x-offSet_A.x,translate_A.y);
         ground_A.draw();
 //      ground_A.drawPolyLine();
-        char_A.drawBox2dObject();
+//        char_A.drawBox2dObject();
         char_A.draw();
         ofPopMatrix();
         
@@ -202,12 +171,10 @@ void testApp::drawScene(int iDraw){
         ofTranslate(translate_B.x-offSet_B.x,translate_B.y);
         ground_B.draw();
 //      ground_B.drawPolyLine();
-        char_B.drawBox2dObject();
+//        char_B.drawBox2dObject();
         char_B.draw();
         ofPopMatrix();
-        
         rope_A.draw();
-        rope_B.draw();
     }
 
 
