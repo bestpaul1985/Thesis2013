@@ -24,11 +24,12 @@ public:
     
     void update();
     void draw();
-    void swing();
+    void swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB);
     void drawBox2dObject();
 
     ofxBox2dRect    character;
     ofxBox2dRect    Dummy;
+    ofxBox2d        world;
     
     ofPoint         setPos;
     ofPoint         getPos;
@@ -40,11 +41,12 @@ public:
     bool            bSwing;
     bool            mirrorLeft;
     int             charNum;
+    int             step;
     ttControl       *control;
     vector<ofImage> sprite;
     
-   
-   
+    ofxBox2dCircle  start;
+    ofxBox2dJoint   joint;
 };
 
 #endif /* defined(__thatThey__ttChar__) */

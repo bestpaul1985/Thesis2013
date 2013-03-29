@@ -53,8 +53,6 @@ void ttRope::updateAccelerometer(ofPoint acc){
             bHooked = false;
         }
     }
-
-      cout<<bHooked<<endl;
 }
 
 //--------------------------------------------------------
@@ -62,8 +60,8 @@ void ttRope::draw(){
     
     ofPushMatrix();
     ofTranslate(translate_A.x, translate_A.y+offset_A.y);
-    ofSetColor(30,255,220);
-    ofCircle(0, 0, 10);
+    ofSetColor(30,255,220,20);
+//    ofCircle(0, 0, 10);
     ofLine(0, 0, endPos.x, endPos.y);
     ofPopMatrix();
     
