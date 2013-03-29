@@ -38,6 +38,8 @@ public:
     
     bool bSwingLeft;
     bool bSwingRight;
+    bool bHooked;
+    bool bRelese;
     int touchId;
    
 };

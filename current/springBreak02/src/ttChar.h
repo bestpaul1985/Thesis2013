@@ -18,7 +18,8 @@ public:
     ttChar();
     void setup(ofxBox2d &characterWorld,
                ofxBox2d &dummyWorld,
-               ttControl &ctrl,
+               ttControl &ctrl_A,
+               ttControl &ctrl_B,
                ofPoint SetPos,
                int iCharNum);
     
@@ -42,7 +43,8 @@ public:
     bool            mirrorLeft;
     int             charNum;
     int             step;
-    ttControl       *control;
+    ttControl       *control_A;
+    ttControl       *control_B;
     vector<ofImage> sprite;
     
     ofxBox2dCircle  start;

@@ -15,6 +15,9 @@ ttControl::ttControl(){
     bSwingLeft = false;
     bLeft = false;
     bRight = false;
+    bHooked = false;
+    bRelese = false;
+    
     diff.set(0, 0);
     dis = 0;
     touchId = -1;
@@ -59,7 +62,13 @@ void ttControl::touchDown(int x, int y, int TouchId){
         if (touchId == -1) {
             touchId = TouchId;
         }
+        
+        if (bHooked) {
+            bRelese = true;
+        }
     }
+    
+   
     
 }
 
@@ -108,6 +117,7 @@ void ttControl::touchUp(int x, int y, int TouchId){
                 }
         }
         touchId = -1;
+        bRelese = false;
     }
           
     
@@ -125,7 +135,10 @@ void ttControl::touchUp(int x, int y, int TouchId){
                 }
             }
         touchId = -1;
+        bRelese = false;
     }
+    
+   
         
 }
    

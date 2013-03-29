@@ -18,11 +18,14 @@ ttChar::ttChar(){
 //----------------------------------------------
 void ttChar::setup(ofxBox2d &characterWorld,
                    ofxBox2d &dummyWorld,
-                   ttControl &ctrl,
+                   ttControl &ctrl_A,
+                   ttControl &ctrl_B,
                    ofPoint SetPos,
                    int iCharNum){
     
-    control = &ctrl;
+    control_A = &ctrl_A;
+    control_B = &ctrl_B;
+    
     bFixedMove = false;
     setPos = SetPos;
     getPos = SetPos;
@@ -66,7 +69,6 @@ void ttChar::setup(ofxBox2d &characterWorld,
     
     character.body->SetFixedRotation(true);
     character.body->SetLinearDamping(0.5);
-    
     adjustedHeight = 85;
 }
 
@@ -80,77 +82,104 @@ void ttChar::update(){
     float scale = 55;
     float smallMove;
     
-    if (bFixedMove==true) {
-        control->bSmallLeft = false;
-        control->bSmallRight = false;
-        control->bLeft = false;
-        control->bRight = false;
-        
-    }else{
-        if (control->diff.x>1||control->diff.x<-1) {
-            smallMove = control->diff.x;
-        }else{
-            smallMove  = 0;
-        }
-        
-        if (charNum == 0) {
 
-            if (control->bSmallLeft == true) {
-                character.setVelocity(smallMove, 0);
-                control->bSmallLeft = false;
-                mirrorLeft = true;
+            
+           
+            if (charNum == 0) {
+                if (bFixedMove==true){
+                    control_A->bSmallLeft = false;
+                    control_A->bSmallRight = false;
+                    control_A->bLeft = false;
+                    control_A->bRight = false;
+                }
+                
+                if (control_A->diff.x>1||control_A->diff.x<-1) {
+                    smallMove = control_A->diff.x;
+                }
+                else
+                {
+                    smallMove  = 0;
+                }
+                
+                
+                if (control_A->bSmallLeft == true) {
+                    character.setVelocity(smallMove, 0);
+                    control_A->bSmallLeft = false;
+                    mirrorLeft = true;
+                }
+                
+                else if(control_A->bSmallRight == true)
+                {
+                    character.setVelocity(smallMove, 0);
+                    control_A->bSmallRight = false;
+                    mirrorLeft = false;
+                }
+                
+                else if (control_A->bLeft == true)
+                {
+                    character.setVelocity(20, 0);
+                    character.addForce(ofVec2f(x,0), scale);
+                    control_A->bLeft = false;
+                    mirrorLeft = true;
+                }
+                else if(control_A->bRight == true)
+                {
+                    character.setVelocity(-20, 0);
+                    character.addForce(ofVec2f(-x,0), scale);
+                    control_A->bRight = false;
+                    mirrorLeft = false;
+                }
             }
             
-            else if(control->bSmallRight == true){
-                character.setVelocity(smallMove, 0);
-                control->bSmallRight = false;
-                mirrorLeft = false;
+            if(charNum  == 1){
+                if (bFixedMove == true) {
+                    control_B->bSmallLeft = false;
+                    control_B->bSmallRight = false;
+                    control_B->bLeft = false;
+                    control_B->bRight = false;
+                }
+                else
+                {
+                
+                    if (control_B->diff.x>1||control_B->diff.x<-1) {
+                        smallMove = control_B->diff.x;
+                    }else{
+                        smallMove  = 0;
+                    }
+                    
+                    if (control_B->bSmallLeft == true) {
+                       
+                        character.setVelocity(smallMove, 0);
+                        control_B->bSmallLeft = false;
+                        mirrorLeft = true;
+                    }
+                    
+                    else if(control_B->bSmallRight == true){
+                       
+                        character.setVelocity(smallMove, 0);
+                        control_B->bSmallRight = false;
+                        mirrorLeft = false;
+                    }
+                    
+                    else if (control_B->bLeft == true) {
+                     
+                        character.setVelocity(-20, 0);
+                        character.addForce(ofVec2f(-x,0), scale);
+                        control_B->bLeft = false;
+                        mirrorLeft = true;
+                    }
+                    
+                    else if(control_B->bRight == true){
+                        cout<<"ok"<<endl;
+                        character.setVelocity(20, 0);
+                        character.addForce(ofVec2f(x,0), scale);
+                        control_B->bRight = false;
+                        mirrorLeft = false;
+                    }
+                }
             }
-
-            else if (control->bLeft == true) {
-                character.setVelocity(20, 0);
-                character.addForce(ofVec2f(x,0), scale);
-                control->bLeft = false;
-                mirrorLeft = true;
-            }
-            else if(control->bRight == true){
-                character.setVelocity(-20, 0);
-                character.addForce(ofVec2f(-x,0), scale);
-                control->bRight = false;
-                mirrorLeft = false;
-            }
-        }
-
-        if(charNum  == 1){
-            
-            if (control->bSmallLeft == true) {
-                character.setVelocity(smallMove, 0);
-                control->bSmallLeft = false;
-                mirrorLeft = true;
-            }
-            
-            else if(control->bSmallRight == true){
-                character.setVelocity(smallMove, 0);
-                control->bSmallRight = false;
-                mirrorLeft = false;
-            }
-
-            else if (control->bLeft == true) {
-                character.setVelocity(-20, 0);
-                character.addForce(ofVec2f(-x,0), scale);
-                control->bLeft = false;
-                mirrorLeft = true;
-            }
-
-            else if(control->bRight == true){
-                character.setVelocity(20, 0);
-                character.addForce(ofVec2f(x,0), scale);
-                control->bRight = false;
-                mirrorLeft = false;
-            }
-        }
-    }
-
+                
+    
     getPos = character.getPosition();
 
 }
@@ -188,7 +217,7 @@ void ttChar::draw(){
 }
 //-----------------------------------------------
 void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB){
-    if (charNum == 1) {
+    if (charNum == 0) {
         if (bSwing) {
             if (step == 0) {
                 ofPoint startPos;
@@ -202,7 +231,7 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
                 character.setVelocity(0,-3);
                 character.body->SetLinearDamping(b2dNum(0.0f));
                 step = 1;
-                cout<<length<<endl;
+                //                cout<<length<<endl;
             }
         }
         else
@@ -210,6 +239,63 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
             if (step == 1) {
                 joint.destroy();
                 world.getWorld()->DestroyBody(start.body);
+                character.body->SetLinearDamping(b2dNum(0.9f));
+                step = 0;
+                
+            }
+            
+        }
+        
+        if (step == 1) {
+            
+            float diffX = character.getPosition().x - start.getPosition().x;
+            float diffY = character.getPosition().y - start.getPosition().y;
+            float angleTo = atan2(diffY, diffX)*RAD_TO_DEG;
+            
+            if (control_B->bSwingLeft ) {
+                character.addForce(ofPoint(-55,0), 1200);
+                control_B->bSwingLeft = false;
+            }else if(control_A->bSwingRight ){
+                character.addForce(ofPoint(55,0), 1200);
+                control_A->bSwingRight = false;
+            }
+            
+            if (angleTo>150) {
+                character.setVelocity(-10, 0);
+                
+            }else if(angleTo<30){
+                character.setVelocity(10, 0);
+                
+            }
+            
+        }
+        
+    }
+    
+
+    
+    if (charNum == 1) {
+        if (bSwing) {
+            if (step == 0) {
+                ofPoint startPos;
+                startPos.x = offsetB.x;
+                startPos.y = translateA.y+offsetA.y-translateB.y;
+                start.setup(world.getWorld(), startPos.x, startPos.y, 10);
+                float length;
+                joint.setup(world.getWorld(), start.body, character.body);
+                length = translateB.y+offsetB.y-translateA.y-offsetA.y-150;
+                joint.setLength(length);
+                character.setVelocity(0,-3);
+                character.body->SetLinearDamping(b2dNum(0.0f));
+                step = 1;
+            }
+        }
+        else
+        {
+            if (step == 1) {
+                joint.destroy();
+                world.getWorld()->DestroyBody(start.body);
+                character.body->SetLinearDamping(b2dNum(0.9f));
                 step = 0;
                
             }
@@ -217,20 +303,32 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
         }
         
         if (step == 1) {
-            if (control->bSwingLeft) {
-                character.setVelocity(-10, 0);
-                control->bSwingLeft = false;
-            }else if(control->bSwingRight){
-                character.setVelocity(10, 0);
-                control->bSwingRight = false;
+            
+            float diffX = character.getPosition().x - start.getPosition().x;
+            float diffY = character.getPosition().y - start.getPosition().y;
+            float angleTo = atan2(diffY, diffX)*RAD_TO_DEG;
+            if (control_A->bSwingLeft ) {
+                character.addForce(ofPoint(55,0), 1200);
+                control_A->bSwingLeft = false;
+            }else if(control_A->bSwingRight ){
+                character.addForce(ofPoint(-55,0), 1200);
+                control_A->bSwingRight = false;
             }
+            
+            if (angleTo>150) {
+                character.setVelocity(10, 0);
+
+            }else if(angleTo<30){
+                character.setVelocity(-10, 0);
+
+            }
+            
         }
         
     }
    
-    
-    
-   
+        
+   getPos = character.getPosition();
     
 }
 //----------------------------------------------
@@ -238,8 +336,8 @@ void ttChar::drawBox2dObject(){
     ofSetColor(255, 30, 220,100);
     character.draw();
     
-    if (step>0) {
-        start.draw();
-        joint.draw();
-    }
+//    if (step>0) {
+//        start.draw();
+//        joint.draw();
+//    }
 }

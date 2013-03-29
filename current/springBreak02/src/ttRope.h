@@ -30,6 +30,7 @@ public:
     int ropeNum;
     bool bHooked;
     bool bRopeInUse;
+    int counter;
     
 };
 
