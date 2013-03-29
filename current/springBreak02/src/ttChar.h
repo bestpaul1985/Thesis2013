@@ -8,7 +8,6 @@
 
 #ifndef __thatThey__ttChar__
 #define __thatThey__ttChar__
-#define EMOJI_NUM 5
 
 #include "ofMain.h"
 #include "ofxBox2d.h"
@@ -25,9 +24,9 @@ public:
                int iCharNum);
     
     void update();
-    void drawBox2dObject();
     void draw();
     void swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB);
+    void drawBox2dObject();
 
     ofxBox2dRect    character;
     ofxBox2dRect    Dummy;
@@ -50,10 +49,6 @@ public:
     
     ofxBox2dCircle  start;
     ofxBox2dJoint   joint;
-    
-    ofImage         emoji[EMOJI_NUM];
-    int             emojiMode;
-    bool            drawEmo;
 };
 
 #endif /* defined(__thatThey__ttChar__) */
