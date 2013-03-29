@@ -202,27 +202,25 @@ void ttChar::draw(){
     ofPushMatrix();
     ofTranslate(getPos);
     
-    //draw emoji
-    if (drawEmo) {
-        emojiMode = ofClamp(emojiMode, 0, EMOJI_NUM);
-        if(charNum ==0) {
-            ofPushMatrix();
-            ofTranslate(-30,30);
-            ofScale(-1, -1);
-            emoji[emojiMode].draw(0, 0, 40,40);
-            ofPopMatrix();
-        }
-        if(charNum ==1) emoji[emojiMode].draw(30, -30, 40,40);
-    }
-    
-    //turn left flip
-    if (mirrorLeft) ofScale(-1, 1);
     //if no picture files, draw box2d rect instead
     if ((int)sprite.size() <=0 ) {
         ofSetColor(255, 30, 220,100);
         character.draw();
     }
     
+    //world a is upside!
+    if (charNum==0) ofScale(1, -1);
+    
+    //draw emoji
+    if (drawEmo) {
+        emojiMode = ofClamp(emojiMode, 0, EMOJI_NUM);
+        emoji[emojiMode].draw(30, -30, 40,40);
+    }
+
+    //turn left flip
+    if (mirrorLeft) ofScale(-1, 1);
+    
+    //character animation
     int frameIndex = 0;
     frameIndex = (int) (ofGetElapsedTimef() * 24) % sprite.size();
     
