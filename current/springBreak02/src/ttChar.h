@@ -17,8 +17,7 @@
 class ttChar{
 public:
     ttChar();
-    void setup(ofxBox2d &characterWorld,
-               ofxBox2d &dummyWorld,
+    void setup(ofxBox2d &World,
                ttControl &ctrl_A,
                ttControl &ctrl_B,
                ofPoint SetPos,
