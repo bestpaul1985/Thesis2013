@@ -65,11 +65,21 @@ void ttChar::setup(ofxBox2d &characterWorld,
             }
         }
     }
- 
+
+    
     
     character.body->SetFixedRotation(true);
     character.body->SetLinearDamping(0.5);
     adjustedHeight = 85;
+    
+    emoji[0].loadImage("sprites/emoji/emoji_1.png");
+    emoji[1].loadImage("sprites/emoji/emoji_2.png");
+    emoji[2].loadImage("sprites/emoji/emoji_3.png");
+    emoji[3].loadImage("sprites/emoji/emoji_4.png");
+    emoji[4].loadImage("sprites/emoji/emoji_5.png");
+    drawEmo = false;
+    emojiMode = 0;
+    
 }
 
 
@@ -192,6 +202,19 @@ void ttChar::draw(){
     ofPushMatrix();
     ofTranslate(getPos);
     
+    //draw emoji
+    if (drawEmo) {
+        emojiMode = ofClamp(emojiMode, 0, EMOJI_NUM);
+        if(charNum ==0) {
+            ofPushMatrix();
+            ofTranslate(-30,30);
+            ofScale(-1, -1);
+            emoji[emojiMode].draw(0, 0, 40,40);
+            ofPopMatrix();
+        }
+        if(charNum ==1) emoji[emojiMode].draw(30, -30, 40,40);
+    }
+    
     //turn left flip
     if (mirrorLeft) ofScale(-1, 1);
     //if no picture files, draw box2d rect instead
@@ -212,9 +235,13 @@ void ttChar::draw(){
         sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
     }
     
+    
     ofPopMatrix();
     ofSetRectMode(OF_RECTMODE_CORNER);
+    
 }
+
+
 //-----------------------------------------------
 void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB){
     if (charNum == 0) {
