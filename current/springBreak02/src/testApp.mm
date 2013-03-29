@@ -13,13 +13,13 @@ void testApp::setup(){
     // setup world A
     world_A.init();
     world_A.setFPS(60);
-    world_A.setGravity(0,-9.8);
+    world_A.setGravity(0,-98);
     world_A.setIterations(1, 1);
     world_A.registerGrabbing();
     // setup world B
     world_B.init();
     world_B.setFPS(60);
-    world_B.setGravity(0, 9.8);
+    world_B.setGravity(0, 98);
     world_B.setIterations(1, 1);
     world_B.registerGrabbing();
     //Map

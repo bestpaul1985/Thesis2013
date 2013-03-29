@@ -30,10 +30,10 @@ void ttChar::setup(ofxBox2d &characterWorld,
     bSwing = false;
     mirrorLeft = false;
     world = characterWorld;
-    character.setPhysics(200.f, 0.0f, 0.3f);
+    character.setPhysics(200.f, 0.0f, 1.f);
     character.setup(characterWorld.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
-    character.body->SetLinearDamping(b2dNum(0.3f));
-
+    character.body->SetLinearDamping(b2dNum(.9));
+   
     character.setData(new ttSetData);
     ttSetData* sd = (ttSetData*)character.getData();
     if (charNum == 0) {
