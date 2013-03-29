@@ -230,7 +230,8 @@ void ttChar::draw(){
     }
     else
     {
-        sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
+        if(charNum==0)sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
+        if(charNum==1)sprite[5].draw(0,0, adjustedHeight, adjustedHeight);
     }
     
     
