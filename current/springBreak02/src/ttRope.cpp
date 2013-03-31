@@ -110,7 +110,7 @@ void ttRope::draw(){
         ofPushMatrix();
         ofTranslate(translate_A.x, translate_A.y+offset_A.y);
         ofSetColor(30,255,220,150);
-        ofCircle(0, 0, 10);
+//        ofCircle(0, 0, 10);
         ofLine(0, 0, endPos.x, endPos.y);
         ofPopMatrix();
     }
@@ -120,7 +120,7 @@ void ttRope::draw(){
         ofPushMatrix();
         ofTranslate(translate_B.x, translate_B.y+offset_B.y);
         ofSetColor(30,255,220,150);
-        ofCircle(0, 0, 10);
+//        ofCircle(0, 0, 10);
         ofLine(0, 0, endPos.x, endPos.y);
         ofPopMatrix();
     }

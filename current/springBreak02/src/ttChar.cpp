@@ -91,43 +91,52 @@ void ttChar::update(){
                     control_A->bSmallRight = false;
                     control_A->bLeft = false;
                     control_A->bRight = false;
-                }
+                    
+                    if (bReset) {
+                        character.setVelocity(0, 0);
+                        bReset = false;
+                    }
+                }else{
                 
-                if (control_A->diff.x>1||control_A->diff.x<-1) {
-                    smallMove = control_A->diff.x;
-                }
-                else
-                {
-                    smallMove  = 0;
-                }
+                    bReset = true;
+                    
+                    if (control_A->diff.x>1||control_A->diff.x<-1) {
+                        smallMove = control_A->diff.x;
+                    }
+                    else
+                    {
+                        smallMove  = 0;
+                    }
+                    
+                    
+                    if (control_A->bSmallLeft == true) {
+                        character.setVelocity(smallMove, 0);
+                        control_A->bSmallLeft = false;
+                        mirrorLeft = true;
+                    }
+                    
+                    else if(control_A->bSmallRight == true)
+                    {
+                        character.setVelocity(smallMove, 0);
+                        control_A->bSmallRight = false;
+                        mirrorLeft = false;
+                    }
+                    
+                    else if (control_A->bLeft == true)
+                    {
+                        character.setVelocity(20, 0);
+                        character.addForce(ofVec2f(x,0), scale);
+                        control_A->bLeft = false;
+                        mirrorLeft = true;
+                    }
+                    else if(control_A->bRight == true)
+                    {
+                        character.setVelocity(-20, 0);
+                        character.addForce(ofVec2f(-x,0), scale);
+                        control_A->bRight = false;
+                        mirrorLeft = false;
+                    }
                 
-                
-                if (control_A->bSmallLeft == true) {
-                    character.setVelocity(smallMove, 0);
-                    control_A->bSmallLeft = false;
-                    mirrorLeft = true;
-                }
-                
-                else if(control_A->bSmallRight == true)
-                {
-                    character.setVelocity(smallMove, 0);
-                    control_A->bSmallRight = false;
-                    mirrorLeft = false;
-                }
-                
-                else if (control_A->bLeft == true)
-                {
-                    character.setVelocity(20, 0);
-                    character.addForce(ofVec2f(x,0), scale);
-                    control_A->bLeft = false;
-                    mirrorLeft = true;
-                }
-                else if(control_A->bRight == true)
-                {
-                    character.setVelocity(-20, 0);
-                    character.addForce(ofVec2f(-x,0), scale);
-                    control_A->bRight = false;
-                    mirrorLeft = false;
                 }
                 
                 getPos = character.getPosition();
@@ -139,10 +148,16 @@ void ttChar::update(){
                     control_B->bSmallRight = false;
                     control_B->bLeft = false;
                     control_B->bRight = false;
+                    if (bReset) {
+                        character.setVelocity(0, 0);
+                        bReset = false;
+                    }
                 }
                 else
                 {
                 
+                    bReset = true;
+                    
                     if (control_B->diff.x>1||control_B->diff.x<-1) {
                         smallMove = control_B->diff.x;
                     }else{
@@ -172,7 +187,6 @@ void ttChar::update(){
                     }
                     
                     else if(control_B->bRight == true){
-                        cout<<"ok"<<endl;
                         character.setVelocity(20, 0);
                         character.addForce(ofVec2f(x,0), scale);
                         control_B->bRight = false;
@@ -243,9 +257,8 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
             if (step == 1) {
                 joint.destroy();
                 world.getWorld()->DestroyBody(start.body);
-                character.body->SetLinearDamping(0.9f);
+                character.body->SetLinearDamping(0.5f);
                 step = 0;
-                
             }
             
         }
@@ -265,14 +278,14 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
             }
             
             cout<<angleTo<<endl;
-//            if (angleTo<-150) {
-//                character.setVelocity(10, 0);
-//                
-//            }else if(angleTo>-30){
-//                character.setVelocity(-10, 0);
-//                
-//            }
-//            
+            if (angleTo<-150) {
+                character.setVelocity(10, 0);
+                
+            }else if(angleTo>-30){
+                character.setVelocity(-10, 0);
+                
+            }
+//
         }
         getPos = character.getPosition();
     }

@@ -41,6 +41,7 @@ public:
     bool            bFixedMove;
     bool            bSwing;
     bool            mirrorLeft;
+    bool            bReset;
     int             charNum;
     int             step;
     ttControl       *control_A;

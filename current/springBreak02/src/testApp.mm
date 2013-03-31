@@ -122,29 +122,44 @@ void testApp::update(){
     rope_B.updateAccelerometer(ofxAccelerometer.getForce());
     
     if (rope_A.bRopeInUse) {
-        char_A.bFixedMove = true;
-    }else{
-        char_A.bFixedMove = false;
-        control_B.bHooked = false;
-    }
-    
-    if (rope_A.bHooked) {
-        char_B.bFixedMove = true;
-        control_B.bHooked = true;
-        char_B.bSwing = true;
         
-        ofPoint pos;
-        pos.x = currentPos_B.x - offSet_B.x;
-        pos.y = char_B.start.getPosition().y - char_B.getPos.y;
-        rope_A.endPos.set(pos.x, -pos.y);
+        char_A.bFixedMove = true;
+        
+        if (rope_A.bHooked) {
+            char_B.bFixedMove = true;
+            control_B.bHooked = true;
+            char_B.bSwing = true;
+            ofPoint pos;
+            pos.x = currentPos_B.x - offSet_B.x;
+            pos.y = char_B.start.getPosition().y - char_B.getPos.y;
+            rope_A.endPos.set(pos.x, -pos.y);
+        }
+        
+        if (control_B.bRelese) {
+            char_B.bFixedMove = false;
+            control_B.bHooked = false;
+            char_B.bSwing = false;
+            rope_A.bRopeInUse = false;
+            rope_A.bHooked = false;
+            char_A.bFixedMove = false;
+            rope_A.endPos.set(0, 0);
+        }
+        
     }
     
-    if (control_B.bRelese) {
-        rope_A.bRopeInUse = false;
-        rope_A.bHooked = false;
-        rope_A.endPos.set(0, 0);
+   
+    if (!rope_A.bRopeInUse&&!rope_B.bRopeInUse) {
         char_B.bFixedMove = false;
         char_B.bSwing = false;
+    
+        char_A.bFixedMove = false;
+        char_A.bSwing = false;
+        
+        control_A.bHooked = false;
+        control_B.bHooked = false;
+       
+        rope_A.bHooked = false;
+        rope_B.bHooked = false;
     }
     
     
@@ -152,15 +167,12 @@ void testApp::update(){
     //ropeB
     if (rope_B.bRopeInUse) {
         char_B.bFixedMove = true;
-    }else{
-        char_B.bFixedMove = false;
-        control_A.bHooked = false;
     }
     
     if (rope_B.bHooked) {
         char_A.bFixedMove = true;
-        char_A.bSwing = true;
         control_A.bHooked = true;
+        char_A.bSwing = true;
         ofPoint pos;
         pos.x = currentPos_A.x - offSet_A.x;
         pos.y = char_A.start.getPosition().y - char_A.getPos.y;
