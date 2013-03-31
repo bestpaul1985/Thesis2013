@@ -75,6 +75,7 @@ void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
 					poly.addVertex(x, y);
 				}
 			}
+            poly.setPhysics(0.0f, 0.0f, 0.03f);
 			poly.create(world.getWorld());
 			ground.push_back(poly);
 		}
