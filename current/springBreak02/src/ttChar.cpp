@@ -129,6 +129,8 @@ void ttChar::update(){
                     control_A->bRight = false;
                     mirrorLeft = false;
                 }
+                
+                getPos = character.getPosition();
             }
             
             if(charNum  == 1){
@@ -177,10 +179,12 @@ void ttChar::update(){
                         mirrorLeft = false;
                     }
                 }
+                
+                getPos = character.getPosition();
             }
                 
     
-    getPos = character.getPosition();
+    
 
 }
 
@@ -217,21 +221,21 @@ void ttChar::draw(){
 }
 //-----------------------------------------------
 void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB){
+    
     if (charNum == 0) {
         if (bSwing) {
             if (step == 0) {
                 ofPoint startPos;
-                startPos.x = offsetB.x;
-                startPos.y = translateA.y+offsetA.y-translateB.y;
+                startPos.x = offsetA.x;
+                startPos.y = translateB.y+offsetB.y-translateA.y;
                 start.setup(world.getWorld(), startPos.x, startPos.y, 10);
                 float length;
                 joint.setup(world.getWorld(), start.body, character.body);
                 length = translateB.y+offsetB.y-translateA.y-offsetA.y-180;
                 joint.setLength(length);
-                character.setVelocity(0,-3);
-                character.body->SetLinearDamping(b2dNum(0.0f));
+                character.setVelocity(0,3);
+                character.body->SetLinearDamping(0.f);
                 step = 1;
-                //                cout<<length<<endl;
             }
         }
         else
@@ -239,7 +243,7 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
             if (step == 1) {
                 joint.destroy();
                 world.getWorld()->DestroyBody(start.body);
-                character.body->SetLinearDamping(b2dNum(0.9f));
+                character.body->SetLinearDamping(0.9f);
                 step = 0;
                 
             }
@@ -251,25 +255,26 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
             float diffX = character.getPosition().x - start.getPosition().x;
             float diffY = character.getPosition().y - start.getPosition().y;
             float angleTo = atan2(diffY, diffX)*RAD_TO_DEG;
-            
+
             if (control_B->bSwingLeft ) {
                 character.addForce(ofPoint(-55,0), 1200);
                 control_B->bSwingLeft = false;
-            }else if(control_A->bSwingRight ){
+            }else if(control_B->bSwingRight ){
                 character.addForce(ofPoint(55,0), 1200);
-                control_A->bSwingRight = false;
+                control_B->bSwingRight = false;
             }
             
-            if (angleTo>150) {
-                character.setVelocity(-10, 0);
-                
-            }else if(angleTo<30){
-                character.setVelocity(10, 0);
-                
-            }
-            
+            cout<<angleTo<<endl;
+//            if (angleTo<-150) {
+//                character.setVelocity(10, 0);
+//                
+//            }else if(angleTo>-30){
+//                character.setVelocity(-10, 0);
+//                
+//            }
+//            
         }
-        
+        getPos = character.getPosition();
     }
     
 
@@ -324,20 +329,20 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
             }
             
         }
-        
+        getPos = character.getPosition();
     }
    
         
-   getPos = character.getPosition();
+   
     
 }
 //----------------------------------------------
 void ttChar::drawBox2dObject(){
     ofSetColor(255, 30, 220,100);
-    character.draw();
+//    character.draw();
     
-//    if (step>0) {
-//        start.draw();
-//        joint.draw();
-//    }
+    if (step>0) {
+        start.draw();
+        joint.draw();
+    }
 }

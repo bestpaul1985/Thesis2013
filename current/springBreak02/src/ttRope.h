@@ -13,7 +13,7 @@
 #include "ofxBox2d.h"
 class ttRope{
 public:
-    void setup();
+    void setup(int num);
     void updateAccelerometer(ofPoint acc);
     void update(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB);
     void draw();
