@@ -51,8 +51,8 @@ void testApp::setup(){
     //offset
     currentPos_A = char_A.getPos;
     currentPos_B = char_B.getPos;
-    orgPos_A.set(0.00, -12.55);
-    orgPos_B.set(0.00, 9.55);
+    orgPos_A.set(0.0, 0.0);
+    orgPos_B.set(0.0, 0.0);
     
     offSet_A = currentPos_A-orgPos_A;
     offSet_B = currentPos_B-orgPos_B;
@@ -128,23 +128,23 @@ void testApp::update(){
         control_B.bHooked = false;
     }
     
-    if (rope_A.bHooked&&rope_A.bRopeInUse) {
+    if (rope_A.bHooked) {
         char_B.bFixedMove = true;
-        char_B.bSwing = true;
         control_B.bHooked = true;
+        char_B.bSwing = true;
+        
         ofPoint pos;
         pos.x = currentPos_B.x - offSet_B.x;
         pos.y = char_B.start.getPosition().y - char_B.getPos.y;
         rope_A.endPos.set(pos.x, -pos.y);
-    }else{
-        char_B.bFixedMove = false;
-        char_B.bSwing = false;
     }
     
     if (control_B.bRelese) {
         rope_A.bRopeInUse = false;
         rope_A.bHooked = false;
         rope_A.endPos.set(0, 0);
+        char_B.bFixedMove = false;
+        char_B.bSwing = false;
     }
     
     
@@ -157,7 +157,7 @@ void testApp::update(){
         control_A.bHooked = false;
     }
     
-    if (rope_B.bHooked && rope_B.bRopeInUse) {
+    if (rope_B.bHooked) {
         char_A.bFixedMove = true;
         char_A.bSwing = true;
         control_A.bHooked = true;
@@ -165,21 +165,19 @@ void testApp::update(){
         pos.x = currentPos_A.x - offSet_A.x;
         pos.y = char_A.start.getPosition().y - char_A.getPos.y;
         rope_B.endPos.set(pos.x, -pos.y);
-    }else{
-        char_A.bFixedMove = false;
-        char_A.bSwing = false;
     }
     
     if (control_A.bRelese) {
         rope_B.bRopeInUse = false;
         rope_B.bHooked = false;
+        char_A.bFixedMove = false;
+        char_A.bSwing = false;
         rope_B.endPos.set(0, 0);
     }
     
     
     char_A.swing(translate_A, translate_B, offSet_A, offSet_B);
     char_B.swing(translate_A, translate_B, offSet_A, offSet_B);
-  
 }
 
 //--------------------------------------------------------------

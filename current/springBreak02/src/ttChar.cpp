@@ -339,7 +339,7 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
 //----------------------------------------------
 void ttChar::drawBox2dObject(){
     ofSetColor(255, 30, 220,100);
-//    character.draw();
+//        character.draw();
     
     if (step>0) {
         start.draw();
