@@ -28,8 +28,8 @@ void ttChar::setup(ofxBox2d &characterWorld,
     getPos = SetPos;
     charNum = iCharNum;
     bSwing = false;
-    mirrorLeft = false;
-    
+    if(charNum ==1)mirrorLeft = false;
+    if(charNum ==0)mirrorLeft = true;
     bDead = false;
     deadStep = 2;
     
