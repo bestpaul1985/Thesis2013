@@ -67,7 +67,9 @@ void ttControl::touchDown(int x, int y, int TouchId){
             touchId = TouchId;
         }
         
-        
+        if (bHooked) {
+            bRelese = true;
+        }
     }
 }
 
@@ -109,13 +111,10 @@ void ttControl::touchUp(int x, int y, int TouchId){
             if (Directional_Touch_Area.inside(x, y)){
                 
                 if ( charNum == 0 ) {
-                    if (dis> 10 && diff.x >0&& bFixed == false){
+                    if (dis> 10 && diff.x >0){
                         bLeft = true;
-                    }else if(dis> 10 && diff.x >0&& bFixed){
-                        bLeftAir = true;
                     }
-                    
-                    if(dis > 10 && diff.x < 0&& bFixed == false){
+                    if(dis > 10 && diff.x < 0){
                         bRight = true;
                     }
                     
@@ -130,12 +129,13 @@ void ttControl::touchUp(int x, int y, int TouchId){
                 }
                 
                 if ( charNum == 1) {
-                    if (dis> 10 && diff.x >0&& bFixed == false){
+                    if (dis> 10 && diff.x >0){
                         bRight = true;
                     }
                     
-                    if(dis > 10 && diff.x < 0&& bFixed == false){
+                    if(dis > 10 && diff.x < 0){
                         bLeft = true;
+                       
                     }
                     
                     if (dis> 10 && diff.x >0){
@@ -149,10 +149,9 @@ void ttControl::touchUp(int x, int y, int TouchId){
             
             }
         
-        if (bRelese == false) {
-            bRelese = true;
-        }
+        
         touchId = -1;
+        bRelese = false;
     }
                 
        

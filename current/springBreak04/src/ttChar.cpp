@@ -33,7 +33,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
     character.setPhysics(40.f, 0.0f, 0.3f);
     character.setup(world.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
     character.body->SetFixedRotation(true);
-    character.body->SetLinearDamping(b2dNum(0.3));
+    character.body->SetLinearDamping(b2dNum(0.5));
     numFootContacts = 0;
     adjustedHeight = 85;
     ofDirectory dir;
@@ -72,7 +72,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
 //----------------------------------------------
 void ttChar::update(){
     
-    float x =45;
+    float x =30;
     float scale = 1200;
     float smallMove;
     
@@ -103,7 +103,21 @@ void ttChar::update(){
                     }
                     
                     
-                    if (control_A->bSmallLeft == true) {
+                    
+                    
+                    if (control_A->bLeft == true && character.getVelocity().x< 15)
+                    {
+                        character.addForce(ofVec2f(x,0), scale);
+                        control_A->bLeft = false;
+                        mirrorLeft = true;
+                    }
+                    else if(control_A->bRight == true && character.getVelocity().x> -15)
+                    {
+
+                        character.addForce(ofVec2f(-x,0), scale);
+                        control_A->bRight = false;
+                        mirrorLeft = false;
+                    }else if (control_A->bSmallLeft == true) {
                         character.setVelocity(smallMove, 0);
                         control_A->bSmallLeft = false;
                         mirrorLeft = true;
@@ -113,20 +127,6 @@ void ttChar::update(){
                     {
                         character.setVelocity(smallMove, 0);
                         control_A->bSmallRight = false;
-                        mirrorLeft = false;
-                    }
-                    
-                    else if (control_A->bLeft == true && character.getVelocity().x< 30)
-                    {
-                        character.addForce(ofVec2f(x,0), scale);
-                        control_A->bLeft = false;
-                        mirrorLeft = true;
-                    }
-                    else if(control_A->bRight == true && character.getVelocity().x> -30)
-                    {
-
-                        character.addForce(ofVec2f(-x,0), scale);
-                        control_A->bRight = false;
                         mirrorLeft = false;
                     }
                 
@@ -156,33 +156,38 @@ void ttChar::update(){
                         smallMove  = 0;
                     }
                     
-                    if (control_B->bSmallLeft == true) {
-                       
-                        character.setVelocity(smallMove, 0);
-                        control_B->bSmallLeft = false;
-                        mirrorLeft = true;
-                    }
                     
-                    else if(control_B->bSmallRight == true){
-                       
-                        character.setVelocity(smallMove, 0);
-                        control_B->bSmallRight = false;
-                        mirrorLeft = false;
-                    }
                     
-                    else if (control_B->bLeft == true && character.getVelocity().x>-30) {
+                   
+                    if (control_B->bLeft == true && character.getVelocity().x>-15)
+                    {
                      
                         character.addForce(ofVec2f(-x,0), scale);
                         control_B->bLeft = false;
                         mirrorLeft = true;
                     }
                     
-                    else if(control_B->bRight == true && character.getVelocity().x<30){
+                    else if(control_B->bRight == true && character.getVelocity().x<15)
+                    {
                         
                         character.addForce(ofVec2f(x,0), scale);
                         control_B->bRight = false;
                         mirrorLeft = false;
+                    }else if (control_B->bSmallLeft == true)
+                    {
+                        
+                        character.setVelocity(smallMove, 0);
+                        control_B->bSmallLeft = false;
+                        mirrorLeft = true;
                     }
+                    
+                    else if(control_B->bSmallRight == true){
+                        
+                        character.setVelocity(smallMove, 0);
+                        control_B->bSmallRight = false;
+                        mirrorLeft = false;
+                    }
+                    
                 }
                 
                

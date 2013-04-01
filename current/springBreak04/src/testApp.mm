@@ -13,13 +13,13 @@ void testApp::setup(){
     // setup world A
     world_A.init();
     world_A.setFPS(60);
-    world_A.setGravity(0,-50);
+    world_A.setGravity(0,-30);
     world_A.setIterations(1, 1);
     world_A.registerGrabbing();
     // setup world B
     world_B.init();
     world_B.setFPS(60);
-    world_B.setGravity(0, 50);
+    world_B.setGravity(0, 30);
     world_B.setIterations(1, 1);
     world_B.registerGrabbing();
     //Map
@@ -177,9 +177,8 @@ void testApp::update(){
         
         if (rope_A.bHooked) {
             char_B.bFixedMove = true;
-            char_B.bSwing = true;
             control_B.bHooked = true;
-
+            char_B.bSwing = true;
             ofPoint pos;
             pos.x = currentPos_B.x - offSet_B.x;
             pos.y = char_B.start.getPosition().y - char_B.getPos.y;
@@ -188,11 +187,11 @@ void testApp::update(){
         
         if (control_B.bRelese) {
             char_B.bFixedMove = false;
+            control_B.bHooked = false;
             char_B.bSwing = false;
-            char_A.bFixedMove = false;
             rope_A.bRopeInUse = false;
             rope_A.bHooked = false;
-            control_B.bHooked = false;
+            char_A.bFixedMove = false;
             rope_A.endPos.set(0, 0);
         }
         
