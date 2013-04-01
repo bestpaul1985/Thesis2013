@@ -1,4 +1,7 @@
 #pragma once
+#define CIRCLE_SIZE 30
+#define PARTICLE_NUM 300
+// max before start to lag IS   around 800
 
 #include "ofMain.h"
 #include "ofxiPhone.h"
