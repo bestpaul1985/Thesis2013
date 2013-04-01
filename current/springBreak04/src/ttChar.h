@@ -36,8 +36,6 @@ public:
     float           setWidth;
     float           setHeight;
     float           adjustedHeight;
-    float           deadTime;
-    float           deadDurationg;
     bool            bFixedMove;
     bool            bSwing;
     bool            mirrorLeft;

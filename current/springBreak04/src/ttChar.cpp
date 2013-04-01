@@ -31,9 +31,8 @@ void ttChar::setup(ofxBox2d &characterWorld,
     mirrorLeft = false;
     
     bDead = false;
-    deadTime = ofGetElapsedTimeMillis();
-    deadDurationg = 2000;
-    deadStep = 0;
+    deadStep = 2;
+    
     color.set(255, 255, 255, 255);
     character.setPhysics(40.f, 0.0f, 0.3f);
     character.setup(world.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
