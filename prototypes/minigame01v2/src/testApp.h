@@ -34,7 +34,7 @@ public:
     bool bFingerPressed;
     
     // require chunks from minigame01
-    ofPoint     start, cursorIn, prompt, accelXeno;;
+    ofPoint     start, cursorIn, accelXeno;;
     float       indicator, goal, circleSize, holdSize;
     
     bool        bCorner[4];

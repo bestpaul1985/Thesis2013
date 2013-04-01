@@ -91,12 +91,6 @@ void testApp::draw(){
     ofFill();
     ofCircle(start, indicator);
     
-    //cursorIn
-    ofColor cursorColor = ofColor::blanchedAlmond;
-    if (dist.length()<circleSize*2) cursorColor = ofColor::cadetBlue;
-    ofSetColor(cursorColor);
-    ofCircle(cursorIn, circleSize);
-    
     //moving prompt
     ofColor promptColor = ofColor::burlyWood;
     ofSetColor(promptColor);
@@ -106,6 +100,11 @@ void testApp::draw(){
     prompt.y = start.y + radius * -sin(angle);
     ofCircle(prompt, circleSize);
     
+    //cursorIn
+    ofColor cursorColor = ofColor::blanchedAlmond;
+    if (dist.length()<circleSize*2) cursorColor = ofColor::cadetBlue;
+    ofSetColor(cursorColor);
+    ofCircle(cursorIn, circleSize);
     
     if (indicator>goal)ofDrawBitmapStringHighlight("YAY! You win!", start.x-30,start.y);
     

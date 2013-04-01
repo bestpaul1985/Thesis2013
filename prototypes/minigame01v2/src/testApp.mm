@@ -10,7 +10,7 @@ void testApp::setup(){
     ofxAccelerometer.setForceSmoothing(0.55f);
     
     start.set(ofGetWidth()/2, ofGetHeight()/2);
-    cursorIn = prompt = start;
+    cursorIn = start;
     
     ofSetCircleResolution(8);
     ofEnableAlphaBlending();
@@ -22,15 +22,17 @@ void testApp::setup(){
     goal = 350;
     holdSize = 120;
     
+    cursorIn.set(0,0);
+    accelXeno.set(0,0);
     
-    
-    //particles
+    //particles drawings
 	bFingerPressed = false;
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
 	
+    //drawing
 	for (int i = 0; i < particles.size(); i++){
 		particles[i].resetForce();
 		particles[i].addDampingForce();
@@ -52,6 +54,18 @@ void testApp::update(){
 	prevTouch = smoothedTouch;
     if (particles.size()>300) particles.clear();
     // max before start to lag around 800
+    
+    
+    
+    //accel input
+    ofPoint accelIn = ofxAccelerometer.getForce();
+    ofClamp(accelIn.x, -.6, .6);
+    ofClamp(accelIn.y, -.6, .6);
+    
+    float xenoSpeed = 0.2f;
+    accelXeno = (xenoSpeed)* accelIn + (1-xenoSpeed)* accelXeno;
+    cursorIn.x = ofMap(accelXeno.x, -.6, .6, 0, ofGetWidth(),true);
+    cursorIn.y = ofMap(accelXeno.y, .6, -.6, 0, ofGetHeight(),true);
 }
 
 //--------------------------------------------------------------
@@ -78,6 +92,11 @@ void testApp::draw(){
     ofSetRectMode(OF_RECTMODE_CORNER);
     float bar = ofMap(particles.size(), 0, 800, 0, ofGetWidth());
     ofRect(0,0, bar, 10);
+    
+    //cursorIn
+    ofColor cursorColor = ofColor::cadetBlue;
+    ofSetColor(cursorColor);
+    ofCircle(cursorIn, circleSize);
     
     
 }
