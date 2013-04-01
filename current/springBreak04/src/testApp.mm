@@ -154,11 +154,11 @@ void testApp::update(){
     //offset
     currentPos_A = char_A.getPos;
     currentPos_B = char_B.getPos;
-    if (!rope_A.bHooking) {
+    if (!rope_A.bHooked) {
         offSet_B = currentPos_B-orgPos_B;
     }
     
-    if (!rope_B.bHooking) {
+    if (!rope_B.bHooked) {
         offSet_A = currentPos_A-orgPos_A;
     }
     
@@ -175,7 +175,7 @@ void testApp::update(){
         
         char_A.bFixedMove = true;
         
-        if (rope_A.bHooking) {
+        if (rope_A.bHooked) {
             char_B.bFixedMove = true;
             char_B.bSwing = true;
             control_B.bHooked = true;
@@ -191,7 +191,7 @@ void testApp::update(){
             char_B.bSwing = false;
             char_A.bFixedMove = false;
             rope_A.bRopeInUse = false;
-            rope_A.bHooking = false;
+            rope_A.bHooked = false;
             control_B.bHooked = false;
             rope_A.endPos.set(0, 0);
         }
@@ -209,8 +209,8 @@ void testApp::update(){
         control_A.bHooked = false;
         control_B.bHooked = false;
        
-        rope_A.bHooking = false;
-        rope_B.bHooking = false;
+        rope_A.bHooked = false;
+        rope_B.bHooked = false;
     }
     
     
@@ -220,7 +220,7 @@ void testApp::update(){
         char_B.bFixedMove = true;
     }
     
-    if (rope_B.bHooking) {
+    if (rope_B.bHooked) {
         char_A.bFixedMove = true;
         control_A.bHooked = true;
         char_A.bSwing = true;
@@ -232,7 +232,7 @@ void testApp::update(){
     
     if (control_A.bRelese) {
         rope_B.bRopeInUse = false;
-        rope_B.bHooking = false;
+        rope_B.bHooked = false;
         char_A.bFixedMove = false;
         char_A.bSwing = false;
         rope_B.endPos.set(0, 0);

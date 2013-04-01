@@ -28,7 +28,7 @@ public:
     ofPoint endPos;
     float length;
     int ropeNum;
-    bool bHooking;
+    bool bHooked;
     bool bRopeInUse;
     int counter;
     

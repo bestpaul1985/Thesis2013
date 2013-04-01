@@ -32,7 +32,7 @@ void ttRope::setup(int num){
     offset_A.set(0, 0);
     offset_B.set(0, 0);
     endPos.set(0, 0);
-    bHooked = false;
+    bHooking = false;
     bRopeInUse = false;
     counter = 0;
 }
