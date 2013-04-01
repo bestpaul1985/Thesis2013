@@ -154,11 +154,11 @@ void testApp::update(){
     //offset
     currentPos_A = char_A.getPos;
     currentPos_B = char_B.getPos;
-    if (!rope_A.bHooked) {
+    if (!rope_A.bHooking) {
         offSet_B = currentPos_B-orgPos_B;
     }
     
-    if (!rope_B.bHooked) {
+    if (!rope_B.bHooking) {
         offSet_A = currentPos_A-orgPos_A;
     }
     
