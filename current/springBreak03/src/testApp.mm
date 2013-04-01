@@ -26,28 +26,31 @@ void testApp::setup(){
     ground_A.setup(1, 0, world_A);
     ground_B.setup(1, 1, world_B);
     
-    // register the listener so that we get the events
+  
 	ofAddListener(world_A.contactStartEvents, this, &testApp::contactStart_worldA);
 	ofAddListener(world_A.contactEndEvents, this, &testApp::contactEnd_worldA);
     ofAddListener(world_B.contactStartEvents,this, &testApp::contactStart_worldB);
-    ofAddListener(world_B.contactEndEvents,this, &testApp::contactStart_worldB);
+    ofAddListener(world_B.contactEndEvents,this, &testApp::contactEnd_worldB);
+    numFootContacts_A = 0;
+    numFootContacts_B = 0;
     
     //contorl
     control_A.setup(0);
     control_B.setup(1);
     //char
-    char_A.setup(world_A, world_B,
+    char_A.setup(world_A,
                  control_A,
                  control_B,
                  ofPoint(0,0),
                  0);
     
-    char_B.setup(world_B, world_A,
+    char_B.setup(world_B,
                  control_A,
                  control_B,
                  ofPoint(0,0),
                  1);
     
+   
     //offset
     currentPos_A = char_A.getPos;
     currentPos_B = char_B.getPos;
@@ -67,6 +70,18 @@ void testApp::setup(){
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
         //a == polygone, b == circle
+        ttSetData * aData = (ttSetData*)e.a->GetUserData();
+        ttSetData * bData = (ttSetData*)e.b->GetUserData();
+        
+        if (aData && aData->name == "footSenser"){
+            numFootContacts_A++;
+        
+        }
+        if (bData && bData->name == "footSenser"){
+            numFootContacts_A++;
+            
+        }
+   
        
     }
 
@@ -75,25 +90,55 @@ void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
 void testApp::contactEnd_worldA(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
             
-
+        ttSetData * aData = (ttSetData*)e.a->GetUserData();
+        ttSetData * bData = (ttSetData*)e.b->GetUserData();
+        
+        if (aData && aData->name == "footSenser"){
+            numFootContacts_A--;
+            
+        }
+        if (bData && bData->name == "footSenser"){
+            numFootContacts_A--;
+            
+        }
     }
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldB(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
+        //a == polygone, b == circle
+        ttSetData * aData = (ttSetData*)e.a->GetUserData();
+        ttSetData * bData = (ttSetData*)e.b->GetUserData();
         
+        if (aData && aData->name == "footSenser"){
+            numFootContacts_B++;
+            
+        }
+        if (bData && bData->name == "footSenser"){
+            numFootContacts_B++;
+            
+        }
     }
 
 }
 //--------------------------------------------------------------
 void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
-    
+        //a == polygone, b == circle
+        ttSetData * aData = (ttSetData*)e.a->GetUserData();
+        ttSetData * bData = (ttSetData*)e.b->GetUserData();
+        if (aData && aData->name == "footSenser"){
+            numFootContacts_B--;
+        }
+        if (bData && bData->name == "footSenser"){
+            numFootContacts_B--;
+        } 
     }
 }
 //--------------------------------------------------------------
 void testApp::update(){
-
+    cout<<numFootContacts_A<<"  "<<numFootContacts_B<<endl;
+    
     world_A.update();
     world_B.update();
 
@@ -210,7 +255,7 @@ void testApp::drawScene(int iDraw){
         ofPushMatrix();
         ofTranslate(translate_A.x-offSet_A.x,translate_A.y);
         ground_A.draw();
-//      ground_A.drawPolyLine();
+        ground_A.drawPolyLine();
         char_A.drawBox2dObject();
         char_A.draw();
         ofPopMatrix();
@@ -218,7 +263,7 @@ void testApp::drawScene(int iDraw){
         ofPushMatrix();
         ofTranslate(translate_B.x-offSet_B.x,translate_B.y);
         ground_B.draw();
-//      ground_B.drawPolyLine();
+        ground_B.drawPolyLine();
         char_B.drawBox2dObject();
         char_B.draw();
         ofPopMatrix();

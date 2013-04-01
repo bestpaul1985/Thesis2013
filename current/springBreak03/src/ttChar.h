@@ -15,9 +15,7 @@
 #include "ttControl.h"
 class ttChar{
 public:
-    ttChar();
     void setup(ofxBox2d &characterWorld,
-               ofxBox2d &dummyWorld,
                ttControl &ctrl_A,
                ttControl &ctrl_B,
                ofPoint SetPos,
@@ -29,7 +27,6 @@ public:
     void drawBox2dObject();
 
     ofxBox2dRect    character;
-    ofxBox2dRect    Dummy;
     ofxBox2d        world;
     
     ofPoint         setPos;
@@ -44,6 +41,7 @@ public:
     bool            bReset;
     int             charNum;
     int             step;
+    int             numFootContacts;
     ttControl       *control_A;
     ttControl       *control_B;
     vector<ofImage> sprite;

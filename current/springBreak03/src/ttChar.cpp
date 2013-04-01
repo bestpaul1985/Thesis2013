@@ -8,72 +8,67 @@
 
 #include "ttChar.h"
 
-ttChar::ttChar(){
-    
-    setWidth = 15;
-    setHeight = 30;
-    setPos.set(384, 512);
-    step = 0;
-}
 //----------------------------------------------
 void ttChar::setup(ofxBox2d &characterWorld,
-                   ofxBox2d &dummyWorld,
                    ttControl &ctrl_A,
                    ttControl &ctrl_B,
                    ofPoint SetPos,
                    int iCharNum){
-    
+   
+    world = characterWorld;
     control_A = &ctrl_A;
     control_B = &ctrl_B;
-    
+    setWidth = 15;
+    setHeight = 30;
+    setPos.set(384, 512);
+    step = 0;
+  
     bFixedMove = false;
     setPos = SetPos;
     getPos = SetPos;
     charNum = iCharNum;
     bSwing = false;
     mirrorLeft = false;
-    world = characterWorld;
-    character.setPhysics(40.f, 0.0f, 0.3f);
-    character.setup(characterWorld.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
-    character.body->SetFixedRotation(true);
-    character.body->SetLinearDamping(0.3);
-    adjustedHeight = 85;
     
-    character.setData(new ttSetData);
-    ttSetData* sd = (ttSetData*)character.getData();
+    character.setPhysics(40.f, 0.0f, 0.3f);
+    character.setup(world.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
+    character.body->SetFixedRotation(true);
+    
+    numFootContacts = 0;
+    adjustedHeight = 85;
+    ofDirectory dir;
+    int nFiles;
+    b2Vec2 v2;
     if (charNum == 0) {
-        sd->name = "char_A";
-        
-        ofDirectory dir;
-        int nFiles = dir.listDir("sprites/girl");
-        if (nFiles) {
-            for (int i= 0; i<dir.numFiles(); i++) {
-                string filePath = dir.getPath(i);
-                sprite.push_back(ofImage());
-                sprite.back().loadImage(filePath);
-            }
-        }
+        nFiles = dir.listDir("sprites/girl");
+        v2 = screenPtToWorldPt(ofPoint(0,-30));
+     
     }
-    else{
-        sd->name = "char_B";
-        
-        ofDirectory dir;
-        int nFiles = dir.listDir("sprites/boy");
-        if (nFiles) {
-            for (int i= 0; i<dir.numFiles(); i++) {
-                string filePath = dir.getPath(i);
-                sprite.push_back(ofImage());
-                sprite.back().loadImage(filePath);
-            }
-        }
+    else
+    {
+        nFiles  = dir.listDir("sprites/boy");
+        v2 = screenPtToWorldPt(ofPoint(0,30));
     }
  
-  
+    if (nFiles) {
+        for (int i= 0; i<dir.numFiles(); i++) {
+            string filePath = dir.getPath(i);
+            sprite.push_back(ofImage());
+            sprite.back().loadImage(filePath);
+        }
+    }
+    
+    b2PolygonShape shape;
+    shape.SetAsBox(b2dNum(10), b2dNum(10), v2, b2dNum(0));
+	b2FixtureDef fixture;
+    fixture.isSensor = true;
+    fixture.shape = &shape;
+    b2Fixture* footSensorFixture = character.body->CreateFixture(&fixture);
+    footSensorFixture->SetUserData(new ttSetData());
+    ttSetData * sd = (ttSetData*)footSensorFixture->GetUserData();
+    sd->name	= "footSenser";
+    
 }
-
-
-
-
 //----------------------------------------------
 void ttChar::update(){
     
@@ -194,7 +189,7 @@ void ttChar::update(){
             }
     
     
-    cout<<character.getVelocity().x<<endl;
+//    cout<<character.getVelocity().x<<endl;
    
      getPos = character.getPosition();
     
@@ -273,7 +268,7 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
                 control_B->bSwingRight = false;
             }
             
-            cout<<angleTo<<endl;
+//            cout<<angleTo<<endl;
             if (angleTo<-150) {
                 character.setVelocity(10, 0);
                 
@@ -281,7 +276,6 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
                 character.setVelocity(-10, 0);
                 
             }
-//
         }
         getPos = character.getPosition();
     }
@@ -346,10 +340,43 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
 //----------------------------------------------
 void ttChar::drawBox2dObject(){
     ofSetColor(255, 30, 220,100);
-//        character.draw();
     
+    character.draw();
     if (step>0) {
         start.draw();
         joint.draw();
     }
+    //draw sensor
+    ofPolyline   shape;
+    const b2Transform& xf = character.body->GetTransform();
+    for (b2Fixture* f = character.body->GetFixtureList(); f; f = f->GetNext())
+    {
+        if (f->IsSensor()) {
+            
+            ofSetColor(255,30,230,100);
+            //            ofCircle(sensor.getPosition(),f->GetShape()->m_radius*OFX_BOX2D_SCALE);
+            b2PolygonShape* poly = (b2PolygonShape*)f->GetShape();
+            if(poly) {
+                for(int i=0; i<poly->m_vertexCount; i++) {
+                    b2Vec2 pt = b2Mul(xf, poly->m_vertices[i]);
+                    shape.addVertex(worldPtToscreenPt(pt));
+                }
+            }
+        }
+        
+    }
+    shape.setClosed(true);
+    ofPath path;
+    for (int i=0; i<shape.size(); i++) {
+        if(i==0)path.moveTo(shape[i]);
+        else path.lineTo(shape[i]);
+    }
+    
+    path.setColor(ofGetStyle().color);
+    path.setFilled(ofGetStyle().bFill);
+    path.draw();
+
+    
 }
+
+
