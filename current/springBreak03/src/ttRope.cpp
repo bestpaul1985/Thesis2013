@@ -8,9 +8,15 @@
 
 #include "ttRope.h"
 
-void ttRope::setup(int num){
+void ttRope::setup(int num,ttChar &charA,ttChar &charB, ttControl &cont_A, ttControl &cont_B){
     
     ropeNum = num;
+    contr_A = &cont_A;
+    contr_B = &cont_B;
+    
+    char_A = &charA;
+    char_B = &charB;
+    
     if (ropeNum == 0) {
         world.init();
         world.setFPS(60);
@@ -55,13 +61,18 @@ void ttRope::updateAccelerometer(ofPoint acc){
             ofPoint charB_pos(translate_B.x, translate_B.y+offset_B.y);
             if (counter == 0) {
                 bRopeInUse = true;
+                contr_A->mode = contr_A->e_fixedMove;
+                char_A->bFixedMove = true;
                 counter=1;
             }
             
-            if (end_pos.distance(charB_pos)>10 && bHooked == false) {
+            if (end_pos.distance(charB_pos)>10) {
                 endPos.y +=10;
             }else{
-                bHooked = true;
+                contr_A->mode = contr_A->e_swing;
+                contr_B->mode = contr_B->e_hooked;
+                char_B->bFixedMove = true;
+                char_B->bSwing = true;
                 counter = 2;
             }
         }
@@ -70,7 +81,11 @@ void ttRope::updateAccelerometer(ofPoint acc){
             endPos.y = 0;
             endPos.x = 0;
             bRopeInUse = false;
-            bHooked = false;
+            char_A->bFixedMove = false;
+            char_B->bFixedMove = false;
+            char_B->bSwing = false;
+            contr_A->mode = contr_A->e_movement;
+            contr_B->mode = contr_A->e_movement;
             counter = 0;
         }
     }

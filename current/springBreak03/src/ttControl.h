@@ -13,6 +13,14 @@
 class ttControl{
 
 public:
+    enum Type
+	{
+        e_fixedMove = -1,
+		e_movement= 0,
+		e_swing = 1,
+        e_hooked = 2,
+	};
+    
     ttControl();
     void setup(int iCharNum);
     void draw();
@@ -31,6 +39,7 @@ public:
     float height;
     float dis;
     int charNum;
+    int  mode;
     bool bLeft;
     bool bRight;
     bool bSmallLeft;

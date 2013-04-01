@@ -62,8 +62,8 @@ void testApp::setup(){
     translate_A.set(384,250);
     translate_B.set(384,774);
     //rope
-    rope_A.setup(0);
-    rope_B.setup(1);
+    rope_A.setup(0,char_A,char_B,control_A,control_B);
+    rope_B.setup(1,char_A,char_B,control_A,control_B);
     
     //thorn
     thorns_A.setup(world_A, 0);
@@ -172,27 +172,27 @@ void testApp::update(){
     
     if (rope_A.bRopeInUse) {
         
-        char_A.bFixedMove = true;
-        
-        if (rope_A.bHooked) {
-            char_B.bFixedMove = true;
-            control_B.bHooked = true;
-            char_B.bSwing = true;
-            ofPoint pos;
-            pos.x = currentPos_B.x - offSet_B.x;
-            pos.y = char_B.start.getPosition().y - char_B.getPos.y;
-            rope_A.endPos.set(pos.x, -pos.y);
-        }
-        
-        if (control_B.bRelese) {
-            char_B.bFixedMove = false;
-            control_B.bHooked = false;
-            char_B.bSwing = false;
-            rope_A.bRopeInUse = false;
-            rope_A.bHooked = false;
-            char_A.bFixedMove = false;
-            rope_A.endPos.set(0, 0);
-        }
+//        char_A.bFixedMove = true;
+//        
+//        if (rope_A.bHooked) {
+//            char_B.bFixedMove = true;
+//            control_B.bHooked = true;
+//            char_B.bSwing = true;
+//            ofPoint pos;
+//            pos.x = currentPos_B.x - offSet_B.x;
+//            pos.y = char_B.start.getPosition().y - char_B.getPos.y;
+//            rope_A.endPos.set(pos.x, -pos.y);
+//        }
+//        
+//        if (control_B.bRelese) {
+//            char_B.bFixedMove = false;
+//            control_B.bHooked = false;
+//            char_B.bSwing = false;
+//            rope_A.bRopeInUse = false;
+//            rope_A.bHooked = false;
+//            char_A.bFixedMove = false;
+//            rope_A.endPos.set(0, 0);
+//        }
         
     }
     
