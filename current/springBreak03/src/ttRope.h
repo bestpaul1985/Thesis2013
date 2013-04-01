@@ -11,11 +11,9 @@
 
 #include "ofMain.h"
 #include "ofxBox2d.h"
-#include "ttControl.h"
-#include "ttChar.h"
 class ttRope{
 public:
-    void setup(int num,ttChar &charA,ttChar &charB, ttControl &cont_A, ttControl &cont_B);
+    void setup(int num);
     void updateAccelerometer(ofPoint acc);
     void update(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB);
     void draw();
@@ -26,14 +24,13 @@ public:
     ofxBox2dRect start;
     ofxBox2dRect end;
     ofxBox2dJoint joint;
-    ttControl *contr_A, *contr_B;
-    ttChar *char_A, *char_B;
+    
     ofPoint endPos;
     float length;
-    int  ropeNum;
+    int ropeNum;
     bool bHooked;
     bool bRopeInUse;
-    int  counter;
+    int counter;
     
 };
 

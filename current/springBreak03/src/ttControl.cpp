@@ -17,10 +17,10 @@ ttControl::ttControl(){
     bRight = false;
     bHooked = false;
     bRelese = false;
+    
     diff.set(0, 0);
     dis = 0;
     touchId = -1;
-    mode = 0;
 }
 
 //------------------------------------------------
@@ -63,15 +63,8 @@ void ttControl::touchDown(int x, int y, int TouchId){
             touchId = TouchId;
         }
         
-        switch (mode) {
-            case 0:
-                break;
-                
-            case 1:
-                break;
-            case 2:
-                bRelese = true;
-                break;
+        if (bHooked) {
+            bRelese = true;
         }
     }
     
@@ -83,40 +76,27 @@ void ttControl::touchDown(int x, int y, int TouchId){
 void ttControl::touchMove(int x, int y, int TouchId){
 
     if (touchId == TouchId) {
+        ofPoint touchPos(x, y);
         if (Directional_Touch_Area.inside(x, y)) {
-            ofPoint touchPos(x, y);
             dis = touchPos.distance(preTouchPos);
             diff = touchPos - preTouchPos;
             preTouchPos = touchPos;
-           
-            switch (mode) {
-                case e_movement:{
-                    if (charNum == 0) {
-                        if (dis< 10 && diff.x >0){
-                            bSmallLeft = true;
-                        }else if(dis < 10 && diff.x < 0){
-                            bSmallRight = true;
-                        }
-                    }
-                    
-                    if(charNum == 1){
-                        if (dis< 10 && diff.x >0){
-                            bSmallRight = true;
-                        }else if(dis < 10 && diff.x < 0){
-                            bSmallLeft = true;
-                        }
-                    }
-                }break;
-                case e_swing:{
-                    
-                }break;
-                case e_hooked:{
-                   
-                }break;
+            
+            if (charNum == 0) {
+                if (dis< 10 && diff.x >0){
+                    bSmallLeft = true;
+                }else if(dis < 10 && diff.x < 0){
+                    bSmallRight = true;
+                }
             }
             
-            
-           
+            if(charNum == 1){
+                if (dis< 10 && diff.x >0){
+                    bSmallRight = true;
+                }else if(dis < 10 && diff.x < 0){
+                    bSmallLeft = true;
+                }
+            }
             
         }
 
@@ -124,67 +104,41 @@ void ttControl::touchMove(int x, int y, int TouchId){
 }
 //-------------------------------------------------
 void ttControl::touchUp(int x, int y, int TouchId){
-    if (touchId == TouchId){
-        if (Directional_Touch_Area.inside(x, y)){
-            switch (mode) {
-                case e_movement:{
-                    if (charNum == 0) {
-                        if (dis> 10 && diff.x >0 ){
-                            bLeft = true;
-                            bSwingLeft = true;
-                        }
-                        
-                        if(dis > 10 && diff.x < 0){
-                            bRight = true;
-                            bSwingRight = true;
-                        }
-                    }
-                    
-                    if (charNum == 1) {
-                        if (dis> 10 && diff.x >0){
-                            bRight = true;
-                            bSwingRight = true;
-                        }
-                        
-                        if(dis > 10 && diff.x < 0){
-                            bLeft = true;
-                            bSwingLeft = true;
-                        }
-                    }
-                }break;
-
-                case e_swing:{
-                    if (charNum == 0) {
-                        if (dis> 10 && diff.x >0 ){
-                            bSwingLeft = true;
-                        }
-                        
-                        if(dis > 10 && diff.x < 0){
-                            bSwingRight = true;
-                        }
-                    }
-                    
-                    if (charNum == 1) {
-                        if (dis> 10 && diff.x >0){
-                            bSwingRight = true;
-                        }
-                        
-                        if(dis > 10 && diff.x < 0){
-                            bSwingLeft = true;
-                        }
-                    }
-                }break;
-                    
-                case e_hooked:{
-                    bRelese = false;
-                }break;
-            }
-            
+    if (touchId == TouchId && charNum == 0) {
+            if (Directional_Touch_Area.inside(x, y)){
+                if (dis> 10 && diff.x >0){
+                    bLeft = true;
+                    bSwingLeft = true;
+                }
+                
+                if(dis > 10 && diff.x < 0){
+                    bRight = true;
+                    bSwingRight = true;
+                }
         }
-    
         touchId = -1;
+        bRelese = false;
+    }
+          
+    
+    if (touchId == TouchId && charNum == 1) {
+       
+            if (Directional_Touch_Area.inside(x, y)){
+                if (dis> 10 && diff.x >0){
+                    bRight = true;
+                    bSwingRight = true;
+                }
+                
+                if(dis > 10 && diff.x < 0){
+                    bLeft = true;
+                    bSwingLeft = true;
+                }
+            }
+        touchId = -1;
+        bRelese = false;
     }
     
+   
         
 }
    
