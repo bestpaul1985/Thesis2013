@@ -25,7 +25,7 @@ public:
     void draw();
     void swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB);
     void drawBox2dObject();
-
+    void dead();
     ofxBox2dRect    character;
     ofxBox2d        world;
     
@@ -39,6 +39,7 @@ public:
     bool            bSwing;
     bool            mirrorLeft;
     bool            bReset;
+    bool            bDead;
     int             charNum;
     int             step;
     int             numFootContacts;

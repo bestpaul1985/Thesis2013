@@ -11,7 +11,7 @@
 #include "ttControl.h"
 #include "ttGround.h"
 #include "ttRope.h"
-
+#include "ttThorn.h"
 class testApp : public ofxiPhoneApp{
 	
     public:
@@ -46,7 +46,8 @@ class testApp : public ofxiPhoneApp{
     
         ttChar  char_A;
         ttChar  char_B;
-
+        int numFootContacts_A, numFootContacts_B;
+    
         ttControl control_A;
         ttControl control_B;
     
@@ -59,8 +60,9 @@ class testApp : public ofxiPhoneApp{
         ofPoint orgPos_A, orgPos_B, currentPos_A, currentPos_B, offSet_A, offSet_B;
         //rope
         ttRope rope_A,rope_B;
+        //thorns
+        ttThorn thorns_A, thorns_B;
     
-        int numFootContacts_A, numFootContacts_B;
 };
 
 

@@ -50,7 +50,6 @@ void testApp::setup(){
                  ofPoint(0,0),
                  1);
     
-   
     //offset
     currentPos_A = char_A.getPos;
     currentPos_B = char_B.getPos;
@@ -65,6 +64,10 @@ void testApp::setup(){
     //rope
     rope_A.setup(0);
     rope_B.setup(1);
+    
+    //thorn
+    thorns_A.setup(world_A, 0);
+    thorns_B.setup(world_B, 1);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -75,14 +78,17 @@ void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
         
         if (aData && aData->name == "footSenser"){
             numFootContacts_A++;
-        
+            if (bData&&bData->name == "thorn") {
+                char_A.bDead = true;
+            }
         }
-        if (bData && bData->name == "footSenser"){
+        else if (bData && bData->name == "footSenser"){
             numFootContacts_A++;
-            
+            if (aData&&aData->name == "thorn") {
+                char_A.bDead = true;
+            }
         }
-   
-       
+        
     }
 
 }
@@ -95,11 +101,8 @@ void testApp::contactEnd_worldA(ofxBox2dContactArgs &e){
         
         if (aData && aData->name == "footSenser"){
             numFootContacts_A--;
-            
-        }
-        if (bData && bData->name == "footSenser"){
+        }else if (bData && bData->name == "footSenser"){
             numFootContacts_A--;
-            
         }
     }
 }
@@ -112,11 +115,14 @@ void testApp::contactStart_worldB(ofxBox2dContactArgs &e){
         
         if (aData && aData->name == "footSenser"){
             numFootContacts_B++;
-            
-        }
-        if (bData && bData->name == "footSenser"){
+            if (bData&&bData->name == "thorn") {
+                char_B.bDead = true;
+            }
+        }else if (bData && bData->name == "footSenser"){
             numFootContacts_B++;
-            
+            if (aData&&aData->name == "thorn") {
+                char_B.bDead = true;
+            }
         }
     }
 
@@ -129,15 +135,13 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
         ttSetData * bData = (ttSetData*)e.b->GetUserData();
         if (aData && aData->name == "footSenser"){
             numFootContacts_B--;
-        }
-        if (bData && bData->name == "footSenser"){
+        }else if (bData && bData->name == "footSenser"){
             numFootContacts_B--;
         } 
     }
 }
 //--------------------------------------------------------------
 void testApp::update(){
-    cout<<numFootContacts_A<<"  "<<numFootContacts_B<<endl;
     
     world_A.update();
     world_B.update();
@@ -258,6 +262,7 @@ void testApp::drawScene(int iDraw){
         ground_A.drawPolyLine();
         char_A.drawBox2dObject();
         char_A.draw();
+        thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
@@ -266,6 +271,7 @@ void testApp::drawScene(int iDraw){
         ground_B.drawPolyLine();
         char_B.drawBox2dObject();
         char_B.draw();
+        thorns_B.draw();
         ofPopMatrix();
         rope_A.draw();
         rope_B.draw();

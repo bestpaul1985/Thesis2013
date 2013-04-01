@@ -29,11 +29,11 @@ void ttChar::setup(ofxBox2d &characterWorld,
     charNum = iCharNum;
     bSwing = false;
     mirrorLeft = false;
-    
+    bDead = false;
     character.setPhysics(40.f, 0.0f, 0.3f);
     character.setup(world.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
     character.body->SetFixedRotation(true);
-    
+    character.body->SetLinearDamping(b2dNum(0.3));
     numFootContacts = 0;
     adjustedHeight = 85;
     ofDirectory dir;
@@ -190,9 +190,8 @@ void ttChar::update(){
     
     
 //    cout<<character.getVelocity().x<<endl;
-   
-     getPos = character.getPosition();
-    
+    getPos = character.getPosition();
+    dead();
 }
 
 
@@ -332,11 +331,35 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
         }
         getPos = character.getPosition();
     }
-   
-        
-   
     
 }
+//----------------------------------------------
+void ttChar::dead(){
+
+    if (charNum == 0) {
+        if (bDead) {
+            if (character.getPosition().x<2593) {
+                 character.setPosition(0, 0);
+            }else if(character.getPosition().x>2593){
+                character.setPosition(2691, 41);
+            }
+            bDead = false;
+        }
+    }
+    
+    if (charNum == 1) {
+        if (bDead) {
+            if (character.getPosition().x<2718) {
+                character.setPosition(0, 0);
+            }else if(character.getPosition().x>2718){
+                character.setPosition(2809, 75);
+            }
+            bDead = false;
+        }
+    }
+
+}
+
 //----------------------------------------------
 void ttChar::drawBox2dObject(){
     ofSetColor(255, 30, 220,100);
