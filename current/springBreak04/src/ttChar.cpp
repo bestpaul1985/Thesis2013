@@ -29,7 +29,12 @@ void ttChar::setup(ofxBox2d &characterWorld,
     charNum = iCharNum;
     bSwing = false;
     mirrorLeft = false;
+    
     bDead = false;
+    deadTime = ofGetElapsedTimeMillis();
+    deadDurationg = 2000;
+    deadStep = 0;
+    color.set(255, 255, 255, 255);
     character.setPhysics(40.f, 0.0f, 0.3f);
     character.setup(world.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
     character.body->SetFixedRotation(true);
@@ -200,36 +205,7 @@ void ttChar::update(){
 }
 
 
-//----------------------------------------------
-void ttChar::draw(){
-    ofSetColor(255,255);
-    ofSetRectMode(OF_RECTMODE_CENTER);
-    ofPushMatrix();
-    ofTranslate(getPos);
-    
-    //turn left flip
-    if (mirrorLeft) ofScale(-1, 1);
-    //if no picture files, draw box2d rect instead
-    if ((int)sprite.size() <=0 ) {
-        ofSetColor(255, 30, 220,100);
-        character.draw();
-    }
-    
-    int frameIndex = 0;
-    frameIndex = (int) (ofGetElapsedTimef() * 24) % sprite.size();
-    
-    if(character.getVelocity().lengthSquared() >  0)
-    {
-        sprite[frameIndex].draw (0,0, adjustedHeight, adjustedHeight);
-    }
-    else
-    {
-        sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
-    }
-    
-    ofPopMatrix();
-    ofSetRectMode(OF_RECTMODE_CORNER);
-}
+
 //-----------------------------------------------
 void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB){
     
@@ -271,8 +247,7 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
                 character.addForce(ofPoint(55,0), 1200);
                 control_B->bSwingRight = false;
             }
-            
-//            cout<<angleTo<<endl;
+
             if (angleTo<-150) {
                 character.setVelocity(10, 0);
                 
@@ -307,7 +282,6 @@ void ttChar::swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoi
                 joint.destroy();
                 world.getWorld()->DestroyBody(start.body);
                 step = 0;
-               
             }
             
         }
@@ -343,19 +317,52 @@ void ttChar::dead(){
 
     if (charNum == 0) {
         if (bDead) {
+            deadStep = 0;
+            color.a = 200;
+            bDead = false;
+        }
+        
+        if (deadStep == 0) {
+            color.a -= 5;
+            if (color.a <=0) {
+                color.a = 100;
+                deadStep = 1;
+            }
+        }
+        
+        if(deadStep == 1){
             if (character.getPosition().x<2593) {
-                 character.setPosition(0, 0);
+                character.setPosition(0, 0);
             }else if(character.getPosition().x>2593 && character.getPosition().x<4384){
                 character.setPosition(2691, 41);
             }else if(character.getPosition().x>4384){
-                  character.setPosition(4693, -185);
+                character.setPosition(4693, -185);
             }
-            bDead = false;
+            
+            color.a+=5;
+            if (color.a>=255) {
+                color.a = 255;
+                deadStep = 2;
+            }
         }
     }
     
     if (charNum == 1) {
         if (bDead) {
+            deadStep = 0;
+            color.a = 200;
+            bDead = false;
+        }
+        
+        if (deadStep == 0) {
+            color.a -= 5;
+            if (color.a <=0) {
+                color.a = 100;
+                deadStep = 1;
+            }
+        }
+        
+        if (deadStep == 1) {
             if (character.getPosition().x<2718) {
                 character.setPosition(0, 0);
             }else if(character.getPosition().x>2718&&character.getPosition().x<4533){
@@ -363,7 +370,11 @@ void ttChar::dead(){
             }else if(character.getPosition().x>4533){
                 character.setPosition(4860, 196);
             }
-            bDead = false;
+            color.a+=5;
+            if (color.a>=255) {
+                color.a = 255;
+                deadStep = 2;
+            }
         }
     }
 
@@ -411,4 +422,33 @@ void ttChar::drawBox2dObject(){
     
 }
 
-
+//----------------------------------------------
+void ttChar::draw(){
+    ofSetColor(color);
+    ofSetRectMode(OF_RECTMODE_CENTER);
+    ofPushMatrix();
+    ofTranslate(getPos);
+    
+    //turn left flip
+    if (mirrorLeft) ofScale(-1, 1);
+    //if no picture files, draw box2d rect instead
+    if ((int)sprite.size() <=0 ) {
+        ofSetColor(255, 30, 220,100);
+        character.draw();
+    }
+    
+    int frameIndex = 0;
+    frameIndex = (int) (ofGetElapsedTimef() * 24) % sprite.size();
+    
+    if(character.getVelocity().lengthSquared() >  0)
+    {
+        sprite[frameIndex].draw (0,0, adjustedHeight, adjustedHeight);
+    }
+    else
+    {
+        sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
+    }
+    
+    ofPopMatrix();
+    ofSetRectMode(OF_RECTMODE_CORNER);
+}

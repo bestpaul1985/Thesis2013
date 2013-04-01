@@ -26,6 +26,7 @@ public:
     void swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB);
     void drawBox2dObject();
     void dead();
+    
     ofxBox2dRect    character;
     ofxBox2d        world;
     
@@ -35,6 +36,8 @@ public:
     float           setWidth;
     float           setHeight;
     float           adjustedHeight;
+    float           deadTime;
+    float           deadDurationg;
     bool            bFixedMove;
     bool            bSwing;
     bool            mirrorLeft;
@@ -42,6 +45,7 @@ public:
     bool            bDead;
     int             charNum;
     int             step;
+    int             deadStep;
     int             numFootContacts;
     ttControl       *control_A;
     ttControl       *control_B;
@@ -49,6 +53,8 @@ public:
     
     ofxBox2dCircle  start;
     ofxBox2dJoint   joint;
+    
+    ofColor         color;
 };
 
 #endif /* defined(__thatThey__ttChar__) */
