@@ -34,10 +34,10 @@ void ttChar::setup(ofxBox2d &characterWorld,
     deadStep = 2;
     
     color.set(255, 255, 255, 255);
-    character.setPhysics(40.f, 0.0f, 0.3f);
+    character.setPhysics(40.f, 0.0f, 0.95f);
     character.setup(world.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
     character.body->SetFixedRotation(true);
-    character.body->SetLinearDamping(b2dNum(0.5));
+    character.body->SetLinearDamping(b2dNum(0.95));
     numFootContacts = 0;
     adjustedHeight = 85;
     ofDirectory dir;
@@ -76,9 +76,10 @@ void ttChar::setup(ofxBox2d &characterWorld,
 //----------------------------------------------
 void ttChar::update(){
     
-    float x =30;
-    float scale = 1200;
+    float x =20;
+    float scale = 1000;
     float smallMove;
+    float smallMoveSale = 1.2;
     
 
             
@@ -99,7 +100,7 @@ void ttChar::update(){
                     bReset = true;
                     
                     if (control_A->diff.x>1||control_A->diff.x<-1) {
-                        smallMove = control_A->diff.x;
+                        smallMove = control_A->diff.x*smallMoveSale;
                     }
                     else
                     {
@@ -155,7 +156,7 @@ void ttChar::update(){
                     bReset = true;
                     
                     if (control_B->diff.x>1||control_B->diff.x<-1) {
-                        smallMove = control_B->diff.x;
+                        smallMove = control_B->diff.x*smallMoveSale;
                     }else{
                         smallMove  = 0;
                     }
