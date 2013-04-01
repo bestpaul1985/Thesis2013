@@ -93,13 +93,12 @@ void testApp::draw(){
     
     //cursorIn
     ofColor cursorColor = ofColor::blanchedAlmond;
-    if (dist.length()<circleSize*2) cursorColor = ofColor::burlyWood;
+    if (dist.length()<circleSize*2) cursorColor = ofColor::cadetBlue;
     ofSetColor(cursorColor);
     ofCircle(cursorIn, circleSize);
     
     //moving prompt
-	
-    ofColor promptColor = ofColor::cadetBlue;
+    ofColor promptColor = ofColor::burlyWood;
     ofSetColor(promptColor);
     float radius = 200;
     float angle = ofGetElapsedTimef()*3;
