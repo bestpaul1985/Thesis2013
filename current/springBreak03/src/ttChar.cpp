@@ -340,8 +340,10 @@ void ttChar::dead(){
         if (bDead) {
             if (character.getPosition().x<2593) {
                  character.setPosition(0, 0);
-            }else if(character.getPosition().x>2593){
+            }else if(character.getPosition().x>2593 && character.getPosition().x<4384){
                 character.setPosition(2691, 41);
+            }else if(character.getPosition().x>4384){
+                  character.setPosition(4693, -185);
             }
             bDead = false;
         }
@@ -351,8 +353,10 @@ void ttChar::dead(){
         if (bDead) {
             if (character.getPosition().x<2718) {
                 character.setPosition(0, 0);
-            }else if(character.getPosition().x>2718){
+            }else if(character.getPosition().x>2718&&character.getPosition().x<4533){
                 character.setPosition(2809, 75);
+            }else if(character.getPosition().x>4533){
+                character.setPosition(4860, 196);
             }
             bDead = false;
         }

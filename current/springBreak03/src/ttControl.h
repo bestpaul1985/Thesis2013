@@ -36,6 +36,7 @@ public:
     bool bSmallLeft;
     bool bSmallRight;
     
+    bool bFixed;
     bool bSwingLeft;
     bool bSwingRight;
     bool bHooked;

@@ -76,6 +76,51 @@ void ttThorn::setup(ofxBox2d &world, int charnum){
         sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
         sd->name	= "thorn";
         thorns.push_back(thorn);
+        
+        shape.set(5019,-199,26,17);
+        thorn.setPhysics(0.0f, 0.2f, 0.3f);
+        thorn.setup(world.getWorld(), shape);
+        thorn.body->GetFixtureList()->SetSensor(true);
+        thorn.body->GetFixtureList()->SetUserData(new ttSetData());
+        sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
+        sd->name	= "thorn";
+        thorns.push_back(thorn);
+        
+        shape.set(5005,-161,33,20);
+        thorn.setPhysics(0.0f, 0.2f, 0.3f);
+        thorn.setup(world.getWorld(), shape);
+        thorn.body->GetFixtureList()->SetSensor(true);
+        thorn.body->GetFixtureList()->SetUserData(new ttSetData());
+        sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
+        sd->name	= "thorn";
+        thorns.push_back(thorn);
+        
+        shape.set(5005,-118,33,20);
+        thorn.setPhysics(0.0f, 0.2f, 0.3f);
+        thorn.setup(world.getWorld(), shape);
+        thorn.body->GetFixtureList()->SetSensor(true);
+        thorn.body->GetFixtureList()->SetUserData(new ttSetData());
+        sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
+        sd->name	= "thorn";
+        thorns.push_back(thorn);
+        
+        shape.set(5029,-86,16,16);
+        thorn.setPhysics(0.0f, 0.2f, 0.3f);
+        thorn.setup(world.getWorld(), shape);
+        thorn.body->GetFixtureList()->SetSensor(true);
+        thorn.body->GetFixtureList()->SetUserData(new ttSetData());
+        sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
+        sd->name	= "thorn";
+        thorns.push_back(thorn);
+        
+        shape.set(5019,-50,26,14);
+        thorn.setPhysics(0.0f, 0.2f, 0.3f);
+        thorn.setup(world.getWorld(), shape);
+        thorn.body->GetFixtureList()->SetSensor(true);
+        thorn.body->GetFixtureList()->SetUserData(new ttSetData());
+        sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
+        sd->name	= "thorn";
+        thorns.push_back(thorn);
     }
     
     if (charNum == 1) {
@@ -135,6 +180,60 @@ void ttThorn::setup(ofxBox2d &world, int charnum){
         thorns.push_back(thorn);
         
         shape.set(4427,412,90,116);
+        thorn.setPhysics(0.0f, 0.2f, 0.3f);
+        thorn.setup(world.getWorld(), shape);
+        thorn.body->GetFixtureList()->SetSensor(true);
+        thorn.body->GetFixtureList()->SetUserData(new ttSetData());
+        sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
+        sd->name	= "thorn";
+        thorns.push_back(thorn);
+        
+        shape.set(5222,9,16,12);
+        thorn.setPhysics(0.0f, 0.2f, 0.3f);
+        thorn.setup(world.getWorld(), shape);
+        thorn.body->GetFixtureList()->SetSensor(true);
+        thorn.body->GetFixtureList()->SetUserData(new ttSetData());
+        sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
+        sd->name	= "thorn";
+        thorns.push_back(thorn);
+        
+        shape.set(5210,49,28,12);
+        thorn.setPhysics(0.0f, 0.2f, 0.3f);
+        thorn.setup(world.getWorld(), shape);
+        thorn.body->GetFixtureList()->SetSensor(true);
+        thorn.body->GetFixtureList()->SetUserData(new ttSetData());
+        sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
+        sd->name	= "thorn";
+        thorns.push_back(thorn);
+        
+        shape.set(5219,81,19,14);
+        thorn.setPhysics(0.0f, 0.2f, 0.3f);
+        thorn.setup(world.getWorld(), shape);
+        thorn.body->GetFixtureList()->SetSensor(true);
+        thorn.body->GetFixtureList()->SetUserData(new ttSetData());
+        sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
+        sd->name	= "thorn";
+        thorns.push_back(thorn);
+        
+        shape.set(5199,115,39,19);
+        thorn.setPhysics(0.0f, 0.2f, 0.3f);
+        thorn.setup(world.getWorld(), shape);
+        thorn.body->GetFixtureList()->SetSensor(true);
+        thorn.body->GetFixtureList()->SetUserData(new ttSetData());
+        sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
+        sd->name	= "thorn";
+        thorns.push_back(thorn);
+        
+        shape.set(5200,155,38,18);
+        thorn.setPhysics(0.0f, 0.2f, 0.3f);
+        thorn.setup(world.getWorld(), shape);
+        thorn.body->GetFixtureList()->SetSensor(true);
+        thorn.body->GetFixtureList()->SetUserData(new ttSetData());
+        sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
+        sd->name	= "thorn";
+        thorns.push_back(thorn);
+        
+        shape.set(5209,194,29,18);
         thorn.setPhysics(0.0f, 0.2f, 0.3f);
         thorn.setup(world.getWorld(), shape);
         thorn.body->GetFixtureList()->SetSensor(true);

@@ -59,8 +59,8 @@ void testApp::setup(){
     offSet_A = currentPos_A-orgPos_A;
     offSet_B = currentPos_B-orgPos_B;
     
-    translate_A.set(384,250);
-    translate_B.set(384,774);
+    translate_A.set(384,280);
+    translate_B.set(384,744);
     //rope
     rope_A.setup(0);
     rope_B.setup(1);
@@ -164,12 +164,13 @@ void testApp::update(){
     
     
     
-    //rope
+    //rope update
     rope_A.update(translate_A,translate_B,offSet_A,offSet_B);
     rope_A.updateAccelerometer(ofxAccelerometer.getForce());
     rope_B.update(translate_A,translate_B,offSet_A,offSet_B);
     rope_B.updateAccelerometer(ofxAccelerometer.getForce());
     
+    // rope_A swiches
     if (rope_A.bRopeInUse) {
         
         char_A.bFixedMove = true;
@@ -213,7 +214,7 @@ void testApp::update(){
     
     
     
-    //ropeB
+    //ropeB swiches
     if (rope_B.bRopeInUse) {
         char_B.bFixedMove = true;
     }
@@ -239,6 +240,19 @@ void testApp::update(){
     
     char_A.swing(translate_A, translate_B, offSet_A, offSet_B);
     char_B.swing(translate_A, translate_B, offSet_A, offSet_B);
+    
+    //no jump in sky
+//    if (numFootContacts_A<=0) {
+//        control_A.bFixed = true;
+//    }else{
+//        control_A.bFixed = false;
+//    }
+//    
+//    if (numFootContacts_B<=0) {
+//        control_B.bFixed = true;
+//    }else{
+//        control_B.bFixed = false;
+//    }
 }
 
 //--------------------------------------------------------------
@@ -259,19 +273,20 @@ void testApp::drawScene(int iDraw){
         ofPushMatrix();
         ofTranslate(translate_A.x-offSet_A.x,translate_A.y);
         ground_A.draw();
-        ground_A.drawPolyLine();
-        char_A.drawBox2dObject();
+//        ground_A.drawPolyLine();
+//        char_A.drawBox2dObject();
+//        thorns_A.draw();
         char_A.draw();
-        thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(translate_B.x-offSet_B.x,translate_B.y);
         ground_B.draw();
-        ground_B.drawPolyLine();
-        char_B.drawBox2dObject();
+//        ground_B.drawPolyLine();
+//        char_B.drawBox2dObject();
+//        thorns_B.draw();
         char_B.draw();
-        thorns_B.draw();
+
         ofPopMatrix();
         rope_A.draw();
         rope_B.draw();

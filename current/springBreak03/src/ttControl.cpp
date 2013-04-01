@@ -17,6 +17,7 @@ ttControl::ttControl(){
     bRight = false;
     bHooked = false;
     bRelese = false;
+    bFixed = false;
     
     diff.set(0, 0);
     dis = 0;
@@ -59,6 +60,7 @@ void ttControl::touchDown(int x, int y, int TouchId){
         preTouchPos.set(x, y);
         diff.set(0,0);
         dis = 0;
+        
         if (touchId == -1) {
             touchId = TouchId;
         }
@@ -67,9 +69,6 @@ void ttControl::touchDown(int x, int y, int TouchId){
             bRelese = true;
         }
     }
-    
-   
-    
 }
 
 //------------------------------------------------
@@ -77,23 +76,23 @@ void ttControl::touchMove(int x, int y, int TouchId){
 
     if (touchId == TouchId) {
         ofPoint touchPos(x, y);
-        if (Directional_Touch_Area.inside(x, y)) {
+        if (Directional_Touch_Area.inside(x, y) ) {
             dis = touchPos.distance(preTouchPos);
             diff = touchPos - preTouchPos;
             preTouchPos = touchPos;
             
             if (charNum == 0) {
-                if (dis< 10 && diff.x >0){
+                if (dis< 10 && diff.x >0  && bFixed == false){
                     bSmallLeft = true;
-                }else if(dis < 10 && diff.x < 0){
+                }else if(dis < 10 && diff.x < 0  && bFixed == false){
                     bSmallRight = true;
                 }
             }
             
-            if(charNum == 1){
-                if (dis< 10 && diff.x >0){
+            if(charNum == 1 ){
+                if (dis< 10 && diff.x >0 && bFixed == false){
                     bSmallRight = true;
-                }else if(dis < 10 && diff.x < 0){
+                }else if(dis < 10 && diff.x < 0 && bFixed == false){
                     bSmallLeft = true;
                 }
             }
@@ -104,40 +103,60 @@ void ttControl::touchMove(int x, int y, int TouchId){
 }
 //-------------------------------------------------
 void ttControl::touchUp(int x, int y, int TouchId){
-    if (touchId == TouchId && charNum == 0) {
-            if (Directional_Touch_Area.inside(x, y)){
-                if (dis> 10 && diff.x >0){
-                    bLeft = true;
-                    bSwingLeft = true;
-                }
-                
-                if(dis > 10 && diff.x < 0){
-                    bRight = true;
-                    bSwingRight = true;
-                }
-        }
-        touchId = -1;
-        bRelese = false;
-    }
-          
+   
     
-    if (touchId == TouchId && charNum == 1) {
-       
+    if (touchId == TouchId) {
             if (Directional_Touch_Area.inside(x, y)){
-                if (dis> 10 && diff.x >0){
-                    bRight = true;
-                    bSwingRight = true;
+                
+                if ( charNum == 0 ) {
+                    if (dis> 10 && diff.x >0&& bFixed == false){
+                        bLeft = true;
+                        bSwingLeft = true;
+                    }
+                    
+                    if(dis > 10 && diff.x < 0&& bFixed == false){
+                        bRight = true;
+                        bSwingRight = true;
+                    }
+                    
+                    
+                    if (dis> 10 && diff.x >0){
+                        bSwingLeft = true;
+                    }
+                    
+                    if(dis > 10 && diff.x < 0){
+                        bSwingRight = true;
+                    }
                 }
                 
-                if(dis > 10 && diff.x < 0){
-                    bLeft = true;
-                    bSwingLeft = true;
+                if ( charNum == 1) {
+                    if (dis> 10 && diff.x >0&& bFixed == false){
+                        bRight = true;
+                        bSwingRight = true;
+                    }
+                    
+                    if(dis > 10 && diff.x < 0&& bFixed == false){
+                        bLeft = true;
+                        bSwingLeft = true;
+                    }
+                    
+                    if (dis> 10 && diff.x >0){
+                        bSwingRight = true;
+                    }
+                    
+                    if(dis > 10 && diff.x < 0){
+                        bSwingLeft = true;
+                    }
                 }
+            
             }
+        
+        
         touchId = -1;
         bRelese = false;
     }
-    
+                
+       
    
         
 }
