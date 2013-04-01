@@ -189,10 +189,10 @@ void testApp::update(){
         if (control_B.bRelese) {
             char_B.bFixedMove = false;
             char_B.bSwing = false;
-            control_B.bHooked = false;
             char_A.bFixedMove = false;
             rope_A.bRopeInUse = false;
-            rope_A.bHooked = false;
+            rope_A.bHooking = false;
+            control_B.bHooked = false;
             rope_A.endPos.set(0, 0);
         }
         
@@ -209,8 +209,8 @@ void testApp::update(){
         control_A.bHooked = false;
         control_B.bHooked = false;
        
-        rope_A.bHooked = false;
-        rope_B.bHooked = false;
+        rope_A.bHooking = false;
+        rope_B.bHooking = false;
     }
     
     
@@ -220,7 +220,7 @@ void testApp::update(){
         char_B.bFixedMove = true;
     }
     
-    if (rope_B.bHooked) {
+    if (rope_B.bHooking) {
         char_A.bFixedMove = true;
         control_A.bHooked = true;
         char_A.bSwing = true;
@@ -232,7 +232,7 @@ void testApp::update(){
     
     if (control_A.bRelese) {
         rope_B.bRopeInUse = false;
-        rope_B.bHooked = false;
+        rope_B.bHooking = false;
         char_A.bFixedMove = false;
         char_A.bSwing = false;
         rope_B.endPos.set(0, 0);
