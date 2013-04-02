@@ -22,15 +22,9 @@ public:
     ofPoint translate_A, translate_B;
     ofPoint offset_A, offset_B;
     ofxBox2d world;
-<<<<<<< HEAD
     
     vector<ofxBox2dCircle> circles;
     vector<ofxBox2dJoint> joints;
-=======
-    ofxBox2dRect start;
-    vector<ofxBox2dRect>    rects;
-    vector<b2RevoluteJoint*> joints;
->>>>>>> parent of 5ad7f70... Revert "bad try, will roll back"
     
     ofPoint endPos;
     float length;
@@ -38,7 +32,6 @@ public:
     bool bHooked;
     bool bRopeInUse;
     int counter;
-    int size;
     
 };
 
