@@ -35,6 +35,10 @@ void ttRope::setup(int num){
     bHooked = false;
     bRopeInUse = false;
     counter = 0;
+    size = 0;
+    
+    start.setup(world.getWorld(), 0,0,1,1);
+
 }
 //--------------------------------------------------------
 void ttRope::update(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB){
@@ -65,6 +69,7 @@ void ttRope::updateAccelerometer(ofPoint acc){
                 counter = 2;
             }
         }
+    }
         
         if(acc.y>-0.15){
             endPos.y = 0;
@@ -72,13 +77,12 @@ void ttRope::updateAccelerometer(ofPoint acc){
             bRopeInUse = false;
             bHooked = false;
             counter = 0;
+
         }
-    }
-    
-    
+
+
     if (ropeNum == 1) {
         if (acc.y>0.15&&counter !=2) {
-            
             ofPoint end_pos(endPos.x+translate_B.x, endPos.y+translate_B.y+offset_B.y);
             ofPoint charB_pos(translate_A.x, translate_A.y+offset_A.y);
             if (counter == 0) {
@@ -92,6 +96,9 @@ void ttRope::updateAccelerometer(ofPoint acc){
                 bHooked = true;
                 counter = 2;
             }
+            
+            
+            
         }
         
         if(acc.y<0.15){
@@ -105,22 +112,76 @@ void ttRope::updateAccelerometer(ofPoint acc){
 }
 
 //--------------------------------------------------------
+void ttRope::b2dRope(){
+
+    size = endPos.y/20;
+    cout<<size<<"  "<<joints.size()<<endl;
+    
+    if (size>0) {
+        if (joints.empty()) {
+           
+        }
+        else{
+            if(joints.size()<size){
+                cout<<"2"<<endl;
+                ofxBox2dRect rect;
+                rect.setPhysics(20.0f, 0.0f, 0.2f);
+                rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y+20, 2, 10);
+                rects.push_back(rect);
+                
+                b2RevoluteJointDef revoluteJointDef;
+                revoluteJointDef.Initialize(rects[rects.size()-2].body, rects.back().body, rects.back().body->GetWorldCenter());
+                b2Vec2 p = screenPtToWorldPt(ofPoint(0,9));
+                revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                revoluteJointDef.localAnchorB.Set(p.x, -p.y);
+                joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+            }
+            
+            if (joints.size()>size) {
+                cout<<"3"<<endl;
+                world.world->DestroyJoint(joints.front());
+                world.world->DestroyBody(rects.front().body);
+                joints.erase(joints.begin());
+                rects.erase(rects.begin());
+                
+                ofPoint pos = rects.front().getPosition();
+                rects.front().setPosition(pos.x, pos.y-20);
+                b2RevoluteJointDef revoluteJointDef;
+                revoluteJointDef.Initialize(start.body, rects.front().body, start.body->GetWorldCenter());
+                b2Vec2 p = screenPtToWorldPt(ofPoint(0,9));
+                revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                revoluteJointDef.localAnchorB.Set(p.x, -p.y);
+                joints.front() = (b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef);
+            }
+        }
+    }else{
+            for (int i =0; i<joints.size(); i++) {
+                world.world->DestroyJoint(joints.back());
+                world.world->DestroyBody(rects.back().body);
+                joints.pop_back();
+                rects.pop_back();
+            }
+    }
+}
+//--------------------------------------------------------
 void ttRope::draw(){
     if( ropeNum==0){
         ofPushMatrix();
         ofTranslate(translate_A.x, translate_A.y+offset_A.y);
         ofSetColor(30,255,220,150);
-//        ofCircle(0, 0, 10);
+//      ofCircle(0, 0, 10);
         ofLine(0, 0, endPos.x, endPos.y);
+        for (int i =0; i<rects.size(); i++) {
+            rects[i].draw();
+        }
         ofPopMatrix();
     }
-    
     
     if( ropeNum==1){
         ofPushMatrix();
         ofTranslate(translate_B.x, translate_B.y+offset_B.y);
         ofSetColor(30,255,220,150);
-//        ofCircle(0, 0, 10);
+//      ofCircle(0, 0, 10);
         ofLine(0, 0, endPos.x, endPos.y);
         ofPopMatrix();
     }
