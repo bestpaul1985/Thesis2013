@@ -68,6 +68,8 @@ void testApp::setup(){
     //thorn
     thorns_A.setup(world_A, 0);
     thorns_B.setup(world_B, 1);
+    //sky
+    sky.setup();
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -253,17 +255,20 @@ void testApp::update(){
     }else{
         control_B.bFixed = false;
     }
+    
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
     ofColor dark(80);
     ofBackgroundGradient(dark, ofColor::black);
-    
+   
+    sky.draw();
     drawScene(0);
-
-    ofDrawBitmapStringHighlight("offSet_A: " + ofToString(offSet_A,2)+"\ntranslate_A: "+ofToString(translate_A)+"\nchar_A: "+ofToString(char_A.getPos), 50,50);
-    ofDrawBitmapStringHighlight("offSet_B: " + ofToString(offSet_B,2)+"\ntranslate_B: "+ofToString(translate_B)+"\nchar_B: "+ofToString(char_B.getPos), 530,950);
+    
+    
+//    ofDrawBitmapStringHighlight("offSet_A: " + ofToString(offSet_A,2)+"\ntranslate_A: "+ofToString(translate_A)+"\nchar_A: "+ofToString(char_A.getPos), 50,50);
+//    ofDrawBitmapStringHighlight("offSet_B: " + ofToString(offSet_B,2)+"\ntranslate_B: "+ofToString(translate_B)+"\nchar_B: "+ofToString(char_B.getPos), 530,950);
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int iDraw){

@@ -93,7 +93,6 @@ void ttGround::draw(){
 //            float imgMul = bgImg[0].width*(ofGetHeight()/2)/bgImg[0].height;
             float imgMul = 717;
             if (charNo == 0) {
-                
                 ofSetColor(255,255);
                 bgImg[i].draw(-1000 + (imgMul*i)-i ,-300, imgMul, 495);
             }

@@ -166,7 +166,6 @@ void ttChar::update(){
                    
                     if (control_B->bLeft == true && character.getVelocity().x>-15)
                     {
-                     
                         character.addForce(ofVec2f(-x,0), scale);
                         control_B->bLeft = false;
                         mirrorLeft = true;
@@ -174,7 +173,6 @@ void ttChar::update(){
                     
                     else if(control_B->bRight == true && character.getVelocity().x<15)
                     {
-                        
                         character.addForce(ofVec2f(x,0), scale);
                         control_B->bRight = false;
                         mirrorLeft = false;

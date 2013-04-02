@@ -12,6 +12,7 @@
 #include "ttGround.h"
 #include "ttRope.h"
 #include "ttThorn.h"
+#include "ttSky.h"
 class testApp : public ofxiPhoneApp{
 	
     public:
@@ -62,7 +63,8 @@ class testApp : public ofxiPhoneApp{
         ttRope rope_A,rope_B;
         //thorns
         ttThorn thorns_A, thorns_B;
-    
+        //sky
+        ttSky sky;
 };
 
 
