@@ -128,8 +128,9 @@ void ttRope::b2dRope(){
             int a = (int)circles.size()-2;
             int b = (int)circles.size()-1;
             ofxBox2dJoint j;
-            j.setup(world.getWorld(), circles[a].body, circles[b].body,0.f,0.9f,false);
-            j.setLength(25);
+            j.setup(world.getWorld(), circles[a].body, circles[b].body);
+            j.setLength(30);
+            j.setFrequency(0);
             joints.push_back(j);
         }else if(joints.size()<size){
         
@@ -141,8 +142,9 @@ void ttRope::b2dRope(){
             int a = (int)circles.size()-2;
             int b = (int)circles.size()-1;
             ofxBox2dJoint j;
-            j.setup(world.getWorld(), circles[a].body, circles[b].body,0.f,0.9f,false);
-            j.setLength(25);
+            j.setup(world.getWorld(), circles[a].body, circles[b].body);
+            j.setLength(30);
+            j.setFrequency(0);
             joints.push_back(j);
         }else if(joints.size()>size){
             world.world->DestroyJoint(joints.back().joint);
