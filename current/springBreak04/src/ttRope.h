@@ -16,15 +16,14 @@ public:
     void setup(int num);
     void updateAccelerometer(ofPoint acc);
     void update(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB);
-    void b2dRope();
     void draw();
     
     ofPoint translate_A, translate_B;
     ofPoint offset_A, offset_B;
     ofxBox2d world;
-    
-    vector<ofxBox2dCircle> circles;
-    vector<ofxBox2dJoint> joints;
+    ofxBox2dRect start;
+    ofxBox2dRect end;
+    ofxBox2dJoint joint;
     
     ofPoint endPos;
     float length;
