@@ -53,6 +53,5 @@ void ttSky::draw(){
     ofTranslate(pos03);
     cloud03.draw(0, 0);
     ofPopMatrix();
-    
-    cout<<cloud03.getWidth()<<endl;
+   
 }

@@ -103,27 +103,83 @@ void ttRope::updateAccelerometer(ofPoint acc){
         }
     }
 }
-
+//--------------------------------------------------------
+void ttRope::b2dRope(){
+    
+    int size = abs(int(endPos.length() / 30)) ;
+    cout<<size<<endl;
+    ofPoint offSet;
+    if (ropeNum == 0) {
+        offSet.x = 4;
+        offSet.y = 0;
+    }else{
+        offSet.x = 4;
+        offSet.y = 0;
+    }
+    if (size >0) {
+        if (joints.empty()) {
+            ofxBox2dCircle c;
+            c.setup(world.getWorld(), 0, 0, 4);
+            circles.push_back(c);
+            c.setPhysics(0.1f, 0.0f, 0.0f);
+            c.setup(world.getWorld(), offSet.x, offSet.y, 2);
+            circles.push_back(c);
+            
+            int a = (int)circles.size()-2;
+            int b = (int)circles.size()-1;
+            ofxBox2dJoint j;
+            j.setup(world.getWorld(), circles[a].body, circles[b].body);
+            j.setLength(30);
+            j.setFrequency(0);
+            joints.push_back(j);
+        }else if(joints.size()<size){
+        
+            ofxBox2dCircle c;
+            c.setPhysics(1.0f, 0.0f, 0.0f);
+            c.setup(world.getWorld(), circles.back().getPosition().x+offSet.x, circles.back().getPosition().y+offSet.y, 4);
+            circles.push_back(c);
+            
+            int a = (int)circles.size()-2;
+            int b = (int)circles.size()-1;
+            ofxBox2dJoint j;
+            j.setup(world.getWorld(), circles[a].body, circles[b].body);
+            j.setLength(30);
+            j.setFrequency(0);
+            joints.push_back(j);
+        }else if(joints.size()>size){
+            world.world->DestroyJoint(joints.back().joint);
+            world.world->DestroyBody(circles.back().body);
+            joints.pop_back();
+            circles.pop_back();
+        }
+    }else{
+        for (int i = 0; i<joints.size(); i++) {
+            world.world->DestroyJoint(joints.back().joint);
+            world.world->DestroyBody(circles.back().body);
+            joints.pop_back();
+            circles.pop_back();
+        }
+    }
+    
+    
+}
 //--------------------------------------------------------
 void ttRope::draw(){
-    if( ropeNum==0){
-        ofPushMatrix();
+    
+    ofPushMatrix();
+    if(ropeNum==0){
         ofTranslate(translate_A.x, translate_A.y+offset_A.y);
-        ofSetColor(30,255,220,150);
-//        ofCircle(0, 0, 10);
-        ofLine(0, 0, endPos.x, endPos.y);
-        ofPopMatrix();
-    }
-    
-    
-    if( ropeNum==1){
-        ofPushMatrix();
+    }else{
         ofTranslate(translate_B.x, translate_B.y+offset_B.y);
-        ofSetColor(30,255,220,150);
-//        ofCircle(0, 0, 10);
-        ofLine(0, 0, endPos.x, endPos.y);
-        ofPopMatrix();
     }
+    ofSetColor(246,146,30);
+//    ofSetLineWidth(2);
+//    ofLine(0, 0, endPos.x, endPos.y);
+    for (int i=0; i<joints.size(); i++) {
+        joints[i].draw();
+    }
+    ofPopMatrix();
+    
 }
 
 

@@ -185,6 +185,8 @@ void testApp::update(){
             pos.x = currentPos_B.x - offSet_B.x;
             pos.y = char_B.start.getPosition().y - char_B.getPos.y;
             rope_A.endPos.set(pos.x, -pos.y);
+            
+            rope_A.circles.back().setPosition(pos.x, -pos.y);
         }
         
         if (control_B.bRelese) {
@@ -229,6 +231,7 @@ void testApp::update(){
         pos.x = currentPos_A.x - offSet_A.x;
         pos.y = char_A.start.getPosition().y - char_A.getPos.y;
         rope_B.endPos.set(pos.x, -pos.y);
+        rope_B.circles.back().setPosition(pos.x, -pos.y);
     }
     
     if (control_A.bRelese) {
@@ -256,6 +259,9 @@ void testApp::update(){
         control_B.bFixed = false;
     }
     
+    //b2drope
+    rope_A.b2dRope();
+    rope_B.b2dRope();
 }
 
 //--------------------------------------------------------------
