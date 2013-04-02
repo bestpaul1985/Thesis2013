@@ -185,6 +185,7 @@ void testApp::update(){
             pos.x = currentPos_B.x - offSet_B.x;
             pos.y = char_B.start.getPosition().y - char_B.getPos.y;
             rope_A.endPos.set(pos.x, -pos.y);
+            rope_A.rects.back().setPosition(pos.x, -pos.y);
         }
         
         if (control_B.bRelese) {
@@ -242,7 +243,8 @@ void testApp::update(){
     
     char_A.swing(translate_A, translate_B, offSet_A, offSet_B);
     char_B.swing(translate_A, translate_B, offSet_A, offSet_B);
-    
+    rope_A.b2dRope();
+    rope_B.b2dRope();
     //no jump in sky
     if (numFootContacts_A<=0) {
         control_A.bFixed = true;
@@ -281,18 +283,26 @@ void testApp::drawScene(int iDraw){
 //        ground_A.drawPolyLine();
 //        char_A.drawBox2dObject();
 //        thorns_A.draw();
-        char_A.draw();
         ofPopMatrix();
-        
+    
         ofPushMatrix();
         ofTranslate(translate_B.x-offSet_B.x,translate_B.y);
         ground_B.draw();
 //        ground_B.drawPolyLine();
 //        char_B.drawBox2dObject();
 //        thorns_B.draw();
-        char_B.draw();
-
         ofPopMatrix();
+        
+        ofPushMatrix();
+        ofTranslate(translate_A.x-offSet_A.x,translate_A.y);
+        char_A.draw();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofTranslate(translate_B.x-offSet_B.x,translate_B.y);
+        char_B.draw();
+        ofPopMatrix();
+        
         rope_A.draw();
         rope_B.draw();
     }
