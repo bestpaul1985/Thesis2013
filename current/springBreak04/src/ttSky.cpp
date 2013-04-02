@@ -53,5 +53,8 @@ void ttSky::draw(){
     ofTranslate(pos03);
     cloud03.draw(0, 0);
     ofPopMatrix();
+<<<<<<< HEAD
    
+=======
+>>>>>>> parent of 5ad7f70... Revert "bad try, will roll back"
 }
