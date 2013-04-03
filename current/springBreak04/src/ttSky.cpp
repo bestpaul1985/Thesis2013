@@ -17,15 +17,20 @@ void ttSky::setup(){
     speed01 = 0.5;
     speed02 = 0.7;
     speed03 = 1.0;
-    pos01.set(50, 455);
-    pos02.set(389, 511);
-    pos03.set(818, 468);
+    pos01.set(50, 455-100);
+    pos02.set(389, 511-100);
+    pos03.set(818, 468-100);
 }
 
-void ttSky::draw(){
-
+void ttSky::drawBg(){
     ofSetColor(255, 255, 255);
     skyBg.draw(0,0);
+}
+
+
+void ttSky::drawCloud(){
+
+    ofSetColor(255, 255, 255);
     
     pos01.x+=speed01;
     ofPushMatrix();
@@ -53,6 +58,4 @@ void ttSky::draw(){
     ofTranslate(pos03);
     cloud03.draw(0, 0);
     ofPopMatrix();
-    
-    cout<<cloud03.getWidth()<<endl;
 }

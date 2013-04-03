@@ -5,7 +5,7 @@ void testApp::setup(){
 	// initialize the accelerometer
 	ofxAccelerometer.setup();
     ofxAccelerometer.setForceSmoothing(0.55f);
-	iPhoneSetOrientation(OFXIPHONE_ORIENTATION_PORTRAIT);
+	iPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_LEFT);
 	
 	ofBackground(30);
     ofEnableAlphaBlending();
@@ -59,8 +59,8 @@ void testApp::setup(){
     offSet_A = currentPos_A-orgPos_A;
     offSet_B = currentPos_B-orgPos_B;
     
-    translate_A.set(384,280);
-    translate_B.set(384,744);
+    translate_A.set(384,200);
+    translate_B.set(384,768-200);
     //rope
     rope_A.setup(0);
     rope_B.setup(1);
@@ -70,6 +70,8 @@ void testApp::setup(){
     thorns_B.setup(world_B, 1);
     //sky
     sky.setup();
+    //indictor
+    accIndictor.setup(ofxAccelerometer.getForce());
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -256,6 +258,8 @@ void testApp::update(){
         control_B.bFixed = false;
     }
     
+ 
+    
 }
 
 //--------------------------------------------------------------
@@ -263,9 +267,8 @@ void testApp::draw(){
     ofColor dark(80);
     ofBackgroundGradient(dark, ofColor::black);
    
-    sky.draw();
     drawScene(0);
-    
+    accIndictor.draw();
     
 //    ofDrawBitmapStringHighlight("offSet_A: " + ofToString(offSet_A,2)+"\ntranslate_A: "+ofToString(translate_A)+"\nchar_A: "+ofToString(char_A.getPos), 50,50);
 //    ofDrawBitmapStringHighlight("offSet_B: " + ofToString(offSet_B,2)+"\ntranslate_B: "+ofToString(translate_B)+"\nchar_B: "+ofToString(char_B.getPos), 530,950);
@@ -274,6 +277,7 @@ void testApp::draw(){
 void testApp::drawScene(int iDraw){
 
     if (iDraw == 0) {
+        sky.drawBg();
         
         ofPushMatrix();
         ofTranslate(translate_A.x-offSet_A.x,translate_A.y);
@@ -281,7 +285,6 @@ void testApp::drawScene(int iDraw){
 //        ground_A.drawPolyLine();
 //        char_A.drawBox2dObject();
 //        thorns_A.draw();
-        char_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
@@ -290,9 +293,20 @@ void testApp::drawScene(int iDraw){
 //        ground_B.drawPolyLine();
 //        char_B.drawBox2dObject();
 //        thorns_B.draw();
-        char_B.draw();
-
         ofPopMatrix();
+        
+        sky.drawCloud();
+        
+        ofPushMatrix();
+        ofTranslate(translate_A.x-offSet_A.x,translate_A.y);
+        char_A.draw();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofTranslate(translate_B.x-offSet_B.x,translate_B.y);
+        char_B.draw();
+        ofPopMatrix();
+        
         rope_A.draw();
         rope_B.draw();
     }

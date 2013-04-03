@@ -13,6 +13,7 @@
 #include "ttRope.h"
 #include "ttThorn.h"
 #include "ttSky.h"
+#include "ttIndicator.h"
 class testApp : public ofxiPhoneApp{
 	
     public:
@@ -65,6 +66,8 @@ class testApp : public ofxiPhoneApp{
         ttThorn thorns_A, thorns_B;
         //sky
         ttSky sky;
+        //Indictor
+        ttIndicator accIndictor;
 };
 
 

@@ -13,7 +13,8 @@
 class ttSky{
 public:
     void setup();
-    void draw();
+    void drawBg();
+    void drawCloud();
     
     ofImage skyBg;
     ofImage cloud01;

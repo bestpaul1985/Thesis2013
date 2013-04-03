@@ -49,7 +49,7 @@ void ttRope::update(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPo
 void ttRope::updateAccelerometer(ofPoint acc){
     
     if (ropeNum == 0) {
-        if (acc.y<-0.15&&counter !=2) {
+        if (acc.x<-0.15&&counter !=2) {
             
             ofPoint end_pos(endPos.x+translate_A.x, endPos.y+translate_A.y+offset_A.y);
             ofPoint charB_pos(translate_B.x, translate_B.y+offset_B.y);
@@ -58,15 +58,15 @@ void ttRope::updateAccelerometer(ofPoint acc){
                 counter=1;
             }
             
-            if (end_pos.distance(charB_pos)>10 && bHooked == false) {
-                endPos.y +=10;
+            if (end_pos.distance(charB_pos)>5 && bHooked == false) {
+                endPos.y +=5;
             }else{
                 bHooked = true;
                 counter = 2;
             }
         }
         
-        if(acc.y>-0.15){
+        if(acc.x>-0.15){
             endPos.y = 0;
             endPos.x = 0;
             bRopeInUse = false;
@@ -77,7 +77,7 @@ void ttRope::updateAccelerometer(ofPoint acc){
     
     
     if (ropeNum == 1) {
-        if (acc.y>0.15&&counter !=2) {
+        if (acc.x>0.15&&counter !=2) {
             
             ofPoint end_pos(endPos.x+translate_B.x, endPos.y+translate_B.y+offset_B.y);
             ofPoint charB_pos(translate_A.x, translate_A.y+offset_A.y);
@@ -86,15 +86,15 @@ void ttRope::updateAccelerometer(ofPoint acc){
                 counter=1;
             }
             
-            if (end_pos.distance(charB_pos)>10 && bHooked == false) {
-                endPos.y -=10;
+            if (end_pos.distance(charB_pos)>5 && bHooked == false) {
+                endPos.y -=5;
             }else{
                 bHooked = true;
                 counter = 2;
             }
         }
         
-        if(acc.y<0.15){
+        if(acc.x<0.15){
             endPos.y = 0;
             endPos.x = 0;
             bRopeInUse = false;
