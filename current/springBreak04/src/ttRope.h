@@ -40,6 +40,7 @@ public:
     
     bool bHooked;
     bool bRopeInUse;
+    bool bFall;
     int counter;
     int ropeNum;
     int m_num;

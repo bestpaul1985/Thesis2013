@@ -173,7 +173,8 @@ void testApp::update(){
     rope_B.updatePosition(translate_A,translate_B,offSet_A,offSet_B);
     rope_A.updateAccelerometer();
     rope_B.updateAccelerometer();
-    
+    rope_A.controlRope();
+    rope_B.controlRope();
     // rope_A swiches
     if (rope_A.bRopeInUse) {
         

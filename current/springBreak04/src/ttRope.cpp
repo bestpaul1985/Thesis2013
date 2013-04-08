@@ -34,10 +34,11 @@ void ttRope::setup(ofPoint &accFrc,int num){
     endPos.set(0, 0);
     bHooked = false;
     bRopeInUse = false;
+    bFall = false;
     counter = 0;
   
-    m_num = 30;
-    m_preNum = 30;
+    m_num = 10;
+    m_preNum = 10;
     startTime = ofGetElapsedTimeMillis();
     duration = 100;
 }
@@ -59,7 +60,8 @@ void ttRope::updateRope(){
         charPos.set(translate_A.x, translate_A.y+offset_A.y);
     }
     
-    controlRope();
+    
+    
 }
 //--------------------------------------------------------
 void ttRope::updateAccelerometer(){
@@ -69,22 +71,20 @@ void ttRope::updateAccelerometer(){
             
             if (counter == 0) {
                 bRopeInUse = true;
-                
                 initializeRope();
-                m_preNum = m_num;
-                
+                bFall = true;
                 counter=1;
-                cout<<"1"<<endl;
             }
             
             if (counter == 1) {
-                
                 ofPoint end_pos(endPos.x+translate_A.x, endPos.y+translate_A.y+offset_A.y);
                 ofPoint charB_pos(translate_B.x, translate_B.y+offset_B.y);
+                
                 if (end_pos.distance(charB_pos)>5 && bHooked == false) {
                     endPos.y +=5;
                 }else{
                     bHooked = true;
+                    bFall = false;
                     counter = 2;
                 }
             }
@@ -96,7 +96,7 @@ void ttRope::updateAccelerometer(){
             endPos.x = 0;
             bRopeInUse = false;
             bHooked = false;
-            
+            bFall = false;
             if (counter != 0) {
                 destroyRope();
                 counter = 0;
@@ -138,6 +138,7 @@ void ttRope::updateAccelerometer(){
 //--------------------------------------------------------
 void ttRope::initializeRope(){
     
+    cout<<"ok"<<endl;
     for(int i =0; i<m_num; i++){
         
         if (joints.empty()) {
@@ -211,52 +212,45 @@ void ttRope::initializeRope(){
             joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
         }
     }
+    
 }
 //--------------------------------------------------------
 void ttRope::destroyRope(){
     
-    
-        for(int i =0; i<m_num; i++){
+    for(int i =0; i<m_num; i++){
+        
+        if (joints.size()>1)
+        {
             
-            if (joints.size()>1)
-            {
-                
-                world.world->DestroyJoint(joints.front());
-                world.world->DestroyBody(rects[1].body);
-                joints.erase(joints.begin());
-                rects.erase(rects.begin()+1);
-                
-                ofPoint pos = rects.front().getPosition();
-                rects.front().setPosition(pos.x, pos.y-20);
-                b2RevoluteJointDef revoluteJointDef;
-                revoluteJointDef.Initialize(rects[0].body, rects[1].body, rects[0].body->GetWorldCenter());
-                
-                b2Vec2 p = screenPtToWorldPt(ofPoint(0,9));
-                revoluteJointDef.localAnchorA.Set(p.x, p.y);
-                revoluteJointDef.localAnchorB.Set(p.x, -p.y);
-                joints.front() = (b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef);
-                
-            }
-            else if(joints.size()==1)
-            {
-                world.world->DestroyJoint(joints.back());
-                world.world->DestroyBody(rects.back().body);
-                joints.clear();
-                rects.clear();
-            }
+            world.world->DestroyJoint(joints.front());
+            world.world->DestroyBody(rects[1].body);
+            joints.erase(joints.begin());
+            rects.erase(rects.begin()+1);
+            
+            ofPoint pos = rects.front().getPosition();
+            rects.front().setPosition(pos.x, pos.y-20);
+            b2RevoluteJointDef revoluteJointDef;
+            revoluteJointDef.Initialize(rects[0].body, rects[1].body, rects[0].body->GetWorldCenter());
+            
+            b2Vec2 p = screenPtToWorldPt(ofPoint(0,9));
+            revoluteJointDef.localAnchorA.Set(p.x, p.y);
+            revoluteJointDef.localAnchorB.Set(p.x, -p.y);
+            joints.front() = (b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef);
+            
         }
+        else if(joints.size()==1)
+        {
+            world.world->DestroyJoint(joints.back());
+            world.world->DestroyBody(rects.back().body);
+            joints.clear();
+            rects.clear();
+        }
+    }
     
-
+    m_preNum = m_num;
 }
 //--------------------------------------------------------
 void ttRope::controlRope(){
-    
-    if (ofGetElapsedTimeMillis()-startTime>duration && bHooked == false) {
-        if (m_preNum>1) {
-            m_preNum--;
-        }
-        startTime = ofGetElapsedTimeMillis();
-    }
     
     if (!joints.empty()) {
         
@@ -268,10 +262,18 @@ void ttRope::controlRope(){
             }
         }
         
-        cout<<rects.size()<<"  "<<m_preNum<<endl;
+//        cout<<rects.size()<<"  "<<m_preNum<<endl;
     }
     
     
+    if (ofGetElapsedTimeMillis()-startTime>duration && bFall) {
+        if (m_preNum>1) {
+            m_preNum--;
+        }
+        startTime = ofGetElapsedTimeMillis();
+    }
+
+       
 }
 //--------------------------------------------------------
 void ttRope::draw(){
@@ -295,9 +297,9 @@ void ttRope::draw(){
         ofPopMatrix();
     }
     
-//    for (int i =0; i<rects.size(); i++) {
-//        rects[i].draw();
-//    }
+    for (int i =0; i<rects.size(); i++) {
+        rects[i].draw();
+    }
     
 }
 
