@@ -13,17 +13,13 @@
 #include "ofxBox2d.h"
 class ttRope{
 public:
-    void setup(ofPoint &accFrc,int num);
-    void updateAccelerometer();
-    void updatePosition(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB);
-    void updateRope();
-    void initializeRope();
-    void controlRope();
-    void destroyRope();
+    void setup(ofPoint &accFrc,ofPoint &_translateA,ofPoint &_translateB, ofPoint &_offsetA, ofPoint &_offsetB,int num);
+    void update();
+    void initialize();
+    void control();
+    void destroy();
     void draw();
     
-    ofPoint translate_A, translate_B;
-    ofPoint offset_A, offset_B;
     ofxBox2d world;
     ofxBox2dRect start;
     ofxBox2dRect end;
@@ -32,8 +28,12 @@ public:
     vector<ofxBox2dRect>    rects;
     vector<b2RevoluteJoint*> joints;
     
-    ofPoint endPos;
     ofPoint *acc;
+    ofPoint *translateA;
+    ofPoint *translateB;
+    ofPoint *charPosA;
+    ofPoint *charPosB;
+    
     float length;
     float startTime;
     float duration;

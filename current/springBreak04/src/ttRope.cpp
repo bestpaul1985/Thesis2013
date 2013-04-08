@@ -8,147 +8,98 @@
 
 #include "ttRope.h"
 
-void ttRope::setup(ofPoint &accFrc,int num){
+void ttRope::setup(ofPoint &accFrc,ofPoint &_translateA,ofPoint &_translateB, ofPoint &_charA, ofPoint &_charB,int num){
     acc = &accFrc;
+    translateA = &_translateA;
+    translateB = &_translateB;
+    charPosA = &_charA;
+    charPosB = &_charB;
     ropeNum = num;
-    if (ropeNum == 0) {
-        world.init();
-        world.setFPS(60);
-        world.setGravity(0,9.8);
-        world.setIterations(1, 1);
-        world.registerGrabbing();
-    }
+
+    world.init();
+    world.setFPS(60);
+    world.setGravity(0,9.8);
+    world.registerGrabbing();
     
-    if (ropeNum == 1) {
-        world.init();
-        world.setFPS(60);
-        world.setGravity(0,-9.8);
-        world.setIterations(1, 1);
-        world.registerGrabbing();
-    }
-    
-    translate_A.set(0, 0);
-    translate_B.set(0, 0);
-    offset_A.set(0, 0);
-    offset_B.set(0, 0);
-    endPos.set(0, 0);
-    bHooked = false;
     bRopeInUse = false;
     bFall = false;
+    bHooked = false;
+    
     counter = 0;
-  
-    m_num = 10;
-    m_preNum = 10;
+    m_num = 30;
+    m_preNum = 30;
+    
     startTime = ofGetElapsedTimeMillis();
     duration = 100;
+    
+    initialize();
 }
 //--------------------------------------------------------
-void ttRope::updatePosition(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB){
+void ttRope::update(){
     world.update();
-    translate_A = translateA;
-    translate_B = translateB;
-    offset_A = offsetA;
-    offset_B = offsetB;
-}
-//--------------------------------------------------------
-void ttRope::updateRope(){
     
-    ofPoint charPos;
-    if (ropeNum == 0){
-        charPos.set(translate_B.x, translate_B.y+offset_B.y);
-    }else{
-        charPos.set(translate_A.x, translate_A.y+offset_A.y);
-    }
-    
-    
-    
-}
-//--------------------------------------------------------
-void ttRope::updateAccelerometer(){
-    
-    if (ropeNum == 0) {
-        if (acc->x<-0.15&&counter !=2) {
-            
-            if (counter == 0) {
-                bRopeInUse = true;
-                initializeRope();
-                bFall = true;
-                counter=1;
-            }
-            
-            if (counter == 1) {
-                ofPoint end_pos(endPos.x+translate_A.x, endPos.y+translate_A.y+offset_A.y);
-                ofPoint charB_pos(translate_B.x, translate_B.y+offset_B.y);
-                
-                if (end_pos.distance(charB_pos)>5 && bHooked == false) {
-                    endPos.y +=5;
-                }else{
-                    bHooked = true;
-                    bFall = false;
-                    counter = 2;
-                }
-            }
+    if (acc->x < -0.15) {
+        if (joints.empty()) {
+            initialize();
+            bRopeInUse = true;
+        }
+        else
+        {
+            ofPoint rectPos,charPos;
+            rectPos = rects.back().getPosition();
+            charPos.x = translateB->x - translateA->x;
+            charPos.y = translateB->y - translateA->y + charPosB->y;
+            float length = rectPos.distance(charPos);
            
-        }
-        
-        if(acc->x>-0.15){
-            endPos.y = 0;
-            endPos.x = 0;
-            bRopeInUse = false;
-            bHooked = false;
-            bFall = false;
-            if (counter != 0) {
-                destroyRope();
-                counter = 0;
-            }
-        }
-    }
-    
-    
-    if (ropeNum == 1) {
-        if (acc->x>0.15&&counter !=2) {
-            
-            ofPoint end_pos(endPos.x+translate_B.x, endPos.y+translate_B.y+offset_B.y);
-            ofPoint charA_pos(translate_A.x, translate_A.y+offset_A.y);
-            if (counter == 0) {
-                bRopeInUse = true;
-                counter=1;
-            }
-            
-            if (end_pos.distance(charA_pos)>5 && bHooked == false) {
-                endPos.y -=5;
+            if (length>10) {
+                if (ofGetElapsedTimeMillis()-startTime>duration) {
+                    if (m_preNum>1) {
+                        m_preNum--;
+                    }
+                    startTime = ofGetElapsedTimeMillis();
+                }
+                
+                for (int i =0; i<rects.size(); i++) {
+                    if (i<m_preNum) {
+                        rects[i].body->SetType(b2_staticBody);
+                    }else{
+                        rects[i].body->SetType(b2_dynamicBody);
+                    }
+                }
             }else{
                 bHooked = true;
-                counter = 2;
             }
         }
+       
         
-        if(acc->x<0.15){
-            endPos.y = 0;
-            endPos.x = 0;
-            bRopeInUse = false;
-            bHooked = false;
-            counter = 0;
-            m_preNum = m_num;
+        
+    }else if(acc->x>0.15){
+        cout<<"2"<<endl;
+    }else{
+        bRopeInUse = false;
+        bHooked = false;
+        if (!joints.empty()) {
+            destroy();
         }
     }
-}
-
-
-//--------------------------------------------------------
-void ttRope::initializeRope(){
     
-    cout<<"ok"<<endl;
+    
+    cout<<bRopeInUse<<"     "<<bHooked<<endl;
+
+    
+}
+//--------------------------------------------------------
+void ttRope::initialize(){
+
     for(int i =0; i<m_num; i++){
         
         if (joints.empty()) {
             ofxBox2dRect rect;
-            
-            rect.setup(world.getWorld(), ofGetWidth()/2,150, 1,1);
+            rect.setup(world.getWorld(), 0, 0, 1,1);
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
             
-            rect.setPhysics(1.0f, 0.0f, 0.2f);
+            rect.setPhysics(0.3f, 0.0f, 0.0f);
             rect.setup(world.world, rects[0].getPosition().x+9, rects[0].getPosition().y, 10, 2);
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
@@ -167,7 +118,7 @@ void ttRope::initializeRope(){
         }else if(i<m_num-1){
             
             ofxBox2dRect rect;
-            rect.setPhysics(1.0f, 0.0f, 0.2f);
+            rect.setPhysics(0.3f, 0.0f, 0.0f);
             rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 10, 2);
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
@@ -188,8 +139,8 @@ void ttRope::initializeRope(){
             
         }else{
             ofxBox2dRect rect;
-            rect.setPhysics(30.0f, 0.0f, 0.2f);
-            rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 8, 8);
+            rect.setPhysics(30.0f, 0.0f, 0.0f);
+            rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 5, 5);
             rect.body->GetFixtureList()->SetSensor(true);
             rect.body->SetFixedRotation(true);
             rects.push_back(rect);
@@ -213,10 +164,13 @@ void ttRope::initializeRope(){
         }
     }
     
+    for (int i =0; i<rects.size(); i++) {
+            rects[i].body->SetType(b2_staticBody);
+    }
+
 }
 //--------------------------------------------------------
-void ttRope::destroyRope(){
-    
+void ttRope::destroy(){
     for(int i =0; i<m_num; i++){
         
         if (joints.size()>1)
@@ -246,62 +200,20 @@ void ttRope::destroyRope(){
             rects.clear();
         }
     }
-    
-    m_preNum = m_num;
-}
-//--------------------------------------------------------
-void ttRope::controlRope(){
-    
-    if (!joints.empty()) {
-        
-        for (int i =0; i<rects.size(); i++) {
-            if (i<m_preNum) {
-                rects[i].body->SetType(b2_staticBody);
-            }else{
-                rects[i].body->SetType(b2_dynamicBody);
-            }
-        }
-        
-//        cout<<rects.size()<<"  "<<m_preNum<<endl;
-    }
-    
-    
-    if (ofGetElapsedTimeMillis()-startTime>duration && bFall) {
-        if (m_preNum>1) {
-            m_preNum--;
-        }
-        startTime = ofGetElapsedTimeMillis();
-    }
+   m_preNum = m_num;
 
-       
 }
+
 //--------------------------------------------------------
 void ttRope::draw(){
-    if( ropeNum==0){
-        ofPushMatrix();
-        ofTranslate(translate_A.x, translate_A.y+offset_A.y);
-        ofSetColor(30,255,220,150);
-        ofLine(0, 0, endPos.x, endPos.y);
-        
-        ofPopMatrix();
-    }
-    
-    
-    if( ropeNum==1){
-        ofPushMatrix();
-        ofTranslate(translate_B.x, translate_B.y+offset_B.y);
-        ofSetColor(30,255,220,150);
-        ofLine(0, 0, endPos.x, endPos.y);
+
+    for (int i=0; i<rects.size(); i++) {
         ofSetColor(255, 30, 220);
-        
-        ofPopMatrix();
-    }
-    
-    for (int i =0; i<rects.size(); i++) {
         rects[i].draw();
     }
-    
+ 
 }
+
 
 
 
