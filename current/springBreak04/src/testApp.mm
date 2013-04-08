@@ -62,8 +62,8 @@ void testApp::setup(){
     translate_A.set(384,200);
     translate_B.set(384,768-200);
     //rope
-    rope_A.setup(0);
-    rope_B.setup(1);
+    rope_A.setup(ofxAccelerometer.getForce(),0);
+    rope_B.setup(ofxAccelerometer.getForce(),1);
     
     //thorn
     thorns_A.setup(world_A, 0);
@@ -169,10 +169,10 @@ void testApp::update(){
     
     
     //rope update
-    rope_A.update(translate_A,translate_B,offSet_A,offSet_B);
-    rope_A.updateAccelerometer(ofxAccelerometer.getForce());
-    rope_B.update(translate_A,translate_B,offSet_A,offSet_B);
-    rope_B.updateAccelerometer(ofxAccelerometer.getForce());
+    rope_A.updatePosition(translate_A,translate_B,offSet_A,offSet_B);
+    rope_B.updatePosition(translate_A,translate_B,offSet_A,offSet_B);
+    rope_A.updateAccelerometer();
+    rope_B.updateAccelerometer();
     
     // rope_A swiches
     if (rope_A.bRopeInUse) {
