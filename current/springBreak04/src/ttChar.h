@@ -23,7 +23,9 @@ public:
     
     void update();
     void draw();
-    void swing(ofPoint translateA,ofPoint translateB, ofPoint offsetA, ofPoint offsetB);
+    void copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint*> Joints, ofPoint screen);
+    void destroyRope();
+    void swing();
     void drawBox2dObject();
     void dead();
     
@@ -45,6 +47,7 @@ public:
     int             step;
     int             deadStep;
     int             numFootContacts;
+    int             jointSize;
     ttControl       *control_A;
     ttControl       *control_B;
     vector<ofImage> sprite;
@@ -53,6 +56,9 @@ public:
     ofxBox2dJoint   joint;
     
     ofColor         color;
+    
+    vector<ofxBox2dRect>    rects;
+    vector<b2RevoluteJoint*> joints;
 };
 
 #endif /* defined(__thatThey__ttChar__) */

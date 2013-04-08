@@ -21,7 +21,7 @@ class testApp : public ofxiPhoneApp{
         void update();
         void draw();
         void exit();
-
+        
         void drawScene(int iCameraDraw);
     
         void touchDown(ofTouchEventArgs & touch);
@@ -32,7 +32,6 @@ class testApp : public ofxiPhoneApp{
     
         void contactStart_worldA(ofxBox2dContactArgs &e);
         void contactEnd_worldA(ofxBox2dContactArgs &e);
-    
         void contactStart_worldB(ofxBox2dContactArgs &e);
         void contactEnd_worldB(ofxBox2dContactArgs &e);
     
@@ -40,7 +39,9 @@ class testApp : public ofxiPhoneApp{
         void gotFocus();
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
-
+    
+        void screen();
+    
         ofxBox2d        world_A,        world_B;
         ofxBox2dRect    charDummy_A,    charDummy_B;
         ofxBox2dCircle  ropeEnd_A,  ropeEnd_B;
@@ -59,7 +60,7 @@ class testApp : public ofxiPhoneApp{
         ofPoint preTouch_A,preTouch_B;
         ofPoint camPos_A,camPos_B;
         ofPoint translate_A, translate_B;
-
+        ofPoint screenA, screenB;
         //rope
         ttRope rope_A,rope_B;
         //thorns

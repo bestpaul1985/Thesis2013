@@ -13,9 +13,9 @@
 #include "ofxBox2d.h"
 class ttRope{
 public:
-    void setup(ofPoint &accFrc,ofPoint &_translateA,ofPoint &_translateB, ofPoint &_offsetA, ofPoint &_offsetB,int num);
+    void setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint &_CharA, ofPoint &_CharB,int num);
     void update();
-    void initialize();
+    void initialize(ofPoint pos);
     void control();
     void destroy();
     void draw();
@@ -29,10 +29,10 @@ public:
     vector<b2RevoluteJoint*> joints;
     
     ofPoint *acc;
-    ofPoint *translateA;
-    ofPoint *translateB;
-    ofPoint *charPosA;
-    ofPoint *charPosB;
+    ofPoint *screenA;
+    ofPoint *screenB;
+    ofPoint *charA;
+    ofPoint *charB;
     
     float length;
     float startTime;

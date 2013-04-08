@@ -40,7 +40,7 @@ void testApp::setup(){
     //translate
     translate_A.set(384,200);
     translate_B.set(384,768-200);
-    
+    screen();
     //thorn
     thorns_A.setup(world_A, 0);
     thorns_B.setup(world_B, 1);
@@ -52,7 +52,7 @@ void testApp::setup(){
     accIndictor.setup(ofxAccelerometer.getForce());
     
     //rope
-    rope_A.setup(ofxAccelerometer.getForce(),translate_A,translate_B,char_A.getPos,char_B.getPos,0);
+    rope_A.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,0);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -130,15 +130,7 @@ void testApp::update(){
     
     world_A.update();
     world_B.update();
-
-    //Character
-    char_A.update();
-    char_B.update();
-   
-    //rope update
-    rope_A.update();
-   
-
+    
     //no jump in sky
     if (numFootContacts_A<=0) {
         control_A.bFixed = true;
@@ -151,9 +143,34 @@ void testApp::update(){
     }else{
         control_B.bFixed = false;
     }
+
+    //Character
+    char_A.update();
+    char_B.update();
+    //screen
+    screen();
+   
+    //rope update
+    rope_A.update();
     
- 
+    //character rope
+    if (rope_A.bRopeInUse) {
+        char_A.bFixedMove = true;
+        if (rope_A.bHooked) {
+            char_B.copyRope(rope_A.rects, rope_A.joints,screenB);
+            rope_A.destroy();
+            rope_A.bHooked = false;
+        }
+    }
     
+    if (!rope_A.bRopeInUse && !rope_B.bRopeInUse) {
+        char_B.bSwing = false;
+        char_A.bFixedMove = false;
+        char_B.bFixedMove = false;
+        char_B.destroyRope();
+    }
+    
+   
 }
 
 //--------------------------------------------------------------
@@ -164,8 +181,8 @@ void testApp::draw(){
     drawScene(0);
     accIndictor.draw();
     
-    ofDrawBitmapStringHighlight("pos: " + ofToString(char_A.getPos,2)+"\ntranslate_A: "+ofToString(translate_A), 50,50);
-    ofDrawBitmapStringHighlight("pos: " + ofToString(char_B.getPos,2)+"\ntranslate_B: "+ofToString(translate_B), 900,600);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(ofPoint(translate_A.x,translate_A.y+char_A.getPos.y),2), 50,50);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(ofPoint(translate_B.x,translate_B.y+char_B.getPos.y),2), 800,680);
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int iDraw){
@@ -194,7 +211,6 @@ void testApp::drawScene(int iDraw){
         ofPushMatrix();
         ofTranslate(translate_A.x-char_A.getPos.x,translate_A.y);
         char_A.draw();
-        rope_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
@@ -202,11 +218,8 @@ void testApp::drawScene(int iDraw){
         char_B.draw();
         ofPopMatrix();
         
-        
-//        rope_B.draw();
+        rope_A.draw();
     }
-
-
 }
 //--------------------------------------------------------------
 void testApp::exit(){
@@ -260,4 +273,13 @@ void testApp::gotMemoryWarning(){
 void testApp::deviceOrientationChanged(int newOrientation){
 
 }
+//--------------------------------------------------------------
+void testApp::screen(){
+    
+    screenA.x = translate_A.x - char_A.getPos.x,
+    screenA.y = translate_A.y;
+    
+    screenB.x = translate_B.x - char_B.getPos.x,
+    screenB.y = translate_B.y;
 
+}

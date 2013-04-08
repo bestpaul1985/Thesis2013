@@ -8,12 +8,12 @@
 
 #include "ttRope.h"
 
-void ttRope::setup(ofPoint &accFrc,ofPoint &_translateA,ofPoint &_translateB, ofPoint &_charA, ofPoint &_charB,int num){
+void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint &_CharA, ofPoint &_CharB,int num){
     acc = &accFrc;
-    translateA = &_translateA;
-    translateB = &_translateB;
-    charPosA = &_charA;
-    charPosB = &_charB;
+    screenA = &_screenA;
+    screenB = &_screenB;
+    charA = &_CharA;
+    charB = &_CharB;
     ropeNum = num;
 
     world.init();
@@ -31,26 +31,28 @@ void ttRope::setup(ofPoint &accFrc,ofPoint &_translateA,ofPoint &_translateB, of
     
     startTime = ofGetElapsedTimeMillis();
     duration = 100;
-    
-    initialize();
 }
 //--------------------------------------------------------
 void ttRope::update(){
     world.update();
-    
+    ofPoint pos;
+
     if (acc->x < -0.15) {
-        if (joints.empty()) {
-            initialize();
+        pos = *screenA + *charA;
+        
+        if (joints.empty() && !bRopeInUse) {
+            initialize(pos);
             bRopeInUse = true;
         }
-        else
-        {
+        
+        
+        if(!joints.empty()){
+            
             ofPoint rectPos,charPos;
             rectPos = rects.back().getPosition();
-            charPos.x = translateB->x - translateA->x;
-            charPos.y = translateB->y - translateA->y + charPosB->y;
+            charPos = *screenB+*charB;
             float length = rectPos.distance(charPos);
-           
+    
             if (length>10) {
                 if (ofGetElapsedTimeMillis()-startTime>duration) {
                     if (m_preNum>1) {
@@ -74,7 +76,7 @@ void ttRope::update(){
         
         
     }else if(acc->x>0.15){
-        cout<<"2"<<endl;
+        
     }else{
         bRopeInUse = false;
         bHooked = false;
@@ -84,18 +86,18 @@ void ttRope::update(){
     }
     
     
-    cout<<bRopeInUse<<"     "<<bHooked<<endl;
+//    cout<<bRopeInUse<<"     "<<bHooked<<endl;
 
     
 }
 //--------------------------------------------------------
-void ttRope::initialize(){
+void ttRope::initialize(ofPoint pos){
 
     for(int i =0; i<m_num; i++){
         
         if (joints.empty()) {
             ofxBox2dRect rect;
-            rect.setup(world.getWorld(), 0, 0, 1,1);
+            rect.setup(world.getWorld(), pos.x, pos.y, 1,1);
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
             
@@ -200,8 +202,8 @@ void ttRope::destroy(){
             rects.clear();
         }
     }
-   m_preNum = m_num;
-
+ 
+      m_preNum = m_num;
 }
 
 //--------------------------------------------------------
