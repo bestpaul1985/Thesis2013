@@ -256,13 +256,19 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
     bReset = true;
     bSwing = true;
     bFixedMove = true;
+    if (charNum == 0)
+    {
+       character.setVelocity(0, -10); 
+    }else
+    {
+        character.setVelocity(0, 10);
+    }
+    
 }
 //-----------------------------------------------
 void ttChar::destroyRope(){
     
     if (!joints.empty()) {
-        
-        
         
         for(int i =0; i<jointSize; i++){
             
