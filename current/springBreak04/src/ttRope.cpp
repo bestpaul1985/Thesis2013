@@ -15,11 +15,15 @@ void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint 
     charA = &_CharA;
     charB = &_CharB;
     ropeNum = num;
-
+   
     world.init();
     world.setFPS(60);
-    world.setGravity(0,9.8);
-    world.registerGrabbing();
+    if (ropeNum == 0) {
+        world.setGravity(0,9.8);
+    }else{
+        world.setGravity(0,-9.8);
+    }
+    
     
     bRopeInUse = false;
     bFall = false;
@@ -37,53 +41,101 @@ void ttRope::update(){
     world.update();
     ofPoint pos;
 
-    if (acc->x < -0.15) {
-        pos = *screenA + *charA;
-        
-        if (joints.empty() && !bRopeInUse) {
-            initialize(pos);
-            bRopeInUse = true;
-        }
-        
-        
-        if(!joints.empty()){
+    if (ropeNum == 0) {
+        if (acc->x < -0.15)
+        {
+            pos = *screenA + *charA;
             
-            ofPoint rectPos,charPos;
-            rectPos = rects.back().getPosition();
-            charPos = *screenB+*charB;
-            float length = rectPos.distance(charPos);
-    
-            if (length>10) {
-                if (ofGetElapsedTimeMillis()-startTime>duration) {
-                    if (m_preNum>1) {
-                        m_preNum--;
-                    }
-                    startTime = ofGetElapsedTimeMillis();
-                }
+            if (joints.empty() && !bRopeInUse) {
+                initialize(pos);
+                bRopeInUse = true;
+            }
+            
+            
+            if(!joints.empty()){
                 
-                for (int i =0; i<rects.size(); i++) {
-                    if (i<m_preNum) {
-                        rects[i].body->SetType(b2_staticBody);
-                    }else{
-                        rects[i].body->SetType(b2_dynamicBody);
+                ofPoint rectPos,charPos;
+                rectPos = rects.back().getPosition();
+                charPos = *screenB+*charB;
+                float length = rectPos.distance(charPos);
+                
+                if (length>20) {
+                    if (ofGetElapsedTimeMillis()-startTime>duration) {
+                        if (m_preNum>1) {
+                            m_preNum--;
+                        }
+                        startTime = ofGetElapsedTimeMillis();
                     }
+                    
+                    for (int i =0; i<rects.size(); i++) {
+                        if (i<m_preNum) {
+                            rects[i].body->SetType(b2_staticBody);
+                        }else{
+                            rects[i].body->SetType(b2_dynamicBody);
+                        }
+                    }
+                }else{
+                    bHooked = true;
                 }
-            }else{
-                bHooked = true;
+            }
+        }else{
+            cout<<"delet01"<<endl;
+            bRopeInUse = false;
+            bHooked = false;
+            if (!joints.empty()) {
+                destroy();
             }
         }
-       
-        
-        
-    }else if(acc->x>0.15){
-        
-    }else{
-        bRopeInUse = false;
-        bHooked = false;
-        if (!joints.empty()) {
-            destroy();
-        }
+
     }
+    
+    
+     if (ropeNum == 1) {
+         if(acc->x>0.15 && ropeNum == 1){
+            pos = *screenB + *charB;
+            
+            if (joints.empty() && !bRopeInUse) {
+                initialize(pos);
+                bRopeInUse = true;
+            }
+            
+            
+            if(!joints.empty()){
+                
+                ofPoint rectPos,charPos;
+                rectPos = rects.back().getPosition();
+                charPos = *screenA+*charA;
+                float length = rectPos.distance(charPos);
+                
+                if (length>20) {
+                    if (ofGetElapsedTimeMillis()-startTime>duration) {
+                        if (m_preNum>1) {
+                            m_preNum--;
+                        }
+                        startTime = ofGetElapsedTimeMillis();
+                    }
+                    
+                    for (int i =0; i<rects.size(); i++) {
+                        if (i<m_preNum) {
+                            rects[i].body->SetType(b2_staticBody);
+                        }else{
+                            rects[i].body->SetType(b2_dynamicBody);
+                        }
+                    }
+                }else{
+                    bHooked = true;
+                }
+            }
+
+            }else{
+                cout<<"delet02"<<endl;
+                bRopeInUse = false;
+                bHooked = false;
+                if (!joints.empty()) {
+                    destroy();
+                }
+            }
+     }
     
     
 //    cout<<bRopeInUse<<"     "<<bHooked<<endl;

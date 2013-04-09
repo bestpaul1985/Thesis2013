@@ -201,98 +201,84 @@ void ttChar::update(){
 //-----------------------------------------------
 void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Joints, ofPoint screen){
   
-  
-    
-//    for (int i=0; i<Rects.size(); i++) {
-//        
-//        ofxBox2dRect rect;
-//        ofPoint pos;
-//        pos = Rects[i].getPosition() - screen;
-//        rect.setPhysics(Rects[i].density, Rects[i].bounce, Rects[i].friction);
-//        rect.setup(world.getWorld(), pos.x,pos.y, Rects[i].getWidth(), Rects[i].getHeight());
-//        rect.body->GetFixtureList()->SetSensor(true);
-//        rect.setVelocity(Rects[i].getVelocity());
-//        rect.setAngle(Rects[i].getRotation());
-//        rects.push_back(rect);
-//    }
-    
-    for (int i=0; i<Joints.size(); i++) {
-        if (joints.empty()) {
-            ofxBox2dRect rect;
-            ofPoint pos;
-            pos = Rects[i].getPosition() - screen;
-            rect.setPhysics(Rects[i].density, Rects[i].bounce, Rects[i].friction);
-            rect.setup(world.getWorld(), pos.x,pos.y, Rects[i].getWidth(), Rects[i].getHeight());
-            rect.body->GetFixtureList()->SetSensor(true);
-            rect.setVelocity(Rects[i].getVelocity());
-            rect.setAngle(Rects[i].getRotation());
-            rects.push_back(rect);
-            
-            pos = Rects[i+1].getPosition() - screen;
-            rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
-            rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
-            rect.body->GetFixtureList()->SetSensor(true);
-            rect.setVelocity(Rects[i+1].getVelocity());
-            rect.setAngle(Rects[i+1].getRotation());
-            rects.push_back(rect);
-            
-            b2RevoluteJointDef revoluteJointDef;
-            revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
-            b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
-            revoluteJointDef.localAnchorA.Set(p.x, p.y);
-            p = screenPtToWorldPt(ofPoint(-9,0));
-            revoluteJointDef.localAnchorB.Set(p.x, p.y);
-            joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
-        }else if(i<Joints.size()-1){
-            ofxBox2dRect rect;
-            ofPoint pos;
-            pos = Rects[i+1].getPosition() - screen;
-            rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
-            rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
-            rect.body->GetFixtureList()->SetSensor(true);
-            rect.setVelocity(Rects[i+1].getVelocity());
-            rect.setAngle(Rects[i+1].getRotation());
-            rects.push_back(rect);
-            
-            b2RevoluteJointDef revoluteJointDef;
-            revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
-            b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
-            revoluteJointDef.localAnchorA.Set(p.x, p.y);
-            p = screenPtToWorldPt(ofPoint(-9,0));
-            revoluteJointDef.localAnchorB.Set(p.x, p.y);
-            joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
-            
-        }else{
-            ofxBox2dRect rect;
-            ofPoint pos;
-            pos = Rects[i+1].getPosition() - screen;
-            rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
-            rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
-            rect.body->GetFixtureList()->SetSensor(true);
-            rect.setVelocity(Rects[i+1].getVelocity());
-            rect.setAngle(Rects[i+1].getRotation());
-            rects.push_back(rect);
-            
-            b2RevoluteJointDef revoluteJointDef;
-            revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
-            b2Vec2 p = screenPtToWorldPt(ofPoint(9,0));
-            revoluteJointDef.localAnchorA.Set(p.x, p.y);
-            p = screenPtToWorldPt(ofPoint(0,0));
-            revoluteJointDef.localAnchorB.Set(p.x, p.y);
-            joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+    if (charNum == 0) {
+        cout<<"ok"<<endl;
+        for (int i=0; i<Joints.size(); i++) {
+            if (joints.empty()) {
+                ofxBox2dRect rect;
+                ofPoint pos;
+                pos = Rects[i].getPosition() - screen;
+                rect.setPhysics(Rects[i].density, Rects[i].bounce, Rects[i].friction);
+                rect.setup(world.getWorld(), pos.x,pos.y, Rects[i].getWidth(), Rects[i].getHeight());
+                rect.body->GetFixtureList()->SetSensor(true);
+                rect.setVelocity(Rects[i].getVelocity());
+                rect.setAngle(Rects[i].getRotation());
+                rects.push_back(rect);
+                
+                pos = Rects[i+1].getPosition() - screen;
+                rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
+                rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
+                rect.body->GetFixtureList()->SetSensor(true);
+                rect.setVelocity(Rects[i+1].getVelocity());
+                rect.setAngle(Rects[i+1].getRotation());
+                rects.push_back(rect);
+                
+                b2RevoluteJointDef revoluteJointDef;
+                revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
+                b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
+                revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                p = screenPtToWorldPt(ofPoint(-9,0));
+                revoluteJointDef.localAnchorB.Set(p.x, p.y);
+                joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+            }else if(i<Joints.size()-1){
+                ofxBox2dRect rect;
+                ofPoint pos;
+                pos = Rects[i+1].getPosition() - screen;
+                rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
+                rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
+                rect.body->GetFixtureList()->SetSensor(true);
+                rect.setVelocity(Rects[i+1].getVelocity());
+                rect.setAngle(Rects[i+1].getRotation());
+                rects.push_back(rect);
+                
+                b2RevoluteJointDef revoluteJointDef;
+                revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
+                b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
+                revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                p = screenPtToWorldPt(ofPoint(-9,0));
+                revoluteJointDef.localAnchorB.Set(p.x, p.y);
+                joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+                
+            }else{
+                ofxBox2dRect rect;
+                ofPoint pos;
+                pos = Rects[i+1].getPosition() - screen;
+                rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
+                rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
+                rect.body->GetFixtureList()->SetSensor(true);
+                rect.setVelocity(Rects[i+1].getVelocity());
+                rect.setAngle(Rects[i+1].getRotation());
+                rects.push_back(rect);
+                
+                b2RevoluteJointDef revoluteJointDef;
+                revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
+                b2Vec2 p = screenPtToWorldPt(ofPoint(9,0));
+                revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                p = screenPtToWorldPt(ofPoint(0,0));
+                revoluteJointDef.localAnchorB.Set(p.x, p.y);
+                joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+            }
         }
-    }
-    
-    b2RevoluteJointDef revoluteJointDef;
-    revoluteJointDef.Initialize(rects.back().body, character.body, rects.back().body->GetWorldCenter());
-    b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
-    revoluteJointDef.localAnchorA.Set(p.x, p.y);
-    p = screenPtToWorldPt(ofPoint(15,0));
-    revoluteJointDef.localAnchorB.Set(p.x, p.y);
-    joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
-    
+        
+        b2RevoluteJointDef revoluteJointDef;
+        revoluteJointDef.Initialize(rects.back().body, character.body, rects.back().body->GetWorldCenter());
+        b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
+        revoluteJointDef.localAnchorA.Set(p.x, p.y);
+        p = screenPtToWorldPt(ofPoint(15,0));
+        revoluteJointDef.localAnchorB.Set(p.x, p.y);
+        joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+     }
     jointSize = joints.size();
-   
     bReset = true;
     bSwing = true;
     bFixedMove = true;
@@ -321,7 +307,6 @@ void ttChar::controlRope(){
 void ttChar::destroyRope(){
     
     if (!joints.empty()) {
-        
         for(int i =0; i<jointSize; i++){
             
             if (joints.size()>1)
@@ -354,8 +339,9 @@ void ttChar::destroyRope(){
                 joints.pop_back();
             }
         }
-
     }
+
+    
    
 }
 //-----------------------------------------------

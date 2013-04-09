@@ -6,8 +6,6 @@ void testApp::setup(){
 	ofxAccelerometer.setup();
     ofxAccelerometer.setForceSmoothing(0.55f);
 	iPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_LEFT);
-	
-	ofBackground(30);
     ofEnableAlphaBlending();
     
     // setup world A
@@ -22,7 +20,7 @@ void testApp::setup(){
     ground_A.setup(1, 0, world_A);
     ground_B.setup(1, 1, world_B);
     
-  
+    
 	ofAddListener(world_A.contactStartEvents, this, &testApp::contactStart_worldA);
 	ofAddListener(world_A.contactEndEvents, this, &testApp::contactEnd_worldA);
     ofAddListener(world_B.contactStartEvents,this, &testApp::contactStart_worldB);
@@ -53,6 +51,7 @@ void testApp::setup(){
     
     //rope
     rope_A.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,0);
+    rope_B.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,1);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -152,6 +151,7 @@ void testApp::update(){
    
     //rope update
     rope_A.update();
+    rope_B.update();
     
     //character rope
     if (rope_A.bRopeInUse) {
@@ -165,9 +165,11 @@ void testApp::update(){
     
     if (!rope_A.bRopeInUse && !rope_B.bRopeInUse) {
         char_B.bSwing = false;
-        char_A.bFixedMove = false;
-        char_B.bFixedMove = false;
         char_B.destroyRope();
+        char_B.bFixedMove = false;
+        
+        char_A.bFixedMove = false;
+        
     }
     
    
@@ -219,6 +221,7 @@ void testApp::drawScene(int iDraw){
         ofPopMatrix();
         
         rope_A.draw();
+        rope_B.draw();
     }
 }
 //--------------------------------------------------------------
