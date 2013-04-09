@@ -31,6 +31,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
     if(charNum ==0)mirrorLeft = true;
     bDead = false;
     deadStep = 2;
+    hold_Num = 0;
     
     color.set(255, 255, 255, 255);
     character.setPhysics(40.f, 0.0f, 0.95f);
@@ -202,21 +203,39 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
   
   
     
-    for (int i=0; i<Rects.size(); i++) {
-        
-        ofxBox2dRect rect;
-        ofPoint pos;
-        pos = Rects[i].getPosition() - screen;
-        rect.setPhysics(Rects[i].density, Rects[i].bounce, Rects[i].friction);
-        rect.setup(world.getWorld(), pos.x,pos.y, Rects[i].getWidth(), Rects[i].getHeight());
-        rect.body->GetFixtureList()->SetSensor(true);
-        rect.setVelocity(Rects[i].getVelocity());
-        rect.setAngle(Rects[i].getRotation());
-        rects.push_back(rect);
-    }
+//    for (int i=0; i<Rects.size(); i++) {
+//        
+//        ofxBox2dRect rect;
+//        ofPoint pos;
+//        pos = Rects[i].getPosition() - screen;
+//        rect.setPhysics(Rects[i].density, Rects[i].bounce, Rects[i].friction);
+//        rect.setup(world.getWorld(), pos.x,pos.y, Rects[i].getWidth(), Rects[i].getHeight());
+//        rect.body->GetFixtureList()->SetSensor(true);
+//        rect.setVelocity(Rects[i].getVelocity());
+//        rect.setAngle(Rects[i].getRotation());
+//        rects.push_back(rect);
+//    }
     
     for (int i=0; i<Joints.size(); i++) {
         if (joints.empty()) {
+            ofxBox2dRect rect;
+            ofPoint pos;
+            pos = Rects[i].getPosition() - screen;
+            rect.setPhysics(Rects[i].density, Rects[i].bounce, Rects[i].friction);
+            rect.setup(world.getWorld(), pos.x,pos.y, Rects[i].getWidth(), Rects[i].getHeight());
+            rect.body->GetFixtureList()->SetSensor(true);
+            rect.setVelocity(Rects[i].getVelocity());
+            rect.setAngle(Rects[i].getRotation());
+            rects.push_back(rect);
+            
+            pos = Rects[i+1].getPosition() - screen;
+            rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
+            rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
+            rect.body->GetFixtureList()->SetSensor(true);
+            rect.setVelocity(Rects[i+1].getVelocity());
+            rect.setAngle(Rects[i+1].getRotation());
+            rects.push_back(rect);
+            
             b2RevoluteJointDef revoluteJointDef;
             revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
             b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
@@ -225,6 +244,16 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             revoluteJointDef.localAnchorB.Set(p.x, p.y);
             joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
         }else if(i<Joints.size()-1){
+            ofxBox2dRect rect;
+            ofPoint pos;
+            pos = Rects[i+1].getPosition() - screen;
+            rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
+            rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
+            rect.body->GetFixtureList()->SetSensor(true);
+            rect.setVelocity(Rects[i+1].getVelocity());
+            rect.setAngle(Rects[i+1].getRotation());
+            rects.push_back(rect);
+            
             b2RevoluteJointDef revoluteJointDef;
             revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
             b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
@@ -234,6 +263,16 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
             
         }else{
+            ofxBox2dRect rect;
+            ofPoint pos;
+            pos = Rects[i+1].getPosition() - screen;
+            rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
+            rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
+            rect.body->GetFixtureList()->SetSensor(true);
+            rect.setVelocity(Rects[i+1].getVelocity());
+            rect.setAngle(Rects[i+1].getRotation());
+            rects.push_back(rect);
+            
             b2RevoluteJointDef revoluteJointDef;
             revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
             b2Vec2 p = screenPtToWorldPt(ofPoint(9,0));
@@ -253,18 +292,31 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
     joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
     
     jointSize = joints.size();
+   
     bReset = true;
     bSwing = true;
     bFixedMove = true;
-    if (charNum == 0)
-    {
-       character.setVelocity(0, -10); 
-    }else
-    {
-        character.setVelocity(0, 10);
-    }
+    
+
     
 }
+//-----------------------------------------------
+void ttChar::controlRope(){
+
+    if (ofRandom(100) == 1) {
+        
+        hold_Num ++;
+        for (int i =0; i<rects.size(); i++) {
+            if (i<hold_Num) {
+                rects[i].body->SetType(b2_staticBody);
+                rects[i].setPosition(character.getPosition());
+            }
+        }
+        
+    }
+
+}
+
 //-----------------------------------------------
 void ttChar::destroyRope(){
     
@@ -465,8 +517,11 @@ void ttChar::draw(){
     ofPopMatrix();
     ofSetRectMode(OF_RECTMODE_CORNER);
     //rope
+    
     for (int i =0; i<rects.size(); i++) {
         ofSetColor(255, 220, 30);
         rects[i].draw();
     }
+
+    
 }
