@@ -18,12 +18,7 @@ void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint 
 
     world.init();
     world.setFPS(60);
-    if (ropeNum == 0) {
-        world.setGravity(0,30);
-    }else{
-        world.setGravity(0,-30);
-    }
-   
+    world.setGravity(0,9.8);
     world.registerGrabbing();
     
     bRopeInUse = false;
@@ -58,7 +53,7 @@ void ttRope::update(){
             charPos = *screenB+*charB;
             float length = rectPos.distance(charPos);
     
-            if (length>30) {
+            if (length>10) {
                 if (ofGetElapsedTimeMillis()-startTime>duration) {
                     if (m_preNum>1) {
                         m_preNum--;

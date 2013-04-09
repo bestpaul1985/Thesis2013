@@ -164,8 +164,10 @@ void testApp::update(){
     }
     
     if (!rope_A.bRopeInUse && !rope_B.bRopeInUse) {
-        char_B.destroyRope();
         char_B.bSwing = false;
+        char_A.bFixedMove = false;
+        char_B.bFixedMove = false;
+        char_B.destroyRope();
     }
     
    

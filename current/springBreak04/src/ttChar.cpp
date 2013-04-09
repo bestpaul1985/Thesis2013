@@ -200,7 +200,7 @@ void ttChar::update(){
 //-----------------------------------------------
 void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Joints, ofPoint screen){
   
-    jointSize = Joints.size();
+  
     
     for (int i=0; i<Rects.size(); i++) {
         
@@ -244,6 +244,8 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
         }
     }
     
+   
+    jointSize = joints.size();
     bReset = true;
     bSwing = true;
     bFixedMove = true;
@@ -256,7 +258,6 @@ void ttChar::destroyRope(){
             
             if (joints.size()>1)
             {
-                
                 world.world->DestroyJoint(joints.front());
                 world.world->DestroyBody(rects[1].body);
                 joints.erase(joints.begin());
@@ -288,7 +289,10 @@ void ttChar::destroyRope(){
 //-----------------------------------------------
 void ttChar::swing(){
     if (bSwing ) {
-
+        character.enableGravity(false);
+        character.addAttractionPoint(rects.back().getPosition().x, rects.back().getPosition().y, 100);
+//        character.setPosition(rects.back().getPosition());
+        
         if (control_A->bSwingLeft) {
             cout<<"left"<<endl;
             control_A->bSwingLeft = false;
