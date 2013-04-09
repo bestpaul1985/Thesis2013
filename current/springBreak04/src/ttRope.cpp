@@ -79,7 +79,6 @@ void ttRope::update(){
                 }
             }
         }else{
-            cout<<"delet01"<<endl;
             bRopeInUse = false;
             bHooked = false;
             if (!joints.empty()) {
@@ -128,7 +127,6 @@ void ttRope::update(){
             }
 
             }else{
-                cout<<"delet02"<<endl;
                 bRopeInUse = false;
                 bHooked = false;
                 if (!joints.empty()) {
