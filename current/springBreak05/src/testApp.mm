@@ -50,8 +50,8 @@ void testApp::setup(){
     accIndictor.setup(ofxAccelerometer.getForce());
     
     //rope
-    rope_A.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,0);
-    rope_B.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,1);
+    rope_A.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control_A,control_B,0);
+    rope_B.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control_A,control_B,1);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -155,11 +155,11 @@ void testApp::update(){
     
     //character rope
     
-    if (rope_A.bRopeInHook) {
-        char_B.copyRope(rope_B.rects, rope_B.joints,screenA);
-        rope_A.destroy();
-        rope_A.bRopeInHook = false;
-    }
+//    if (rope_A.bRopeInHook) {
+//        char_B.copyRope(rope_B.rects, rope_B.joints,screenA);
+//        rope_A.destroy();
+//        rope_A.bRopeInHook = false;
+//    }
     
 //    if (rope_B.bRopeInUse) {
 //        char_B.bFixedMove = true;
@@ -253,18 +253,24 @@ void testApp::exit(){
 void testApp::touchDown(ofTouchEventArgs & touch){
     control_A.touchDown(touch.x, touch.y,touch.id);
     control_B.touchDown(touch.x, touch.y,touch.id);
+    rope_A.touchDown(touch.x, touch.y,touch.id);
+    rope_B.touchDown(touch.x, touch.y,touch.id);
 }
 
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
     control_A.touchMove(touch.x, touch.y,touch.id);
     control_B.touchMove(touch.x, touch.y,touch.id);
+    rope_A.touchMove(touch.x, touch.y,touch.id);
+    rope_B.touchMove(touch.x, touch.y,touch.id);
 }
 
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
     control_A.touchUp(touch.x, touch.y,touch.id);
     control_B.touchUp(touch.x, touch.y,touch.id);
+    rope_A.touchUp(touch.x, touch.y,touch.id);
+    rope_B.touchUp(touch.x, touch.y,touch.id);
 }
 
 //--------------------------------------------------------------

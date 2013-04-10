@@ -8,14 +8,18 @@
 
 #include "ttRope.h"
 
-void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint &_CharA, ofPoint &_CharB,int num){
+void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint &_CharA, ofPoint &_CharB,ttControl &controlA,ttControl &controlB, int num){
     acc = &accFrc;
     screenA = &_screenA;
     screenB = &_screenB;
     charA = &_CharA;
     charB = &_CharB;
     ropeNum = num;
-   
+    closestRectNum = 0;
+    
+    img_CharA.loadImage("sprites/girl/girl_7.png");
+    img_CharB.loadImage("sprites/boy/boy_7.png");
+    
     world.init();
     world.setFPS(60);
     if (ropeNum == 0) {
@@ -26,7 +30,7 @@ void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint 
     
     
     bRopeInUse = false;
-    bFall = false;
+    bRopeIsReady = false;
     bRopeInHook = false;
     
     counter = 0;
@@ -74,11 +78,17 @@ void ttRope::update(){
                     }
                 }
             }
+            
+            
+            detect();
+    
+            
         }
         
         if (acc->x>-0.15) {
             bRopeInUse = false;
             bRopeInHook = false;
+            bRopeIsReady = false;
             if (!joints.empty()) {
                 destroy();
             }
@@ -253,15 +263,95 @@ void ttRope::destroy(){
  
       m_preNum = m_num;
 }
+//--------------------------------------------------------
+void ttRope::detect(){
+    
+    int counter = 0;
+    vector<float> length;
+    for (int i=0; i<rects.size(); i++) {
+        ofPoint posRect, posB;
+        posRect = rects[i].getPosition();
+        posB = *screenB + *charB;
+        length.push_back(posRect.distance(posB));
+        
+        if (posRect.distance(posB)<30) {
+            counter++;
+        }
+    }
+    
+    if (!bRopeInHook) {
+        for (int i = 1; i<rects.size(); i++) {
+            if (length[i]<length[i-1]) {
+                closestRectNum = i;
+            }
+        }
+    }
+    
+    
+    if (counter>0) {
+        bRopeIsReady = true;
+    }else{
+        bRopeIsReady = false;
+    }
+    
+    cout<<closestRectNum<<endl;
 
+}
 //--------------------------------------------------------
 void ttRope::draw(){
     for (int i=0; i<rects.size(); i++) {
         ofSetColor(255, 30, 220);
         rects[i].draw();
     }
+    
+    if (bRopeInUse) {
+        ofSetColor(255, 200);
+        ofRect(120, ofGetHeight() - 150, 80,80);
+        ofSetColor(255);
+        if (bRopeInHook) {
+            if(ropeNum == 0){
+                img_CharB.draw(rects[closestRectNum].getPosition().x-43,rects[closestRectNum].getPosition().y-43, 85, 85);
+            }
+        }
+    }
+    
+}
+//--------------------------------------------------------
+void ttRope::touchDown(int x, int y, int TouchId){
+
+    ofRectangle rect;
+    if (ropeNum == 0) {
+        rect.set(120, ofGetHeight() - 150, 80,80);
+    }
+    
+    if (rect.inside(x, y)) {
+        bRopeInHook = true;
+    }
+
 }
 
+//--------------------------------------------------------
+void ttRope::touchMove(int x, int y, int TouchId){
+    ofRectangle rect;
+    if (ropeNum == 0) {
+        rect.set(120, ofGetHeight() - 150, 80,80);
+    }
+    
+    if (!rect.inside(x, y)) {
+        bRopeInHook = false;
+    }
+}
+//--------------------------------------------------------
+void ttRope::touchUp(int x, int y, int TouchId){
+    ofRectangle rect;
+    if (ropeNum == 0) {
+        rect.set(120, ofGetHeight() - 150, 80,80);
+    }
+    
+    if (rect.inside(x, y)) {
+        bRopeInHook = false;
+    }
+}
 
 
 

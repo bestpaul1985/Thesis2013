@@ -43,6 +43,7 @@ public:
     bool bRelese;
     bool bLeftAir;
     bool bRightAir;
+    
     int touchId;
    
 };

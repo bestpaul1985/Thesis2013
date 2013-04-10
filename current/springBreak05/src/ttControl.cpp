@@ -20,7 +20,7 @@ ttControl::ttControl(){
     bHooked = false;
     bRelese = false;
     bFixed = false;
-    
+
     diff.set(0, 0);
     dis = 0;
     touchId = -1;
@@ -154,8 +154,6 @@ void ttControl::touchUp(int x, int y, int TouchId){
         bRelese = false;
     }
                 
-       
-   
         
 }
    
