@@ -62,15 +62,6 @@ void testApp::draw(){
     ofLine(10, moodLine, ofGetWidth()-10, moodLine);
     
     //moodOccur count
-    ofSetColor(255,20);
-    
-    ofPushMatrix();
-    ofTranslate(center.x, center.y -150);
-    ofRotateZ(12*DEG_TO_RAD);
-    ofCircle(0,0, 100);
-    ofRect(0,0, 10, 10);
-    ofPopMatrix();
-    
     for (int i = 0; i<5; i++) {
         // get the highest value from emotionOccurCount array
         if(emotionOccurCount[i]>mostOccur) mostOccur = emotionOccurCount[i];
@@ -78,6 +69,10 @@ void testApp::draw(){
         //background lines
         ofPushMatrix();
         ofTranslate(center.x, center.y -150);
+        
+        ofSetColor(255,20);
+        ofCircle(0,0, 100);
+        
         ofSetLineWidth(1);
         ofSetColor(255,200);
         

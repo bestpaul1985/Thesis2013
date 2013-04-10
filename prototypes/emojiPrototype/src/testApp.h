@@ -33,15 +33,11 @@ public:
     int         emotionOccur[5] = {0,1,2,-2,-1};
     // surprised, laugh, love, cry, angry
     
-    ofPoint data[6];
+    ofPoint data[5];
 
     // time based help counter instead of count base
     ofPoint center;
 
-    //system2
-    int commonScore;
-    // different kind of score??
-    int deathCountP1, deathCountP2;
 
 
 

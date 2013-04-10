@@ -69,6 +69,7 @@ class testApp : public ofxiPhoneApp{
         ttSky sky;
         //Indictor
         ttIndicator accIndictor;
+    
 };
 
 

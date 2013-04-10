@@ -52,6 +52,7 @@ void testApp::setup(){
     //rope
     rope_A.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control_A,control_B,0);
     rope_B.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control_A,control_B,1);
+    
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -158,9 +159,6 @@ void testApp::update(){
         char_A.bFixedMove = true;
     }
     
-    if (rope_A.ropeStep == 2) {
-        char_B.bFixedMove = true;
-    }
    
     if(rope_A.ropeStep == 0){
         char_A.bFixedMove = false;
