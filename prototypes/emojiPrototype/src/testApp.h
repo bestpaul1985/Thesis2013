@@ -28,15 +28,11 @@ public:
     ofColor     currentMood[5];
     
     
-    int         emotionOccurCount[6];
+    int         emotionOccurCount[5];
     int         mostOccur;
-    int         emotionOccur[6] = {3,2,1,0,-3,-5};
-    //love
-    //laugh
-    //smile
-    //surprise
-    //angry
-    //sad
+    int         emotionOccur[5] = {0,1,2,-2,-1};
+    // surprised, laugh, love, cry, angry
+    
     ofPoint data[6];
 
     // time based help counter instead of count base
