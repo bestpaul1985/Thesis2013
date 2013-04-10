@@ -1,7 +1,7 @@
 #include "testApp.h"
 
 //--------------------------------------------------------------
-void testApp::setup(){	
+void testApp::setup(){
 	// initialize the accelerometer
 	ofxAccelerometer.setup();
     ofxAccelerometer.setForceSmoothing(0.55f);
@@ -52,7 +52,6 @@ void testApp::setup(){
     //rope
     rope_A.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control_A,control_B,0);
     rope_B.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control_A,control_B,1);
-    
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -75,12 +74,12 @@ void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
         }
         
     }
-
+    
 }
 //--------------------------------------------------------------
 void testApp::contactEnd_worldA(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
-            
+        
         ttSetData * aData = (ttSetData*)e.a->GetUserData();
         ttSetData * bData = (ttSetData*)e.b->GetUserData();
         
@@ -110,7 +109,7 @@ void testApp::contactStart_worldB(ofxBox2dContactArgs &e){
             }
         }
     }
-
+    
 }
 //--------------------------------------------------------------
 void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
@@ -122,7 +121,7 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
             numFootContacts_B--;
         }else if (bData && bData->name == "footSenser"){
             numFootContacts_B--;
-        } 
+        }
     }
 }
 //--------------------------------------------------------------
@@ -143,59 +142,95 @@ void testApp::update(){
     }else{
         control_B.bFixed = false;
     }
-
+    
     //Character
     char_A.update();
     char_B.update();
     //screen
     screen();
-   
+    
     //rope update
     rope_A.update();
     rope_B.update();
     
     //character rope
-    if (rope_A.ropeStep > 0) {
+    if (rope_A.bRopeInUse) {
         char_A.bFixedMove = true;
+        char_B.destroyRope();
+        char_B.destroyRect();
+        rope_A.bRopeInUse = false;
     }
     
-   
-    if(rope_A.ropeStep == 0){
+    if(rope_A.bReady && control_A.bHookRope && char_B.joints.empty()){
+        char_B.copyRope(rope_A.rects, rope_A.joints, screenB);
+        //        char_B.initializeRope(screenA + char_A.getPos, screenB);
+        rope_A.destroy();
+        rope_A.bReady = false;
+        
+    }
+    else if (rope_A.bReady)
+    {
+        control_A.bDrawButton = true;
+    }
+    
+    //    cout<<char_B.bSwing<<endl;
+    
+    if (rope_B.bRopeInUse) {
+        char_B.bFixedMove = true;
+        if (rope_B.bHooked) {
+            char_A.destroyRope();
+            char_A.destroyRect();
+            char_A.copyRope(rope_B.rects, rope_B.joints,screenA);
+            rope_B.destroy();
+            rope_B.bHooked = false;
+        }
+    }
+    
+    if (!rope_A.bInitialize && !rope_B.bInitialize) {
+        char_B.bSwing = false;
+        char_B.destroyRope();
+        char_B.bFixedMove = false;
+        
+        char_A.bSwing = false;
+        char_A.destroyRope();
         char_A.bFixedMove = false;
     }
+    
+    
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
     ofColor dark(80);
     ofBackgroundGradient(dark, ofColor::black);
-   
+    
     drawScene(0);
     accIndictor.draw();
-    
+    control_A.draw();
+    control_B.draw();
     ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(ofPoint(translate_A.x,translate_A.y+char_A.getPos.y),2), 50,50);
     ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(ofPoint(translate_B.x,translate_B.y+char_B.getPos.y),2), 750,700);
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int iDraw){
-
+    
     if (iDraw == 0) {
         sky.drawBg();
         
         ofPushMatrix();
         ofTranslate(translate_A.x-char_A.getPos.x,translate_A.y);
         ground_A.draw();
-//        ground_A.drawPolyLine();
-//        char_A.drawBox2dObject();
-//        thorns_A.draw();
+        //        ground_A.drawPolyLine();
+        //        char_A.drawBox2dObject();
+        //        thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(translate_B.x-char_B.getPos.x,translate_B.y);
         ground_B.draw();
-//        ground_B.drawPolyLine();
-//        char_B.drawBox2dObject();
-//        thorns_B.draw();
+        //        ground_B.drawPolyLine();
+        //        char_B.drawBox2dObject();
+        //        thorns_B.draw();
         ofPopMatrix();
         
         sky.drawCloud();
@@ -212,50 +247,34 @@ void testApp::drawScene(int iDraw){
         
         rope_A.draw();
         rope_B.draw();
-        
-        ofPushMatrix();
-        ofTranslate(translate_A.x-char_A.getPos.x,translate_A.y);
-        char_A.drawRope();
-        ofPopMatrix();
-        
-        ofPushMatrix();
-        ofTranslate(translate_B.x-char_B.getPos.x,translate_B.y);
-        char_B.drawRope();
-        ofPopMatrix();
     }
 }
 //--------------------------------------------------------------
 void testApp::exit(){
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs & touch){
     control_A.touchDown(touch.x, touch.y,touch.id);
     control_B.touchDown(touch.x, touch.y,touch.id);
-    rope_A.touchDown(touch.x, touch.y,touch.id);
-    rope_B.touchDown(touch.x, touch.y,touch.id);
 }
 
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
     control_A.touchMove(touch.x, touch.y,touch.id);
     control_B.touchMove(touch.x, touch.y,touch.id);
-    rope_A.touchMove(touch.x, touch.y,touch.id);
-    rope_B.touchMove(touch.x, touch.y,touch.id);
 }
 
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
     control_A.touchUp(touch.x, touch.y,touch.id);
     control_B.touchUp(touch.x, touch.y,touch.id);
-    rope_A.touchUp(touch.x, touch.y,touch.id);
-    rope_B.touchUp(touch.x, touch.y,touch.id);
 }
 
 //--------------------------------------------------------------
 void testApp::touchDoubleTap(ofTouchEventArgs & touch){
-
+    
 }
 
 //--------------------------------------------------------------
@@ -265,22 +284,22 @@ void testApp::touchCancelled(ofTouchEventArgs & touch){
 
 //--------------------------------------------------------------
 void testApp::lostFocus(){
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::gotFocus(){
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::gotMemoryWarning(){
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::deviceOrientationChanged(int newOrientation){
-
+    
 }
 //--------------------------------------------------------------
 void testApp::screen(){
@@ -290,5 +309,5 @@ void testApp::screen(){
     
     screenB.x = translate_B.x - char_B.getPos.x,
     screenB.y = translate_B.y;
-
+    
 }

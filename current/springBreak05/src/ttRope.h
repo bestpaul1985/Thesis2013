@@ -14,53 +14,45 @@
 #include "ttControl.h"
 class ttRope{
 public:
-    void setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint &_CharA, ofPoint &_CharB,ttControl &controlA,ttControl &controlB, int num);
+    void setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint &_CharA, ofPoint &_CharB,ttControl &cont_A, ttControl &cont_B, int num);
     void update();
-    void detect();
     void initialize(ofPoint pos);
     void control();
     void destroy();
     void draw();
-    void touchDown(int x, int y, int TouchId);
-    void touchMove(int x, int y, int TouchId);
-    void touchUp(int x, int y, int TouchId);
-    
-    
-    ofImage img_CharA;
-    ofImage img_CharB;
     
     ofxBox2d world;
     ofxBox2dRect start;
     ofxBox2dRect end;
     ofxBox2dJoint joint;
     
+    
+    
     vector<ofxBox2dRect>    rects;
     vector<b2RevoluteJoint*> joints;
-    
-    ttControl *contA;
-    ttControl *contB;
     
     ofPoint *acc;
     ofPoint *screenA;
     ofPoint *screenB;
     ofPoint *charA;
     ofPoint *charB;
+    ttControl *contA;
+    ttControl *contB;
     
     float length;
     float startTime;
     float duration;
     
-    bool bRopeInHook;
+    bool bHooked;
+    bool bReady;
     bool bRopeInUse;
-    bool bRopeIsReady;
-    bool bFixDetect;
+    bool bInitialize;
+    bool bFall;
     int counter;
     int ropeNum;
-    int ropeStep;
     int m_num;
     int m_preNum;
-    int closestRectNum;
-    int touchId = -1;
+    int closetRect;
     
 };
 

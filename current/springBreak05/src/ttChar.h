@@ -23,8 +23,8 @@ public:
     
     void update();
     void draw();
-    void drawRope();
     void copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint*> Joints, ofPoint screen);
+    void initializeRope(ofPoint charPos, ofPoint screen);
     void controlRope();
     void destroyRope();
     void destroyRect();
@@ -42,6 +42,7 @@ public:
     float           setHeight;
     float           adjustedHeight;
     float           alpha;
+    float           startTime;
     bool            bFixedMove;
     bool            bSwing;
     bool            mirrorLeft;
