@@ -27,14 +27,14 @@ void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint 
     
     bRopeInUse = false;
     bFall = false;
-    bHooked = false;
+    bRopeInHook = false;
     
     counter = 0;
     m_num = 30;
     m_preNum = 30;
     
     startTime = ofGetElapsedTimeMillis();
-    duration = 100;
+    duration = 90;
 }
 //--------------------------------------------------------
 void ttRope::update(){
@@ -42,50 +42,47 @@ void ttRope::update(){
     ofPoint pos;
 
     if (ropeNum == 0) {
-        if (acc->x < -0.15)
-        {
-            pos = *screenA + *charA;
-            
-            if (joints.empty() && !bRopeInUse) {
-                initialize(pos);
+        if(bRopeInUse == false){
+            ofPoint posA, posB;
+            posA = *screenA + *charA;
+            posA.x+=5;
+            posA.y-=30;
+            posB = *screenB + *charB;
+            if (acc->x < -0.15)
+            {
+                m_num = (768 - posA.y)/18;
+                m_preNum = m_num;
+                initialize(posA);
                 bRopeInUse = true;
             }
-            
-            
+        }
+        
+        if (bRopeInUse) {
             if(!joints.empty()){
-                
-                ofPoint rectPos,charPos;
-                rectPos = rects.back().getPosition();
-                charPos = *screenB+*charB;
-                float length = rectPos.distance(charPos);
-                
-                if (length>20) {
-                    if (ofGetElapsedTimeMillis()-startTime>duration) {
-                        if (m_preNum>1) {
-                            m_preNum--;
-                        }
-                        startTime = ofGetElapsedTimeMillis();
+                if (ofGetElapsedTimeMillis()-startTime>duration) {
+                    if (m_preNum>1) {
+                        m_preNum--;
                     }
-                    
-                    for (int i =0; i<rects.size(); i++) {
-                        if (i<m_preNum) {
-                            rects[i].body->SetType(b2_staticBody);
-                        }else{
-                            rects[i].body->SetType(b2_dynamicBody);
-                        }
+                    startTime = ofGetElapsedTimeMillis();
+                }
+
+                for (int i =0; i<rects.size(); i++) {
+                    if (i<m_preNum) {
+                        rects[i].body->SetType(b2_staticBody);
+                    }else{
+                        rects[i].body->SetType(b2_dynamicBody);
                     }
-                }else{
-                    bHooked = true;
                 }
             }
-        }else{
+        }
+        
+        if (acc->x>-0.15) {
             bRopeInUse = false;
-            bHooked = false;
+            bRopeInHook = false;
             if (!joints.empty()) {
                 destroy();
             }
         }
-
     }
     
     
@@ -122,13 +119,13 @@ void ttRope::update(){
                         }
                     }
                 }else{
-                    bHooked = true;
+                    bRopeInHook = true;
                 }
             }
 
             }else{
                 bRopeInUse = false;
-                bHooked = false;
+                bRopeInHook = false;
                 if (!joints.empty()) {
                     destroy();
                 }
@@ -151,7 +148,7 @@ void ttRope::initialize(ofPoint pos){
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
             
-            rect.setPhysics(0.3f, 0.0f, 0.0f);
+            rect.setPhysics(0.03f, 0.0f, 0.0f);
             rect.setup(world.world, rects[0].getPosition().x+9, rects[0].getPosition().y, 10, 2);
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
@@ -170,7 +167,7 @@ void ttRope::initialize(ofPoint pos){
         }else if(i<m_num-1){
             
             ofxBox2dRect rect;
-            rect.setPhysics(0.3f, 0.0f, 0.0f);
+            rect.setPhysics(0.03f, 0.0f, 0.0f);
             rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 10, 2);
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
@@ -191,7 +188,7 @@ void ttRope::initialize(ofPoint pos){
             
         }else{
             ofxBox2dRect rect;
-            rect.setPhysics(30.0f, 0.0f, 0.0f);
+            rect.setPhysics(0.5f, 0.0f, 0.0f);
             rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 5, 5);
             rect.body->GetFixtureList()->SetSensor(true);
             rect.body->SetFixedRotation(true);
@@ -259,12 +256,10 @@ void ttRope::destroy(){
 
 //--------------------------------------------------------
 void ttRope::draw(){
-
     for (int i=0; i<rects.size(); i++) {
         ofSetColor(255, 30, 220);
         rects[i].draw();
     }
- 
 }
 
 

@@ -23,6 +23,7 @@ public:
     
     void update();
     void draw();
+    void drawRope();
     void copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint*> Joints, ofPoint screen);
     void controlRope();
     void destroyRope();

@@ -162,7 +162,7 @@ void ttChar::update(){
             
             
             
-           
+
             if (control_B->bLeft == true && character.getVelocity().x>-15)
             {
                 character.addForce(ofVec2f(-x,0), scale);
@@ -201,11 +201,12 @@ void ttChar::update(){
     
     if (joints.empty()&&!rects.empty()) {
         alpha-=5;
-        if (alpha<=0) {
-            destroyRect();
-            alpha = 255;
-            bDestroyRect = false;
-        }
+    }
+    
+    if (alpha<=100) {
+        destroyRect();
+        alpha = 255;
+        bDestroyRect = false;
     }
 }
 
@@ -221,7 +222,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.setup(world.getWorld(), pos.x,pos.y, Rects[i].getWidth(), Rects[i].getHeight());
             rect.body->GetFixtureList()->SetSensor(true);
 //            rect.setVelocity(Rects[i].getVelocity());
-//            rect.setAngle(Rects[i].getRotation());
+            rect.setAngle(Rects[i].body->GetAngle()*DEG_TO_RAD);
             rects.push_back(rect);
             
             pos = Rects[i+1].getPosition() - screen;
@@ -229,7 +230,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
             rect.body->GetFixtureList()->SetSensor(true);
 //            rect.setVelocity(Rects[i+1].getVelocity());
-//            rect.setAngle(Rects[i+1].getRotation());
+            rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
             rects.push_back(rect);
             
             b2RevoluteJointDef revoluteJointDef;
@@ -247,7 +248,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
             rect.body->GetFixtureList()->SetSensor(true);
 //            rect.setVelocity(Rects[i+1].getVelocity());
-//            rect.setAngle(Rects[i+1].getRotation());
+            rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
             rects.push_back(rect);
             
             b2RevoluteJointDef revoluteJointDef;
@@ -266,7 +267,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
             rect.body->GetFixtureList()->SetSensor(true);
 //            rect.setVelocity(Rects[i+1].getVelocity());
-//            rect.setAngle(Rects[i+1].getRotation());
+            rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
             rects.push_back(rect);
             
             b2RevoluteJointDef revoluteJointDef;
@@ -292,7 +293,6 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
     bReset = true;
     bSwing = true;
     bFixedMove = true;
-  
 }
 //-----------------------------------------------
 void ttChar::controlRope(){
@@ -320,9 +320,9 @@ void ttChar::destroyRope(){
        
         for(int i =0; i<rects.size(); i++){
             if (charNum == 0) {
-            rects[i].setVelocity(ofRandom(-15,15),ofRandom(-10,0));  
+            rects[i].setVelocity(ofRandom(-10,10),ofRandom(0,5));
             }else{
-            rects[i].setVelocity(ofRandom(-15,15),ofRandom(10,0));
+            rects[i].setVelocity(ofRandom(-10,10),ofRandom(-5,0));
             }
             
             rects[i].body->SetFixedRotation(false);
@@ -501,10 +501,14 @@ void ttChar::draw(){
     ofSetRectMode(OF_RECTMODE_CORNER);
     //rope
     
+
+}
+//----------------------------------------------
+void ttChar::drawRope(){
+
     for (int i =0; i<rects.size(); i++) {
         ofSetColor(255, 220, 30,alpha);
         rects[i].draw();
     }
 
-    
 }

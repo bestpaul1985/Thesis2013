@@ -154,37 +154,33 @@ void testApp::update(){
     rope_B.update();
     
     //character rope
-    if (rope_A.bRopeInUse) {
-        char_A.bFixedMove = true;
-        if (rope_A.bHooked) {
-            char_B.destroyRope();
-            char_B.destroyRect();
-            char_B.copyRope(rope_A.rects, rope_A.joints,screenB);
-            rope_A.destroy();
-            rope_A.bHooked = false;
-        }
+    
+    if (rope_A.bRopeInHook) {
+        char_B.copyRope(rope_B.rects, rope_B.joints,screenA);
+        rope_A.destroy();
+        rope_A.bRopeInHook = false;
     }
     
-    if (rope_B.bRopeInUse) {
-        char_B.bFixedMove = true;
-        if (rope_B.bHooked) {
-            char_A.destroyRope();
-            char_A.destroyRect();
-            char_A.copyRope(rope_B.rects, rope_B.joints,screenA);
-            rope_B.destroy();
-            rope_B.bHooked = false;
-        }
-    }
-    
-    if (!rope_A.bRopeInUse && !rope_B.bRopeInUse) {
-        char_B.bSwing = false;
-        char_B.destroyRope();
-        char_B.bFixedMove = false;
-        
-        char_A.bSwing = false;
-        char_A.destroyRope();
-        char_A.bFixedMove = false;
-    }
+//    if (rope_B.bRopeInUse) {
+//        char_B.bFixedMove = true;
+//        if (rope_B.bHooked) {
+//            char_A.destroyRope();
+//            char_A.destroyRect();
+//            char_A.copyRope(rope_B.rects, rope_B.joints,screenA);
+//            rope_B.destroy();
+//            rope_B.bHooked = false;
+//        }
+//    }
+//    
+//    if (!rope_A.bRopeInUse && !rope_B.bRopeInUse) {
+//        char_B.bSwing = false;
+//        char_B.destroyRope();
+//        char_B.bFixedMove = false;
+//        
+//        char_A.bSwing = false;
+//        char_A.destroyRope();
+//        char_A.bFixedMove = false;
+//    }
     
    
 }
@@ -236,6 +232,16 @@ void testApp::drawScene(int iDraw){
         
         rope_A.draw();
         rope_B.draw();
+        
+        ofPushMatrix();
+        ofTranslate(translate_A.x-char_A.getPos.x,translate_A.y);
+        char_A.drawRope();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofTranslate(translate_B.x-char_B.getPos.x,translate_B.y);
+        char_B.drawRope();
+        ofPopMatrix();
     }
 }
 //--------------------------------------------------------------

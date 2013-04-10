@@ -38,7 +38,7 @@ public:
     float startTime;
     float duration;
     
-    bool bHooked;
+    bool bRopeInHook;
     bool bRopeInUse;
     bool bFall;
     int counter;
