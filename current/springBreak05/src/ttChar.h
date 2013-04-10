@@ -26,6 +26,7 @@ public:
     void copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint*> Joints, ofPoint screen);
     void controlRope();
     void destroyRope();
+    void destroyRect();
     void swing();
     void drawBox2dObject();
     void dead();
@@ -39,17 +40,20 @@ public:
     float           setWidth;
     float           setHeight;
     float           adjustedHeight;
+    float           alpha;
     bool            bFixedMove;
     bool            bSwing;
     bool            mirrorLeft;
     bool            bReset;
     bool            bDead;
+    bool            bDestroyRect;
     int             charNum;
     int             step;
     int             deadStep;
     int             numFootContacts;
     int             jointSize;
     int             hold_Num;
+    int             rectSize;
     ttControl       *control_A;
     ttControl       *control_B;
     vector<ofImage> sprite;

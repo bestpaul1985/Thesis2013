@@ -223,6 +223,7 @@ void ttRope::initialize(ofPoint pos){
 }
 //--------------------------------------------------------
 void ttRope::destroy(){
+    
     for(int i =0; i<m_num; i++){
         
         if (joints.size()>1)
