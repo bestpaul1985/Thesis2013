@@ -53,11 +53,14 @@ public:
     bool bRopeInHook;
     bool bRopeInUse;
     bool bRopeIsReady;
+    bool bFixDetect;
     int counter;
     int ropeNum;
+    int ropeStep;
     int m_num;
     int m_preNum;
     int closestRectNum;
+    int touchId = -1;
     
 };
 

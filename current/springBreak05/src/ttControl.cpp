@@ -58,7 +58,7 @@ void ttControl::draw(){
 //------------------------------------------------
 void ttControl::touchDown(int x, int y, int TouchId){
     
-    if (Directional_Touch_Area.inside(x, y)) {
+    if (Directional_Touch_Area.inside(x, y)&& !bFixed) {
         preTouchPos.set(x, y);
         diff.set(0,0);
         dis = 0;
@@ -76,7 +76,7 @@ void ttControl::touchDown(int x, int y, int TouchId){
 //------------------------------------------------
 void ttControl::touchMove(int x, int y, int TouchId){
 
-    if (touchId == TouchId) {
+    if (touchId == TouchId && !bFixed) {
         ofPoint touchPos(x, y);
         if (Directional_Touch_Area.inside(x, y) ) {
             dis = touchPos.distance(preTouchPos);
@@ -84,17 +84,17 @@ void ttControl::touchMove(int x, int y, int TouchId){
             preTouchPos = touchPos;
             
             if (charNum == 0) {
-                if (dis< 10 && diff.x >0  && bFixed == false){
+                if (dis< 10 && diff.x >0){
                     bSmallLeft = true;
-                }else if(dis < 10 && diff.x < 0  && bFixed == false){
+                }else if(dis < 10 && diff.x < 0){
                     bSmallRight = true;
                 }
             }
             
             if(charNum == 1 ){
-                if (dis< 10 && diff.x >0 && bFixed == false){
+                if (dis< 10 && diff.x >0){
                     bSmallRight = true;
-                }else if(dis < 10 && diff.x < 0 && bFixed == false){
+                }else if(dis < 10 && diff.x < 0){
                     bSmallLeft = true;
                 }
             }
@@ -107,7 +107,7 @@ void ttControl::touchMove(int x, int y, int TouchId){
 void ttControl::touchUp(int x, int y, int TouchId){
    
     
-    if (touchId == TouchId) {
+    if (touchId == TouchId && !bFixed) {
             if (Directional_Touch_Area.inside(x, y)){
                 
                 if ( charNum == 0 ) {

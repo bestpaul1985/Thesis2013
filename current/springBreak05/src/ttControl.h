@@ -31,6 +31,7 @@ public:
     float height;
     float dis;
     int  charNum;
+
     bool bLeft;
     bool bRight;
     bool bSmallLeft;

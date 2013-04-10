@@ -16,6 +16,7 @@ void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint 
     charB = &_CharB;
     ropeNum = num;
     closestRectNum = 0;
+    ropeStep = 0;
     
     img_CharA.loadImage("sprites/girl/girl_7.png");
     img_CharB.loadImage("sprites/boy/boy_7.png");
@@ -32,7 +33,7 @@ void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint 
     bRopeInUse = false;
     bRopeIsReady = false;
     bRopeInHook = false;
-    
+    bFixDetect = false;
     counter = 0;
     m_num = 30;
     m_preNum = 30;
@@ -46,7 +47,7 @@ void ttRope::update(){
     ofPoint pos;
 
     if (ropeNum == 0) {
-        if(bRopeInUse == false){
+        if(ropeStep == 0){
             ofPoint posA, posB;
             posA = *screenA + *charA;
             posA.x+=5;
@@ -58,10 +59,12 @@ void ttRope::update(){
                 m_preNum = m_num;
                 initialize(posA);
                 bRopeInUse = true;
+                ropeStep = 1;
+
             }
         }
         
-        if (bRopeInUse) {
+        if (ropeStep == 1) {
             if(!joints.empty()){
                 if (ofGetElapsedTimeMillis()-startTime>duration) {
                     if (m_preNum>1) {
@@ -78,17 +81,11 @@ void ttRope::update(){
                     }
                 }
             }
-            
-            
             detect();
-    
-            
         }
         
         if (acc->x>-0.15) {
-            bRopeInUse = false;
-            bRopeInHook = false;
-            bRopeIsReady = false;
+            ropeStep = 0;
             if (!joints.empty()) {
                 destroy();
             }
@@ -279,14 +276,12 @@ void ttRope::detect(){
         }
     }
     
-    if (!bRopeInHook) {
-        for (int i = 1; i<rects.size(); i++) {
-            if (length[i]<length[i-1]) {
-                closestRectNum = i;
-            }
+
+    for (int i = 1; i<rects.size(); i++) {
+        if (length[i]<length[i-1]) {
+            closestRectNum = i;
         }
     }
-    
     
     if (counter>0) {
         bRopeIsReady = true;
@@ -294,8 +289,8 @@ void ttRope::detect(){
         bRopeIsReady = false;
     }
     
+    
     cout<<closestRectNum<<endl;
-
 }
 //--------------------------------------------------------
 void ttRope::draw(){
@@ -304,28 +299,46 @@ void ttRope::draw(){
         rects[i].draw();
     }
     
-    if (bRopeInUse) {
-        ofSetColor(255, 200);
+    if (ropeStep == 1) {
+        if (bRopeIsReady) {
+            ofSetColor(255, 220);
+        }else{
+            ofSetColor(255, 100);
+        }
+        
+        if(ropeNum == 0){
+            ofRect(120, ofGetHeight() - 150, 80,80);
+            }
+    }
+    
+    if (ropeStep == 2) {
+       
+        ofSetColor(255, 220);
         ofRect(120, ofGetHeight() - 150, 80,80);
         ofSetColor(255);
-        if (bRopeInHook) {
-            if(ropeNum == 0){
-                img_CharB.draw(rects[closestRectNum].getPosition().x-43,rects[closestRectNum].getPosition().y-43, 85, 85);
-            }
+        
+        if(ropeNum == 0){
+            img_CharB.draw(rects[closestRectNum].getPosition().x-43,rects[closestRectNum].getPosition().y-43, 85, 85);
         }
     }
     
 }
 //--------------------------------------------------------
 void ttRope::touchDown(int x, int y, int TouchId){
-
+    
+    if (touchId == -1) {
+        touchId = TouchId;
+    }
+    
     ofRectangle rect;
     if (ropeNum == 0) {
         rect.set(120, ofGetHeight() - 150, 80,80);
+    }else{
+        rect.set(ofGetWidth()-120, 150, 80,80);
     }
     
-    if (rect.inside(x, y)) {
-        bRopeInHook = true;
+    if (rect.inside(x, y)&&bRopeIsReady) {
+        ropeStep = 2;
     }
 
 }
@@ -333,23 +346,28 @@ void ttRope::touchDown(int x, int y, int TouchId){
 //--------------------------------------------------------
 void ttRope::touchMove(int x, int y, int TouchId){
     ofRectangle rect;
-    if (ropeNum == 0) {
-        rect.set(120, ofGetHeight() - 150, 80,80);
+    if (touchId == TouchId) {
+        if (ropeNum == 0) {
+            rect.set(120, ofGetHeight() - 150, 80,80);
+        }
+        
+        if (!rect.inside(x, y)) {
+            ropeStep = 1;
+        }
     }
-    
-    if (!rect.inside(x, y)) {
-        bRopeInHook = false;
-    }
+   
 }
 //--------------------------------------------------------
 void ttRope::touchUp(int x, int y, int TouchId){
     ofRectangle rect;
-    if (ropeNum == 0) {
-        rect.set(120, ofGetHeight() - 150, 80,80);
-    }
-    
-    if (rect.inside(x, y)) {
-        bRopeInHook = false;
+    if (touchId == TouchId) {
+        if (ropeNum == 0) {
+            rect.set(120, ofGetHeight() - 150, 80,80);
+        }
+        
+        if (rect.inside(x, y)) {
+            ropeStep = 1;
+        }
     }
 }
 

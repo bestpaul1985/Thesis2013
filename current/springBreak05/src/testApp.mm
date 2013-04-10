@@ -154,35 +154,17 @@ void testApp::update(){
     rope_B.update();
     
     //character rope
+    if (rope_A.ropeStep > 0) {
+        char_A.bFixedMove = true;
+    }
     
-//    if (rope_A.bRopeInHook) {
-//        char_B.copyRope(rope_B.rects, rope_B.joints,screenA);
-//        rope_A.destroy();
-//        rope_A.bRopeInHook = false;
-//    }
-    
-//    if (rope_B.bRopeInUse) {
-//        char_B.bFixedMove = true;
-//        if (rope_B.bHooked) {
-//            char_A.destroyRope();
-//            char_A.destroyRect();
-//            char_A.copyRope(rope_B.rects, rope_B.joints,screenA);
-//            rope_B.destroy();
-//            rope_B.bHooked = false;
-//        }
-//    }
-//    
-//    if (!rope_A.bRopeInUse && !rope_B.bRopeInUse) {
-//        char_B.bSwing = false;
-//        char_B.destroyRope();
-//        char_B.bFixedMove = false;
-//        
-//        char_A.bSwing = false;
-//        char_A.destroyRope();
-//        char_A.bFixedMove = false;
-//    }
-    
+    if (rope_A.ropeStep == 2) {
+        char_B.bFixedMove = true;
+    }
    
+    if(rope_A.ropeStep == 0){
+        char_A.bFixedMove = false;
+    }
 }
 
 //--------------------------------------------------------------
