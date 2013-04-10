@@ -253,7 +253,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             
             b2RevoluteJointDef revoluteJointDef;
             revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
-            b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
+            b2Vec2 p = screenPtToWorldPt(ofPoint(9,0));
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
             p = screenPtToWorldPt(ofPoint(-9,0));
             revoluteJointDef.localAnchorB.Set(p.x, p.y);
@@ -500,7 +500,7 @@ void ttChar::draw(){
     ofPopMatrix();
     ofSetRectMode(OF_RECTMODE_CORNER);
     //rope
-    
+    drawRope();
 
 }
 //----------------------------------------------
