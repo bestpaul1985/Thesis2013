@@ -46,7 +46,7 @@ void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint 
 void ttRope::update(){
     world.update();
     ofPoint pos;
-    
+
     if (ropeNum == 0) {
         
         if (bInitialize == false) {
@@ -60,7 +60,7 @@ void ttRope::update(){
             }
             bInitialize = true;
         }
-        
+          
         if(!joints.empty()){
             
             if (ofGetElapsedTimeMillis()-startTime>duration) {
@@ -117,8 +117,8 @@ void ttRope::update(){
         }
     }
     
-    if (ropeNum == 1) {
-        if(acc->x>0.15 && ropeNum == 1){
+     if (ropeNum == 1) {
+         if(acc->x>0.15 && ropeNum == 1){
             pos = *screenB + *charB;
             
             if (joints.empty() && !bRopeInUse) {
@@ -153,26 +153,26 @@ void ttRope::update(){
                     bHooked = true;
                 }
             }
-            
-        }else{
-            bRopeInUse = false;
-            bHooked = false;
-            if (!joints.empty()) {
-                destroy();
+
+            }else{
+                bRopeInUse = false;
+                bHooked = false;
+                if (!joints.empty()) {
+                    destroy();
+                }
             }
         }
-    }
+    
+
     
     
-    
-    
-    //    cout<<bRopeInUse<<"     "<<bHooked<<endl;
-    
+//    cout<<bRopeInUse<<"     "<<bHooked<<endl;
+
     
 }
 //--------------------------------------------------------
 void ttRope::initialize(ofPoint pos){
-    
+
     for(int i =0; i<m_num; i++){
         
         if (joints.empty()) {
@@ -247,9 +247,9 @@ void ttRope::initialize(ofPoint pos){
     }
     
     for (int i =0; i<rects.size(); i++) {
-        rects[i].body->SetType(b2_staticBody);
+            rects[i].body->SetType(b2_staticBody);
     }
-    
+
 }
 //--------------------------------------------------------
 void ttRope::destroy(){
@@ -283,18 +283,18 @@ void ttRope::destroy(){
             rects.clear();
         }
     }
-    
-    m_preNum = m_num;
+ 
+      m_preNum = m_num;
 }
 
 //--------------------------------------------------------
 void ttRope::draw(){
-    
+
     for (int i=0; i<rects.size(); i++) {
         ofSetColor(255, 30, 220);
         rects[i].draw();
     }
-    
+ 
 }
 
 

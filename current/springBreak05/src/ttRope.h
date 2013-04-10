@@ -20,14 +20,13 @@ public:
     void control();
     void destroy();
     void draw();
-
     
     ofxBox2d world;
     ofxBox2dRect start;
     ofxBox2dRect end;
     ofxBox2dJoint joint;
     
-    
+ 
     
     vector<ofxBox2dRect>    rects;
     vector<b2RevoluteJoint*> joints;

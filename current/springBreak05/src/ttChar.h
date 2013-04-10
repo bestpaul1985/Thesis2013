@@ -31,6 +31,7 @@ public:
     void swing();
     void drawBox2dObject();
     void dead();
+    void drawRope();
     
     ofxBox2dRect    character;
     ofxBox2d        world;

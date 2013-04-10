@@ -1,7 +1,7 @@
 #include "testApp.h"
 
 //--------------------------------------------------------------
-void testApp::setup(){
+void testApp::setup(){	
 	// initialize the accelerometer
 	ofxAccelerometer.setup();
     ofxAccelerometer.setForceSmoothing(0.55f);
@@ -74,12 +74,12 @@ void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
         }
         
     }
-    
+
 }
 //--------------------------------------------------------------
 void testApp::contactEnd_worldA(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
-        
+            
         ttSetData * aData = (ttSetData*)e.a->GetUserData();
         ttSetData * bData = (ttSetData*)e.b->GetUserData();
         
@@ -109,7 +109,7 @@ void testApp::contactStart_worldB(ofxBox2dContactArgs &e){
             }
         }
     }
-    
+
 }
 //--------------------------------------------------------------
 void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
@@ -121,7 +121,7 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
             numFootContacts_B--;
         }else if (bData && bData->name == "footSenser"){
             numFootContacts_B--;
-        }
+        } 
     }
 }
 //--------------------------------------------------------------
@@ -142,13 +142,13 @@ void testApp::update(){
     }else{
         control_B.bFixed = false;
     }
-    
+
     //Character
     char_A.update();
     char_B.update();
     //screen
     screen();
-    
+   
     //rope update
     rope_A.update();
     rope_B.update();
@@ -163,17 +163,17 @@ void testApp::update(){
     
     if(rope_A.bReady && control_A.bHookRope && char_B.joints.empty()){
         char_B.copyRope(rope_A.rects, rope_A.joints, screenB);
-        //        char_B.initializeRope(screenA + char_A.getPos, screenB);
+    //        char_B.initializeRope(screenA + char_A.getPos, screenB);
         rope_A.destroy();
         rope_A.bReady = false;
-        
+       
     }
     else if (rope_A.bReady)
     {
-        control_A.bDrawButton = true;
+       control_A.bDrawButton = true;
     }
     
-    //    cout<<char_B.bSwing<<endl;
+//    cout<<char_B.bSwing<<endl;
     
     if (rope_B.bRopeInUse) {
         char_B.bFixedMove = true;
@@ -196,14 +196,14 @@ void testApp::update(){
         char_A.bFixedMove = false;
     }
     
-    
+   
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
     ofColor dark(80);
     ofBackgroundGradient(dark, ofColor::black);
-    
+   
     drawScene(0);
     accIndictor.draw();
     control_A.draw();
@@ -213,24 +213,24 @@ void testApp::draw(){
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int iDraw){
-    
+
     if (iDraw == 0) {
         sky.drawBg();
         
         ofPushMatrix();
         ofTranslate(translate_A.x-char_A.getPos.x,translate_A.y);
         ground_A.draw();
-        //        ground_A.drawPolyLine();
-        //        char_A.drawBox2dObject();
-        //        thorns_A.draw();
+//        ground_A.drawPolyLine();
+//        char_A.drawBox2dObject();
+//        thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(translate_B.x-char_B.getPos.x,translate_B.y);
         ground_B.draw();
-        //        ground_B.drawPolyLine();
-        //        char_B.drawBox2dObject();
-        //        thorns_B.draw();
+//        ground_B.drawPolyLine();
+//        char_B.drawBox2dObject();
+//        thorns_B.draw();
         ofPopMatrix();
         
         sky.drawCloud();
@@ -251,7 +251,7 @@ void testApp::drawScene(int iDraw){
 }
 //--------------------------------------------------------------
 void testApp::exit(){
-    
+
 }
 
 //--------------------------------------------------------------
@@ -274,7 +274,7 @@ void testApp::touchUp(ofTouchEventArgs & touch){
 
 //--------------------------------------------------------------
 void testApp::touchDoubleTap(ofTouchEventArgs & touch){
-    
+
 }
 
 //--------------------------------------------------------------
@@ -284,22 +284,22 @@ void testApp::touchCancelled(ofTouchEventArgs & touch){
 
 //--------------------------------------------------------------
 void testApp::lostFocus(){
-    
+
 }
 
 //--------------------------------------------------------------
 void testApp::gotFocus(){
-    
+
 }
 
 //--------------------------------------------------------------
 void testApp::gotMemoryWarning(){
-    
+
 }
 
 //--------------------------------------------------------------
 void testApp::deviceOrientationChanged(int newOrientation){
-    
+
 }
 //--------------------------------------------------------------
 void testApp::screen(){
@@ -309,5 +309,5 @@ void testApp::screen(){
     
     screenB.x = translate_B.x - char_B.getPos.x,
     screenB.y = translate_B.y;
-    
+
 }
