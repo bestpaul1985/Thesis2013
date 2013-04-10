@@ -7,6 +7,8 @@
 #include "ofxiPhoneExtras.h"
 
 #include "baseScene.h"
+
+#include "openingScene.h"
 //example scenes
 #include "circleScene.h"
 #include "squareScene.h"

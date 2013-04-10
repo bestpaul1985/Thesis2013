@@ -17,7 +17,8 @@ class baseScene {
 	virtual void update(){};
 	virtual void draw(){};
 	
-	
+    int goToScene;
+	bool end;
 	
 };
 

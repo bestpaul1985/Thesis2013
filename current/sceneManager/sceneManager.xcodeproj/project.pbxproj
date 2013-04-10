@@ -10,11 +10,12 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		476DDA6517160790005910CE /* circleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 476DDA5E17160790005910CE /* circleScene.cpp */; };
+		476DDA6617160790005910CE /* imageScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 476DDA6017160790005910CE /* imageScene.cpp */; };
+		476DDA6717160790005910CE /* squareScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 476DDA6217160790005910CE /* squareScene.cpp */; };
+		476DDA6C17160D85005910CE /* openingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 476DDA6A17160D85005910CE /* openingScene.cpp */; };
 		47A165F317041B1E00286F73 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F217041B1E00286F73 /* Default-Portrait@2x~ipad.png */; };
 		47A165F517041B8300286F73 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F417041B8300286F73 /* Default-Portrait~ipad.png */; };
-		47A39475171601D1006F6F23 /* circleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47A3946F171601D1006F6F23 /* circleScene.cpp */; };
-		47A39476171601D1006F6F23 /* imageScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47A39471171601D1006F6F23 /* imageScene.cpp */; };
-		47A39477171601D1006F6F23 /* squareScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 47A39473171601D1006F6F23 /* squareScene.cpp */; };
 		4CB26E5E170407F4005E11E7 /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4CB26DF6170407F3005E11E7 /* install.xml */; };
 		4CB26E5F170407F4005E11E7 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26DFB170407F3005E11E7 /* b2BroadPhase.cpp */; };
 		4CB26E60170407F4005E11E7 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26DFD170407F3005E11E7 /* b2CollideCircle.cpp */; };
@@ -95,19 +96,21 @@
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* springBreak05.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = springBreak05.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* sceneManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sceneManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* iPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhone_Prefix.pch; sourceTree = "<group>"; };
+		476DDA5E17160790005910CE /* circleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = circleScene.cpp; sourceTree = "<group>"; };
+		476DDA5F17160790005910CE /* circleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = circleScene.h; sourceTree = "<group>"; };
+		476DDA6017160790005910CE /* imageScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imageScene.cpp; sourceTree = "<group>"; };
+		476DDA6117160790005910CE /* imageScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageScene.h; sourceTree = "<group>"; };
+		476DDA6217160790005910CE /* squareScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = squareScene.cpp; sourceTree = "<group>"; };
+		476DDA6317160790005910CE /* squareScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = squareScene.h; sourceTree = "<group>"; };
+		476DDA6417160790005910CE /* baseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseScene.h; sourceTree = "<group>"; };
+		476DDA6A17160D85005910CE /* openingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openingScene.cpp; sourceTree = "<group>"; };
+		476DDA6B17160D85005910CE /* openingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openingScene.h; sourceTree = "<group>"; };
 		47A165F217041B1E00286F73 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		47A165F417041B8300286F73 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		47A3946D171600D7006F6F23 /* baseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseScene.h; sourceTree = "<group>"; };
-		47A3946F171601D1006F6F23 /* circleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = circleScene.cpp; sourceTree = "<group>"; };
-		47A39470171601D1006F6F23 /* circleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = circleScene.h; sourceTree = "<group>"; };
-		47A39471171601D1006F6F23 /* imageScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = imageScene.cpp; sourceTree = "<group>"; };
-		47A39472171601D1006F6F23 /* imageScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageScene.h; sourceTree = "<group>"; };
-		47A39473171601D1006F6F23 /* squareScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = squareScene.cpp; sourceTree = "<group>"; };
-		47A39474171601D1006F6F23 /* squareScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = squareScene.h; sourceTree = "<group>"; };
 		4CB26DF6170407F3005E11E7 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		4CB26DF9170407F3005E11E7 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		4CB26DFB170407F3005E11E7 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -249,7 +252,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* springBreak05.app */,
+				1D6058910D05DD3D006BFB54 /* sceneManager.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -288,17 +291,26 @@
 			name = "core frameworks";
 			sourceTree = "<group>";
 		};
-		47A3946E171601D1006F6F23 /* exampleScenes */ = {
+		476DDA5D17160790005910CE /* exampleScenes */ = {
 			isa = PBXGroup;
 			children = (
-				47A3946F171601D1006F6F23 /* circleScene.cpp */,
-				47A39470171601D1006F6F23 /* circleScene.h */,
-				47A39471171601D1006F6F23 /* imageScene.cpp */,
-				47A39472171601D1006F6F23 /* imageScene.h */,
-				47A39473171601D1006F6F23 /* squareScene.cpp */,
-				47A39474171601D1006F6F23 /* squareScene.h */,
+				476DDA5E17160790005910CE /* circleScene.cpp */,
+				476DDA5F17160790005910CE /* circleScene.h */,
+				476DDA6017160790005910CE /* imageScene.cpp */,
+				476DDA6117160790005910CE /* imageScene.h */,
+				476DDA6217160790005910CE /* squareScene.cpp */,
+				476DDA6317160790005910CE /* squareScene.h */,
 			);
 			path = exampleScenes;
+			sourceTree = "<group>";
+		};
+		476DDA6917160D37005910CE /* startScenes */ = {
+			isa = PBXGroup;
+			children = (
+				476DDA6A17160D85005910CE /* openingScene.cpp */,
+				476DDA6B17160D85005910CE /* openingScene.h */,
+			);
+			path = startScenes;
 			sourceTree = "<group>";
 		};
 		4CB26DF5170407F3005E11E7 /* ofxBox2d */ = {
@@ -530,10 +542,11 @@
 			isa = PBXGroup;
 			children = (
 				E4D8936B11527B74007E1F53 /* main.mm */,
-				E4D8936C11527B74007E1F53 /* testApp.h */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
-				47A3946D171600D7006F6F23 /* baseScene.h */,
-				47A3946E171601D1006F6F23 /* exampleScenes */,
+				E4D8936C11527B74007E1F53 /* testApp.h */,
+				476DDA6417160790005910CE /* baseScene.h */,
+				476DDA5D17160790005910CE /* exampleScenes */,
+				476DDA6917160D37005910CE /* startScenes */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -541,9 +554,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* springBreak05 */ = {
+		1D6058900D05DD3D006BFB54 /* sceneManager */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "springBreak05" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "sceneManager" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -555,9 +568,9 @@
 			dependencies = (
 				E41D410413B3A11300A75A5D /* PBXTargetDependency */,
 			);
-			name = springBreak05;
+			name = sceneManager;
 			productName = iPhone;
-			productReference = 1D6058910D05DD3D006BFB54 /* springBreak05.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* sceneManager.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -565,7 +578,7 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "springBreak05" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "sceneManager" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -585,7 +598,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* springBreak05 */,
+				1D6058900D05DD3D006BFB54 /* sceneManager */,
 			);
 		};
 /* End PBXProject section */
@@ -681,9 +694,10 @@
 				4CB26E86170407F4005E11E7 /* ofxBox2dJoint.cpp in Sources */,
 				4CB26E87170407F4005E11E7 /* ofxBox2dPolygon.cpp in Sources */,
 				4CB26E88170407F4005E11E7 /* ofxBox2dRect.cpp in Sources */,
-				47A39475171601D1006F6F23 /* circleScene.cpp in Sources */,
-				47A39476171601D1006F6F23 /* imageScene.cpp in Sources */,
-				47A39477171601D1006F6F23 /* squareScene.cpp in Sources */,
+				476DDA6517160790005910CE /* circleScene.cpp in Sources */,
+				476DDA6617160790005910CE /* imageScene.cpp in Sources */,
+				476DDA6717160790005910CE /* squareScene.cpp in Sources */,
+				476DDA6C17160D85005910CE /* openingScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -706,7 +720,7 @@
 				GCC_PREFIX_HEADER = iPhone_Prefix.pch;
 				INFOPLIST_FILE = "ofxiphone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				PRODUCT_NAME = springBreak05;
+				PRODUCT_NAME = sceneManager;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALID_ARCHS = "armv6 armv7";
 			};
@@ -719,7 +733,7 @@
 				GCC_PREFIX_HEADER = iPhone_Prefix.pch;
 				INFOPLIST_FILE = "ofxiphone-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				PRODUCT_NAME = springBreak05;
+				PRODUCT_NAME = sceneManager;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALID_ARCHS = "armv6 armv7";
 			};
@@ -791,7 +805,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "springBreak05" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "sceneManager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
@@ -800,7 +814,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "springBreak05" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "sceneManager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
