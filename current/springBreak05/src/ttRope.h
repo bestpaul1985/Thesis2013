@@ -20,6 +20,7 @@ public:
     void control();
     void destroy();
     void draw();
+
     
     ofxBox2d world;
     ofxBox2dRect start;
