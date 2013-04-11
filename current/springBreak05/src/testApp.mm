@@ -158,6 +158,9 @@ void testApp::update(){
     if (!rope_A.bInitialize) {
         char_B.destroyRope();
         char_B.bSwing = false;
+        char_B.bFixedMove = false;
+        char_A.bFixedMove = false;
+        control_B.bDrawButton = false;
     }
     
     
@@ -168,15 +171,23 @@ void testApp::update(){
     }
     
     if(rope_A.bReady){
-        control_A.bDrawButton = true;
+        control_B.bDrawButton = true;
     }
     
-    if (control_A.bHookRope && rope_A.bReady) {
+    if (control_B.bHookRope && rope_A.bReady) {
         char_B.copyRope(rope_A.rects, rope_A.joints, screenB);
         char_B.bSwing = true;
         char_B.bFixedMove = true;
         rope_A.bReady = false;
         rope_A.destroy();
+    }else if(control_B.bHookRope && char_B.bSwing){
+        char_B.controlRope();
+    }else if(!control_B.bHookRope && char_B.bSwing){
+        char_B.character.setVelocity(char_B.rects.back().getVelocity());
+        char_B.destroyRope();
+        char_B.bSwing = false;
+        char_B.bFixedMove = false;
+        control_B.bDrawButton = false;
     }
     
     

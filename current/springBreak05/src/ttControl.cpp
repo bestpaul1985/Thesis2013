@@ -37,10 +37,10 @@ void ttControl::setup(int iCharNum){
     
     if (iCharNum == 0) {
         Directional_Touch_Area.set(w-width, 0, width, height);
-        rope_Area.set(150, h-100, 80, 80);
+        rope_Area.set(w-150, 100, 80, 80);
     }else if(iCharNum == 1){
         Directional_Touch_Area.set(0, h-height, width, height);
-        rope_Area.set(w-150, 100, 80, 80);
+        rope_Area.set(150, h-100, 80, 80);
     }
 
 }
@@ -78,14 +78,15 @@ void ttControl::touchDown(int x, int y, int TouchId){
         if (touchId == -1) {
             touchId = TouchId;
         }
-    }
-    
-    
-    
-    if (rope_Area.inside(x, y)) {
         
-        bHookRope = true;
+        if (rope_Area.inside(x, y)) {
+            bHookRope = true;
+        }
     }
+    
+    
+    
+    
     
 }
 
@@ -114,16 +115,17 @@ void ttControl::touchMove(int x, int y, int TouchId){
                     bSmallLeft = true;
                 }
             }
+         
             
+            if (!rope_Area.inside(x, y)) {
+                bHookRope = false;
+            }
+
         }
 
     }
     
     
-  
-    if (!rope_Area.inside(x, y)) {
-        bHookRope = false;
-    }
 
     
 }
@@ -175,14 +177,15 @@ void ttControl::touchUp(int x, int y, int TouchId){
         
         
         touchId = -1;
-        bRelese = false;
+        
+        if (rope_Area.inside(x, y)) {
+            bHookRope = false;
+        }
     }
 
     
     
-    
-        bHookRope = false;
-
+        
         
 }
    

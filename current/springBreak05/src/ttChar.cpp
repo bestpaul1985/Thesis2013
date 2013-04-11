@@ -389,14 +389,13 @@ void ttChar::swing(){
         if (dis<-5 && dis>-30) {
             bHookIt = true;
         }
-        cout<<dis<<"   "<<rects.back().getPosition().y <<"   "<<character.getPosition().y<<endl;
     }
     
     if (bHookIt) {
         character.setPosition(rects.back().getPosition().x-10,rects.back().getPosition().y+10);
     }
     
-    controlRope();
+   
        
         if (control_A->bSwingLeft) {
             rects[2].addForce(ofPoint(2,0), 10);
