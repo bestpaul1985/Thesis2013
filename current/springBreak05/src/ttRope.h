@@ -54,6 +54,9 @@ public:
     int m_preNum;
     int closetRect;
     
+    float rectW;
+    float rectH;
+    float rectOff;
 };
 
 #endif /* defined(__springBreak02__ttRope__) */

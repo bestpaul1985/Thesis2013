@@ -222,6 +222,9 @@ void ttChar::update(){
 //-----------------------------------------------
 void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Joints, ofPoint screen){
    
+
+    float rectOff = 14;
+    
     for (int i=0; i<Joints.size(); i++) {
         if (joints.empty()) {
             ofxBox2dRect rect;
@@ -247,7 +250,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
             b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
-            p = screenPtToWorldPt(ofPoint(-9,0));
+            p = screenPtToWorldPt(ofPoint(-rectOff,0));
             revoluteJointDef.localAnchorB.Set(p.x, p.y);
             joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
         }else if(i<Joints.size()-1){
@@ -263,9 +266,9 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             
             b2RevoluteJointDef revoluteJointDef;
             revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
-            b2Vec2 p = screenPtToWorldPt(ofPoint(9,0));
+            b2Vec2 p = screenPtToWorldPt(ofPoint(rectOff,0));
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
-            p = screenPtToWorldPt(ofPoint(-9,0));
+            p = screenPtToWorldPt(ofPoint(-rectOff,0));
             revoluteJointDef.localAnchorB.Set(p.x, p.y);
             joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
             
@@ -282,7 +285,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             
             b2RevoluteJointDef revoluteJointDef;
             revoluteJointDef.Initialize(rects[i].body, rects[i+1].body, rects[0].body->GetWorldCenter());
-            b2Vec2 p = screenPtToWorldPt(ofPoint(9,0));
+            b2Vec2 p = screenPtToWorldPt(ofPoint(rectOff,0));
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
             p = screenPtToWorldPt(ofPoint(0,0));
             revoluteJointDef.localAnchorB.Set(p.x, p.y);
@@ -346,7 +349,7 @@ void ttChar::destroyRect(){
 //-----------------------------------------------
 void ttChar::controlRope(){
     
- 
+        
         if (!joints.empty() && rects.size()>20) {
             if (ofGetElapsedTimeMillis()-startTime>50) {
                 world.getWorld()->DestroyJoint(joints.front());
@@ -370,7 +373,7 @@ void ttChar::controlRope(){
         }
         else
         {
-                rects.back().setDensity(10.0);
+                rects.back().setDensity(30.0);
         }
         
     
