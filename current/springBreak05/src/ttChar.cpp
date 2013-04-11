@@ -31,7 +31,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
     if(charNum ==0)mirrorLeft = true;
     bDead = false;
     bDestroyRect = false;
-    bRopeRest = false;
+    bHookIt = false;
     alpha = 255;
     deadStep = 2;
     hold_Num = 0;
@@ -197,10 +197,15 @@ void ttChar::update(){
        
     }
     
-    swing();
-    dead();
-    getPos = character.getPosition();
     
+    if (bSwing) {
+         swing();
+    }else{
+        getPos = character.getPosition();
+    }
+   
+    dead();
+        
     if (joints.empty()&&!rects.empty()) {
         alpha-=5;
     }
@@ -233,6 +238,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.body->GetFixtureList()->SetSensor(true);
 //            rect.setVelocity(Rects[i+1].getVelocity());
             rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
+//            rect.body->SetAngularDamping(b2dNum(0.9f));
             rects.push_back(rect);
             
             b2RevoluteJointDef revoluteJointDef;
@@ -342,8 +348,6 @@ void ttChar::controlRope(){
         
     }else{
     
-    
-            
             if (ofGetElapsedTimeMillis()-startTime>500) {
                 world.getWorld()->DestroyJoint(joints.front());
                 world.getWorld()->DestroyBody(rects[1].body);
@@ -369,9 +373,18 @@ void ttChar::controlRope(){
 }
 //-----------------------------------------------
 void ttChar::swing(){
-    if (bSwing) {
-        
-        if (!joints.empty() && rects.size()>15) {
+    
+    if (bHookIt == false) {
+        if (rects.back().getPosition().distance(character.getPosition())<10) {
+            bHookIt = true;
+        }
+    }
+    
+    if (bHookIt) {
+        character.setPosition(rects.back().getPosition());
+    }
+    
+        if (!joints.empty() && rects.size()>20) {
             if (ofGetElapsedTimeMillis()-startTime>50) {
                 world.getWorld()->DestroyJoint(joints.front());
                 world.getWorld()->DestroyBody(rects[1].body);
@@ -384,22 +397,27 @@ void ttChar::swing(){
                 revoluteJointDef.localAnchorA.Set(p.x, p.y);
                 p = screenPtToWorldPt(ofPoint(-9,0));
                 revoluteJointDef.localAnchorB.Set(p.x, p.y);
+                revoluteJointDef.enableLimit = true;
+                revoluteJointDef.lowerAngle = -PI/4;
+                revoluteJointDef.upperAngle = PI/4;
                 joints.front() = (b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef);
-    
+                
                 startTime = ofGetElapsedTimeMillis();
             }
         }
        
         if (control_A->bSwingLeft) {
+            rects[1].addForce(ofPoint(2,0), 10);
             cout<<"left"<<endl;
             control_A->bSwingLeft = false;
         }
         
         if (control_A->bSwingRight) {
+            rects[1].addForce(ofPoint(-2,0), 10);
             cout<<"right"<<endl;
             control_A->bSwingRight = false;
         }
-    }
+    
     
 }
 //----------------------------------------------
@@ -517,8 +535,7 @@ void ttChar::draw(){
     ofSetColor(color);
     ofSetRectMode(OF_RECTMODE_CENTER);
     ofPushMatrix();
-    ofTranslate(getPos);
-    
+    ofTranslate(character.getPosition());
     //turn left flip
     if (mirrorLeft) ofScale(-1, 1);
     //if no picture files, draw box2d rect instead

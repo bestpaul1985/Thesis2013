@@ -53,6 +53,8 @@ void ttRope::update(){
             if (acc->x < -0.15)
             {
                 pos = *screenA + *charA;
+                pos.x += 5;
+                pos.y -= 30;
                 if (joints.empty() && !bRopeInUse) {
                     initialize(pos);
                 }

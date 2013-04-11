@@ -38,7 +38,7 @@ public:
     
     ofPoint         setPos;
     ofPoint         getPos;
-    
+    ofPoint         prePos;
     float           setWidth;
     float           setHeight;
     float           adjustedHeight;
@@ -48,7 +48,7 @@ public:
     bool            bSwing;
     bool            mirrorLeft;
     bool            bReset;
-    bool            bRopeRest;
+    bool            bHookIt;
     bool            bDead;
     bool            bDestroyRect;
     int             charNum;

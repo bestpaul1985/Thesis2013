@@ -154,13 +154,12 @@ void testApp::update(){
 //    rope_B.update();
     
     //character rope
-    if (!char_B.joints.empty()) {
-        if (!rope_A.bInitialize) {
-            char_B.destroyRope();
-            
-            cout<<"ookk"<<endl;
-        }
+    
+    if (!rope_A.bInitialize) {
+        char_B.destroyRope();
+        char_B.bSwing = false;
     }
+    
     
     if (rope_A.bRopeInUse) {
         char_A.bFixedMove = true;
