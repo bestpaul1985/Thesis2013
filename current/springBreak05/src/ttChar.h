@@ -48,6 +48,7 @@ public:
     bool            bSwing;
     bool            mirrorLeft;
     bool            bReset;
+    bool            bRopeRest;
     bool            bDead;
     bool            bDestroyRect;
     int             charNum;

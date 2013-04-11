@@ -151,50 +151,56 @@ void testApp::update(){
    
     //rope update
     rope_A.update();
-    rope_B.update();
+//    rope_B.update();
     
     //character rope
+    if (!char_B.joints.empty()) {
+        if (!rope_A.bInitialize) {
+            char_B.destroyRope();
+        }
+    }
+    
     if (rope_A.bRopeInUse) {
         char_A.bFixedMove = true;
-        char_B.destroyRope();
         char_B.destroyRect();
         rope_A.bRopeInUse = false;
     }
     
-    if(rope_A.bReady && control_A.bHookRope && char_B.joints.empty()){
+    if(rope_A.bReady){
+        control_A.bDrawButton = true;
+    }
+    
+    if (control_A.bHookRope && rope_A.bReady) {
         char_B.copyRope(rope_A.rects, rope_A.joints, screenB);
-    //        char_B.initializeRope(screenA + char_A.getPos, screenB);
-        rope_A.destroy();
+        char_B.bSwing = true;
+        char_B.bFixedMove = true;
         rope_A.bReady = false;
-       
+        rope_A.destroy();
     }
-    else if (rope_A.bReady)
-    {
-       control_A.bDrawButton = true;
-    }
+    
     
 //    cout<<char_B.bSwing<<endl;
     
-    if (rope_B.bRopeInUse) {
-        char_B.bFixedMove = true;
-        if (rope_B.bHooked) {
-            char_A.destroyRope();
-            char_A.destroyRect();
-            char_A.copyRope(rope_B.rects, rope_B.joints,screenA);
-            rope_B.destroy();
-            rope_B.bHooked = false;
-        }
-    }
-    
-    if (!rope_A.bInitialize && !rope_B.bInitialize) {
-        char_B.bSwing = false;
-        char_B.destroyRope();
-        char_B.bFixedMove = false;
-        
-        char_A.bSwing = false;
-        char_A.destroyRope();
-        char_A.bFixedMove = false;
-    }
+//    if (rope_B.bRopeInUse) {
+//        char_B.bFixedMove = true;
+//        if (rope_B.bHooked) {
+//            char_A.destroyRope();
+//            char_A.destroyRect();
+//            char_A.copyRope(rope_B.rects, rope_B.joints,screenA);
+//            rope_B.destroy();
+//            rope_B.bHooked = false;
+//        }
+//    }
+//    
+//    if (!rope_A.bInitialize && !rope_B.bInitialize) {
+//        char_B.bSwing = false;
+//        char_B.destroyRope();
+//        char_B.bFixedMove = false;
+//        
+//        char_A.bSwing = false;
+//        char_A.destroyRope();
+//        char_A.bFixedMove = false;
+//    }
     
    
 }

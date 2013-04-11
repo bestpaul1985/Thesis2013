@@ -181,7 +181,7 @@ void ttRope::initialize(ofPoint pos){
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
             
-            rect.setPhysics(0.3f, 0.0f, 0.0f);
+            rect.setPhysics(0.03f, 0.0f, 0.0f);
             rect.setup(world.world, rects[0].getPosition().x+9, rects[0].getPosition().y, 10, 2);
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
@@ -200,7 +200,7 @@ void ttRope::initialize(ofPoint pos){
         }else if(i<m_num-1){
             
             ofxBox2dRect rect;
-            rect.setPhysics(0.3f, 0.0f, 0.0f);
+            rect.setPhysics(0.03f, 0.0f, 0.0f);
             rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 10, 2);
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
@@ -221,7 +221,7 @@ void ttRope::initialize(ofPoint pos){
             
         }else{
             ofxBox2dRect rect;
-            rect.setPhysics(30.0f, 0.0f, 0.0f);
+            rect.setPhysics(0.10f, 0.0f, 0.0f);
             rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 5, 5);
             rect.body->GetFixtureList()->SetSensor(true);
             rect.body->SetFixedRotation(true);

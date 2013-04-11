@@ -31,6 +31,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
     if(charNum ==0)mirrorLeft = true;
     bDead = false;
     bDestroyRect = false;
+    bRopeRest = false;
     alpha = 255;
     deadStep = 2;
     hold_Num = 0;
@@ -281,74 +282,115 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
         }
     }
     
-    b2RevoluteJointDef revoluteJointDef;
-    revoluteJointDef.Initialize(rects.back().body, character.body, rects.back().body->GetWorldCenter());
-    b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
-    revoluteJointDef.localAnchorA.Set(p.x, p.y);
-    p = screenPtToWorldPt(ofPoint(15,0));
-    revoluteJointDef.localAnchorB.Set(p.x, p.y);
-    joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
- 
+//    b2RevoluteJointDef revoluteJointDef;
+//    revoluteJointDef.Initialize(rects.back().body, character.body, rects.back().body->GetWorldCenter());
+//    b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
+//    revoluteJointDef.localAnchorA.Set(p.x, p.y);
+//    p = screenPtToWorldPt(ofPoint(15,0));
+//    revoluteJointDef.localAnchorB.Set(p.x, p.y);
+//    joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+// 
     jointSize = joints.size();
     rectSize = rects.size();
-    bReset = true;
-    bSwing = true;
-    bFixedMove = true;
 }
 
 
 //-----------------------------------------------
 void ttChar::destroyRope(){
     
-    if (!joints.empty()) {
-        for(int i =0; i<jointSize; i++){
-            world.world->DestroyJoint(joints.back());
-            joints.pop_back();
-        }
-       
-        for(int i =0; i<rects.size(); i++){
-            if (charNum == 0) {
-            rects[i].setVelocity(ofRandom(-10,10),ofRandom(0,5));
-            }else{
-            rects[i].setVelocity(ofRandom(-10,10),ofRandom(-5,0));
-            }
-            
-            rects[i].body->SetFixedRotation(false);
-            rects[i].body->SetAngularDamping(b2dNum(0));
-            rects[i].body->SetAngularVelocity(b2dNum(ofRandom(-3000,3000)));
-        }
+    if (joints.empty()) {
+        return;
     }
+    
+    
+    for(int i =joints.size()-1; i>=0; i--){
+        world.world->DestroyJoint(joints[i]);
+    }
+    
+    joints.clear();
+    
+    for(int i =0; i<rects.size(); i++){
+        if (charNum == 0) {
+        rects[i].setVelocity(ofRandom(-10,10),ofRandom(0,5));
+        }else{
+        rects[i].setVelocity(ofRandom(-10,10),ofRandom(-5,0));
+        }
+        
+        rects[i].body->SetFixedRotation(false);
+        rects[i].body->SetAngularDamping(b2dNum(0));
+        rects[i].body->SetAngularVelocity(b2dNum(ofRandom(-3000,3000)));
+    }
+    
+        cout<<joints.empty()<<endl;
+    
 }
 //-----------------------------------------------
 void ttChar::destroyRect(){
     
     if (!rects.empty()) {
-        for(int i =0; i<rectSize; i++){
+        for(int i =0; i<rects.size(); i++){
             world.world->DestroyBody(rects.back().body);
             rects.pop_back();
         }
+        rects.clear();
     }
 }
 //-----------------------------------------------
 void ttChar::controlRope(){
     
-    if (rects.size()>20) {
-        if (ofGetElapsedTimeMillis()-startTime>100) {
-            world.getWorld()->DestroyJoint(joints.front());
-            world.getWorld()->DestroyBody(rects[1].body);
-            joints.erase(joints.begin());
-            rects.erase(rects.begin()+1);
-        }
+    if (charNum == 0) {
+        
+    }else{
+    
+    
+            
+            if (ofGetElapsedTimeMillis()-startTime>500) {
+                world.getWorld()->DestroyJoint(joints.front());
+                world.getWorld()->DestroyBody(rects[1].body);
+                joints.erase(joints.begin());
+                rects.erase(rects.begin()+1);
+                
+                b2RevoluteJointDef revoluteJointDef;
+                revoluteJointDef.Initialize(rects[0].body, rects[1].body, rects[0].body->GetWorldCenter());
+                b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
+                revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                p = screenPtToWorldPt(ofPoint(-9,0));
+                revoluteJointDef.localAnchorB.Set(p.x, p.y);
+                joints.insert(joints.begin(),(b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+                
+                startTime = ofGetElapsedTimeMillis();
+            }
+        
     }
     
-    cout<<"ok"<<endl;
+    
+
+
 }
 //-----------------------------------------------
 void ttChar::swing(){
-    if (bSwing ) {
-//        character.enableGravity(false);
-//        character.setPosition(rects.back().getPosition());
-//        
+    if (bSwing) {
+        
+        if (!joints.empty() && rects.size()>15) {
+            if (ofGetElapsedTimeMillis()-startTime>50) {
+                world.getWorld()->DestroyJoint(joints.front());
+                world.getWorld()->DestroyBody(rects[1].body);
+                joints.erase(joints.begin());
+                rects.erase(rects.begin()+1);
+                
+                b2RevoluteJointDef revoluteJointDef;
+                revoluteJointDef.Initialize(rects[0].body, rects[1].body, rects[0].body->GetWorldCenter());
+                b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
+                revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                p = screenPtToWorldPt(ofPoint(-9,0));
+                revoluteJointDef.localAnchorB.Set(p.x, p.y);
+                joints.insert(joints.begin(),(b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+                
+                startTime = ofGetElapsedTimeMillis();
+                
+            }
+        }
+       
         if (control_A->bSwingLeft) {
             cout<<"left"<<endl;
             control_A->bSwingLeft = false;
@@ -359,7 +401,6 @@ void ttChar::swing(){
             control_A->bSwingRight = false;
         }
     }
-    
     
 }
 //----------------------------------------------
