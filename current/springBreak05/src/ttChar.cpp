@@ -74,6 +74,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
     ttSetData * sd = (ttSetData*)footSensorFixture->GetUserData();
     sd->name	= "footSenser";
     
+    startTime = ofGetElapsedTimeMillis();
 }
 //----------------------------------------------
 void ttChar::update(){
@@ -294,20 +295,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
     bSwing = true;
     bFixedMove = true;
 }
-//-----------------------------------------------
-void ttChar::controlRope(){
 
-    if (ofRandom(10) == 1) {
-        hold_Num ++;
-        for (int i =0; i<rects.size(); i++) {
-            if (i<hold_Num) {
-                rects[i].body->SetType(b2_staticBody);
-                rects[i].setPosition(character.getPosition());
-            }
-        }
-    }
-    cout<<"ok"<<endl;
-}
 
 //-----------------------------------------------
 void ttChar::destroyRope(){
@@ -340,6 +328,20 @@ void ttChar::destroyRect(){
             rects.pop_back();
         }
     }
+}
+//-----------------------------------------------
+void ttChar::controlRope(){
+    
+    if (rects.size()>20) {
+        if (ofGetElapsedTimeMillis()-startTime>100) {
+            world.getWorld()->DestroyJoint(joints.front());
+            world.getWorld()->DestroyBody(rects[1].body);
+            joints.erase(joints.begin());
+            rects.erase(rects.begin()+1);
+        }
+    }
+    
+    cout<<"ok"<<endl;
 }
 //-----------------------------------------------
 void ttChar::swing(){
