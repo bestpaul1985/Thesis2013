@@ -55,6 +55,10 @@ void ttRope::update(){
                 pos = *screenA + *charA;
                 pos.x += 10;
                 pos.y -= 30;
+                m_num = (768 - (screenA->y + charA->y))/18+1;
+                if (m_num>40) {
+                    m_num = 40;
+                }
                 if (joints.empty() && !bRopeInUse) {
                     initialize(pos);
                 }
@@ -127,6 +131,10 @@ void ttRope::update(){
                 pos = *screenB + *charB;
                 pos.x += 10;
                 pos.y += 30;
+                m_num = (screenB->y + charB->y)/18+1;
+                if (m_num>40) {
+                    m_num = 40;
+                }
                 if (joints.empty() && !bRopeInUse) {
                     initialize(pos);
                 }
@@ -202,6 +210,7 @@ void ttRope::update(){
 //--------------------------------------------------------
 void ttRope::initialize(ofPoint pos){
 
+    
     for(int i =0; i<m_num; i++){
         
         if (joints.empty()) {
@@ -320,7 +329,7 @@ void ttRope::destroy(){
 void ttRope::draw(){
 
     for (int i=0; i<rects.size(); i++) {
-        ofSetColor(255, 30, 220);
+        ofSetColor(255, 220, 30);
         rects[i].draw();
     }
  

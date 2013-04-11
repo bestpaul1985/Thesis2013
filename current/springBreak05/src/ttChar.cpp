@@ -199,6 +199,7 @@ void ttChar::update(){
     
     
     if (bSwing) {
+        
          swing();
     }else{
         getPos = character.getPosition();
@@ -360,12 +361,16 @@ void ttChar::controlRope(){
                 p = screenPtToWorldPt(ofPoint(-9,0));
                 revoluteJointDef.localAnchorB.Set(p.x, p.y);
                 revoluteJointDef.enableLimit = true;
-                revoluteJointDef.lowerAngle = -PI/7;
-                revoluteJointDef.upperAngle = PI/7;
+                revoluteJointDef.lowerAngle = -PI/3;
+                revoluteJointDef.upperAngle = PI/3;
                 joints.front() = (b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef);
                 
                 startTime = ofGetElapsedTimeMillis();
             }
+        }
+        else
+        {
+                rects.back().setDensity(10.0);
         }
         
     

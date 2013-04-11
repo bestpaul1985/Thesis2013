@@ -36,8 +36,8 @@ void testApp::setup(){
     char_B.setup(world_B,control_A,control_B,ofPoint(50,0),1);
     
     //translate
-    translate_A.set(384,200);
-    translate_B.set(384,768-200);
+    translate_A.set(384,250);
+    translate_B.set(384,768-250);
     screen();
     //thorn
     thorns_A.setup(world_A, 0);
