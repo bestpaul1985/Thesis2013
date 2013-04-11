@@ -53,7 +53,7 @@ void ttRope::update(){
             if (acc->x < -0.15)
             {
                 pos = *screenA + *charA;
-                pos.x += 5;
+                pos.x += 10;
                 pos.y -= 30;
                 if (joints.empty() && !bRopeInUse) {
                     initialize(pos);
@@ -87,7 +87,7 @@ void ttRope::update(){
                 rectPos = rects[i].getPosition();
                 charPos = *screenB+*charB;
                 length = rectPos.distance(charPos);
-                if (length<20) {
+                if (length<30) {
                     counter ++;
                 }
                 lengths.push_back(length);
