@@ -225,7 +225,7 @@ void ttRope::initialize(ofPoint pos){
             rects.push_back(rect);
             
             rect.setPhysics(0.03f, 0.0f, 0.0f);
-            rect.setup(world.world, rects[0].getPosition().x+9, rects[0].getPosition().y, rectW, rectH);
+            rect.setup(world.world, rects[0].getPosition().x+rectOff, rects[0].getPosition().y, rectW, rectH);
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
             
@@ -235,9 +235,9 @@ void ttRope::initialize(ofPoint pos){
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
             p = screenPtToWorldPt(ofPoint(-rectOff,0));
             revoluteJointDef.localAnchorB.Set(p.x, p.y);
-//            revoluteJointDef.enableLimit = true;
-//            revoluteJointDef.lowerAngle = -180*DEG_TO_RAD;
-//            revoluteJointDef.upperAngle = 180*DEG_TO_RAD;
+            revoluteJointDef.enableLimit = true;
+            revoluteJointDef.lowerAngle = -180*DEG_TO_RAD;
+            revoluteJointDef.upperAngle = 180*DEG_TO_RAD;
             joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
             
         }else if(i<m_num-1){
@@ -265,7 +265,12 @@ void ttRope::initialize(ofPoint pos){
         }else{
             ofxBox2dRect rect;
             rect.setPhysics(0.10f, 0.0f, 0.0f);
-            rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 5, 5);
+            if(i%2==1){
+            rect.setup(world.world, rects.back().getPosition().x+rectW, rects.back().getPosition().y, 5, 5);
+            }else{
+            rect.setup(world.world, rects.back().getPosition().x-rectW, rects.back().getPosition().y, 5, 5);
+            }
+            
             rect.body->GetFixtureList()->SetSensor(true);
             rect.body->SetFixedRotation(true);
             rects.push_back(rect);
@@ -308,11 +313,11 @@ void ttRope::destroy(){
             rects.erase(rects.begin()+1);
             
             ofPoint pos = rects.front().getPosition();
-            rects.front().setPosition(pos.x, pos.y-20);
+            rects.front().setPosition(pos.x, pos.y);
             b2RevoluteJointDef revoluteJointDef;
             revoluteJointDef.Initialize(rects[0].body, rects[1].body, rects[0].body->GetWorldCenter());
             
-            b2Vec2 p = screenPtToWorldPt(ofPoint(0,9));
+            b2Vec2 p = screenPtToWorldPt(ofPoint(0,rectOff));
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
             revoluteJointDef.localAnchorB.Set(p.x, -p.y);
             joints.front() = (b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef);

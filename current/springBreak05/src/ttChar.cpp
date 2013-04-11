@@ -349,8 +349,15 @@ void ttChar::destroyRect(){
 //-----------------------------------------------
 void ttChar::controlRope(){
     
-        
-        if (!joints.empty() && rects.size()>20) {
+    int size;
+    if (charNum == 0) {
+      size = (fabs(rects[0].getPosition().y - getPos.y)-120)/28 + 2;   
+    }else{
+      size = (fabs(rects[0].getPosition().y - getPos.y)-120)/28 + 2;
+    }
+    
+    
+        if (!joints.empty() && rects.size()>size) {
             if (ofGetElapsedTimeMillis()-startTime>50) {
                 world.getWorld()->DestroyJoint(joints.front());
                 world.getWorld()->DestroyBody(rects[1].body);
@@ -378,7 +385,7 @@ void ttChar::controlRope(){
         
     
 
-
+    cout<<rects[0].getPosition().y<<"  "<<getPos.y<<"   "<<size<<endl;
 }
 //-----------------------------------------------
 void ttChar::swing(){
