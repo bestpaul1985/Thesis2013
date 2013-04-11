@@ -51,6 +51,7 @@ public:
     bool            bHookIt;
     bool            bDead;
     bool            bDestroyRect;
+    bool            bControlRope;
     int             charNum;
     int             step;
     int             deadStep;
