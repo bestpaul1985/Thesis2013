@@ -119,51 +119,78 @@ void ttRope::update(){
         }
     }
     
-     if (ropeNum == 1) {
-         if(acc->x>0.15 && ropeNum == 1){
-            pos = *screenB + *charB;
-            
-            if (joints.empty() && !bRopeInUse) {
-                initialize(pos);
+    if (ropeNum == 1) {
+        
+        if (bInitialize == false) {
+            if (acc->x > 0.15)
+            {
+                pos = *screenB + *charB;
+                pos.x += 10;
+                pos.y += 30;
+                if (joints.empty() && !bRopeInUse) {
+                    initialize(pos);
+                }
                 bRopeInUse = true;
             }
+            bInitialize = true;
+        }
+        
+        if(!joints.empty()){
             
+            if (ofGetElapsedTimeMillis()-startTime>duration) {
+                if (m_preNum>1) {
+                    m_preNum--;
+                }
+                startTime = ofGetElapsedTimeMillis();
+            }
             
-            if(!joints.empty()){
-                
-                ofPoint rectPos,charPos;
-                rectPos = rects.back().getPosition();
-                charPos = *screenA+*charA;
-                float length = rectPos.distance(charPos);
-                
-                if (length>20) {
-                    if (ofGetElapsedTimeMillis()-startTime>duration) {
-                        if (m_preNum>1) {
-                            m_preNum--;
-                        }
-                        startTime = ofGetElapsedTimeMillis();
-                    }
-                    
-                    for (int i =0; i<rects.size(); i++) {
-                        if (i<m_preNum) {
-                            rects[i].body->SetType(b2_staticBody);
-                        }else{
-                            rects[i].body->SetType(b2_dynamicBody);
-                        }
-                    }
+            for (int i =0; i<rects.size(); i++) {
+                if (i<m_preNum) {
+                    rects[i].body->SetType(b2_staticBody);
                 }else{
-                    bHooked = true;
+                    rects[i].body->SetType(b2_dynamicBody);
                 }
             }
-
-            }else{
-                bRopeInUse = false;
-                bHooked = false;
-                if (!joints.empty()) {
-                    destroy();
+            
+            int counter = 0;
+            vector<float> lengths;
+            for (int i = 0; i<rects.size(); i++) {
+                ofPoint rectPos,charPos;
+                rectPos = rects[i].getPosition();
+                charPos = *screenA+*charA;
+                length = rectPos.distance(charPos);
+                if (length<30) {
+                    counter ++;
                 }
+                lengths.push_back(length);
+            }
+            
+            for (int i = 1; i<lengths.size(); i++) {
+                if (lengths[i-1]<lengths[i]) {
+                    closetRect = i-1;
+                }else{
+                    closetRect = i;
+                }
+            }
+            
+            if (counter>0) {
+                bReady = true;
+            }else{
+                bReady = false;
             }
         }
+        
+        
+        if (acc->x < 0.15) {
+            bReady = false;
+            bInitialize = false;
+            closetRect = 0;
+            if (!joints.empty()) {
+                destroy();
+            }
+        }
+     
+    }
     
 
     

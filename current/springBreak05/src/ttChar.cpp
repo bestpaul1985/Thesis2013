@@ -345,10 +345,7 @@ void ttChar::destroyRect(){
 //-----------------------------------------------
 void ttChar::controlRope(){
     
-    if (charNum == 0) {
-        
-    }else{
-    
+ 
         if (!joints.empty() && rects.size()>20) {
             if (ofGetElapsedTimeMillis()-startTime>50) {
                 world.getWorld()->DestroyJoint(joints.front());
@@ -371,8 +368,6 @@ void ttChar::controlRope(){
             }
         }
         
-    }
-    
     
 
 
@@ -382,13 +377,14 @@ void ttChar::swing(){
     
     if (bHookIt == false) {
         float dis;
-        if (charNum ==1) {
-             dis = rects.back().getPosition().y - character.getPosition().y;
-        }
+        
+        dis = rects.back().getPosition().y - character.getPosition().y;
         
         if (dis<-5 && dis>-30) {
             bHookIt = true;
         }
+        
+        cout<<dis<<endl;
     }
     
     if (bHookIt) {
@@ -549,8 +545,6 @@ void ttChar::draw(){
     
     ofPopMatrix();
     ofSetRectMode(OF_RECTMODE_CORNER);
-    //rope
-    drawRope();
 
 }
 //----------------------------------------------

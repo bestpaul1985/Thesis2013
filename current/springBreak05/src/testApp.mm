@@ -151,9 +151,9 @@ void testApp::update(){
    
     //rope update
     rope_A.update();
-//    rope_B.update();
+    rope_B.update();
     
-    //character rope
+    //character ropeA
     
     if (!rope_A.bInitialize) {
         char_B.destroyRope();
@@ -189,32 +189,43 @@ void testApp::update(){
         char_B.bFixedMove = false;
         control_B.bDrawButton = false;
     }
+    //character ropeB
+    
+    if (!rope_B.bInitialize) {
+        char_A.destroyRope();
+        char_A.bSwing = false;
+        char_A.bFixedMove = false;
+        char_B.bFixedMove = false;
+        control_A.bDrawButton = false;
+    }
     
     
-//    cout<<char_B.bSwing<<endl;
+    if (rope_B.bRopeInUse) {
+        char_B.bFixedMove = true;
+        char_A.destroyRect();
+        rope_B.bRopeInUse = false;
+    }
     
-//    if (rope_B.bRopeInUse) {
-//        char_B.bFixedMove = true;
-//        if (rope_B.bHooked) {
-//            char_A.destroyRope();
-//            char_A.destroyRect();
-//            char_A.copyRope(rope_B.rects, rope_B.joints,screenA);
-//            rope_B.destroy();
-//            rope_B.bHooked = false;
-//        }
-//    }
-//    
-//    if (!rope_A.bInitialize && !rope_B.bInitialize) {
-//        char_B.bSwing = false;
-//        char_B.destroyRope();
-//        char_B.bFixedMove = false;
-//        
-//        char_A.bSwing = false;
-//        char_A.destroyRope();
-//        char_A.bFixedMove = false;
-//    }
+    if(rope_B.bReady){
+        control_A.bDrawButton = true;
+    }
     
-   
+    if (control_A.bHookRope && rope_B.bReady) {
+        char_A.copyRope(rope_B.rects, rope_B.joints, screenA);
+        char_A.bSwing = true;
+        char_A.bFixedMove = true;
+        rope_B.bReady = false;
+        rope_B.destroy();
+    }else if(control_A.bHookRope && char_A.bSwing){
+        char_A.controlRope();
+    }else if(!control_A.bHookRope && char_A.bSwing){
+        char_A.character.setVelocity(char_A.rects.back().getVelocity());
+        char_A.destroyRope();
+        char_A.bSwing = false;
+        char_A.bFixedMove = false;
+        control_A.bDrawButton = false;
+    }
+    
 }
 
 //--------------------------------------------------------------
@@ -256,11 +267,24 @@ void testApp::drawScene(int iDraw){
         ofPushMatrix();
         ofTranslate(translate_A.x-char_A.getPos.x,translate_A.y);
         char_A.draw();
+        char_A.drawRope();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(translate_B.x-char_B.getPos.x,translate_B.y);
         char_B.draw();
+        char_B.drawRope();
+        ofPopMatrix();
+        
+        
+        ofPushMatrix();
+        ofTranslate(translate_A.x-char_A.getPos.x,translate_A.y);
+        char_A.drawRope();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofTranslate(translate_B.x-char_B.getPos.x,translate_B.y);
+        char_B.drawRope();
         ofPopMatrix();
         
         rope_A.draw();
