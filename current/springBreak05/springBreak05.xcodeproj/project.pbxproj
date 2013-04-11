@@ -10,6 +10,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		476DDB371716377D005910CE /* ttEmoji.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 476DDB351716377D005910CE /* ttEmoji.cpp */; };
 		47A165F317041B1E00286F73 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F217041B1E00286F73 /* Default-Portrait@2x~ipad.png */; };
 		47A165F517041B8300286F73 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F417041B8300286F73 /* Default-Portrait~ipad.png */; };
 		4C02C60A16EEDC210051C0DB /* ttChar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C02C60816EEDC210051C0DB /* ttChar.cpp */; };
@@ -103,6 +104,8 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* iPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhone_Prefix.pch; sourceTree = "<group>"; };
+		476DDB351716377D005910CE /* ttEmoji.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttEmoji.cpp; sourceTree = "<group>"; };
+		476DDB361716377D005910CE /* ttEmoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttEmoji.h; sourceTree = "<group>"; };
 		47A165F217041B1E00286F73 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		47A165F417041B8300286F73 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		4C02C60816EEDC210051C0DB /* ttChar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttChar.cpp; sourceTree = "<group>"; };
@@ -533,6 +536,8 @@
 				E4D8936C11527B74007E1F53 /* testApp.h */,
 				4C02C60816EEDC210051C0DB /* ttChar.cpp */,
 				4C02C60916EEDC210051C0DB /* ttChar.h */,
+				476DDB351716377D005910CE /* ttEmoji.cpp */,
+				476DDB361716377D005910CE /* ttEmoji.h */,
 				4C273B901704B36B001D53EB /* ttRope.cpp */,
 				4C273B911704B36B001D53EB /* ttRope.h */,
 				4CCD3A7616F3D9A00095BCB1 /* ttControl.cpp */,
@@ -700,6 +705,7 @@
 				4CFA0E0C1709135B00DAD3D4 /* ttThorn.cpp in Sources */,
 				4C296294170A155800CEF0FC /* ttSky.cpp in Sources */,
 				4C90B562170C946900FE43ED /* ttIndicator.cpp in Sources */,
+				476DDB371716377D005910CE /* ttEmoji.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
