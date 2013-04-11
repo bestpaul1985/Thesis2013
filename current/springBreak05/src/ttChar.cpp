@@ -321,7 +321,7 @@ void ttChar::destroyRope(){
         rects[i].body->SetAngularVelocity(b2dNum(ofRandom(-3000,3000)));
     }
     
-        cout<<joints.empty()<<endl;
+    cout<<joints.empty()<<endl;
     
 }
 //-----------------------------------------------
@@ -384,10 +384,9 @@ void ttChar::swing(){
                 revoluteJointDef.localAnchorA.Set(p.x, p.y);
                 p = screenPtToWorldPt(ofPoint(-9,0));
                 revoluteJointDef.localAnchorB.Set(p.x, p.y);
-                joints.insert(joints.begin(),(b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
-                
+                joints.front() = (b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef);
+    
                 startTime = ofGetElapsedTimeMillis();
-                
             }
         }
        
@@ -549,9 +548,12 @@ void ttChar::draw(){
 //----------------------------------------------
 void ttChar::drawRope(){
 
-    for (int i =0; i<rects.size(); i++) {
-        ofSetColor(255, 220, 30,alpha);
-        rects[i].draw();
+    if (!rects.empty()) {
+        for (int i =0; i<rects.size(); i++) {
+            ofSetColor(255, 220, 30,alpha);
+            rects[i].draw();
+        }
     }
+    
 
 }

@@ -157,6 +157,8 @@ void testApp::update(){
     if (!char_B.joints.empty()) {
         if (!rope_A.bInitialize) {
             char_B.destroyRope();
+            
+            cout<<"ookk"<<endl;
         }
     }
     
