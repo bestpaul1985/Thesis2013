@@ -392,19 +392,35 @@ void ttChar::swing(){
     }
     
    
-       
+    if (charNum == 0) {
+        if (control_B->bSwingLeft) {
+            rects[2].addForce(ofPoint(2,0), 10);
+            cout<<"left"<<endl;
+            control_B->bSwingLeft = false;
+        }
+        
+        else if (control_B->bSwingRight) {
+            rects[2].addForce(ofPoint(-2,0), 10);
+            cout<<"right"<<endl;
+            control_B->bSwingRight = false;
+        }
+    }else{
+
         if (control_A->bSwingLeft) {
             rects[2].addForce(ofPoint(2,0), 10);
             cout<<"left"<<endl;
             control_A->bSwingLeft = false;
         }
-        
-        if (control_A->bSwingRight) {
+        else if (control_A->bSwingRight) {
             rects[2].addForce(ofPoint(-2,0), 10);
             cout<<"right"<<endl;
             control_A->bSwingRight = false;
         }
+    }
     
+    
+    
+        
     
 }
 //----------------------------------------------
