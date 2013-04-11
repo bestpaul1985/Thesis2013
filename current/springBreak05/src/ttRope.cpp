@@ -135,7 +135,7 @@ void ttRope::update(){
                 pos = *screenB + *charB;
                 pos.x += 10;
                 pos.y += 30;
-                m_num = (screenB->y + charB->y)/28+1;
+                m_num = ((screenB->y + charB->y)+60)/28+1;
                 if (m_num>40) {
                     m_num = 40;
                 }

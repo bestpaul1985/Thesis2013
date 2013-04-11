@@ -349,8 +349,9 @@ void ttChar::destroyRect(){
 //-----------------------------------------------
 void ttChar::controlRope(){
     
-        
-        if (!joints.empty() && rects.size()>20) {
+    int size = (fabs(rects[0].getPosition().y - getPos.y)-100)/28;
+    
+        if (!joints.empty() && rects.size()>size) {
             if (ofGetElapsedTimeMillis()-startTime>50) {
                 world.getWorld()->DestroyJoint(joints.front());
                 world.getWorld()->DestroyBody(rects[1].body);
@@ -388,7 +389,7 @@ void ttChar::swing(){
         
         dis = rects.back().getPosition().y - character.getPosition().y;
         
-        if (dis<-5 && dis>-30) {
+        if (dis<0 && dis>-40) {
             bHookIt = true;
         }
         
