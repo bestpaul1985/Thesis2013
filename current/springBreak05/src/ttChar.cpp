@@ -32,7 +32,6 @@ void ttChar::setup(ofxBox2d &characterWorld,
     bDead = false;
     bDestroyRect = false;
     bHookIt = false;
-    bControlRope = true;
     alpha = 255;
     deadStep = 2;
     hold_Num = 0;
@@ -200,10 +199,11 @@ void ttChar::update(){
     
     
     if (bSwing) {
+        
          swing();
     }else{
         getPos = character.getPosition();
-        bControlRope = true;
+        bHookIt = false;
     }
    
     dead();
@@ -349,7 +349,13 @@ void ttChar::destroyRect(){
 //-----------------------------------------------
 void ttChar::controlRope(){
     
-    int size = (fabs(rects[0].getPosition().y - getPos.y)-120)/28 + 2;   
+    int size;
+    if (charNum == 0) {
+      size = (fabs(rects[0].getPosition().y - getPos.y)-120)/28 + 2;   
+    }else{
+      size = (fabs(rects[0].getPosition().y - getPos.y)-120)/28 + 2;
+    }
+    
     
         if (!joints.empty() && rects.size()>size) {
             if (ofGetElapsedTimeMillis()-startTime>50) {
@@ -362,7 +368,7 @@ void ttChar::controlRope(){
                 revoluteJointDef.Initialize(rects[0].body, rects[1].body, rects[0].body->GetWorldCenter());
                 b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
                 revoluteJointDef.localAnchorA.Set(p.x, p.y);
-                p = screenPtToWorldPt(ofPoint(-14,0));
+                p = screenPtToWorldPt(ofPoint(-9,0));
                 revoluteJointDef.localAnchorB.Set(p.x, p.y);
                 revoluteJointDef.enableLimit = true;
                 revoluteJointDef.lowerAngle = -PI/3;
@@ -384,25 +390,20 @@ void ttChar::controlRope(){
 //-----------------------------------------------
 void ttChar::swing(){
     
-    if (bControlRope) {
-        float dis = rects.back().getPosition().y - character.getPosition().y;
+    if (bHookIt == false) {
+        float dis;
         
-        if (dis<0 && dis>-50) {
+        dis = rects.back().getPosition().y - character.getPosition().y;
+        
+        if (dis<-5 && dis>-30) {
             bHookIt = true;
-            bControlRope = false;
         }
+        
+        cout<<dis<<endl;
     }
     
     if (bHookIt) {
-        
-            b2RevoluteJointDef revoluteJointDef;
-            revoluteJointDef.Initialize(rects.back().body, character.body, rects.back().body->GetWorldCenter());
-            b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
-            revoluteJointDef.localAnchorA.Set(p.x, p.y);
-            p = screenPtToWorldPt(ofPoint(15,0));
-            revoluteJointDef.localAnchorB.Set(p.x, p.y);
-            joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
-        bHookIt =false;
+        character.setPosition(rects.back().getPosition().x-10,rects.back().getPosition().y+10);
     }
     
    
