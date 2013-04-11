@@ -264,7 +264,7 @@ void ttRope::initialize(ofPoint pos){
             
         }else{
             ofxBox2dRect rect;
-            rect.setPhysics(0.10f, 0.0f, 0.0f);
+            rect.setPhysics(1.0f, 0.0f, 0.0f);
             if(i%2==1){
             rect.setup(world.world, rects.back().getPosition().x+rectW, rects.back().getPosition().y, 5, 5);
             }else{
