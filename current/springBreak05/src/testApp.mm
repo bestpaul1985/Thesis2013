@@ -133,16 +133,22 @@ void testApp::update(){
     //no jump in sky
     if (numFootContacts_A<=0) {
         control_A.bFixed = true;
+        char_A.character.body->SetLinearDamping(0.0f);
+
     }else{
         control_A.bFixed = false;
+        char_A.character.body->SetLinearDamping(0.95f);
     }
     
     if (numFootContacts_B<=0) {
         control_B.bFixed = true;
+        char_B.character.body->SetLinearDamping(0.0f);
     }else{
         control_B.bFixed = false;
+        char_B.character.body->SetLinearDamping(0.95f);
     }
 
+    
     //Character
     char_A.update();
     char_B.update();
@@ -168,7 +174,8 @@ void testApp::update(){
     }
     
     if (control_B.bHookRope && rope_A.bReady) {
-        char_B.copyRope(rope_A.rects, rope_A.joints, screenB);
+//        char_B.copyRope(rope_A.rects, rope_A.joints, screenB);
+//        char_B.initializeRope(rope_A.rects, screenB);
         char_B.bSwing = true;
         char_B.bFixedMove = true;
         rope_A.bReady = false;
@@ -176,7 +183,8 @@ void testApp::update(){
     }else if(control_B.bHookRope && char_B.bSwing){
         char_B.controlRope();
     }else if(!control_B.bHookRope && char_B.bSwing){
-        char_B.character.setVelocity(char_B.rects.back().getVelocity());
+        char_B.character.setVelocity(char_B.rects.back().getVelocity()*3);
+        cout<<char_B.rects.back().getVelocity()<<endl;
         char_B.destroyRope();
         char_B.bSwing = false;
         char_B.bFixedMove = false;
@@ -194,7 +202,8 @@ void testApp::update(){
     }
     
     if (control_A.bHookRope && rope_B.bReady) {
-        char_A.copyRope(rope_B.rects, rope_B.joints, screenA);
+//        char_A.copyRope(rope_B.rects, rope_B.joints, screenA);
+//        char_A.initializeRope(rope_B.rects, screenA);
         char_A.bSwing = true;
         char_A.bFixedMove = true;
         rope_B.bReady = false;
@@ -202,7 +211,7 @@ void testApp::update(){
     }else if(control_A.bHookRope && char_A.bSwing){
         char_A.controlRope();
     }else if(!control_A.bHookRope && char_A.bSwing){
-        char_A.character.setVelocity(char_A.rects.back().getVelocity());
+        char_A.character.setVelocity(char_A.rects.back().getVelocity()*3);
         char_A.destroyRope();
         char_A.bSwing = false;
         char_A.bFixedMove = false;

@@ -24,7 +24,7 @@ public:
     void update();
     void draw();
     void copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint*> Joints, ofPoint screen);
-    void initializeRope(ofPoint charPos, ofPoint screen);
+    void initializeRope(vector<ofxBox2dRect> Rects, ofPoint screen);
     void controlRope();
     void destroyRope();
     void destroyRect();
@@ -51,6 +51,7 @@ public:
     bool            bHookIt;
     bool            bDead;
     bool            bDestroyRect;
+    bool            bRestAngle;
     int             charNum;
     int             step;
     int             deadStep;

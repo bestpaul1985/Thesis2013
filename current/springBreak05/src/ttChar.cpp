@@ -32,12 +32,13 @@ void ttChar::setup(ofxBox2d &characterWorld,
     bDead = false;
     bDestroyRect = false;
     bHookIt = false;
+    bRestAngle = true;
     alpha = 255;
     deadStep = 2;
     hold_Num = 0;
     
     color.set(255, 255, 255, 255);
-    character.setPhysics(40.f, 0.0f, 0.95f);
+    character.setPhysics(1.0f, 0.0f, 0.95f);
     character.setup(world.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
     character.body->SetFixedRotation(true);
     character.body->SetLinearDamping(b2dNum(0.95));
@@ -81,7 +82,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
 void ttChar::update(){
     
     float x =20;
-    float scale = 1000;
+    float scale = 100;
     float smallMove;
     float smallMoveSale = 1.2;
 
@@ -199,11 +200,11 @@ void ttChar::update(){
     
     
     if (bSwing) {
-        
          swing();
     }else{
         getPos = character.getPosition();
         bHookIt = false;
+        bRestAngle = true;
     }
    
     dead();
@@ -218,13 +219,103 @@ void ttChar::update(){
         bDestroyRect = false;
     }
 }
+//-----------------------------------------------
+void ttChar::initializeRope(vector<ofxBox2dRect> Rects, ofPoint screen){
 
+    float size = (fabs(rects[0].getPosition().y - getPos.y)-100)/18+1;
+    cout<<size<<endl;
+    for (int i = 0; i< size; i++) {
+        if (joints.empty()) {
+            ofxBox2dRect rect;
+            ofPoint pos;
+            pos = Rects[0].getPosition() + pos;
+            rect.setup(world.getWorld(), pos.x, pos.y, 1,1);
+            rect.body->GetFixtureList()->SetSensor(true);
+            rects.push_back(rect);
+            
+            rect.setPhysics(1.0f, 0.0f, 0.2f);
+            rect.setup(world.world, rects[0].getPosition().x+9, rects[0].getPosition().y, 10, 2);
+            rect.body->GetFixtureList()->SetSensor(true);
+            rects.push_back(rect);
+            
+            b2RevoluteJointDef revoluteJointDef;
+            revoluteJointDef.Initialize(rects[0].body, rects.back().body, rects[0].body->GetWorldCenter());
+            b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
+            revoluteJointDef.localAnchorA.Set(p.x, p.y);
+            p = screenPtToWorldPt(ofPoint(-9,0));
+            revoluteJointDef.localAnchorB.Set(p.x, p.y);
+            revoluteJointDef.enableLimit = true;
+            revoluteJointDef.lowerAngle = -180*DEG_TO_RAD;
+            revoluteJointDef.upperAngle = 180*DEG_TO_RAD;
+            joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+            
+        }else if(i<size-1){
+            
+            ofxBox2dRect rect;
+            rect.setPhysics(1.0f, 0.0f, 0.2f);
+            rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 10, 2);
+            rect.body->GetFixtureList()->SetSensor(true);
+            rects.push_back(rect);
+            
+            b2RevoluteJointDef revoluteJointDef;
+            revoluteJointDef.Initialize(rects[rects.size()-2].body, rects.back().body, rects.back().body->GetWorldCenter());
+            b2Vec2 p;
+            if(i%2==1){
+                p = screenPtToWorldPt(ofPoint(9,0));
+            }
+            else{
+                p = screenPtToWorldPt(ofPoint(-9,0));
+            }
+            
+            revoluteJointDef.localAnchorA.Set(p.x, p.y);
+            revoluteJointDef.localAnchorB.Set(p.x, p.y);
+            joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+            
+        }else{
+            ofxBox2dRect rect;
+            rect.setPhysics(30.0f, 0.0f, 0.2f);
+            rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 8, 8);
+            rect.body->GetFixtureList()->SetSensor(true);
+            rect.body->SetFixedRotation(true);
+            rects.push_back(rect);
+            
+            b2RevoluteJointDef revoluteJointDef;
+            revoluteJointDef.Initialize(rects[rects.size()-2].body, rects.back().body, rects[rects.size()-2].body->GetWorldCenter());
+            b2Vec2 p1;
+            b2Vec2 p2;
+            if(i%2==1){
+                p1 = screenPtToWorldPt(ofPoint(9,0));
+                p2 = screenPtToWorldPt(ofPoint(0,0));
+            }
+            else{
+                p1 = screenPtToWorldPt(ofPoint(-9,0));
+                p2 = screenPtToWorldPt(ofPoint(0,0));
+            }
+            
+            revoluteJointDef.localAnchorA.Set(p1.x, p1.y);
+            revoluteJointDef.localAnchorB.Set(p2.x, p2.y);
+            joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+        }
+    }
+    
+    
+    
+}
 //-----------------------------------------------
 void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Joints, ofPoint screen){
-   
-
-    float rectOff = 9;
     
+    int size = 0;
+    for (int i=0; i<Rects.size(); i++) {
+        if(Rects[i].body->GetType() == 2){
+            size++;
+            cout<<size<<endl;
+        }
+         
+    }
+  
+    
+    float rectOff = 9;
+  
     for (int i=0; i<Joints.size(); i++) {
         if (joints.empty()) {
             ofxBox2dRect rect;
@@ -233,7 +324,6 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.setPhysics(Rects[i].density, Rects[i].bounce, Rects[i].friction);
             rect.setup(world.getWorld(), pos.x,pos.y, Rects[i].getWidth(), Rects[i].getHeight());
             rect.body->GetFixtureList()->SetSensor(true);
-//            rect.setVelocity(Rects[i].getVelocity());
             rect.setAngle(Rects[i].body->GetAngle()*DEG_TO_RAD);
             rects.push_back(rect);
             
@@ -241,9 +331,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
             rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
             rect.body->GetFixtureList()->SetSensor(true);
-//            rect.setVelocity(Rects[i+1].getVelocity());
             rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
-//            rect.body->SetAngularDamping(b2dNum(0.9f));
             rects.push_back(rect);
             
             b2RevoluteJointDef revoluteJointDef;
@@ -260,7 +348,6 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
             rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
             rect.body->GetFixtureList()->SetSensor(true);
-//            rect.setVelocity(Rects[i+1].getVelocity());
             rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
             rects.push_back(rect);
             
@@ -270,8 +357,17 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
             p = screenPtToWorldPt(ofPoint(-rectOff,0));
             revoluteJointDef.localAnchorB.Set(p.x, p.y);
-            joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
             
+            int angle = -90*i;
+            if (angle<-360) {
+                angle = 90;
+            }
+            
+            if (angle>360) {
+                angle = -90;
+            }
+            
+            joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
         }else{
             ofxBox2dRect rect;
             ofPoint pos;
@@ -279,7 +375,6 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.setPhysics(Rects[i+1].density, Rects[i+1].bounce, Rects[i+1].friction);
             rect.setup(world.getWorld(), pos.x,pos.y, Rects[i+1].getWidth(), Rects[i+1].getHeight());
             rect.body->GetFixtureList()->SetSensor(true);
-//            rect.setVelocity(Rects[i+1].getVelocity());
             rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
             rects.push_back(rect);
             
@@ -289,6 +384,9 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
             p = screenPtToWorldPt(ofPoint(0,0));
             revoluteJointDef.localAnchorB.Set(p.x, p.y);
+//            revoluteJointDef.enableLimit = true;
+//            revoluteJointDef.lowerAngle = -1*DEG_TO_RAD;
+//            revoluteJointDef.upperAngle = 1*DEG_TO_RAD;
             joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
         }
     }
@@ -301,8 +399,10 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
 //    revoluteJointDef.localAnchorB.Set(p.x, p.y);
 //    joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
 // 
-    jointSize = joints.size();
-    rectSize = rects.size();
+    joint.setup(world.getWorld(), rects.front().body, rects.back().body);
+    joint.setLength(fabs(rects.front().getPosition().y - rects.back().getPosition().y));
+    joint.setFrequency(0);
+    character.setVelocity(-1, 0);
 }
 
 
@@ -313,6 +413,9 @@ void ttChar::destroyRope(){
         return;
     }
     
+    if (joint.isSetup()) {
+        world.world->DestroyJoint(joint.joint);
+    }
     
     for(int i =joints.size()-1; i>=0; i--){
         world.world->DestroyJoint(joints[i]);
@@ -332,7 +435,6 @@ void ttChar::destroyRope(){
         rects[i].body->SetAngularVelocity(b2dNum(ofRandom(-3000,3000)));
     }
     
-    cout<<joints.empty()<<endl;
     
 }
 //-----------------------------------------------
@@ -349,7 +451,15 @@ void ttChar::destroyRect(){
 //-----------------------------------------------
 void ttChar::controlRope(){
     
-    int size = (fabs(rects[0].getPosition().y - getPos.y)-100)/20+2;
+    float goTo = fabs(rects[0].getPosition().y - getPos.y)-100;
+    float length;
+    if (joint.getLength()<goTo) {
+       length = joint.getLength()-20;
+    }
+    
+    joint.setLength(length);
+    
+    int size = length/20+2;
     
         if (!joints.empty() && rects.size()>size) {
             if (ofGetElapsedTimeMillis()-startTime>50) {
@@ -365,71 +475,72 @@ void ttChar::controlRope(){
                 p = screenPtToWorldPt(ofPoint(-9,0));
                 revoluteJointDef.localAnchorB.Set(p.x, p.y);
                 revoluteJointDef.enableLimit = true;
-                revoluteJointDef.lowerAngle = -PI/3;
-                revoluteJointDef.upperAngle = PI/3;
+                revoluteJointDef.lowerAngle = -90*DEG_TO_RAD;
+                revoluteJointDef.upperAngle = 90*DEG_TO_RAD;
                 joints.front() = (b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef);
                 
                 startTime = ofGetElapsedTimeMillis();
             }
+           
         }
-        else
-        {
-                rects.back().setDensity(30.0);
-        }
-        
-    
-
-
+   
 }
 //-----------------------------------------------
 void ttChar::swing(){
     
+    
     if (bHookIt == false) {
         float dis;
-        
         dis = rects.back().getPosition().y - character.getPosition().y;
         
         if (dis<0 && dis>-40) {
             bHookIt = true;
+          
         }
         
-        cout<<dis<<endl;
+      
     }
+
     
     if (bHookIt) {
-        character.setPosition(rects.back().getPosition().x-10,rects.back().getPosition().y+10);
+        character.setPosition(rects.back().getPosition());
     }
     
    
     if (charNum == 0) {
         if (control_B->bSwingLeft) {
-            rects[2].addForce(ofPoint(2,0), 10);
+            rects[1].addForce(ofPoint(-5,0), 10);
+            rects[2].addForce(ofPoint(-5,0), 10);
+            rects[3].addForce(ofPoint(-5,0), 10);
             cout<<"left"<<endl;
             control_B->bSwingLeft = false;
         }
         
         else if (control_B->bSwingRight) {
-            rects[2].addForce(ofPoint(-2,0), 10);
+            rects[1].addForce(ofPoint(5,0), 10);
+            rects[2].addForce(ofPoint(5,0), 10);
+            rects[3].addForce(ofPoint(5,0), 10);
             cout<<"right"<<endl;
             control_B->bSwingRight = false;
         }
     }else{
 
         if (control_A->bSwingLeft) {
-            rects[2].addForce(ofPoint(2,0), 10);
+            rects[1].addForce(ofPoint(5,0), 10);
+            rects[2].addForce(ofPoint(5,0), 10);
+            rects[3].addForce(ofPoint(5,0), 10);
             cout<<"left"<<endl;
             control_A->bSwingLeft = false;
         }
         else if (control_A->bSwingRight) {
-            rects[2].addForce(ofPoint(-2,0), 10);
+            rects[1].addForce(ofPoint(-5,0), 10);
+            rects[2].addForce(ofPoint(-5,0), 10);
+            rects[3].addForce(ofPoint(-5,0), 10);
             cout<<"right"<<endl;
             control_A->bSwingRight = false;
         }
     }
-    
-    
-    
-        
+
     
 }
 //----------------------------------------------
@@ -582,5 +693,7 @@ void ttChar::drawRope(){
         }
     }
     
-
+//    if (joint.isSetup()) {
+//        joint.draw();
+//    }
 }
