@@ -223,7 +223,7 @@ void ttChar::update(){
 void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Joints, ofPoint screen){
    
 
-    float rectOff = 14;
+    float rectOff = 9;
     
     for (int i=0; i<Joints.size(); i++) {
         if (joints.empty()) {
@@ -349,7 +349,7 @@ void ttChar::destroyRect(){
 //-----------------------------------------------
 void ttChar::controlRope(){
     
-    int size = (fabs(rects[0].getPosition().y - getPos.y)-100)/28;
+    int size = (fabs(rects[0].getPosition().y - getPos.y)-100)/20+2;
     
         if (!joints.empty() && rects.size()>size) {
             if (ofGetElapsedTimeMillis()-startTime>50) {
