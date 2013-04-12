@@ -61,11 +61,11 @@ void ofxBox2dJoint::setWorld(b2World* w) {
 //----------------------------------------
 bool ofxBox2dJoint::isSetup() {
 	if (world == NULL) {
-//		ofLog(OF_LOG_NOTICE, "ofxBox2dJoint :: world must be set!");
+		ofLog(OF_LOG_NOTICE, "ofxBox2dJoint :: world must be set!");
 		return false;
 	}
 	if (joint == NULL) {
-//		ofLog(OF_LOG_NOTICE, "ofxBox2dJoint :: setup function must be called!");
+		ofLog(OF_LOG_NOTICE, "ofxBox2dJoint :: setup function must be called!");
 		return false;
 	}
 	return true;

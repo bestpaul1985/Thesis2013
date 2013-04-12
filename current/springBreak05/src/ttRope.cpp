@@ -59,7 +59,7 @@ void ttRope::update(){
                 pos = *screenA + *charA;
                 pos.x += 10;
                 pos.y -= 30;
-                m_num = (768 - (screenA->y + charA->y-30))/18+1;
+                m_num = (768 - (screenA->y + charA->y))/28+1;
                 if (m_num>40) {
                     m_num = 40;
                 }
@@ -136,12 +136,13 @@ void ttRope::update(){
                 pos = *screenB + *charB;
                 pos.x += 10;
                 pos.y += 30;
-                m_num = ((screenB->y + charB->y)+30)/18+1;
+                m_num = ((screenB->y + charB->y)+60)/28+1;
                 if (m_num>40) {
                     m_num = 40;
                 }
                 if (joints.empty() && !bRopeInUse) {
                     initialize(pos);
+                    rects.back().setVelocity(0, -10);
                 }
                 bRopeInUse = true;
             }
@@ -235,6 +236,9 @@ void ttRope::initialize(ofPoint pos){
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
             p = screenPtToWorldPt(ofPoint(-9,0));
             revoluteJointDef.localAnchorB.Set(p.x, p.y);
+            revoluteJointDef.enableLimit = true;
+            revoluteJointDef.lowerAngle = -180*DEG_TO_RAD;
+            revoluteJointDef.upperAngle = 180*DEG_TO_RAD;
             joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
             
         }else if(i<m_num-1){
@@ -257,12 +261,11 @@ void ttRope::initialize(ofPoint pos){
             
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
             revoluteJointDef.localAnchorB.Set(p.x, p.y);
-            
             joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
             
         }else{
             ofxBox2dRect rect;
-            rect.setPhysics(0.3f, 0.0f, 0.0f);
+            rect.setPhysics(0.10f, 0.0f, 0.0f);
             if(i%2==1){
             rect.setup(world.world, rects.back().getPosition().x+9, rects.back().getPosition().y, 5, 5);
             }else{
