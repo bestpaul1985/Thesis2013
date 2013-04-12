@@ -13,15 +13,16 @@ void ttChar::setup(ofxBox2d &characterWorld,
                    ttControl &ctrl_A,
                    ttControl &ctrl_B,
                    ofPoint SetPos,
+                   ofPoint &Acc,
                    int iCharNum){
    
     world = characterWorld;
     control_A = &ctrl_A;
     control_B = &ctrl_B;
+    accFroce = &Acc;
     setWidth = 15;
     setHeight = 30;
     step = 0;
-  
     bFixedMove = false;
     setPos = SetPos;
     getPos = SetPos;
@@ -403,33 +404,59 @@ void ttChar::swing(){
    
     if (charNum == 0) {
         if (control_B->bSwingLeft) {
-            rects[2].addForce(ofPoint(2,0), 10);
-            cout<<"left"<<endl;
+            for (int i=1; i<5; i++) {
+                rects[i].addForce(ofPoint(-2,0), 1);
+            }
             control_B->bSwingLeft = false;
         }
         
         else if (control_B->bSwingRight) {
-            rects[2].addForce(ofPoint(-2,0), 10);
-            cout<<"right"<<endl;
+            for (int i=1; i<5; i++) {
+                rects[i].addForce(ofPoint(2,0), 1);
+            }
             control_B->bSwingRight = false;
         }
+        
+       
     }else{
 
         if (control_A->bSwingLeft) {
-            rects[2].addForce(ofPoint(2,0), 10);
-            cout<<"left"<<endl;
+            for (int i=1; i<5; i++) {
+                rects[i].addForce(ofPoint(2,0), 1);
+            }
+            
             control_A->bSwingLeft = false;
         }
         else if (control_A->bSwingRight) {
-            rects[2].addForce(ofPoint(-2,0), 10);
-            cout<<"right"<<endl;
+            for (int i=1; i<5; i++) {
+                rects[i].addForce(ofPoint(-2,0), 1);
+            }
+        
             control_A->bSwingRight = false;
         }
     }
     
     
     
+    if (accFroce->y>0.15 && !bAccRight) {
         
+        for (int i=1; i<rects.size(); i++) {
+            rects[i].addForce(ofPoint(-1,0), 1);
+        }
+        bAccRight = true;
+    }
+    
+    if(accFroce->y<-0.15 && !bAccLeft){
+        for (int i=1; i<rects.size(); i++) {
+            rects[i].addForce(ofPoint(1,0), 1);
+        }
+        bAccLeft = true;
+    }
+    
+    if (accFroce->y<0.15&&accFroce->y>-0.15) {
+        bAccLeft = false;
+        bAccRight = false;
+    }
     
 }
 //----------------------------------------------

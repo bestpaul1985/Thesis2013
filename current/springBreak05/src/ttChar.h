@@ -19,6 +19,7 @@ public:
                ttControl &ctrl_A,
                ttControl &ctrl_B,
                ofPoint SetPos,
+               ofPoint &Acc,
                int iCharNum);
     
     void update();
@@ -39,6 +40,7 @@ public:
     ofPoint         setPos;
     ofPoint         getPos;
     ofPoint         prePos;
+    ofPoint         *accFroce;
     float           setWidth;
     float           setHeight;
     float           adjustedHeight;
@@ -51,6 +53,8 @@ public:
     bool            bHookIt;
     bool            bDead;
     bool            bDestroyRect;
+    bool            bAccLeft;
+    bool            bAccRight;
     int             charNum;
     int             step;
     int             deadStep;

@@ -32,8 +32,8 @@ void testApp::setup(){
     control_A.setup(0);
     control_B.setup(1);
     //char
-    char_A.setup(world_A,control_A,control_B,ofPoint(50,0),0);
-    char_B.setup(world_B,control_A,control_B,ofPoint(50,0),1);
+    char_A.setup(world_A,control_A,control_B,ofPoint(50,0),ofxAccelerometer.getForce(),0);
+    char_B.setup(world_B,control_A,control_B,ofPoint(50,0),ofxAccelerometer.getForce(),1);
     
     //translate
     translate_A.set(384,250);
