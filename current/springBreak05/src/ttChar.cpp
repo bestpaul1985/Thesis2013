@@ -303,6 +303,12 @@ void ttChar::initializeRope(vector<ofxBox2dRect> Rects, ofPoint screen){
 }
 //-----------------------------------------------
 void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Joints, ofPoint screen){
+<<<<<<< HEAD
+=======
+   
+
+    float rectOff = 14;
+>>>>>>> parent of 2498f97... fixed bug
     
     int size = 0;
     for (int i=0; i<Rects.size(); i++) {
@@ -451,6 +457,7 @@ void ttChar::destroyRect(){
 //-----------------------------------------------
 void ttChar::controlRope(){
     
+<<<<<<< HEAD
     float goTo = fabs(rects[0].getPosition().y - getPos.y)-100;
     float length;
     if (joint.getLength()<goTo) {
@@ -460,6 +467,9 @@ void ttChar::controlRope(){
     joint.setLength(length);
     
     int size = length/20+2;
+=======
+    int size = (fabs(rects[0].getPosition().y - getPos.y)-100)/28;
+>>>>>>> parent of 2498f97... fixed bug
     
         if (!joints.empty() && rects.size()>size) {
             if (ofGetElapsedTimeMillis()-startTime>50) {
