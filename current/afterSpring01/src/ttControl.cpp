@@ -9,18 +9,20 @@
 #include "ttControl.h"
 
 void ttControl::setup(){
-    bSmallLeft = false;
-    bSmallRight = false;
-    bSwingRight =false;
-    bSwingLeft = false;
-    bLeft = false;
-    bRight = false;
-    bLeftAir = false;
-    bRightAir = false;
-    bHookRope = false;
-    bRelese = false;
-    bFixed = false;
-    bDrawButton = false;
+//    bSmallLeft = false;
+//    bSmallRight = false;
+//    bSwingRight =false;
+//    bSwingLeft = false;
+//    bLeft = false;
+//    bRight = false;
+//    bLeftAir = false;
+//    bRightAir = false;
+//    bHookRope = false;
+//    bRelese = false;
+//    bFixed = false;
+//    bDrawButton = false;
+    
+    bAllTouch = false;
     diff.set(0, 0);
     dis = 0;
     touchId = -1;
@@ -55,11 +57,13 @@ void ttControl::draw(){
 //        }
 //         ofRect(rope_Area);
 //    }
-    cout<<bTouch[0]<<bTouch[1]<<bTouch[2]<<bTouch[3]<<endl;
+//    cout<<bTouch[0]<<bTouch[1]<<bTouch[2]<<bTouch[3]<<endl;
+//     cout<<"bAllTouch: "<<bAllTouch<<endl;
 }
 //------------------------------------------------
 void ttControl::touchDown(int x, int y, int TouchId){
   
+    int counter =0;
     ofPoint touchPos(x,y);
     for (int i = 0; i<4; i++) {
         if (orgPos[i].distance(touchPos)<RAD) {
@@ -68,6 +72,15 @@ void ttControl::touchDown(int x, int y, int TouchId){
         }
     }
     
+    for (int i = 0; i< 4; i++) {
+        if (bTouch[i]) {
+            counter ++;
+        }
+    }
+    
+    if (counter ==4) {
+        bAllTouch = true;
+    }
     
     
 }
@@ -80,7 +93,7 @@ void ttControl::touchMove(int x, int y, int TouchId){
 //-------------------------------------------------
 void ttControl::touchUp(int x, int y, int TouchId){
    
-    
+    int counter =0;
     ofPoint touchPos(x,y);
 
     for (int i = 0; i<4; i++) {
@@ -89,6 +102,15 @@ void ttControl::touchUp(int x, int y, int TouchId){
         }
     }
 
+    for (int i = 0; i< 4; i++) {
+        if (bTouch[i]) {
+            counter ++;
+        }
+    }
+    
+    if (counter <4) {
+        bAllTouch = false;
+    }
 }
    
 

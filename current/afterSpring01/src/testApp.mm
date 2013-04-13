@@ -11,11 +11,11 @@ void testApp::setup(){
     // setup world A
     world_A.init();
     world_A.setFPS(60);
-    world_A.setGravity(0,-30);
+    world_A.setGravity(0,-10);
     // setup world B
     world_B.init();
     world_B.setFPS(60);
-    world_B.setGravity(0, 30);
+    world_B.setGravity(0, 10);
     //Map
     ground_A.setup(1, 0, world_A);
     ground_B.setup(1, 1, world_B);
@@ -132,15 +132,15 @@ void testApp::update(){
     
     //no jump in sky
     if (numFootContacts_A<=0) {
-        control.bFixed = true;
+        char_A.bInSky = true;
     }else{
-        control.bFixed = false;
+        char_A.bInSky = false;
     }
     
     if (numFootContacts_B<=0) {
-        control.bFixed = true;
+        char_B.bInSky = true;
     }else{
-        control.bFixed = false;
+        char_B.bInSky = false;
     }
 
     //Character
@@ -150,28 +150,51 @@ void testApp::update(){
     screen();
    
     //rope update
-    rope_A.update();
-    rope_B.update();
     
+    if (!control.bAllTouch) {
+        rope_A.update();
+        rope_B.update();
+    }
     //character ropeA
     
-    if (char_A.bDouPressed && rope_B.bReady) {
+    if (char_A.bDouPressed && rope_B.bReady && char_A.joints.empty()) {
         char_A.copyRope(rope_B.rects, rope_B.joints, screenA);
         rope_B.bReady = false;
         rope_B.destroy();
+    }else if(char_A.bDouPressed && !char_A.joints.empty()&& !char_A.bRopeInControl){
+        char_A.controlRope();
+    }else if(char_A.bDouPressed && !char_A.joints.empty()&& char_A.bRopeInControl){
+        char_A.swing();
+    }else if(!char_A.bDouPressed && !char_A.joints.empty()&& char_A.bSwing){
+        char_A.character.setVelocity(char_A.rects.back().getVelocity().x, char_A.character.getVelocity().y);
+        char_A.destroyRope();
+        char_A.bSwing = false;
+    }
+    
+    if (char_B.bDouPressed && rope_A.bReady && char_B.joints.empty()) {
+        char_B.copyRope(rope_A.rects, rope_A.joints, screenB);
+        rope_A.bReady = false;
+        rope_A.destroy();
+    }else if(char_B.bDouPressed && !char_B.joints.empty()&& !char_B.bRopeInControl){
+        char_B.controlRope();
+    }else if(char_B.bDouPressed && !char_B.joints.empty()&& char_B.bRopeInControl){
+        char_B.swing();
+    }else if(!char_B.bDouPressed && !char_B.joints.empty()&& char_B.bSwing){
+        char_B.character.setVelocity(char_B.rects.back().getVelocity().x, char_B.character.getVelocity().y);
+        char_B.destroyRope();
+        char_B.bSwing = false;
     }
     
     
     
-    
-    
-    if (!rope_A.bInitialize && !rope_B.bInitialize) {
+    if (!rope_A.bInitialize && !rope_B.bInitialize && !control.bAllTouch) {
         char_B.destroyRope();
         rope_A.bRopeInUse = false;
-        
         char_A.destroyRope();
         rope_B.bRopeInUse = false;
     }
+    
+    
     
 }
 

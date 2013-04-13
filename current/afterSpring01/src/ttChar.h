@@ -49,6 +49,7 @@ public:
     float           startTime;
     bool            bFixedMove;
     bool            bSwing;
+    bool            bInSky;
     bool            mirrorLeft;
     bool            bReset;
     bool            bHookIt;

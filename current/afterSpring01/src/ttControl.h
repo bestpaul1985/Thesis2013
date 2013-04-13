@@ -28,6 +28,7 @@ public:
     int  RAD;
     bool bTouch[4];
     int touchID[4];
+    bool bAllTouch;
     //----old
     float w;
     float h;
