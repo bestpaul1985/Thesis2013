@@ -51,13 +51,13 @@ void ttChar::setup(ofxBox2d &characterWorld,
     b2Vec2 v2;
     if (charNum == 0) {
         nFiles = dir.listDir("sprites/girl");
-        v2 = screenPtToWorldPt(ofPoint(0,-30));
+        v2.Set(b2dNum(0), b2dNum(-30));
      
     }
     else
     {
         nFiles  = dir.listDir("sprites/boy");
-        v2 = screenPtToWorldPt(ofPoint(0,30));
+        v2.Set(b2dNum(0), b2dNum(30));
     }
  
     if (nFiles) {
@@ -69,7 +69,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
     }
     
     b2PolygonShape shape;
-    shape.SetAsBox(b2dNum(10), b2dNum(10), v2, b2dNum(0));
+    shape.SetAsBox(b2dNum(10), b2dNum(10), v2 , b2dNum(0));
 	b2FixtureDef fixture;
     fixture.isSensor = true;
     fixture.shape = &shape;
@@ -319,7 +319,20 @@ void ttChar::controlRope(){
         }
         else
         {
+            if (rects.back().getPosition().distance(character.getPosition())<50) {
                 bRopeInControl = true;
+            }
+           
+//            b2PolygonShape shape;
+//            shape.SetAsBox(b2dNum(10), b2dNum(10), v2, b2dNum(0));
+//            b2FixtureDef fixture;
+//            fixture.isSensor = true;
+//            fixture.shape = &shape;
+//            b2Fixture* footSensorFixture = character.body->CreateFixture(&fixture);
+//            footSensorFixture->SetUserData(new ttSetData());
+//            ttSetData * sd = (ttSetData*)footSensorFixture->GetUserData();
+//            sd->name	= "footSenser";
+
         }
 
 }
@@ -327,8 +340,9 @@ void ttChar::controlRope(){
 void ttChar::swing(){
     bRopeInControl = false;
     bSwing = true;
-    character.setPosition(rects.back().getPosition());
     
+    character.setPosition(rects.back().getPosition());
+
     if (accFroce->y>0.15 && !bAccRight) {
         
         for (int i=1; i<rects.size(); i++) {
