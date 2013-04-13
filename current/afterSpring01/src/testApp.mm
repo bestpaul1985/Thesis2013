@@ -50,8 +50,8 @@ void testApp::setup(){
     accIndictor.setup(ofxAccelerometer.getForce());
     
     //rope
-    rope_A.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control,control,0);
-    rope_B.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control,control,1);
+    rope_A.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control,0);
+    rope_B.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control,1);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -155,73 +155,23 @@ void testApp::update(){
     
     //character ropeA
     
-   
+    if (char_A.bDouPressed && rope_B.bReady) {
+        char_A.copyRope(rope_B.rects, rope_B.joints, screenA);
+        rope_B.bReady = false;
+        rope_B.destroy();
+    }
     
-//    if (rope_A.bRopeInUse) {
-//        char_A.bFixedMove = true;
-//        char_B.destroyRect();
-//        rope_A.bRopeInUse = false;
-//    }
-//    
-//    if(rope_A.bReady){
-//        control_B.bDrawButton = true;
-//    }
-//    
-//    if (control_B.bHookRope && rope_A.bReady) {
-//        char_B.copyRope(rope_A.rects, rope_A.joints, screenB);
-//        char_B.bSwing = true;
-//        char_B.bFixedMove = true;
-//        rope_A.bReady = false;
-//        rope_A.destroy();
-//    }else if(control_B.bHookRope && char_B.bSwing){
-//        char_B.controlRope();
-//    }else if(!control_B.bHookRope && char_B.bSwing){
-//        char_B.character.setVelocity(char_B.rects.back().getVelocity());
-//        char_B.destroyRope();
-//        char_B.bSwing = false;
-//        char_B.bFixedMove = false;
-//        control_B.bDrawButton = false;
-//    }
-//    //character ropeB
-//    if (rope_B.bRopeInUse) {
-//        char_B.bFixedMove = true;
-//        char_A.destroyRect();
-//        rope_B.bRopeInUse = false;
-//    }
-//    
-//    if(rope_B.bReady){
-//        control_A.bDrawButton = true;
-//    }
-//    
-//    if (control_A.bHookRope && rope_B.bReady) {
-//        char_A.copyRope(rope_B.rects, rope_B.joints, screenA);
-//        char_A.bSwing = true;
-//        char_A.bFixedMove = true;
-//        rope_B.bReady = false;
-//        rope_B.destroy();
-//    }else if(control_A.bHookRope && char_A.bSwing){
-//        char_A.controlRope();
-//    }else if(!control_A.bHookRope && char_A.bSwing){
-//        char_A.character.setVelocity(char_A.rects.back().getVelocity());
-//        char_A.destroyRope();
-//        char_A.bSwing = false;
-//        char_A.bFixedMove = false;
-//        control_A.bDrawButton = false;
-//    }
-//    
-//    if (!rope_A.bInitialize && !rope_B.bInitialize) {
-//        char_B.destroyRope();
-//        char_B.bSwing = false;
-//        char_B.bFixedMove = false;
-//       
-//        control_B.bDrawButton = false;
-//        
-//        char_A.destroyRope();
-//        char_A.bSwing = false;
-//        char_A.bFixedMove = false;
-//        
-//        control_A.bDrawButton = false;
-//    }
+    
+    
+    
+    
+    if (!rope_A.bInitialize && !rope_B.bInitialize) {
+        char_B.destroyRope();
+        rope_A.bRopeInUse = false;
+        
+        char_A.destroyRope();
+        rope_B.bRopeInUse = false;
+    }
     
 }
 

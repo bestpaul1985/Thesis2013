@@ -21,25 +21,28 @@ void ttChar::setup(ofxBox2d &characterWorld,
     setWidth = 15;
     setHeight = 30;
     step = 0;
-    bFixedMove = false;
+   
     setPos = SetPos;
     getPos = SetPos;
     charNum = iCharNum;
-    bSwing = false;
+    
     if(charNum ==1)mirrorLeft = false;
     if(charNum ==0)mirrorLeft = true;
+    bSwing = false;
+    bFixedMove = false;
     bDead = false;
     bDestroyRect = false;
     bHookIt = false;
+    bDouPressed = false;
+    bRopeInControl = false;
     alpha = 255;
     deadStep = 2;
     hold_Num = 0;
     
     color.set(255, 255, 255, 255);
-    character.setPhysics(40.f, 0.0f, 0.95f);
+    character.setPhysics(4.0f, 0.0f, 0.5f);
     character.setup(world.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
     character.body->SetFixedRotation(true);
-    character.body->SetLinearDamping(b2dNum(0.95));
     numFootContacts = 0;
     adjustedHeight = 85;
     ofDirectory dir;
@@ -79,56 +82,65 @@ void ttChar::setup(ofxBox2d &characterWorld,
 //----------------------------------------------
 void ttChar::update(){
     
-    float x =20;
-    float scale = 1000;
-    int vel = 10;
-    
+    float x = 10;
+    float scale = 10;
+
     if (charNum == 0) {
-        if (control->bTouch[0]&&control->bTouch[1]) {
+        if (accFroce->x > -0.15) {
+            if (control->bTouch[0]&&control->bTouch[1]) {
+                bDouPressed =true;
+            }else if (control->bTouch[0] && !control->bTouch[1]) {
+                character.addForce(ofPoint(-x,0), scale);
+                bDouPressed =false;
+                mirrorLeft = false;
+            }else if (control->bTouch[1] && !control->bTouch[0]) {
+                character.addForce(ofPoint(x,0), scale);
+                bDouPressed =false;
+                mirrorLeft = true;
+            }else if(!control->bTouch[0] && !control->bTouch[1]){
+                character.setVelocity(0, character.getVelocity().y);
+            }
             
-        }else if (control->bTouch[0] && !control->bTouch[1]) {
-            character.setVelocity(-vel, 0);
-        }else if (control->bTouch[1] && !control->bTouch[0]) {
-            character.setVelocity(vel, 0);
-        }else if(!control->bTouch[0] && !control->bTouch[1]){
-            character.setVelocity(0,0);
+        }
+        if (character.getVelocity().x > 15) {
+            character.setVelocity(15, character.getVelocity().y);
+        }else if(character.getVelocity().x < -15){
+            character.setVelocity(-15, character.getVelocity().y);
         }
     }
     
     if (charNum == 1) {
+        if (accFroce->x < 0.15) {
+            if (control->bTouch[2]&&control->bTouch[3]) {
+                bDouPressed =true;
+            }else if (control->bTouch[2]&&!control->bTouch[3]) {
+                character.addForce(ofPoint(-x,0), scale);
+                bDouPressed =false;
+                mirrorLeft = true;
+            }else if (control->bTouch[3]&& !control->bTouch[2]) {
+                character.addForce(ofPoint(x,0), scale);
+                bDouPressed =false;
+                mirrorLeft = false;
+            }else if(!control->bTouch[2]&&!control->bTouch[3]){
+                character.setVelocity(0, character.getVelocity().y);
+            }
+        }
         
-        if (control->bTouch[2]&&control->bTouch[3]) {
-        
-        }else if (control->bTouch[2]&&!control->bTouch[3]) {
-            character.setVelocity(-vel, 0);
-        }else if (control->bTouch[3]&& !control->bTouch[2]) {
-            character.setVelocity(vel, 0);
-        }else if(!control->bTouch[2]&&!control->bTouch[3]){
-            character.setVelocity(0,0);
+        if (character.getVelocity().x > 15) {
+            character.setVelocity(15, character.getVelocity().y);
+        }else if(character.getVelocity().x < -15){
+            character.setVelocity(-15, character.getVelocity().y);
         }
     }
     
     
-    
-    if (bSwing) {
-        
-         swing();
-    }else{
-        getPos = character.getPosition();
-        bHookIt = false;
-    }
-   
     dead();
-        
-    if (joints.empty()&&!rects.empty()) {
-        alpha-=5;
+    destroyRect();
+    
+    if (!bSwing) {
+        getPos = character.getPosition();
     }
     
-    if (alpha<=100) {
-        destroyRect();
-        alpha = 255;
-        bDestroyRect = false;
-    }
 }
 
 //-----------------------------------------------
@@ -212,9 +224,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
 //    p = screenPtToWorldPt(ofPoint(15,0));
 //    revoluteJointDef.localAnchorB.Set(p.x, p.y);
 //    joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
-// 
-    jointSize = joints.size();
-    rectSize = rects.size();
+
 }
 
 
@@ -243,25 +253,33 @@ void ttChar::destroyRope(){
         rects[i].body->SetAngularDamping(b2dNum(0));
         rects[i].body->SetAngularVelocity(b2dNum(ofRandom(-3000,3000)));
     }
-    
-    cout<<joints.empty()<<endl;
+
     
 }
 //-----------------------------------------------
 void ttChar::destroyRect(){
     
-    if (!rects.empty()) {
+    
+    if (joints.empty()&&!rects.empty()) {
+        alpha-=5;
+    }
+    
+    if (alpha<=100) {
         for(int i =0; i<rects.size(); i++){
             world.world->DestroyBody(rects.back().body);
             rects.pop_back();
         }
         rects.clear();
+        alpha = 255;
+        bDestroyRect = false;
     }
+    
+   
 }
 //-----------------------------------------------
 void ttChar::controlRope(){
     
-    int size = (fabs(rects[0].getPosition().y - getPos.y)-100)/20+2;
+    int size = (fabs(rects[0].getPosition().y - getPos.y)-100)/18+2;
     
         if (!joints.empty() && rects.size()>size) {
             if (ofGetElapsedTimeMillis()-startTime>50) {
@@ -286,68 +304,14 @@ void ttChar::controlRope(){
         }
         else
         {
-                rects.back().setDensity(30.0);
+                bRopeInControl = true;
         }
-        
-    
-
 
 }
 //-----------------------------------------------
 void ttChar::swing(){
-    
-    if (bHookIt == false) {
-        float dis;
-        
-        dis = rects.back().getPosition().y - character.getPosition().y;
-        
-        if (dis<0 && dis>-40) {
-            bHookIt = true;
-        }
-        
-        cout<<dis<<endl;
-    }
-    
-    if (bHookIt) {
-        character.setPosition(rects.back().getPosition().x-10,rects.back().getPosition().y+10);
-    }
-    
-   
-//    if (charNum == 0) {
-//        if (control_B->bSwingLeft) {
-//            for (int i=1; i<5; i++) {
-//                rects[i].addForce(ofPoint(-2,0), 1);
-//            }
-//            control_B->bSwingLeft = false;
-//        }
-//        
-//        else if (control_B->bSwingRight) {
-//            for (int i=1; i<5; i++) {
-//                rects[i].addForce(ofPoint(2,0), 1);
-//            }
-//            control_B->bSwingRight = false;
-//        }
-//        
-//       
-//    }else{
-//
-//        if (control_A->bSwingLeft) {
-//            for (int i=1; i<5; i++) {
-//                rects[i].addForce(ofPoint(2,0), 1);
-//            }
-//            
-//            control_A->bSwingLeft = false;
-//        }
-//        else if (control_A->bSwingRight) {
-//            for (int i=1; i<5; i++) {
-//                rects[i].addForce(ofPoint(-2,0), 1);
-//            }
-//        
-//            control_A->bSwingRight = false;
-//        }
-//    }
-    
-    
+    bSwing = true;
+    character.setPosition(rects.back().getPosition());
     
     if (accFroce->y>0.15 && !bAccRight) {
         
@@ -443,10 +407,6 @@ void ttChar::drawBox2dObject(){
     ofSetColor(255, 30, 220,100);
     
     character.draw();
-    if (step>0) {
-        start.draw();
-        joint.draw();
-    }
     //draw sensor
     ofPolyline   shape;
     const b2Transform& xf = character.body->GetTransform();

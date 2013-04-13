@@ -8,14 +8,13 @@
 
 #include "ttRope.h"
 
-void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint &_CharA, ofPoint &_CharB,ttControl &cont_A, ttControl &cont_B,int num){
+void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint &_CharA, ofPoint &_CharB,ttControl &cont, int num){
     acc = &accFrc;
     screenA = &_screenA;
     screenB = &_screenB;
     charA = &_CharA;
     charB = &_CharB;
-    contA = &cont_A;
-    contB = &cont_B;
+    control = &cont;
     ropeNum = num;
     
     
@@ -65,7 +64,7 @@ void ttRope::update(){
                 }
                 if (joints.empty() && !bRopeInUse) {
                     initialize(pos);
-                    rects.back().setVelocity(0, -10);
+                    rects[rects.size()-2].setVelocity(0, 10);
                 }
                 bRopeInUse = true;
             }
@@ -142,7 +141,7 @@ void ttRope::update(){
                 }
                 if (joints.empty() && !bRopeInUse) {
                     initialize(pos);
-                    rects.back().setVelocity(0, -10);
+                    rects[rects.size()-2].setVelocity(0, 10);
                 }
                 bRopeInUse = true;
             }
@@ -205,12 +204,6 @@ void ttRope::update(){
         }
      
     }
-    
-
-    
-    
-//    cout<<bRopeInUse<<"     "<<bHooked<<endl;
-
     
 }
 //--------------------------------------------------------

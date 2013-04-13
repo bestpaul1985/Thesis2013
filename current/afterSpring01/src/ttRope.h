@@ -14,10 +14,9 @@
 #include "ttControl.h"
 class ttRope{
 public:
-    void setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint &_CharA, ofPoint &_CharB,ttControl &cont_A, ttControl &cont_B, int num);
+    void setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint &_CharA, ofPoint &_CharB,ttControl &cont, int num);
     void update();
     void initialize(ofPoint pos);
-    void control();
     void destroy();
     void draw();
     
@@ -25,8 +24,6 @@ public:
     ofxBox2dRect start;
     ofxBox2dRect end;
     ofxBox2dJoint joint;
-    
- 
     
     vector<ofxBox2dRect>    rects;
     vector<b2RevoluteJoint*> joints;
@@ -36,8 +33,7 @@ public:
     ofPoint *screenB;
     ofPoint *charA;
     ofPoint *charB;
-    ttControl *contA;
-    ttControl *contB;
+    ttControl *control;
     
     float length;
     float startTime;

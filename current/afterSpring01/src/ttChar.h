@@ -13,6 +13,7 @@
 #include "ofxBox2d.h"
 #include "ttSetData.h"
 #include "ttControl.h"
+#include "ttRope.h"
 class ttChar{
 public:
     void setup(ofxBox2d &characterWorld,
@@ -35,6 +36,7 @@ public:
     
     ofxBox2dRect    character;
     ofxBox2d        world;
+    ttRope          *rope;
     
     ofPoint         setPos;
     ofPoint         getPos;
@@ -54,6 +56,8 @@ public:
     bool            bDestroyRect;
     bool            bAccLeft;
     bool            bAccRight;
+    bool            bDouPressed;
+    bool            bRopeInControl;
     int             charNum;
     int             step;
     int             deadStep;
@@ -61,6 +65,7 @@ public:
     int             jointSize;
     int             hold_Num;
     int             rectSize;
+    
     ttControl       *control;
     vector<ofImage> sprite;
     
