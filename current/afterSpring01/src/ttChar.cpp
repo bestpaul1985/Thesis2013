@@ -41,7 +41,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
     hold_Num = 0;
     
     color.set(255, 255, 255, 255);
-    character.setPhysics(4.0f, 0.0f, 0.5f);
+    character.setPhysics(4.0f, 0.0f, 0.999f);
     character.setup(world.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
     character.body->SetFixedRotation(true);
     numFootContacts = 0;
@@ -83,7 +83,7 @@ void ttChar::setup(ofxBox2d &characterWorld,
 //----------------------------------------------
 void ttChar::update(){
     
-    float x = 10;
+    float x = 20;
     float scale = 10;
 
     if (charNum == 0) {
@@ -99,16 +99,16 @@ void ttChar::update(){
                 bDouPressed =false;
                 mirrorLeft = true;
             }else if(!control->bTouch[0] && !control->bTouch[1] && !bInSky){
-                character.setVelocity(0, character.getVelocity().y);
+//                character.setVelocity(0, character.getVelocity().y);
             }
             
         }
         
         
-        if (character.getVelocity().x > 15) {
-            character.setVelocity(15, character.getVelocity().y);
-        }else if(character.getVelocity().x < -15){
-            character.setVelocity(-15, character.getVelocity().y);
+        if (character.getVelocity().x > 10) {
+            character.setVelocity(10, character.getVelocity().y);
+        }else if(character.getVelocity().x < -10){
+            character.setVelocity(-10, character.getVelocity().y);
         }
     }
     
@@ -125,14 +125,14 @@ void ttChar::update(){
                 bDouPressed =false;
                 mirrorLeft = false;
             }else if(!control->bTouch[2]&&!control->bTouch[3]&&!bInSky){
-                character.setVelocity(0, character.getVelocity().y);
+//                character.setVelocity(0, character.getVelocity().y);
             }
         }
         
-        if (character.getVelocity().x > 15) {
-            character.setVelocity(15, character.getVelocity().y);
-        }else if(character.getVelocity().x < -15){
-            character.setVelocity(-15, character.getVelocity().y);
+        if (character.getVelocity().x > 10) {
+            character.setVelocity(10, character.getVelocity().y);
+        }else if(character.getVelocity().x < -10){
+            character.setVelocity(-10, character.getVelocity().y);
         }
     }
     
@@ -354,14 +354,14 @@ void ttChar::swing(){
     if (accFroce->y>0.15 && !bAccRight) {
         
         for (int i=1; i<rects.size(); i++) {
-            rects[i].addForce(ofPoint(-1,0), 1);
+            rects[i].addForce(ofPoint(-1-0.05*i,0), 1);
         }
         bAccRight = true;
     }
     
     if(accFroce->y<-0.15 && !bAccLeft){
         for (int i=1; i<rects.size(); i++) {
-            rects[i].addForce(ofPoint(1,0), 1);
+            rects[i].addForce(ofPoint(1+0.05*i,0), 1);
         }
         bAccLeft = true;
     }
