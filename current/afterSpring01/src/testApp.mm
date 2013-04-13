@@ -220,7 +220,7 @@ void testApp::drawScene(int iDraw){
         ofTranslate(translate_A.x-char_A.getPos.x,translate_A.y);
         ground_A.draw();
 //        ground_A.drawPolyLine();
-//        char_A.drawBox2dObject();
+        char_A.drawBox2dObject();
 //        thorns_A.draw();
         ofPopMatrix();
         
@@ -228,7 +228,7 @@ void testApp::drawScene(int iDraw){
         ofTranslate(translate_B.x-char_B.getPos.x,translate_B.y);
         ground_B.draw();
 //        ground_B.drawPolyLine();
-//        char_B.drawBox2dObject();
+        char_B.drawBox2dObject();
 //        thorns_B.draw();
         ofPopMatrix();
         
