@@ -285,7 +285,7 @@ void ttChar::destroyRect(){
 //-----------------------------------------------
 void ttChar::controlRope(){
     
-    int size = (fabs(rects[0].getPosition().y - getPos.y)-100)/18+2;
+    int size = (fabs(rects[0].getPosition().y - getPos.y)-100)/28+2;
     
         if (!joints.empty() && rects.size()>size) {
             int counter = 0;
@@ -319,20 +319,28 @@ void ttChar::controlRope(){
         }
         else
         {
-            if (rects.back().getPosition().distance(character.getPosition())<50) {
+            if (rects.back().getPosition().distance(character.getPosition())<100) {
                 bRopeInControl = true;
             }
            
 //            b2PolygonShape shape;
-//            shape.SetAsBox(b2dNum(10), b2dNum(10), v2, b2dNum(0));
+//            b2Vec2 v2;
+//            if (charNum == 0) {
+//               
+//                v2.Set(b2dNum(0), b2dNum(-30));
+//                
+//            }
+//            else
+//            {
+//                
+//                v2.Set(b2dNum(0), b2dNum(30));
+//            }
+//
+//            shape.SetAsBox(b2dNum(15), b2dNum(30),v2, 0);
 //            b2FixtureDef fixture;
-//            fixture.isSensor = true;
 //            fixture.shape = &shape;
-//            b2Fixture* footSensorFixture = character.body->CreateFixture(&fixture);
-//            footSensorFixture->SetUserData(new ttSetData());
-//            ttSetData * sd = (ttSetData*)footSensorFixture->GetUserData();
-//            sd->name	= "footSenser";
-
+//            rects.back().body->CreateFixture(&fixture);
+           
         }
 
 }

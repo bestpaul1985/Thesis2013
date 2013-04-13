@@ -166,7 +166,7 @@ void testApp::update(){
     }else if(char_A.bDouPressed && !char_A.joints.empty()&& char_A.bRopeInControl){
         char_A.swing();
     }else if(!char_A.bDouPressed && !char_A.joints.empty()&& char_A.bSwing){
-        char_A.character.setVelocity(char_A.rects.back().getVelocity().x, char_A.character.getVelocity().y);
+        char_A.character.setVelocity(char_A.rects.back().getVelocity().x * 3, char_A.character.getVelocity().y);
         char_A.destroyRope();
         char_A.bSwing = false;
     }
@@ -180,7 +180,7 @@ void testApp::update(){
     }else if(char_B.bDouPressed && !char_B.joints.empty()&& char_B.bRopeInControl){
         char_B.swing();
     }else if(!char_B.bDouPressed && !char_B.joints.empty()&& char_B.bSwing){
-        char_B.character.setVelocity(char_B.rects.back().getVelocity().x, char_B.character.getVelocity().y);
+        char_B.character.setVelocity(char_B.rects.back().getVelocity().x * 3, char_B.character.getVelocity().y);
         char_B.destroyRope();
         char_B.bSwing = false;
     }
