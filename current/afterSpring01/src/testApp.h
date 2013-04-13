@@ -51,9 +51,8 @@ class testApp : public ofxiPhoneApp{
         ttChar  char_B;
         int numFootContacts_A, numFootContacts_B;
     
-        ttControl control_A;
-        ttControl control_B;
-    
+        ttControl control;
+           
         ttGround  ground_A, ground_B;
     
         ofRectangle view_A,view_B;

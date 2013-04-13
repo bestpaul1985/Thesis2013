@@ -8,7 +8,7 @@
 
 #include "ttControl.h"
 
-void ttControl::setup(int iCharNum){
+void ttControl::setup(){
     bSmallLeft = false;
     bSmallRight = false;
     bSwingRight =false;
@@ -33,6 +33,7 @@ void ttControl::setup(int iCharNum){
 
     for (int i =0; i<4; i++) {
         bTouch[i] = false;
+        touchID[i] = -1;
     }
 }
 //------------------------------------------------
@@ -54,7 +55,7 @@ void ttControl::draw(){
 //        }
 //         ofRect(rope_Area);
 //    }
-    
+    cout<<bTouch[0]<<bTouch[1]<<bTouch[2]<<bTouch[3]<<endl;
 }
 //------------------------------------------------
 void ttControl::touchDown(int x, int y, int TouchId){
@@ -63,6 +64,7 @@ void ttControl::touchDown(int x, int y, int TouchId){
     for (int i = 0; i<4; i++) {
         if (orgPos[i].distance(touchPos)<RAD) {
             bTouch[i]=true;
+            touchID[i] = TouchId;
         }
     }
     
@@ -73,71 +75,20 @@ void ttControl::touchDown(int x, int y, int TouchId){
 //------------------------------------------------
 void ttControl::touchMove(int x, int y, int TouchId){
 
-    ofPoint touchPos(x,y);
-    for (int i = 0; i<4; i++) {
-        if (orgPos[i].distance(touchPos)<RAD) {
-            bTouch[i]=true;
-        }
-    }
-
     
 }
 //-------------------------------------------------
 void ttControl::touchUp(int x, int y, int TouchId){
    
-
-//    if (touchId == TouchId) {
-//        if (Directional_Touch_Area.inside(x, y)){
-//            
-//            if ( charNum == 0 ) {
-//                if (dis> 10 && diff.x >0){
-//                    bLeft = true;
-//                }
-//                if(dis > 10 && diff.x < 0){
-//                    bRight = true;
-//                }
-//                
-//                
-//                if (dis> 10 && diff.x >0){
-//                    bSwingLeft = true;
-//                }
-//                
-//                if(dis > 10 && diff.x < 0){
-//                    bSwingRight = true;
-//                }
-//            }
-//            
-//            if ( charNum == 1) {
-//                if (dis> 10 && diff.x >0){
-//                    bRight = true;
-//                }
-//                
-//                if(dis > 10 && diff.x < 0){
-//                    bLeft = true;
-//                    
-//                }
-//                
-//                if (dis> 10 && diff.x >0){
-//                    bSwingRight = true;
-//                }
-//                
-//                if(dis > 10 && diff.x < 0){
-//                    bSwingLeft = true;
-//                }
-//            }
-//            
-//        }
-//        
-//        
-//        touchId = -1;
-//        
-//        if (rope_Area.inside(x, y)) {
-//            bHookRope = false;
-//        }
-//    }
-
     
-        
+    ofPoint touchPos(x,y);
+
+    for (int i = 0; i<4; i++) {
+        if (TouchId == touchID[i]) {
+            bTouch[i]=false;
+        }
+    }
+
 }
    
 

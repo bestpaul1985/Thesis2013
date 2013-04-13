@@ -14,7 +14,7 @@ class ttControl{
 
 public:
     
-    void setup(int iCharNum);
+    void setup();
     void draw();
     void touchDown(int x, int y, int TouchId);
     void touchMove(int x, int y, int TouchId);
@@ -27,7 +27,7 @@ public:
     ofPoint orgPos[4];
     int  RAD;
     bool bTouch[4];
-    
+    int touchID[4];
     //----old
     float w;
     float h;

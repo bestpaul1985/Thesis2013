@@ -16,8 +16,7 @@
 class ttChar{
 public:
     void setup(ofxBox2d &characterWorld,
-               ttControl &ctrl_A,
-               ttControl &ctrl_B,
+               ttControl &ctrl,
                ofPoint SetPos,
                ofPoint &Acc,
                int iCharNum);
@@ -62,8 +61,7 @@ public:
     int             jointSize;
     int             hold_Num;
     int             rectSize;
-    ttControl       *control_A;
-    ttControl       *control_B;
+    ttControl       *control;
     vector<ofImage> sprite;
     
     ofxBox2dCircle  start;

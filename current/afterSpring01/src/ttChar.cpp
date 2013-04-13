@@ -10,15 +10,13 @@
 
 //----------------------------------------------
 void ttChar::setup(ofxBox2d &characterWorld,
-                   ttControl &ctrl_A,
-                   ttControl &ctrl_B,
+                   ttControl &ctrl,
                    ofPoint SetPos,
                    ofPoint &Acc,
                    int iCharNum){
    
     world = characterWorld;
-    control_A = &ctrl_A;
-    control_B = &ctrl_B;
+    control = &ctrl;
     accFroce = &Acc;
     setWidth = 15;
     setHeight = 30;
@@ -83,120 +81,33 @@ void ttChar::update(){
     
     float x =20;
     float scale = 1000;
-    float smallMove;
-    float smallMoveSale = 1.2;
-
+    int vel = 10;
+    
     if (charNum == 0) {
-        if (bFixedMove==true){
-            control_A->bSmallLeft = false;
-            control_A->bSmallRight = false;
-            control_A->bLeft = false;
-            control_A->bRight = false;
+        if (control->bTouch[0]&&control->bTouch[1]) {
             
-            if (bReset) {
-                character.setVelocity(0, 0);
-                bReset = false;
-            }
-        }else{
-        
-            bReset = true;
-            
-            if (control_A->diff.x>1||control_A->diff.x<-1) {
-                smallMove = control_A->diff.x*smallMoveSale;
-            }
-            else
-            {
-                smallMove  = 0;
-            }
-            
-            
-            
-            
-            if (control_A->bLeft == true && character.getVelocity().x< 15)
-            {
-                character.addForce(ofVec2f(x,0), scale);
-                control_A->bLeft = false;
-                mirrorLeft = true;
-            }
-            else if(control_A->bRight == true && character.getVelocity().x> -15)
-            {
-
-                character.addForce(ofVec2f(-x,0), scale);
-                control_A->bRight = false;
-                mirrorLeft = false;
-            }else if (control_A->bSmallLeft == true) {
-                character.setVelocity(smallMove, 0);
-                control_A->bSmallLeft = false;
-                mirrorLeft = true;
-            }
-            
-            else if(control_A->bSmallRight == true)
-            {
-                character.setVelocity(smallMove, 0);
-                control_A->bSmallRight = false;
-                mirrorLeft = false;
-            }
-        
+        }else if (control->bTouch[0] && !control->bTouch[1]) {
+            character.setVelocity(-vel, 0);
+        }else if (control->bTouch[1] && !control->bTouch[0]) {
+            character.setVelocity(vel, 0);
+        }else if(!control->bTouch[0] && !control->bTouch[1]){
+            character.setVelocity(0,0);
         }
-        
     }
     
-    if(charNum  == 1){
-        if (bFixedMove == true) {
-            control_B->bSmallLeft = false;
-            control_B->bSmallRight = false;
-            control_B->bLeft = false;
-            control_B->bRight = false;
-            if (bReset) {
-                character.setVelocity(0, 0);
-                bReset = false;
-            }
-        }
-        else
-        {
+    if (charNum == 1) {
         
-            bReset = true;
-            
-            if (control_B->diff.x>1||control_B->diff.x<-1) {
-                smallMove = control_B->diff.x*smallMoveSale;
-            }else{
-                smallMove  = 0;
-            }
-            
-            
-            
-
-            if (control_B->bLeft == true && character.getVelocity().x>-15)
-            {
-                character.addForce(ofVec2f(-x,0), scale);
-                control_B->bLeft = false;
-                mirrorLeft = true;
-            }
-            
-            else if(control_B->bRight == true && character.getVelocity().x<15)
-            {
-                character.addForce(ofVec2f(x,0), scale);
-                control_B->bRight = false;
-                mirrorLeft = false;
-            }else if (control_B->bSmallLeft == true)
-            {
-                
-                character.setVelocity(smallMove, 0);
-                control_B->bSmallLeft = false;
-                mirrorLeft = true;
-            }
-            
-            else if(control_B->bSmallRight == true){
-                
-                character.setVelocity(smallMove, 0);
-                control_B->bSmallRight = false;
-                mirrorLeft = false;
-            }
-            
-        }
+        if (control->bTouch[2]&&control->bTouch[3]) {
         
-       
+        }else if (control->bTouch[2]&&!control->bTouch[3]) {
+            character.setVelocity(-vel, 0);
+        }else if (control->bTouch[3]&& !control->bTouch[2]) {
+            character.setVelocity(vel, 0);
+        }else if(!control->bTouch[2]&&!control->bTouch[3]){
+            character.setVelocity(0,0);
+        }
     }
+    
     
     
     if (bSwing) {
@@ -402,39 +313,39 @@ void ttChar::swing(){
     }
     
    
-    if (charNum == 0) {
-        if (control_B->bSwingLeft) {
-            for (int i=1; i<5; i++) {
-                rects[i].addForce(ofPoint(-2,0), 1);
-            }
-            control_B->bSwingLeft = false;
-        }
-        
-        else if (control_B->bSwingRight) {
-            for (int i=1; i<5; i++) {
-                rects[i].addForce(ofPoint(2,0), 1);
-            }
-            control_B->bSwingRight = false;
-        }
-        
-       
-    }else{
-
-        if (control_A->bSwingLeft) {
-            for (int i=1; i<5; i++) {
-                rects[i].addForce(ofPoint(2,0), 1);
-            }
-            
-            control_A->bSwingLeft = false;
-        }
-        else if (control_A->bSwingRight) {
-            for (int i=1; i<5; i++) {
-                rects[i].addForce(ofPoint(-2,0), 1);
-            }
-        
-            control_A->bSwingRight = false;
-        }
-    }
+//    if (charNum == 0) {
+//        if (control_B->bSwingLeft) {
+//            for (int i=1; i<5; i++) {
+//                rects[i].addForce(ofPoint(-2,0), 1);
+//            }
+//            control_B->bSwingLeft = false;
+//        }
+//        
+//        else if (control_B->bSwingRight) {
+//            for (int i=1; i<5; i++) {
+//                rects[i].addForce(ofPoint(2,0), 1);
+//            }
+//            control_B->bSwingRight = false;
+//        }
+//        
+//       
+//    }else{
+//
+//        if (control_A->bSwingLeft) {
+//            for (int i=1; i<5; i++) {
+//                rects[i].addForce(ofPoint(2,0), 1);
+//            }
+//            
+//            control_A->bSwingLeft = false;
+//        }
+//        else if (control_A->bSwingRight) {
+//            for (int i=1; i<5; i++) {
+//                rects[i].addForce(ofPoint(-2,0), 1);
+//            }
+//        
+//            control_A->bSwingRight = false;
+//        }
+//    }
     
     
     

@@ -29,11 +29,11 @@ void testApp::setup(){
     numFootContacts_B = 0;
     
     //contorl
-    control_A.setup(0);
-    control_B.setup(1);
+    control.setup();
+    
     //char
-    char_A.setup(world_A,control_A,control_B,ofPoint(50,0),ofxAccelerometer.getForce(),0);
-    char_B.setup(world_B,control_A,control_B,ofPoint(50,0),ofxAccelerometer.getForce(),1);
+    char_A.setup(world_A,control,ofPoint(50,0),ofxAccelerometer.getForce(),0);
+    char_B.setup(world_B,control,ofPoint(50,0),ofxAccelerometer.getForce(),1);
     
     //translate
     translate_A.set(384,250);
@@ -50,8 +50,8 @@ void testApp::setup(){
     accIndictor.setup(ofxAccelerometer.getForce());
     
     //rope
-    rope_A.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control_A,control_B,0);
-    rope_B.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control_A,control_B,1);
+    rope_A.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control,control,0);
+    rope_B.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control,control,1);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -132,15 +132,15 @@ void testApp::update(){
     
     //no jump in sky
     if (numFootContacts_A<=0) {
-        control_A.bFixed = true;
+        control.bFixed = true;
     }else{
-        control_A.bFixed = false;
+        control.bFixed = false;
     }
     
     if (numFootContacts_B<=0) {
-        control_B.bFixed = true;
+        control.bFixed = true;
     }else{
-        control_B.bFixed = false;
+        control.bFixed = false;
     }
 
     //Character
@@ -157,71 +157,71 @@ void testApp::update(){
     
    
     
-    if (rope_A.bRopeInUse) {
-        char_A.bFixedMove = true;
-        char_B.destroyRect();
-        rope_A.bRopeInUse = false;
-    }
-    
-    if(rope_A.bReady){
-        control_B.bDrawButton = true;
-    }
-    
-    if (control_B.bHookRope && rope_A.bReady) {
-        char_B.copyRope(rope_A.rects, rope_A.joints, screenB);
-        char_B.bSwing = true;
-        char_B.bFixedMove = true;
-        rope_A.bReady = false;
-        rope_A.destroy();
-    }else if(control_B.bHookRope && char_B.bSwing){
-        char_B.controlRope();
-    }else if(!control_B.bHookRope && char_B.bSwing){
-        char_B.character.setVelocity(char_B.rects.back().getVelocity());
-        char_B.destroyRope();
-        char_B.bSwing = false;
-        char_B.bFixedMove = false;
-        control_B.bDrawButton = false;
-    }
-    //character ropeB
-    if (rope_B.bRopeInUse) {
-        char_B.bFixedMove = true;
-        char_A.destroyRect();
-        rope_B.bRopeInUse = false;
-    }
-    
-    if(rope_B.bReady){
-        control_A.bDrawButton = true;
-    }
-    
-    if (control_A.bHookRope && rope_B.bReady) {
-        char_A.copyRope(rope_B.rects, rope_B.joints, screenA);
-        char_A.bSwing = true;
-        char_A.bFixedMove = true;
-        rope_B.bReady = false;
-        rope_B.destroy();
-    }else if(control_A.bHookRope && char_A.bSwing){
-        char_A.controlRope();
-    }else if(!control_A.bHookRope && char_A.bSwing){
-        char_A.character.setVelocity(char_A.rects.back().getVelocity());
-        char_A.destroyRope();
-        char_A.bSwing = false;
-        char_A.bFixedMove = false;
-        control_A.bDrawButton = false;
-    }
-    
-    if (!rope_A.bInitialize && !rope_B.bInitialize) {
-        char_B.destroyRope();
-        char_B.bSwing = false;
-        char_B.bFixedMove = false;
-       
-        control_B.bDrawButton = false;
-        
-        char_A.destroyRope();
-        char_A.bSwing = false;
-        char_A.bFixedMove = false;
-        
-        control_A.bDrawButton = false;
-    }
+//    if (rope_A.bRopeInUse) {
+//        char_A.bFixedMove = true;
+//        char_B.destroyRect();
+//        rope_A.bRopeInUse = false;
+//    }
+//    
+//    if(rope_A.bReady){
+//        control_B.bDrawButton = true;
+//    }
+//    
+//    if (control_B.bHookRope && rope_A.bReady) {
+//        char_B.copyRope(rope_A.rects, rope_A.joints, screenB);
+//        char_B.bSwing = true;
+//        char_B.bFixedMove = true;
+//        rope_A.bReady = false;
+//        rope_A.destroy();
+//    }else if(control_B.bHookRope && char_B.bSwing){
+//        char_B.controlRope();
+//    }else if(!control_B.bHookRope && char_B.bSwing){
+//        char_B.character.setVelocity(char_B.rects.back().getVelocity());
+//        char_B.destroyRope();
+//        char_B.bSwing = false;
+//        char_B.bFixedMove = false;
+//        control_B.bDrawButton = false;
+//    }
+//    //character ropeB
+//    if (rope_B.bRopeInUse) {
+//        char_B.bFixedMove = true;
+//        char_A.destroyRect();
+//        rope_B.bRopeInUse = false;
+//    }
+//    
+//    if(rope_B.bReady){
+//        control_A.bDrawButton = true;
+//    }
+//    
+//    if (control_A.bHookRope && rope_B.bReady) {
+//        char_A.copyRope(rope_B.rects, rope_B.joints, screenA);
+//        char_A.bSwing = true;
+//        char_A.bFixedMove = true;
+//        rope_B.bReady = false;
+//        rope_B.destroy();
+//    }else if(control_A.bHookRope && char_A.bSwing){
+//        char_A.controlRope();
+//    }else if(!control_A.bHookRope && char_A.bSwing){
+//        char_A.character.setVelocity(char_A.rects.back().getVelocity());
+//        char_A.destroyRope();
+//        char_A.bSwing = false;
+//        char_A.bFixedMove = false;
+//        control_A.bDrawButton = false;
+//    }
+//    
+//    if (!rope_A.bInitialize && !rope_B.bInitialize) {
+//        char_B.destroyRope();
+//        char_B.bSwing = false;
+//        char_B.bFixedMove = false;
+//       
+//        control_B.bDrawButton = false;
+//        
+//        char_A.destroyRope();
+//        char_A.bSwing = false;
+//        char_A.bFixedMove = false;
+//        
+//        control_A.bDrawButton = false;
+//    }
     
 }
 
@@ -232,8 +232,8 @@ void testApp::draw(){
    
     drawScene(0);
     accIndictor.draw();
-    control_A.draw();
-    control_B.draw();
+    control.draw();
+    
     ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(ofPoint(translate_A.x,translate_A.y+char_A.getPos.y),2), 50,50);
     ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(ofPoint(translate_B.x,translate_B.y+char_B.getPos.y),2), 750,700);
 }
@@ -295,20 +295,19 @@ void testApp::exit(){
 
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs & touch){
-    control_A.touchDown(touch.x, touch.y,touch.id);
-    control_B.touchDown(touch.x, touch.y,touch.id);
+    control.touchDown(touch.x, touch.y,touch.id);
+    
 }
 
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
-    control_A.touchMove(touch.x, touch.y,touch.id);
-    control_B.touchMove(touch.x, touch.y,touch.id);
+    control.touchMove(touch.x, touch.y,touch.id);
+    
 }
 
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
-    control_A.touchUp(touch.x, touch.y,touch.id);
-    control_B.touchUp(touch.x, touch.y,touch.id);
+    control.touchUp(touch.x, touch.y,touch.id);
 }
 
 //--------------------------------------------------------------
