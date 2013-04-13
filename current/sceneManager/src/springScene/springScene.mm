@@ -1,11 +1,10 @@
 #include "springScene.h"
 
 //--------------------------------------------------------------
-void testApp::setup(){	
+void springScene::setup(){	
 	// initialize the accelerometer
 	ofxAccelerometer.setup();
     ofxAccelerometer.setForceSmoothing(0.55f);
-	iPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_LEFT);
     ofEnableAlphaBlending();
     
     // setup world A
@@ -21,10 +20,10 @@ void testApp::setup(){
     ground_B.setup(1, 1, world_B);
     
     
-	ofAddListener(world_A.contactStartEvents, this, &testApp::contactStart_worldA);
-	ofAddListener(world_A.contactEndEvents, this, &testApp::contactEnd_worldA);
-    ofAddListener(world_B.contactStartEvents,this, &testApp::contactStart_worldB);
-    ofAddListener(world_B.contactEndEvents,this, &testApp::contactEnd_worldB);
+	ofAddListener(world_A.contactStartEvents, this, &springScene::contactStart_worldA);
+	ofAddListener(world_A.contactEndEvents, this, &springScene::contactEnd_worldA);
+    ofAddListener(world_B.contactStartEvents,this, &springScene::contactStart_worldB);
+    ofAddListener(world_B.contactEndEvents,this, &springScene::contactEnd_worldB);
     numFootContacts_A = 0;
     numFootContacts_B = 0;
     
@@ -54,7 +53,7 @@ void testApp::setup(){
     rope_B.setup(ofxAccelerometer.getForce(),screenA,screenB,char_A.getPos,char_B.getPos,control_A,control_B,1);
 }
 //--------------------------------------------------------------
-void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
+void springScene::contactStart_worldA(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
         //a == polygone, b == circle
         ttSetData * aData = (ttSetData*)e.a->GetUserData();
@@ -77,7 +76,7 @@ void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
 
 }
 //--------------------------------------------------------------
-void testApp::contactEnd_worldA(ofxBox2dContactArgs &e){
+void springScene::contactEnd_worldA(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
             
         ttSetData * aData = (ttSetData*)e.a->GetUserData();
@@ -91,7 +90,7 @@ void testApp::contactEnd_worldA(ofxBox2dContactArgs &e){
     }
 }
 //--------------------------------------------------------------
-void testApp::contactStart_worldB(ofxBox2dContactArgs &e){
+void springScene::contactStart_worldB(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
         //a == polygone, b == circle
         ttSetData * aData = (ttSetData*)e.a->GetUserData();
@@ -112,7 +111,7 @@ void testApp::contactStart_worldB(ofxBox2dContactArgs &e){
 
 }
 //--------------------------------------------------------------
-void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
+void springScene::contactEnd_worldB(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
         //a == polygone, b == circle
         ttSetData * aData = (ttSetData*)e.a->GetUserData();
@@ -125,7 +124,7 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
     }
 }
 //--------------------------------------------------------------
-void testApp::update(){
+void springScene::update(){
     
     world_A.update();
     world_B.update();
@@ -226,7 +225,7 @@ void testApp::update(){
 }
 
 //--------------------------------------------------------------
-void testApp::draw(){
+void springScene::draw(){
     ofColor dark(80);
     ofBackgroundGradient(dark, ofColor::black);
    
@@ -238,7 +237,7 @@ void testApp::draw(){
     ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(ofPoint(translate_B.x,translate_B.y+char_B.getPos.y),2), 750,700);
 }
 //-------------------------------------------------------------
-void testApp::drawScene(int iDraw){
+void springScene::drawScene(int iDraw){
 
     if (iDraw == 0) {
         sky.drawBg();
@@ -289,59 +288,59 @@ void testApp::drawScene(int iDraw){
     }
 }
 //--------------------------------------------------------------
-void testApp::exit(){
+void springScene::exit(){
 
 }
 
 //--------------------------------------------------------------
-void testApp::touchDown(ofTouchEventArgs & touch){
+void springScene::touchDown(ofTouchEventArgs & touch){
     control_A.touchDown(touch.x, touch.y,touch.id);
     control_B.touchDown(touch.x, touch.y,touch.id);
 }
 
 //--------------------------------------------------------------
-void testApp::touchMoved(ofTouchEventArgs & touch){
+void springScene::touchMoved(ofTouchEventArgs & touch){
     control_A.touchMove(touch.x, touch.y,touch.id);
     control_B.touchMove(touch.x, touch.y,touch.id);
 }
 
 //--------------------------------------------------------------
-void testApp::touchUp(ofTouchEventArgs & touch){
+void springScene::touchUp(ofTouchEventArgs & touch){
     control_A.touchUp(touch.x, touch.y,touch.id);
     control_B.touchUp(touch.x, touch.y,touch.id);
 }
 
 //--------------------------------------------------------------
-void testApp::touchDoubleTap(ofTouchEventArgs & touch){
+void springScene::touchDoubleTap(ofTouchEventArgs & touch){
 
 }
 
 //--------------------------------------------------------------
-void testApp::touchCancelled(ofTouchEventArgs & touch){
+void springScene::touchCancelled(ofTouchEventArgs & touch){
     
 }
 
 //--------------------------------------------------------------
-void testApp::lostFocus(){
+void springScene::lostFocus(){
 
 }
 
 //--------------------------------------------------------------
-void testApp::gotFocus(){
+void springScene::gotFocus(){
 
 }
 
 //--------------------------------------------------------------
-void testApp::gotMemoryWarning(){
+void springScene::gotMemoryWarning(){
 
 }
 
 //--------------------------------------------------------------
-void testApp::deviceOrientationChanged(int newOrientation){
+void springScene::deviceOrientationChanged(int newOrientation){
 
 }
 //--------------------------------------------------------------
-void testApp::screen(){
+void springScene::screen(){
     
     screenA.x = translate_A.x - char_A.getPos.x,
     screenA.y = translate_A.y;

@@ -8,6 +8,7 @@
 
 #include "baseScene.h"
 #include "openingScene.h"
+#include "springScene.h"
 //example scenes
 #include "circleScene.h"
 #include "squareScene.h"
@@ -34,7 +35,6 @@ class testApp : public ofxiPhoneApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
     
-        void screen();
     
         baseScene * scenes[SCENE_NUMBER];
         int currentScene;

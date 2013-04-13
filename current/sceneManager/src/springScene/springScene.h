@@ -5,7 +5,10 @@
 #include "ofMain.h"
 #include "ofxiPhone.h"
 #include "ofxiPhoneExtras.h"
+
 #include "ofxBox2d.h"
+#include "baseScene.h"
+
 #include "ttChar.h"
 #include "ttSetData.h"
 #include "ttControl.h"
@@ -14,7 +17,7 @@
 #include "ttThorn.h"
 #include "ttSky.h"
 #include "ttIndicator.h"
-class testApp : public ofxiPhoneApp{
+class springScene : public baseScene{
 	
     public:
         void setup();

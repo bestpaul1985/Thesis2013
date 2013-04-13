@@ -13,17 +13,44 @@ class baseScene {
 
 	public: 
 	
-	virtual void setup(){};
+	virtual void setup(){
+        endTransit = false;
+        endTransitDone = false;
+    };
 	virtual void update(){};
 	virtual void draw(){};
+    
+    virtual void touchDown(ofTouchEventArgs & touch){};
+    virtual void touchMoved(ofTouchEventArgs & touch){};
+    virtual void touchUp(ofTouchEventArgs & touch){};
+    virtual void touchDoubleTap(ofTouchEventArgs & touch){};
+    virtual void touchCancelled(ofTouchEventArgs & touch){};
+    
+    virtual void lostFocus(){};
+    virtual void gotFocus(){};
+    virtual void gotMemoryWarning(){};
+    virtual void deviceOrientationChanged(int newOrientation){};
+    
+    
 	
     int goToScene;
-	bool end;
+	bool endTransit, endTransitDone;
 	
+    void drawTransition(){
+        
+        float startTime;
+        float delayTime = 2;
+        
+        ofPoint map;
+        startTime = ofGetElapsedTimef();
+        map.set(ofMap(ofGetElapsedTimef(), startTime, ofGetElapsedTimef()+delayTime, 0, ofGetWidth()),
+                ofMap(ofGetElapsedTimef(), startTime, ofGetElapsedTimef()+delayTime, 0, ofGetHeight()));
+        ofRect(0, 0, map.x, map.y);
+    
+        endTransit = false;
+        
+    }
+    
+    
 };
-
-
-
-
-
 #endif
