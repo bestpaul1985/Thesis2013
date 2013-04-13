@@ -58,7 +58,7 @@ void ttRope::update(){
                 pos = *screenA + *charA;
 //                pos.x += 10;
                 pos.y -= 30;
-                m_num = (768 - (screenA->y + charA->y))/18+1;
+                m_num = (768 - (screenA->y + charA->y))/28+1;
                 if (m_num>40) {
                     m_num = 40;
                 }
@@ -135,7 +135,7 @@ void ttRope::update(){
                 pos = *screenB + *charB;
 //                pos.x += 10;
                 pos.y += 30;
-                m_num = ((screenB->y + charB->y)+60)/18+1;
+                m_num = ((screenB->y + charB->y)+30)/28+1;
                 if (m_num>40) {
                     m_num = 40;
                 }
@@ -219,7 +219,7 @@ void ttRope::initialize(ofPoint pos){
             rects.push_back(rect);
             
             rect.setPhysics(0.03f, 0.0f, 0.0f);
-            rect.setup(world.world, rects[0].getPosition().x+9, rects[0].getPosition().y, 10, 2);
+            rect.setup(world.world, rects[0].getPosition().x+9, rects[0].getPosition().y, 15, 2);
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
             
@@ -227,7 +227,7 @@ void ttRope::initialize(ofPoint pos){
             revoluteJointDef.Initialize(rects[0].body, rects.back().body, rects[0].body->GetWorldCenter());
             b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
-            p = screenPtToWorldPt(ofPoint(-9,0));
+            p = screenPtToWorldPt(ofPoint(-14,0));
             revoluteJointDef.localAnchorB.Set(p.x, p.y);
             revoluteJointDef.enableLimit = true;
             revoluteJointDef.lowerAngle = -180*DEG_TO_RAD;
@@ -238,7 +238,7 @@ void ttRope::initialize(ofPoint pos){
             
             ofxBox2dRect rect;
             rect.setPhysics(0.03f, 0.0f, 0.0f);
-            rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 10, 2);
+            rect.setup(world.world, rects.back().getPosition().x, rects.back().getPosition().y, 15, 2);
             rect.body->GetFixtureList()->SetSensor(true);
             rects.push_back(rect);
             
@@ -246,10 +246,10 @@ void ttRope::initialize(ofPoint pos){
             revoluteJointDef.Initialize(rects[rects.size()-2].body, rects.back().body, rects.back().body->GetWorldCenter());
             b2Vec2 p;
             if(i%2==1){
-                p = screenPtToWorldPt(ofPoint(9,0));
+                p = screenPtToWorldPt(ofPoint(14,0));
             }
             else{
-                p = screenPtToWorldPt(ofPoint(-9,0));
+                p = screenPtToWorldPt(ofPoint(-14,0));
             }
             
             revoluteJointDef.localAnchorA.Set(p.x, p.y);
@@ -274,11 +274,11 @@ void ttRope::initialize(ofPoint pos){
             b2Vec2 p1;
             b2Vec2 p2;
             if(i%2==1){
-                p1 = screenPtToWorldPt(ofPoint(9,0));
+                p1 = screenPtToWorldPt(ofPoint(14,0));
                 p2 = screenPtToWorldPt(ofPoint(0,0));
             }
             else{
-                p1 = screenPtToWorldPt(ofPoint(-9,0));
+                p1 = screenPtToWorldPt(ofPoint(-14,0));
                 p2 = screenPtToWorldPt(ofPoint(0,0));
             }
             

@@ -150,7 +150,7 @@ void ttChar::update(){
 void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Joints, ofPoint screen){
    
 
-    float rectOff = 9;
+    float rectOff = 14;
     
     for (int i=0; i<Joints.size(); i++) {
         if (joints.empty()) {
@@ -305,7 +305,7 @@ void ttChar::controlRope(){
                 revoluteJointDef.Initialize(rects[0].body, rects[1].body, rects[0].body->GetWorldCenter());
                 b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
                 revoluteJointDef.localAnchorA.Set(p.x, p.y);
-                p = screenPtToWorldPt(ofPoint(-9,0));
+                p = screenPtToWorldPt(ofPoint(-14,0));
                 revoluteJointDef.localAnchorB.Set(p.x, p.y);
 //                revoluteJointDef.enableLimit = true;
 //                revoluteJointDef.lowerAngle = -PI/3;
