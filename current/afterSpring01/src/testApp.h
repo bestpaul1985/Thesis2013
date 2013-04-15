@@ -59,7 +59,9 @@ class testApp : public ofxiPhoneApp{
         ofPoint preTouch_A,preTouch_B;
         ofPoint camPos_A,camPos_B;
         ofPoint translate_A, translate_B;
+        ofPoint final_translate_A, final_translate_B;
         ofPoint screen_A, screen_B;
+        ofPoint camera_A, camera_B;
         //rope
         ttRope rope_A,rope_B;
         //thorns

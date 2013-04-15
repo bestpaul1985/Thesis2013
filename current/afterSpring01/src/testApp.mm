@@ -38,6 +38,8 @@ void testApp::setup(){
     //translate
     translate_A.set(384,250);
     translate_B.set(384,768-250);
+    camera_A = char_A.getPos;
+    camera_B = char_B.getPos;
     screen();
     //thorn
     thorns_A.setup(world_A, 0);
@@ -164,19 +166,20 @@ void testApp::update(){
             char_A.copyRope(rope_B.rects, rope_B.joints, screen_A);
             rope_B.bReady = false;
             rope_B.destroy();
-            rope_B.bSwing = true;
+            
         }
         char_A.controlRope();
         char_A.swing();
         rope_A.bSwing = true;
+        rope_B.bSwing = true;
     }else if(!control.bTouch[0]&&!control.bTouch[1]){
         if (!char_A.joints.empty()) {
-            char_A.character.setVelocity(char_A.rects.back().getVelocity().x * 1.5, char_A.character.getVelocity().y * 1.5);
+            char_A.character.setVelocity(char_A.rects.back().getVelocity().x * 1.5, char_A.character.getVelocity().y * 1.5 +5);
             char_A.destroyRope();
             rope_B.bSwing = false;
+            char_A.bSwing = false;
+            rope_A.bSwing = false;
         }
-        char_A.bSwing = false;
-        rope_A.bSwing = false;
     }
     
   
@@ -189,19 +192,21 @@ void testApp::update(){
             char_B.copyRope(rope_A.rects, rope_A.joints, screen_B);
             rope_A.bReady = false;
             rope_A.destroy();
-            rope_A.bSwing = true;
+            
         }
         char_B.controlRope();
         char_B.swing();
         rope_B.bSwing = true;
+        rope_A.bSwing = true;
     }else if(!control.bTouch[2]&&!control.bTouch[3]){
         if (!char_B.joints.empty()) {
-            char_B.character.setVelocity(char_B.rects.back().getVelocity().x * 1.5, char_B.character.getVelocity().y * 1.5);
+            char_B.character.setVelocity(char_B.rects.back().getVelocity().x * 1.5, char_B.character.getVelocity().y * 1.5 -5);
             char_B.destroyRope();
             rope_A.bSwing = false;
+            char_B.bSwing = false;
+            rope_B.bSwing = false;
         }
-        char_B.bSwing = false;
-        rope_B.bSwing = false;
+       
     }
     
     
@@ -237,7 +242,7 @@ void testApp::drawScene(int iDraw){
         sky.drawBg();
         
         ofPushMatrix();
-        ofTranslate(translate_A.x-char_A.getPos.x,translate_A.y);
+        ofTranslate(screen_A);
         ground_A.draw();
 //        ground_A.drawPolyLine();
 //        char_A.drawBox2dObject();
@@ -245,7 +250,7 @@ void testApp::drawScene(int iDraw){
         ofPopMatrix();
         
         ofPushMatrix();
-        ofTranslate(translate_B.x-char_B.getPos.x,translate_B.y);
+        ofTranslate(screen_B);
         ground_B.draw();
 //        ground_B.drawPolyLine();
 //        char_B.drawBox2dObject();
@@ -255,25 +260,25 @@ void testApp::drawScene(int iDraw){
         sky.drawCloud();
         
         ofPushMatrix();
-        ofTranslate(translate_A.x-char_A.getPos.x,translate_A.y);
+        ofTranslate(screen_A);
         char_A.draw();
         char_A.drawRope();
         ofPopMatrix();
         
         ofPushMatrix();
-        ofTranslate(translate_B.x-char_B.getPos.x,translate_B.y);
+        ofTranslate(screen_B);
         char_B.draw();
         char_B.drawRope();
         ofPopMatrix();
         
         
         ofPushMatrix();
-        ofTranslate(translate_A.x-char_A.getPos.x,translate_A.y);
+        ofTranslate(screen_A);
         char_A.drawRope();
         ofPopMatrix();
         
         ofPushMatrix();
-        ofTranslate(translate_B.x-char_B.getPos.x,translate_B.y);
+        ofTranslate(screen_B);
         char_B.drawRope();
         ofPopMatrix();
         
@@ -334,11 +339,18 @@ void testApp::deviceOrientationChanged(int newOrientation){
 }
 //--------------------------------------------------------------
 void testApp::screen(){
+
+    float catchUpSpeed = 0.03f;
+    camera_A.x = catchUpSpeed * char_A.getPos.x + (1-catchUpSpeed) * camera_A.x;
+	camera_A.y = catchUpSpeed * char_A.getPos.y + (1-catchUpSpeed) * camera_A.y;
     
-    screen_A.x = translate_A.x - char_A.getPos.x,
+    camera_B.x = catchUpSpeed * char_B.getPos.x + (1-catchUpSpeed) * camera_B.x;
+	camera_B.y = catchUpSpeed * char_B.getPos.y + (1-catchUpSpeed) * camera_B.y;
+    
+    screen_A.x = translate_A.x - camera_A.x,
     screen_A.y = translate_A.y;
     
-    screen_B.x = translate_B.x - char_B.getPos.x,
+    screen_B.x = translate_B.x - camera_B.x,
     screen_B.y = translate_B.y;
 
 }
