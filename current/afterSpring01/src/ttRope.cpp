@@ -32,7 +32,8 @@ void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint 
     bHooked = false;
     bReady = false;
     bInitialize = false;
-    
+    bInSky = false;
+    bSwing = false;
     counter = 0;
     m_num = 30;
     m_preNum = 30;
@@ -52,7 +53,7 @@ void ttRope::update(){
 
     if (ropeNum == 0) {
         
-        if (bInitialize == false) {
+        if (!bInitialize  && !bInSky && !bSwing ) {
             if (acc->x < -0.15)
             {
                 pos = *screenA + *charA;
@@ -117,9 +118,10 @@ void ttRope::update(){
         }
         
         
-        if (acc->x > -0.15) {
+        if (acc->x > -0.15 && !bSwing) {
             bReady = false;
             bInitialize = false;
+            bRopeInUse = false;
             closetRect = 0;
             if (!joints.empty()) {
                 destroy();
@@ -129,7 +131,7 @@ void ttRope::update(){
     
     if (ropeNum == 1) {
         
-        if (bInitialize == false) {
+        if (!bInitialize && !bInSky && !bSwing) {
             if (acc->x > 0.15)
             {
                 pos = *screenB + *charB;
@@ -194,9 +196,10 @@ void ttRope::update(){
         }
         
         
-        if (acc->x < 0.15) {
+        if (acc->x < 0.15 && !bSwing) {
             bReady = false;
             bInitialize = false;
+            bRopeInUse = false;
             closetRect = 0;
             if (!joints.empty()) {
                 destroy();

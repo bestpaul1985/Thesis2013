@@ -16,6 +16,7 @@ class ttRope{
 public:
     void setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint &_CharA, ofPoint &_CharB,ttControl &cont, int num);
     void update();
+    void send();
     void initialize(ofPoint pos);
     void destroy();
     void draw();
@@ -44,6 +45,8 @@ public:
     bool bRopeInUse;
     bool bInitialize;
     bool bFall;
+    bool bInSky;
+    bool bSwing;
     int counter;
     int ropeNum;
     int m_num;

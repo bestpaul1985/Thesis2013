@@ -22,6 +22,8 @@ public:
                ofPoint &Acc,
                int iCharNum);
     
+    void moveLeft();
+    void moveRight();
     void update();
     void draw();
     void copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint*> Joints, ofPoint screen);

@@ -41,8 +41,10 @@ void ttChar::setup(ofxBox2d &characterWorld,
     hold_Num = 0;
     
     color.set(255, 255, 255, 255);
-    character.setPhysics(4.0f, 0.0f, 0.999f);
+    character.setPhysics(4.0f, 0.1f, 0.1);
+    
     character.setup(world.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
+    character.body->SetLinearDamping(b2dNum(0.999));
     character.body->SetFixedRotation(true);
     numFootContacts = 0;
     adjustedHeight = 85;
@@ -81,62 +83,107 @@ void ttChar::setup(ofxBox2d &characterWorld,
     startTime = ofGetElapsedTimeMillis();
 }
 //----------------------------------------------
-void ttChar::update(){
+void ttChar::moveLeft(){
     
-    float x = 20;
+    float x = 10;
     float scale = 10;
-
+    if (character.getVelocity().x >0) {
+        character.setVelocity(0, character.getVelocity().y);
+    }
+    character.addForce(ofPoint(-x,0), scale);
+    
     if (charNum == 0) {
-        if (accFroce->x > -0.15) {
-            if (control->bTouch[0]&&control->bTouch[1]) {
-                bDouPressed =true;
-            }else if (control->bTouch[0] && !control->bTouch[1]) {
-                character.addForce(ofPoint(-x,0), scale);
-                bDouPressed =false;
-                mirrorLeft = false;
-            }else if (control->bTouch[1] && !control->bTouch[0]) {
-                character.addForce(ofPoint(x,0), scale);
-                bDouPressed =false;
-                mirrorLeft = true;
-            }else if(!control->bTouch[0] && !control->bTouch[1] && !bInSky){
-//                character.setVelocity(0, character.getVelocity().y);
-            }
-            
-        }
-        
-        
-        if (character.getVelocity().x > 10) {
-            character.setVelocity(10, character.getVelocity().y);
-        }else if(character.getVelocity().x < -10){
-            character.setVelocity(-10, character.getVelocity().y);
-        }
+        mirrorLeft = false;
+    }else{
+        mirrorLeft = true;
     }
     
-    if (charNum == 1) {
-        if (accFroce->x < 0.15) {
-            if (control->bTouch[2]&&control->bTouch[3]) {
-                bDouPressed =true;
-            }else if (control->bTouch[2]&&!control->bTouch[3]) {
-                character.addForce(ofPoint(-x,0), scale);
-                bDouPressed =false;
-                mirrorLeft = true;
-            }else if (control->bTouch[3]&& !control->bTouch[2]) {
-                character.addForce(ofPoint(x,0), scale);
-                bDouPressed =false;
-                mirrorLeft = false;
-            }else if(!control->bTouch[2]&&!control->bTouch[3]&&!bInSky){
-//                character.setVelocity(0, character.getVelocity().y);
-            }
+}
+//----------------------------------------------
+void ttChar::moveRight(){
+    
+    float x = 10;
+    float scale = 10;
+    if (character.getVelocity().x <0) {
+        character.setVelocity(0, character.getVelocity().y);
+    }
+    character.addForce(ofPoint(x,0), scale);
+    
+    if (charNum == 0) {
+        mirrorLeft = true;
+    }else{
+        mirrorLeft = false;
+    }
+}
+//----------------------------------------------
+void ttChar::update(){
+   
+
+//    if (charNum == 0) {
+//        if (accFroce->x > -0.15) {
+//            if (control->bTouch[0]&&control->bTouch[1]) {
+//                bDouPressed =true;
+//            }else if (control->bTouch[0] && !control->bTouch[1]) {
+//                character.addForce(ofPoint(-x,0), scale);
+//                bDouPressed =false;
+//                mirrorLeft = false;
+//            }else if (control->bTouch[1] && !control->bTouch[0]) {
+//                character.addForce(ofPoint(x,0), scale);
+//                bDouPressed =false;
+//                mirrorLeft = true;
+//            }else if(!control->bTouch[0] && !control->bTouch[1] && !bInSky){
+////                character.setVelocity(0, character.getVelocity().y);
+//            }
+//            
+//        }
+//        
+//        
+//        if (character.getVelocity().x > 10) {
+//            character.setVelocity(10, character.getVelocity().y);
+//        }else if(character.getVelocity().x < -10){
+//            character.setVelocity(-10, character.getVelocity().y);
+//        }
+//    }
+//    
+//    if (charNum == 1) {
+//        if (accFroce->x < 0.15) {
+//            if (control->bTouch[2]&&control->bTouch[3]) {
+//                bDouPressed =true;
+//            }else if (control->bTouch[2]&&!control->bTouch[3]) {
+//                character.addForce(ofPoint(-x,0), scale);
+//                bDouPressed =false;
+//                mirrorLeft = true;
+//            }else if (control->bTouch[3]&& !control->bTouch[2]) {
+//                character.addForce(ofPoint(x,0), scale);
+//                bDouPressed =false;
+//                mirrorLeft = false;
+//            }else if(!control->bTouch[2]&&!control->bTouch[3]&&!bInSky){
+////                character.setVelocity(0, character.getVelocity().y);
+//            }
+//        }
+//        
+//        if (character.getVelocity().x > 10) {
+//            character.setVelocity(10, character.getVelocity().y);
+//        }else if(character.getVelocity().x < -10){
+//            character.setVelocity(-10, character.getVelocity().y);
+//        }
+//    }
+    
+    if (!bInSky) {
+        if (character.getVelocity().x > 7) {
+            character.setVelocity(7, character.getVelocity().y);
+        }else if(character.getVelocity().x < -7){
+            character.setVelocity(-7, character.getVelocity().y);
         }
-        
-        if (character.getVelocity().x > 10) {
-            character.setVelocity(10, character.getVelocity().y);
-        }else if(character.getVelocity().x < -10){
-            character.setVelocity(-10, character.getVelocity().y);
+    }else{
+        if (character.getVelocity().x > 12) {
+            character.setVelocity(12, character.getVelocity().y);
+        }else if(character.getVelocity().x < -12){
+            character.setVelocity(-12, character.getVelocity().y);
         }
     }
-    
-    
+   
+
     dead();
     destroyRect();
     
@@ -144,12 +191,12 @@ void ttChar::update(){
         getPos = character.getPosition();
     }
     
+    
 }
 
 //-----------------------------------------------
 void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Joints, ofPoint screen){
    
-
     float rectOff = 14;
     
     for (int i=0; i<Joints.size(); i++) {
@@ -162,7 +209,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.body->GetFixtureList()->SetSensor(true);
             rect.body->SetType(Rects[i].body->GetType());
             rect.setVelocity(Rects[i].getVelocity());
-//            rect.setAngle(Rects[i].body->GetAngle()*DEG_TO_RAD);
+            //            rect.setAngle(Rects[i].body->GetAngle()*DEG_TO_RAD);
             rects.push_back(rect);
             
             pos = Rects[i+1].getPosition() - screen;
@@ -171,8 +218,8 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.body->GetFixtureList()->SetSensor(true);
             rect.body->SetType(Rects[i+1].body->GetType());
             rect.setVelocity(Rects[i+1].getVelocity());
-//            rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
-//            rect.body->SetAngularDamping(b2dNum(0.9f));
+            //            rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
+            //            rect.body->SetAngularDamping(b2dNum(0.9f));
             rects.push_back(rect);
             
             b2RevoluteJointDef revoluteJointDef;
@@ -191,7 +238,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.body->GetFixtureList()->SetSensor(true);
             rect.body->SetType(Rects[i+1].body->GetType());
             rect.setVelocity(Rects[i+1].getVelocity());
-//            rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
+            //            rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
             rects.push_back(rect);
             
             b2RevoluteJointDef revoluteJointDef;
@@ -211,7 +258,7 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
             rect.body->GetFixtureList()->SetSensor(true);
             rect.body->SetType(Rects[i+1].body->GetType());
             rect.setVelocity(Rects[i+1].getVelocity());
-//            rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
+            //            rect.setAngle(Rects[i+1].getRotation()*DEG_TO_RAD);
             rects.push_back(rect);
             
             b2RevoluteJointDef revoluteJointDef;
@@ -224,13 +271,15 @@ void ttChar::copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint *> Join
         }
     }
     
-//    b2RevoluteJointDef revoluteJointDef;
-//    revoluteJointDef.Initialize(rects.back().body, character.body, rects.back().body->GetWorldCenter());
-//    b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
-//    revoluteJointDef.localAnchorA.Set(p.x, p.y);
-//    p = screenPtToWorldPt(ofPoint(15,0));
-//    revoluteJointDef.localAnchorB.Set(p.x, p.y);
-//    joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+    //    b2RevoluteJointDef revoluteJointDef;
+    //    revoluteJointDef.Initialize(rects.back().body, character.body, rects.back().body->GetWorldCenter());
+    //    b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
+    //    revoluteJointDef.localAnchorA.Set(p.x, p.y);
+    //    p = screenPtToWorldPt(ofPoint(15,0));
+    //    revoluteJointDef.localAnchorB.Set(p.x, p.y);
+    //    joints.push_back((b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef));
+
+
 
 }
 
@@ -285,6 +334,10 @@ void ttChar::destroyRect(){
 //-----------------------------------------------
 void ttChar::controlRope(){
     
+    if (rects.empty()) {
+        return;
+    }
+    
     int size = (fabs(rects[0].getPosition().y - getPos.y)-100)/28+2;
     if (size>15) {
         size = 15;
@@ -318,11 +371,7 @@ void ttChar::controlRope(){
                     startTime = ofGetElapsedTimeMillis();
                 }
             }
-        }
-        
-    
-    if (rects.back().getPosition().distance(character.getPosition())<50) {
-            bRopeInControl = true;
+            
         }
        
 //            b2PolygonShape shape;
@@ -348,31 +397,38 @@ void ttChar::controlRope(){
 }
 //-----------------------------------------------
 void ttChar::swing(){
-    bRopeInControl = false;
-    bSwing = true;
+   
     
-    character.setPosition(rects.back().getPosition());
-
-    if (accFroce->y>0.15 && !bAccRight) {
+    if (rects.empty()) {
+        return;
+    }
+    
+    if (rects.back().getPosition().distance(character.getPosition())<50) {
+         character.setPosition(rects.back().getPosition());
+ 
+        if (accFroce->y>0.15 && !bAccRight) {
+            
+            for (int i=1; i<rects.size(); i++) {
+                rects[i].addForce(ofPoint(-1,0), 1);
+            }
+            bAccRight = true;
+        }
         
-        for (int i=1; i<rects.size(); i++) {
-            rects[i].addForce(ofPoint(-1-0.05*i,0), 1);
+        if(accFroce->y<-0.15 && !bAccLeft){
+            for (int i=1; i<rects.size(); i++) {
+                rects[i].addForce(ofPoint(1,0), 1);
+            }
+            bAccLeft = true;
         }
-        bAccRight = true;
-    }
-    
-    if(accFroce->y<-0.15 && !bAccLeft){
-        for (int i=1; i<rects.size(); i++) {
-            rects[i].addForce(ofPoint(1+0.05*i,0), 1);
+        
+        if (accFroce->y<0.15&&accFroce->y>-0.15) {
+            bAccLeft = false;
+            bAccRight = false;
         }
-        bAccLeft = true;
+        
+        bSwing = true;
     }
-    
-    if (accFroce->y<0.15&&accFroce->y>-0.15) {
-        bAccLeft = false;
-        bAccRight = false;
-    }
-    
+
 }
 //----------------------------------------------
 void ttChar::dead(){
@@ -497,12 +553,16 @@ void ttChar::draw(){
     int frameIndex = 0;
     frameIndex = (int) (ofGetElapsedTimef() * 24) % sprite.size();
     
-    if(character.getVelocity().lengthSquared() >  0)
-    {
-        sprite[frameIndex].draw (0,0, adjustedHeight, adjustedHeight);
-    }
-    else
-    {
+    if (!bSwing) {
+        if(character.getVelocity().lengthSquared() >  0)
+        {
+            sprite[frameIndex].draw (0,0, adjustedHeight, adjustedHeight);
+        }
+        else
+        {
+            sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
+        }
+    }else{
         sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
     }
     
@@ -519,6 +579,4 @@ void ttChar::drawRope(){
             rects[i].draw();
         }
     }
-    
-
 }
