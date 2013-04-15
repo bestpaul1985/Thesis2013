@@ -369,12 +369,12 @@ void testApp::screen(){
     }
     
     //calculate
-    if (!rope_A.bRopeInUse && !char_B.bSwing) {
+    if (!rope_A.bRopeInUse && !char_A.bSwing && !char_B.bSwing) {
         camera_A.x = catchUpSpeed * catch_A.x + (1-catchUpSpeed) * camera_A.x;
         camera_A.y = catchUpSpeed * catch_A.y + (1-catchUpSpeed) * camera_A.y;
     }
    
-    if (!rope_B.bRopeInUse && !char_A.bSwing) {
+    if (!rope_B.bRopeInUse && !char_A.bSwing && !char_B.bSwing) {
         camera_B.x = catchUpSpeed * catch_B.x + (1-catchUpSpeed) * camera_B.x;
         camera_B.y = catchUpSpeed * catch_B.y + (1-catchUpSpeed) * camera_B.y;
     }
