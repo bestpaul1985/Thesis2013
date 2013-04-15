@@ -353,7 +353,9 @@ void ttChar::swing(){
         return;
     }
     
-    if (rects.back().getPosition().distance(character.getPosition())<50) {
+    
+    if (rects.back().getPosition().distance(character.getPosition())<60) {
+        
          character.setPosition(rects.back().getPosition());
  
         if (accFroce->y>0.15 && !bAccRight) {

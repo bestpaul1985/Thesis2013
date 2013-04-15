@@ -210,16 +210,20 @@ void testApp::update(){
     }
     
     
-    cout<< char_B.bSwing <<
-    rope_B.bSwing <<
-    rope_A.bSwing << endl;
+//    cout<< char_B.bSwing <<
+//    rope_B.bSwing <<
+//    rope_A.bSwing << endl;
     //rope update
   
     rope_A.update();
     rope_B.update();
     
-
-    
+    if (rope_A.bRopeInUse && !char_A.bInSky) {
+        char_A.character.setVelocity(0, 0);
+    }
+    if (rope_B.bRopeInUse && !char_B.bInSky) {
+        char_B.character.setVelocity(0, 0);
+    }
     
 }
 
@@ -232,8 +236,8 @@ void testApp::draw(){
     accIndictor.draw();
     control.draw();
     
-//    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(ofPoint(translate_A.x,translate_A.y+char_A.getPos.y),2), 50,50);
-//    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(ofPoint(translate_B.x,translate_B.y+char_B.getPos.y),2), 750,700);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(camera_A,2), 50,50);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(camera_B,2), 750,700);
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int iDraw){
@@ -341,12 +345,16 @@ void testApp::deviceOrientationChanged(int newOrientation){
 void testApp::screen(){
 
     float catchUpSpeed = 0.03f;
-    camera_A.x = catchUpSpeed * char_A.getPos.x + (1-catchUpSpeed) * camera_A.x;
-	camera_A.y = catchUpSpeed * char_A.getPos.y + (1-catchUpSpeed) * camera_A.y;
-    
-    camera_B.x = catchUpSpeed * char_B.getPos.x + (1-catchUpSpeed) * camera_B.x;
-	camera_B.y = catchUpSpeed * char_B.getPos.y + (1-catchUpSpeed) * camera_B.y;
-    
+    if (!rope_A.bRopeInUse && !char_B.bSwing) {
+        camera_A.x = catchUpSpeed * char_A.getPos.x + (1-catchUpSpeed) * camera_A.x;
+        camera_A.y = catchUpSpeed * char_A.getPos.y + (1-catchUpSpeed) * camera_A.y;
+    }
+   
+    if (!rope_B.bRopeInUse && !char_A.bSwing) {
+        camera_B.x = catchUpSpeed * char_B.getPos.x + (1-catchUpSpeed) * camera_B.x;
+        camera_B.y = catchUpSpeed * char_B.getPos.y + (1-catchUpSpeed) * camera_B.y;
+    }
+  
     screen_A.x = translate_A.x - camera_A.x,
     screen_A.y = translate_A.y;
     
