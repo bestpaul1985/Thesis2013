@@ -164,19 +164,19 @@ void testApp::update(){
             char_A.copyRope(rope_B.rects, rope_B.joints, screen_A);
             rope_B.bReady = false;
             rope_B.destroy();
+            rope_B.bSwing = true;
         }
         char_A.controlRope();
         char_A.swing();
         rope_A.bSwing = true;
-        rope_B.bSwing = true;
     }else if(!control.bTouch[0]&&!control.bTouch[1]){
         if (!char_A.joints.empty()) {
             char_A.character.setVelocity(char_A.rects.back().getVelocity().x * 1.5, char_A.character.getVelocity().y * 1.5);
             char_A.destroyRope();
+            rope_B.bSwing = false;
         }
         char_A.bSwing = false;
         rope_A.bSwing = false;
-        rope_B.bSwing = false;
     }
     
   
@@ -189,20 +189,18 @@ void testApp::update(){
             char_B.copyRope(rope_A.rects, rope_A.joints, screen_B);
             rope_A.bReady = false;
             rope_A.destroy();
+            rope_A.bSwing = true;
         }
         char_B.controlRope();
         char_B.swing();
         rope_B.bSwing = true;
-        rope_A.bSwing = true;
     }else if(!control.bTouch[2]&&!control.bTouch[3]){
-        
         if (!char_B.joints.empty()) {
             char_B.character.setVelocity(char_B.rects.back().getVelocity().x * 1.5, char_B.character.getVelocity().y * 1.5);
             char_B.destroyRope();
-
+            rope_A.bSwing = false;
         }
         char_B.bSwing = false;
-        rope_A.bSwing = false;
         rope_B.bSwing = false;
     }
     
@@ -215,46 +213,7 @@ void testApp::update(){
     rope_A.update();
     rope_B.update();
     
-    //character ropeA
-    
-//    if (char_A.bDouPressed && rope_B.bReady && char_A.joints.empty()) {
-//        char_A.copyRope(rope_B.rects, rope_B.joints, screenA);
-//        rope_B.bReady = false;
-//        rope_B.destroy();
-//    }else if(char_A.bDouPressed && !char_A.joints.empty()&& !char_A.bRopeInControl){
-//        char_A.controlRope();
-//    }else if(char_A.bDouPressed && !char_A.joints.empty()&& char_A.bRopeInControl){
-//        char_A.controlRope();
-//        char_A.swing();
-//    }else if(!char_A.bDouPressed && !char_A.joints.empty()&& char_A.bSwing){
-//        char_A.character.setVelocity(char_A.rects.back().getVelocity().x * 3, char_A.character.getVelocity().y);
-//        char_A.destroyRope();
-//        char_A.bSwing = false;
-//    }
-//    
-//    if (char_B.bDouPressed && rope_A.bReady && char_B.joints.empty()) {
-//        char_B.copyRope(rope_A.rects, rope_A.joints, screenB);
-//        rope_A.bReady = false;
-//        rope_A.destroy();
-//    }else if(char_B.bDouPressed && !char_B.joints.empty()&& !char_B.bRopeInControl){
-//        char_B.controlRope();
-//    }else if(char_B.bDouPressed && !char_B.joints.empty()&& char_B.bRopeInControl){
-//        char_B.swing();
-//    }else if(!char_B.bDouPressed && !char_B.joints.empty()&& char_B.bSwing){
-//        char_B.character.setVelocity(char_B.rects.back().getVelocity().x * 3, char_B.character.getVelocity().y);
-//        char_B.destroyRope();
-//        char_B.bSwing = false;
-//    }
-//    
-    
-    
-//    if (!rope_A.bInitialize && !rope_B.bInitialize && !control.bAllTouch) {
-//        char_B.destroyRope();
-//        rope_A.bRopeInUse = false;
-//        char_A.destroyRope();
-//        rope_B.bRopeInUse = false;
-//    }
-//    
+
     
     
 }
