@@ -169,9 +169,11 @@ void testApp::update(){
         char_A.swing();
         rope_A.bSwing = true;
         rope_B.bSwing = true;
-    }else if(!control.bTouch[0]&&!control.bTouch[1]&&!char_A.joints.empty()){
-        char_A.character.setVelocity(char_A.rects.back().getVelocity().x * 1.5, char_A.character.getVelocity().y * 1.5);
-        char_A.destroyRope();
+    }else if(!control.bTouch[0]&&!control.bTouch[1]){
+        if (!char_A.joints.empty()) {
+            char_A.character.setVelocity(char_A.rects.back().getVelocity().x * 1.5, char_A.character.getVelocity().y * 1.5);
+            char_A.destroyRope();
+        }
         char_A.bSwing = false;
         rope_A.bSwing = false;
         rope_B.bSwing = false;
@@ -192,16 +194,22 @@ void testApp::update(){
         char_B.swing();
         rope_B.bSwing = true;
         rope_A.bSwing = true;
-    }else if(!control.bTouch[2]&&!control.bTouch[3]&&!char_B.joints.empty()){
-        char_B.character.setVelocity(char_B.rects.back().getVelocity().x * 1.5, char_B.character.getVelocity().y * 1.5);
-        char_B.destroyRope();
+    }else if(!control.bTouch[2]&&!control.bTouch[3]){
+        
+        if (!char_B.joints.empty()) {
+            char_B.character.setVelocity(char_B.rects.back().getVelocity().x * 1.5, char_B.character.getVelocity().y * 1.5);
+            char_B.destroyRope();
+
+        }
         char_B.bSwing = false;
         rope_A.bSwing = false;
         rope_B.bSwing = false;
     }
     
     
-   
+    cout<< char_B.bSwing <<
+    rope_B.bSwing <<
+    rope_A.bSwing << endl;
     //rope update
   
     rope_A.update();
