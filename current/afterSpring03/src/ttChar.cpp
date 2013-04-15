@@ -52,13 +52,13 @@ void ttChar::setup(ofxBox2d &characterWorld,
     int nFiles;
     b2Vec2 v2;
     if (charNum == 0) {
-        nFiles = dir.listDir("sprites/girl");
+        nFiles = dir.listDir("sprites/girl/walk");
         v2.Set(b2dNum(0), b2dNum(-30));
      
     }
     else
     {
-        nFiles  = dir.listDir("sprites/boy");
+        nFiles  = dir.listDir("sprites/boy/walk");
         v2.Set(b2dNum(0), b2dNum(30));
     }
  
