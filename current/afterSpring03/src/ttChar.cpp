@@ -48,43 +48,25 @@ void ttChar::setup(ofxBox2d &characterWorld,
     character.body->SetFixedRotation(true);
     numFootContacts = 0;
     adjustedHeight = 85;
-    ofDirectory dirWalk, dirHang, dirPull;
-    int nFilesWalk, nFilesHang, nFilesPull;
+    ofDirectory dir;
+    int nFiles;
     b2Vec2 v2;
     if (charNum == 0) {
-        nFilesWalk = dirWalk.listDir("sprites/girl/Thatthey_girl_walkcycle_new_16notblur");
-        nFilesHang = dirHang.listDir("sprites/girl/Thatthey_girl_Hang");
-        nFilesPull = dirPull.listDir("sprites/girl/Thatthey_girl_pull");
+        nFiles = dir.listDir("sprites/girl");
         v2.Set(b2dNum(0), b2dNum(-30));
      
     }
     else
     {
-        nFilesWalk = dirWalk.listDir("sprites/boy/Thatthey_boy_walkcycle_newnew_15notblur");
-        nFilesHang = dirHang.listDir("sprites/boy/Thatthey_boy_Hang");
-        nFilesPull = dirPull.listDir("sprites/boy/Thatthey_boy_Pull");
+        nFiles  = dir.listDir("sprites/boy");
         v2.Set(b2dNum(0), b2dNum(30));
     }
  
-    if (nFilesWalk) {
-        for (int i= 0; i<dirWalk.numFiles(); i++) {
-            string filePath = dirWalk.getPath(i);
-            walkSprite.push_back(ofImage());
-            walkSprite.back().loadImage(filePath);
-        }
-    }
-    if (nFilesHang) {
-        for (int i= 0; i<dirHang.numFiles(); i++) {
-            string filePath = dirHang.getPath(i);
-            hangSprite.push_back(ofImage());
-            hangSprite.back().loadImage(filePath);
-        }
-    }
-    if (nFilesPull) {
-        for (int i= 0; i<dirPull.numFiles(); i++) {
-            string filePath = dirPull.getPath(i);
-            pullSprite.push_back(ofImage());
-            pullSprite.back().loadImage(filePath);
+    if (nFiles) {
+        for (int i= 0; i<dir.numFiles(); i++) {
+            string filePath = dir.getPath(i);
+            sprite.push_back(ofImage());
+            sprite.back().loadImage(filePath);
         }
     }
     
@@ -515,31 +497,26 @@ void ttChar::draw(){
     //turn left flip
     if (mirrorLeft) ofScale(-1, 1);
     //if no picture files, draw box2d rect instead
-    if ((int)walkSprite.size() <=0 ) {
+    if ((int)sprite.size() <=0 ) {
         ofSetColor(255, 30, 220,100);
         character.draw();
     }
     
-    int walkIndex = 0;
-    int pullIndex = 0;
-    int hangIndex = 0;
-    walkIndex = (int) (ofGetElapsedTimef() * 24) % walkSprite.size();
-    pullIndex = (int) (ofGetElapsedTimef() * 24) % pullSprite.size();
-    hangIndex = (int) (ofGetElapsedTimef() * 24) % hangSprite.size();
+    int frameIndex = 0;
+    frameIndex = (int) (ofGetElapsedTimef() * 24) % sprite.size();
     
-    
-    if (bSwing) {
-        pullSprite[pullIndex].draw(0, 0, adjustedHeight,adjustedHeight);
-    }
     if (!bSwing) {
-        if(character.getVelocity().lengthSquared() >  0){
-            walkSprite[walkIndex].draw (0,0, adjustedHeight, adjustedHeight);
+        if(character.getVelocity().lengthSquared() >  0)
+        {
+            sprite[frameIndex].draw (0,0, adjustedHeight, adjustedHeight);
         }
-        else{
-            walkSprite[16].draw(0,0, adjustedHeight, adjustedHeight);
+        else
+        {
+            sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
         }
+    }else{
+        sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
     }
-    
     
     ofPopMatrix();
     ofSetRectMode(OF_RECTMODE_CORNER);
