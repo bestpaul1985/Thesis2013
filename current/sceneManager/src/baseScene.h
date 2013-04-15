@@ -34,21 +34,20 @@ class baseScene {
     
 	
     int goToScene;
+    bool end;
 	bool endTransit, endTransitDone;
 	
+    float startTime;
+    float delayTime = 2;
+    
     void drawTransition(){
-        
-        float startTime;
-        float delayTime = 2;
-        
         ofPoint map;
         startTime = ofGetElapsedTimef();
-        map.set(ofMap(ofGetElapsedTimef(), startTime, ofGetElapsedTimef()+delayTime, 0, ofGetWidth()),
-                ofMap(ofGetElapsedTimef(), startTime, ofGetElapsedTimef()+delayTime, 0, ofGetHeight()));
+        map.set(ofMap(ofGetElapsedTimef(), startTime, startTime + delayTime, 0, ofGetWidth()),
+                ofMap(ofGetElapsedTimef(), startTime, startTime + delayTime, 0, ofGetHeight()));
         ofRect(0, 0, map.x, map.y);
     
         endTransit = false;
-        
     }
     
     

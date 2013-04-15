@@ -42,13 +42,13 @@ void ttControl::setup(){
 
 void ttControl::draw(){
     
-  
+    ofSetCircleResolution(12);
     ofSetColor(204,204,204,30);
     ofCircle(orgPos[0], RAD);
     ofCircle(orgPos[1], RAD);
     ofCircle(orgPos[2], RAD);
     ofCircle(orgPos[3], RAD);
-    
+    ofSetCircleResolution(100);
 //    if (bDrawButton) {
 //        if (bHookRope) {
 //            ofSetColor(255, 255, 255);
