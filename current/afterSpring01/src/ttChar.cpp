@@ -126,10 +126,10 @@ void ttChar::update(){
             character.setVelocity(-7, character.getVelocity().y);
         }
     }else{
-        if (character.getVelocity().x > 12) {
-            character.setVelocity(12, character.getVelocity().y);
-        }else if(character.getVelocity().x < -12){
-            character.setVelocity(-12, character.getVelocity().y);
+        if (character.getVelocity().x > 10) {
+            character.setVelocity(10, character.getVelocity().y);
+        }else if(character.getVelocity().x < -10){
+            character.setVelocity(-10, character.getVelocity().y);
         }
     }
    

@@ -176,10 +176,8 @@ void testApp::update(){
         if (!char_A.joints.empty()) {
             char_A.character.setVelocity(char_A.rects.back().getVelocity().x * 1.5, char_A.character.getVelocity().y * 1.5 +5);
             char_A.destroyRope();
-            rope_B.bSwing = false;
-            char_A.bSwing = false;
-            rope_A.bSwing = false;
         }
+        char_A.bSwing = false;
     }
     
   
@@ -202,17 +200,20 @@ void testApp::update(){
         if (!char_B.joints.empty()) {
             char_B.character.setVelocity(char_B.rects.back().getVelocity().x * 1.5, char_B.character.getVelocity().y * 1.5 -5);
             char_B.destroyRope();
-            rope_A.bSwing = false;
-            char_B.bSwing = false;
-            rope_B.bSwing = false;
         }
-       
+       char_B.bSwing = false;
     }
     
+    if (char_A.rects.empty() && char_B.rects.empty()) {
+        rope_B.bSwing = false;
+        rope_A.bSwing = false;
+    }
     
-//    cout<< char_B.bSwing <<
-//    rope_B.bSwing <<
-//    rope_A.bSwing << endl;
+    cout<< char_A.rects.size() <<
+    char_B.rects.size() <<
+    rope_B.bSwing <<
+   rope_A.bSwing << endl;
+    
     //rope update
   
     rope_A.update();
@@ -236,8 +237,8 @@ void testApp::draw(){
     accIndictor.draw();
     control.draw();
     
-    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(camera_A,2), 50,50);
-    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(camera_B,2), 750,700);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(screen_A,2), 50,50);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(screen_B,2), 750,700);
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int iDraw){
@@ -344,15 +345,38 @@ void testApp::deviceOrientationChanged(int newOrientation){
 //--------------------------------------------------------------
 void testApp::screen(){
 
+    bool A[10],B[10];
     float catchUpSpeed = 0.03f;
+    ofPoint catch_A, catch_B;
+    
+    char_A.getPos.x<0? A[0] = true: A[0] =false;
+    char_B.getPos.x<0? B[0] = true: B[0] =false;
+    //camera setup
+    if (A[0]) {
+        catch_A.x = 0;
+        catch_A.y = char_A.getPos.y;
+    }else{
+        catch_A.x = char_A.getPos.x;
+        catch_A.y = char_A.getPos.y;
+    }
+   
+    if (B[0]) {
+        catch_B.x = 0;
+        catch_B.y = char_B.getPos.y;
+    }else{
+        catch_B.x = char_B.getPos.x;
+        catch_B.y = char_B.getPos.y;
+    }
+    
+    //calculate
     if (!rope_A.bRopeInUse && !char_B.bSwing) {
-        camera_A.x = catchUpSpeed * char_A.getPos.x + (1-catchUpSpeed) * camera_A.x;
-        camera_A.y = catchUpSpeed * char_A.getPos.y + (1-catchUpSpeed) * camera_A.y;
+        camera_A.x = catchUpSpeed * catch_A.x + (1-catchUpSpeed) * camera_A.x;
+        camera_A.y = catchUpSpeed * catch_A.y + (1-catchUpSpeed) * camera_A.y;
     }
    
     if (!rope_B.bRopeInUse && !char_A.bSwing) {
-        camera_B.x = catchUpSpeed * char_B.getPos.x + (1-catchUpSpeed) * camera_B.x;
-        camera_B.y = catchUpSpeed * char_B.getPos.y + (1-catchUpSpeed) * camera_B.y;
+        camera_B.x = catchUpSpeed * catch_B.x + (1-catchUpSpeed) * camera_B.x;
+        camera_B.y = catchUpSpeed * catch_B.y + (1-catchUpSpeed) * camera_B.y;
     }
   
     screen_A.x = translate_A.x - camera_A.x,
@@ -361,4 +385,5 @@ void testApp::screen(){
     screen_B.x = translate_B.x - camera_B.x,
     screen_B.y = translate_B.y;
 
+    
 }
