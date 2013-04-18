@@ -25,9 +25,9 @@ void testApp::update(){
 	scenes[currentScene]->update();
     
     for (int i = 0; i < SCENE_NUMBER; i++){
-        if (scenes[i]->endTransitDone == true) {
+        if (scenes[i]->end == true) {
             currentScene=scenes[i]->goToScene;
-            scenes[i]->endTransitDone = false;
+            scenes[i]->end = false;
         }
     }
 
