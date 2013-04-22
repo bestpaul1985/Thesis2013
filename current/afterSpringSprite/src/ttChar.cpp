@@ -48,18 +48,57 @@ void ttChar::setup(ofxBox2d &characterWorld,
     character.body->SetFixedRotation(true);
     numFootContacts = 0;
     adjustedHeight = 85;
-    ofDirectory walkDir, hangDir, sendDir;
-    int walknFiles, hangnFiles, sendnFiles;
+    ofDirectory walkDir;
+    //, hangDir, fallDir, sendDir, pullDir, dieDir;
+    int walknFiles;
+    //, hangnFiles, fallnFiles, sendnFiles, pullnFiles, dienFiles;
     b2Vec2 v2;
     if (charNum == 0) {
-        walknFiles = walkDir.listDir("sprites/girl/Thatthey_Girl_Walk");
+        walknFiles = walkDir.listDir("sprites/girl");
         v2.Set(b2dNum(0), b2dNum(-30));
+
+
+//    if (charNum == 0) {
+//        walknFiles = walkDir.listDir("sprites/girl/Thatthey_Girl_Walk");
+//        v2.Set(b2dNum(0), b2dNum(-30));
+//        
+//        hangnFiles = hangDir.listDir("sprites/girl/Thatthey_Girl_Hung");
+//        v2.Set(b2dNum(0), b2dNum(-30));
+//        
+//        fallnFiles = fallDir.listDir("sprites/girl/Thatthey_Girl_fall");
+//        v2.Set(b2dNum(0), b2dNum(-30));
+//        
+//        sendnFiles = sendDir.listDir("sprites/girl/Thatthey_Girl_Pull");
+//        v2.Set(b2dNum(0), b2dNum(-30));
+//        
+//        pullnFiles = pullDir.listDir("sprites/girl/Thatthey_Girl_Pull2");
+//        v2.Set(b2dNum(0), b2dNum(-30));
+//        
+//        dienFiles = dieDir.listDir("sprites/girl/Thatthey_Girl_Die");
+//        v2.Set(b2dNum(0), b2dNum(-30));
      
     }
     else
     {
-        walknFiles  = walkDir.listDir("sprites/boy/Thatthey_Boy_Walk");
+        walknFiles  = walkDir.listDir("sprites/boy");
         v2.Set(b2dNum(0), b2dNum(30));
+//        walknFiles  = walkDir.listDir("sprites/boy/Thatthey_Boy_Walk");
+//        v2.Set(b2dNum(0), b2dNum(30));
+//
+//        hangnFiles = hangDir.listDir("sprites/boy/Thatthey_Boy_Hung");
+//        v2.Set(b2dNum(0), b2dNum(-30));
+//        
+//        fallnFiles = fallDir.listDir("sprites/boy/Thatthey_Boy_fall");
+//        v2.Set(b2dNum(0), b2dNum(-30));
+//        
+//        sendnFiles = sendDir.listDir("sprites/boy/Thatthey_Boy_Pull");
+//        v2.Set(b2dNum(0), b2dNum(-30));
+//        
+//        pullnFiles = pullDir.listDir("sprites/boy/Thatthey_Boy_Pull2");
+//        v2.Set(b2dNum(0), b2dNum(-30));
+//        
+//        dienFiles = dieDir.listDir("sprites/boy/Thatthey_Boy_Die");
+//        v2.Set(b2dNum(0), b2dNum(-30));
     }
  
     if (walknFiles) {
@@ -69,6 +108,41 @@ void ttChar::setup(ofxBox2d &characterWorld,
             walkSprite.back().loadImage(filePath);
         }
     }
+//    if (hangnFiles) {
+//        for (int i= 0; i<hangDir.numFiles(); i++) {
+//            string filePath = hangDir.getPath(i);
+//            hangSprite.push_back(ofImage());
+//            hangSprite.back().loadImage(filePath);
+//        }
+//    }
+//    if (fallnFiles) {
+//        for (int i= 0; i<fallDir.numFiles(); i++) {
+//            string filePath = fallDir.getPath(i);
+//            fallSprite.push_back(ofImage());
+//            fallSprite.back().loadImage(filePath);
+//        }
+//    }
+//    if (sendnFiles) {
+//        for (int i= 0; i<sendDir.numFiles(); i++) {
+//            string filePath = sendDir.getPath(i);
+//            sendSprite.push_back(ofImage());
+//            sendSprite.back().loadImage(filePath);
+//        }
+//    }
+//    if (pullnFiles) {
+//        for (int i= 0; i<pullDir.numFiles(); i++) {
+//            string filePath = pullDir.getPath(i);
+//            pullSprite.push_back(ofImage());
+//            pullSprite.back().loadImage(filePath);
+//        }
+//    }
+//    if (dienFiles) {
+//        for (int i= 0; i<dieDir.numFiles(); i++) {
+//            string filePath = dieDir.getPath(i);
+//            dieSprite.push_back(ofImage());
+//            dieSprite.back().loadImage(filePath);
+//        }
+//    }
     
     b2PolygonShape shape;
     shape.SetAsBox(b2dNum(10), b2dNum(10), v2 , b2dNum(0));
@@ -495,7 +569,7 @@ void ttChar::draw(){
     ofPushMatrix();
     ofTranslate(character.getPosition());
     //turn left flip
-    if (mirrorLeft) ofScale(-1, 1);
+    if (mirrorLeft) ofScale(-1, -1);
     //if no picture files, draw box2d rect instead
     if ((int)walkSprite.size() <=0 ) {
         ofSetColor(255, 30, 220,100);
