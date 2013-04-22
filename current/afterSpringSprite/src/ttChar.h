@@ -70,8 +70,7 @@ public:
     int             rectSize;
     
     ttControl       *control;
-    vector<ofImage> walkSprite;
-    //, hangSprite, fallSprite, sendSprite, pullSprite, dieSprite;
+    vector<ofImage> walkSprite, hangSprite, sendSprite;
     
     ofxBox2dCircle  start;
     ofxBox2dJoint   joint;
