@@ -559,8 +559,8 @@ void ttChar::draw(){
             sprite[fOffsetWalk+16].draw(0,0, adjustedHeight, adjustedHeight);
         }
     }else{
-        frameIndex = (int) (ofGetElapsedTimef() * 24) % fAmountPull;
-        sprite[fOffsetPull +frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
+        frameIndex = (int) (ofGetElapsedTimef() * 24) % fAmountHung;
+        sprite[fOffsetHung +frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
     }
     
     ofSetRectMode(OF_RECTMODE_CORNER);
