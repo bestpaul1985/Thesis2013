@@ -81,13 +81,13 @@ void ttChar::setup(ofxBox2d &characterWorld,
     
     // frame index April 22
     //            girl      boy
-    //walk        0-19      52-68
+    //walk        0-19      52-71
     //die         20-26     0-6
-    //fall        27-36
-    //starthung   37-42     7-9
-    //hung        43-54     10-19
-    //startpull   55-70     20-37
-    //pull        71-81     38-51
+    //fall        27-36     72-77
+    //starthung   37-42     7-10
+    //hung        43-54     11-19
+    //startpull   55-70     20-38
+    //pull        71-81     39-51
     
     //set sprite constants
     if (charNum == 0) {
@@ -110,19 +110,19 @@ void ttChar::setup(ofxBox2d &characterWorld,
     else{
         fOffsetWalk         = 52 ;
         fOffsetDie          = 0;
-//        fOffsetFall         = ;
+        fOffsetFall         = 72;
         fOffsetStarthung    = 7;
-        fOffsetHung         = 10;
+        fOffsetHung         = 11;
         fOffsetStartpull    = 20;
-        fOffsetPull         = 38;
+        fOffsetPull         = 39;
         
-        fAmountWalk         = 68-52;
+        fAmountWalk         = 71-52;
         fAmountDie          = 6;
-//        fAmountFall         = 36-27;
-        fAmountStarthung    = 42-37;
-        fAmountHung         = 54-43;
-        fAmountStartpull    = 70-55;
-        fAmountPull         = 81-71;
+        fAmountFall         = 77-72;
+        fAmountStarthung    = 10-7;
+        fAmountHung         = 19-11;
+        fAmountStartpull    = 38-20;
+        fAmountPull         = 51-39;
         
     }
 }
@@ -552,14 +552,20 @@ void ttChar::draw(){
 //    walkFrameIndex = (int) (ofGetElapsedTimef() * 24) % sprite.size();
     
     if (!bSwing) {
-        if(character.getVelocity().x !=  0){
+        if      (character.getVelocity().x != 0 && character.getVelocity().y ==0){
             frameIndex = (int) (ofGetElapsedTimef() * 24) % fAmountWalk;
-            sprite[fOffsetWalk+frameIndex].draw (0,0, adjustedHeight, adjustedHeight);
-        }else{
+            sprite[fOffsetWalk+frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
+            
+        }else if(character.getVelocity().y != 0){
+            frameIndex = (int) (ofGetElapsedTimef() * 24) % fAmountFall;
+            sprite[fOffsetFall+frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
+        
+        }else   {
             sprite[fOffsetWalk+16].draw(0,0, adjustedHeight, adjustedHeight);
         }
+    
     }else{
-        frameIndex = (int) (ofGetElapsedTimef() * 24) % fAmountHung;
+        frameIndex = (int) (ofGetElapsedTimef() * 12) % fAmountHung;
         sprite[fOffsetHung +frameIndex].draw(0,0, adjustedHeight, adjustedHeight);
     }
     

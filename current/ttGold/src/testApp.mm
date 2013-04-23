@@ -250,7 +250,7 @@ void testApp::drawScene(int iDraw){
 //        ground_A.draw();
         ground_A.drawPolyLine();
 //        char_A.drawBox2dObject();
-//        thorns_A.draw();
+        thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
@@ -258,7 +258,7 @@ void testApp::drawScene(int iDraw){
 //        ground_B.draw();
         ground_B.drawPolyLine();
 //        char_B.drawBox2dObject();
-//        thorns_B.draw();
+        thorns_B.draw();
         ofPopMatrix();
         
         sky.drawCloud();

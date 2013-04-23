@@ -10,8 +10,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
-		4750F282172673F700287967 /* applogosm.png in Resources */ = {isa = PBXBuildFile; fileRef = 4750F281172673F700287967 /* applogosm.png */; };
-		4750F284172673F900287967 /* applogo2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4750F283172673F900287967 /* applogo2.png */; };
 		4750F2F31726756300287967 /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4750F28B1726756300287967 /* install.xml */; };
 		4750F2F41726756300287967 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4750F2901726756300287967 /* b2BroadPhase.cpp */; };
 		4750F2F51726756300287967 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4750F2921726756300287967 /* b2CollideCircle.cpp */; };
@@ -67,6 +65,8 @@
 		4750F3741726763400287967 /* ttThorn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4750F36B1726763400287967 /* ttThorn.cpp */; };
 		4750F3761726767700287967 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4750F3751726767700287967 /* Default-Portrait~ipad.png */; };
 		4750F3781726767C00287967 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4750F3771726767C00287967 /* Default-Portrait@2x~ipad.png */; };
+		4750F37B17267E7A00287967 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4750F37A17267E7A00287967 /* Icon.png */; };
+		4750F37D17267E7E00287967 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4750F37C17267E7E00287967 /* Icon@2x.png */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
 		53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
@@ -106,8 +106,6 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* iPhone_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhone_Prefix.pch; sourceTree = "<group>"; };
-		4750F281172673F700287967 /* applogosm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = applogosm.png; sourceTree = "<group>"; };
-		4750F283172673F900287967 /* applogo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = applogo2.png; sourceTree = "<group>"; };
 		4750F28B1726756300287967 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		4750F28E1726756300287967 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		4750F2901726756300287967 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -224,6 +222,8 @@
 		4750F36C1726763400287967 /* ttThorn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttThorn.h; sourceTree = "<group>"; };
 		4750F3751726767700287967 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		4750F3771726767C00287967 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		4750F37A17267E7A00287967 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		4750F37C17267E7E00287967 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		BB16EBD10F2B2A9500518274 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -276,10 +276,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				4750F37C17267E7E00287967 /* Icon@2x.png */,
+				4750F37A17267E7A00287967 /* Icon.png */,
 				4750F3771726767C00287967 /* Default-Portrait@2x~ipad.png */,
 				4750F3751726767700287967 /* Default-Portrait~ipad.png */,
-				4750F283172673F900287967 /* applogo2.png */,
-				4750F281172673F700287967 /* applogosm.png */,
 				4750F33D172675E600287967 /* src */,
 				BB24E1F710DAA51900E9C588 /* openFrameworks */,
 				BB16F26B0F2B646B00518274 /* addons */,
@@ -631,11 +631,11 @@
 				BB24DDCA10DA781C00E9C588 /* ofxiphone-Info.plist in Resources */,
 				E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */,
 				E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */,
-				4750F282172673F700287967 /* applogosm.png in Resources */,
-				4750F284172673F900287967 /* applogo2.png in Resources */,
 				4750F2F31726756300287967 /* install.xml in Resources */,
 				4750F3761726767700287967 /* Default-Portrait~ipad.png in Resources */,
 				4750F3781726767C00287967 /* Default-Portrait@2x~ipad.png in Resources */,
+				4750F37B17267E7A00287967 /* Icon.png in Resources */,
+				4750F37D17267E7E00287967 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
