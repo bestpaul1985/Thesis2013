@@ -62,6 +62,7 @@
 		4CB26E88170407F4005E11E7 /* ofxBox2dRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26E5A170407F4005E11E7 /* ofxBox2dRect.cpp */; };
 		4CCD3A7816F3D9A00095BCB1 /* ttControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD3A7616F3D9A00095BCB1 /* ttControl.cpp */; };
 		4CFA0E0C1709135B00DAD3D4 /* ttThorn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA0E0A1709135A00DAD3D4 /* ttThorn.cpp */; };
+		4CFD5DB8171D2DD300704BB8 /* ttBird.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD5DB6171D2DD300704BB8 /* ttBird.cpp */; };
 		4CFEE4C317022C0E007399D9 /* ttGround.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEE4C117022C0E007399D9 /* ttGround.cpp */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
 		53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */; };
@@ -215,6 +216,8 @@
 		4CCD3B2B16F563B80095BCB1 /* ttSetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttSetData.h; sourceTree = "<group>"; };
 		4CFA0E0A1709135A00DAD3D4 /* ttThorn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttThorn.cpp; sourceTree = "<group>"; };
 		4CFA0E0B1709135B00DAD3D4 /* ttThorn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttThorn.h; sourceTree = "<group>"; };
+		4CFD5DB6171D2DD300704BB8 /* ttBird.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttBird.cpp; sourceTree = "<group>"; };
+		4CFD5DB7171D2DD300704BB8 /* ttBird.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttBird.h; sourceTree = "<group>"; };
 		4CFEE4C117022C0E007399D9 /* ttGround.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttGround.cpp; sourceTree = "<group>"; };
 		4CFEE4C217022C0E007399D9 /* ttGround.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttGround.h; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -551,6 +554,8 @@
 				4C296293170A155800CEF0FC /* ttSky.h */,
 				4C90B560170C946800FE43ED /* ttIndicator.cpp */,
 				4C90B561170C946800FE43ED /* ttIndicator.h */,
+				4CFD5DB6171D2DD300704BB8 /* ttBird.cpp */,
+				4CFD5DB7171D2DD300704BB8 /* ttBird.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -706,6 +711,7 @@
 				4C296294170A155800CEF0FC /* ttSky.cpp in Sources */,
 				4C90B562170C946900FE43ED /* ttIndicator.cpp in Sources */,
 				476DDB371716377D005910CE /* ttEmoji.cpp in Sources */,
+				4CFD5DB8171D2DD300704BB8 /* ttBird.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

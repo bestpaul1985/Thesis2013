@@ -1,7 +1,9 @@
 #include "testApp.h"
 
 //--------------------------------------------------------------
-void testApp::setup(){	
+void testApp::setup(){
+    ofSetVerticalSync(true);
+    ofSetFrameRate(60);
 	// initialize the accelerometer
 	ofxAccelerometer.setup();
     ofxAccelerometer.setForceSmoothing(0.55f);
@@ -54,6 +56,8 @@ void testApp::setup(){
     //rope
     rope_A.setup(ofxAccelerometer.getForce(),screen_A,screen_B,char_A.getPos,char_B.getPos,control,0);
     rope_B.setup(ofxAccelerometer.getForce(),screen_A,screen_B,char_A.getPos,char_B.getPos,control,1);
+    //bird
+    bird.setup(world_A, 0, 150);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -129,8 +133,9 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
 //--------------------------------------------------------------
 void testApp::update(){
     
-    world_A.update();
-    world_B.update();
+    //birds
+    bird.update();
+   
     
     //no jump in sky
     if (numFootContacts_A<=0) {
@@ -152,8 +157,6 @@ void testApp::update(){
     //Character
     char_A.update();
     char_B.update();
-    //screen
-    screen();
    
     //control
    
@@ -212,7 +215,7 @@ void testApp::update(){
     cout<< char_A.rects.size() <<
     char_B.rects.size() <<
     rope_B.bSwing <<
-   rope_A.bSwing << endl;
+    rope_A.bSwing << endl;
     
     //rope update
   
@@ -226,6 +229,12 @@ void testApp::update(){
         char_B.character.setVelocity(0, 0);
     }
     
+    
+    world_A.update();
+    world_B.update();
+    
+    //screen
+    screen();
 }
 
 //--------------------------------------------------------------
@@ -280,6 +289,7 @@ void testApp::drawScene(int iDraw){
         ofPushMatrix();
         ofTranslate(screen_A);
         char_A.drawRope();
+        bird.draw();
         ofPopMatrix();
         
         ofPushMatrix();

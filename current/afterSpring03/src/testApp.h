@@ -14,6 +14,7 @@
 #include "ttThorn.h"
 #include "ttSky.h"
 #include "ttIndicator.h"
+#include "ttBird.h"
 class testApp : public ofxiPhoneApp{
 	
     public:
@@ -70,6 +71,8 @@ class testApp : public ofxiPhoneApp{
         ttSky sky;
         //Indictor
         ttIndicator accIndictor;
+        //birds
+        ttBird bird;
 };
 
 
