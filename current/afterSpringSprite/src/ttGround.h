@@ -17,7 +17,6 @@ class ttGround{
     void draw();
     void drawPolyLine();
     
-    vector <ofPolyline>			lines;
     vector <ofxBox2dPolygon>	ground;
     
     vector<ofImage> bgImg;

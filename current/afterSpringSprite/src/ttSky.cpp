@@ -11,20 +11,20 @@
 void ttSky::setup(){
 
     skyBg.loadImage("sprites/bg/sky/background.png");
-    cloud01.loadImage("sprites/bg/sky/cloud01.png");
-    cloud02.loadImage("sprites/bg/sky/cloud02.png");
-    cloud03.loadImage("sprites/bg/sky/cloud03.png");
-    speed01 = 0.5;
-    speed02 = 0.7;
-    speed03 = 1.0;
-    pos01.set(50, 455-120);
-    pos02.set(389, 511-120);
-    pos03.set(818, 468-120);
+    cloud[0].loadImage("sprites/bg/sky/cloud01.png");
+    cloud[1].loadImage("sprites/bg/sky/cloud02.png");
+    cloud[2].loadImage("sprites/bg/sky/cloud03.png");
+    speed[0] = 0.5;
+    speed[1] = 0.7;
+    speed[2] = 1.0;
+    pos[0].set(50, 455-120);
+    pos[1].set(389, 511-120);
+    pos[2].set(818, 468-120);
 }
 
 void ttSky::drawBg(){
     ofSetColor(255, 255, 255);
-    skyBg.draw(0,0);
+    skyBg.draw(0,0,ofGetWidth(),ofGetHeight());
 }
 
 
@@ -32,30 +32,30 @@ void ttSky::drawCloud(){
 
     ofSetColor(255, 255, 255);
     
-    pos01.x+=speed01;
+    pos[0].x+=speed[0];
     ofPushMatrix();
-    if (pos01.x>ofGetWidth()) {
-        pos01.x = -cloud01.getWidth()-50;
+    if (pos[0].x>ofGetWidth()) {
+        pos[0].x = -cloud[0].getWidth()-50;
     }
-    ofTranslate(pos01);
-    cloud01.draw(0, 0);
+    ofTranslate(pos[0]);
+    cloud[0].draw(0, 0);
     ofPopMatrix();
     
-    pos02.x-=speed02;
+    pos[1].x-=speed[1];
     ofPushMatrix();
-    if (pos02.x<-cloud02.getWidth()) {
-        pos02.x = ofGetWidth()+cloud02.getWidth()+389;
+    if (pos[1].x<-cloud[1].getWidth()) {
+        pos[1].x = ofGetWidth()+cloud[1].getWidth()+389;
     }
-    ofTranslate(pos02);
-    cloud02.draw(0, 0);
+    ofTranslate(pos[1]);
+    cloud[1].draw(0, 0);
     ofPopMatrix();
     
-    pos03.x+=speed03;
+    pos[2].x+=speed[2];
     ofPushMatrix();
-    if (pos03.x>ofGetWidth()) {
-        pos03.x = -cloud03.getWidth()-818;
+    if (pos[2].x>ofGetWidth()) {
+        pos[2].x = -cloud[2].getWidth()-818;
     }
-    ofTranslate(pos03);
-    cloud03.draw(0, 0);
+    ofTranslate(pos[2]);
+    cloud[2].draw(0, 0);
     ofPopMatrix();
 }

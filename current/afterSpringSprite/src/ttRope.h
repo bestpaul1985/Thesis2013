@@ -22,10 +22,6 @@ public:
     void draw();
     
     ofxBox2d world;
-    ofxBox2dRect start;
-    ofxBox2dRect end;
-    ofxBox2dJoint joint;
-    
     vector<ofxBox2dRect>    rects;
     vector<b2RevoluteJoint*> joints;
     
@@ -40,13 +36,12 @@ public:
     float startTime;
     float duration;
     
-    bool bHooked;
     bool bReady;
     bool bRopeInUse;
     bool bInitialize;
-    bool bFall;
     bool bInSky;
     bool bSwing;
+    
     int counter;
     int ropeNum;
     int m_num;

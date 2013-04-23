@@ -166,7 +166,6 @@ void testApp::update(){
             char_A.copyRope(rope_B.rects, rope_B.joints, screen_A);
             rope_B.bReady = false;
             rope_B.destroy();
-            
         }
         char_A.controlRope();
         char_A.swing();
@@ -248,16 +247,16 @@ void testApp::drawScene(int iDraw){
         
         ofPushMatrix();
         ofTranslate(screen_A);
-        ground_A.draw();
-//        ground_A.drawPolyLine();
+//        ground_A.draw();
+        ground_A.drawPolyLine();
 //        char_A.drawBox2dObject();
 //        thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
-        ground_B.draw();
-//        ground_B.drawPolyLine();
+//        ground_B.draw();
+        ground_B.drawPolyLine();
 //        char_B.drawBox2dObject();
 //        thorns_B.draw();
         ofPopMatrix();

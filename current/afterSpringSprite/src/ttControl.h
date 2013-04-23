@@ -19,9 +19,6 @@ public:
     void touchDown(int x, int y, int TouchId);
     void touchMove(int x, int y, int TouchId);
     void touchUp(int x, int y, int TouchId);
-    
-    ofRectangle Directional_Touch_Area, rope_Area;
-    ofPoint preTouchPos;
     ofPoint diff;
     
     ofPoint orgPos[4];
@@ -29,27 +26,6 @@ public:
     bool bTouch[4];
     int touchID[4];
     bool bAllTouch;
-    //----old
-    float w;
-    float h;
-    float width;
-    float height;
-    float dis;
-    int  charNum;
-   
-    
-    bool bLeft;
-    bool bRight;
-    bool bSmallLeft;
-    bool bSmallRight;
-    bool bFixed;
-    bool bSwingLeft;
-    bool bSwingRight;
-    bool bHookRope;
-    bool bRelese;
-    bool bLeftAir;
-    bool bRightAir;
-    bool bDrawButton;
     
     int touchId;
    

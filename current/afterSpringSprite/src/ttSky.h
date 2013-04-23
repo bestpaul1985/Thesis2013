@@ -1,3 +1,4 @@
+#define CLOUD_NUM 3
 //
 //  ttSky.h
 //  springBreak04
@@ -12,16 +13,14 @@
 #include "ofMain.h"
 class ttSky{
 public:
-    void setup();
-    void drawBg();
-    void drawCloud();
+    void    setup();
+    void    drawBg();
+    void    drawCloud();
     
-    ofImage skyBg;
-    ofImage cloud01;
-    ofImage cloud02;
-    ofImage cloud03;
-    float speed01,speed02,speed03;
-    ofPoint pos01,pos02,pos03;
+    ofImage     skyBg;
+    ofImage     cloud[CLOUD_NUM];
+    float       speed[CLOUD_NUM];
+    ofPoint     pos[CLOUD_NUM];
 };
 
 #endif /* defined(__springBreak04__ttSky__) */

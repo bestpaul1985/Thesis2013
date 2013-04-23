@@ -26,7 +26,7 @@ public:
     void moveRight();
     void update();
     void draw();
-    void copyRope(vector<ofxBox2dRect> Rects, vector<b2RevoluteJoint*> Joints, ofPoint screen);
+    void copyRope(vector<ofxBox2dRect> _rects, vector<b2RevoluteJoint*> _joints, ofPoint screen);
     void initializeRope(ofPoint charPos, ofPoint screen);
     void controlRope();
     void destroyRope();
@@ -42,25 +42,22 @@ public:
     
     ofPoint         setPos;
     ofPoint         getPos;
-    ofPoint         prePos;
-    ofPoint         *accFroce;
+    ofPoint         *accForce;
+    
     float           setWidth;
     float           setHeight;
     float           adjustedHeight;
     float           alpha;
     float           startTime;
-    bool            bFixedMove;
+    
     bool            bSwing;
     bool            bInSky;
-    bool            bReset;
-    bool            bHookIt;
     bool            bDead;
     bool            bDestroyRect;
     bool            bAccLeft;
     bool            bAccRight;
-    bool            bDouPressed;
-    bool            bRopeInControl;
     bool            mirrorLeft;
+    
     int             charNum;
     int             step;
     int             deadStep;
@@ -69,11 +66,13 @@ public:
     int             hold_Num;
     int             rectSize;
     
-    ttControl       *control;
-    vector<ofImage> walkSprite;
+    int             fOffsetWalk, fOffsetDie, fOffsetFall, fOffsetStarthung,
+                    fOffsetHung, fOffsetStartpull, fOffsetPull;
+    int             fAmountWalk, fAmountDie, fAmountFall, fAmountStarthung,
+                    fAmountHung, fAmountStartpull, fAmountPull;
     
-    ofxBox2dCircle  start;
-    ofxBox2dJoint   joint;
+    ttControl       *control;
+    vector<ofImage> sprite;
     
     ofColor         color;
     

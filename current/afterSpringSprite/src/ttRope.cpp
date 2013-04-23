@@ -28,8 +28,6 @@ void ttRope::setup(ofPoint &accFrc,ofPoint &_screenA,ofPoint &_screenB, ofPoint 
     
     
     bRopeInUse = false;
-    bFall = false;
-    bHooked = false;
     bReady = false;
     bInitialize = false;
     bInSky = false;
@@ -89,7 +87,7 @@ void ttRope::update(){
                 }
             }
             
-            int counter = 0;
+            counter = 0;
             vector<float> lengths;
             for (int i = 0; i<rects.size(); i++) {
                 ofPoint rectPos,charPos;

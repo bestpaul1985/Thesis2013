@@ -9,24 +9,11 @@
 #include "ttControl.h"
 
 void ttControl::setup(){
-//    bSmallLeft = false;
-//    bSmallRight = false;
-//    bSwingRight =false;
-//    bSwingLeft = false;
-//    bLeft = false;
-//    bRight = false;
-//    bLeftAir = false;
-//    bRightAir = false;
-//    bHookRope = false;
-//    bRelese = false;
-//    bFixed = false;
-//    bDrawButton = false;
     
     bAllTouch = false;
     diff.set(0, 0);
-    dis = 0;
     touchId = -1;
-    RAD = 300;
+    RAD = 250;
     
     orgPos[0].set(0, 0);
     orgPos[1].set(ofGetWidth(), 0);
@@ -42,23 +29,13 @@ void ttControl::setup(){
 
 void ttControl::draw(){
     
-  
-    ofSetColor(204,204,204,30);
-    ofCircle(orgPos[0], RAD);
-    ofCircle(orgPos[1], RAD);
-    ofCircle(orgPos[2], RAD);
-    ofCircle(orgPos[3], RAD);
+    ofSetCircleResolution(8);
+    for (int i = 0; i<4; i++) {
+        if(bTouch[i] == false) ofSetColor(ofColor::ivory,180);
+        else ofSetColor(ofColor::lemonChiffon, 180);
+        ofCircle(orgPos[i], RAD);
+    }
     
-//    if (bDrawButton) {
-//        if (bHookRope) {
-//            ofSetColor(255, 255, 255);
-//        }else{
-//            ofSetColor(255, 255, 255,200);
-//        }
-//         ofRect(rope_Area);
-//    }
-//    cout<<bTouch[0]<<bTouch[1]<<bTouch[2]<<bTouch[3]<<endl;
-//     cout<<"bAllTouch: "<<bAllTouch<<endl;
 }
 //------------------------------------------------
 void ttControl::touchDown(int x, int y, int TouchId){
@@ -78,9 +55,7 @@ void ttControl::touchDown(int x, int y, int TouchId){
         }
     }
     
-    if (counter ==4) {
-        bAllTouch = true;
-    }
+    if (counter ==4) bAllTouch = true;
     
     
 }
