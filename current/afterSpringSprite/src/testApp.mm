@@ -264,31 +264,21 @@ void testApp::drawScene(int iDraw){
         
         sky.drawCloud();
         
-        ofPushMatrix();
-        ofTranslate(screen_A);
-        char_A.draw();
-        char_A.drawRope();
-        ofPopMatrix();
-        
-        ofPushMatrix();
-        ofTranslate(screen_B);
-        char_B.draw();
-        char_B.drawRope();
-        ofPopMatrix();
-        
-        
-        ofPushMatrix();
-        ofTranslate(screen_A);
-        char_A.drawRope();
-        ofPopMatrix();
-        
-        ofPushMatrix();
-        ofTranslate(screen_B);
-        char_B.drawRope();
-        ofPopMatrix();
-        
         rope_A.draw();
         rope_B.draw();
+        
+        ofPushMatrix();
+        ofTranslate(screen_A);
+        char_A.drawRope();
+        char_A.draw();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofTranslate(screen_B);
+        char_B.drawRope();
+        char_B.draw();
+        ofPopMatrix();
+        
     }
 }
 //--------------------------------------------------------------

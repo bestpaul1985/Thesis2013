@@ -48,17 +48,17 @@ void ttChar::setup(ofxBox2d &characterWorld,
     character.body->SetFixedRotation(true);
     numFootContacts = 0;
     adjustedHeight = 85;
-    ofDirectory walkDir, hangDir, sendDir;
-    int walknFiles, hangnFiles, sendnFiles;
+    ofDirectory walkDir;
+    int walknFiles;
     b2Vec2 v2;
     if (charNum == 0) {
-        walknFiles = walkDir.listDir("sprites/girl/Thatthey_Girl_Walk");
+        walknFiles = walkDir.listDir("sprites/girl");
         v2.Set(b2dNum(0), b2dNum(-30));
      
     }
     else
     {
-        walknFiles  = walkDir.listDir("sprites/boy/Thatthey_Boy_Walk");
+        walknFiles  = walkDir.listDir("sprites/boy");
         v2.Set(b2dNum(0), b2dNum(30));
     }
  
@@ -496,6 +496,7 @@ void ttChar::draw(){
     ofTranslate(character.getPosition());
     //turn left flip
     if (mirrorLeft) ofScale(-1, 1);
+    if (charNum == 0) ofScale(-1, -1);
     //if no picture files, draw box2d rect instead
     if ((int)walkSprite.size() <=0 ) {
         ofSetColor(255, 30, 220,100);
@@ -518,8 +519,10 @@ void ttChar::draw(){
         walkSprite[16].draw(0,0, adjustedHeight, adjustedHeight);
     }
     
-    ofPopMatrix();
     ofSetRectMode(OF_RECTMODE_CORNER);
+    ofDrawBitmapStringHighlight(ofToString(walkFrameIndex), -20,-20);
+    
+    ofPopMatrix();
 
 }
 //----------------------------------------------

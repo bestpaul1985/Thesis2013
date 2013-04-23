@@ -52,7 +52,6 @@ public:
     bool            bFixedMove;
     bool            bSwing;
     bool            bInSky;
-    bool            mirrorLeft;
     bool            bReset;
     bool            bHookIt;
     bool            bDead;
@@ -61,6 +60,7 @@ public:
     bool            bAccRight;
     bool            bDouPressed;
     bool            bRopeInControl;
+    bool            mirrorLeft;
     int             charNum;
     int             step;
     int             deadStep;
@@ -70,7 +70,7 @@ public:
     int             rectSize;
     
     ttControl       *control;
-    vector<ofImage> walkSprite, hangSprite, sendSprite;
+    vector<ofImage> walkSprite;
     
     ofxBox2dCircle  start;
     ofxBox2dJoint   joint;
