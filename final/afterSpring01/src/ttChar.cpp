@@ -29,8 +29,12 @@ void ttChar::setup(ofxBox2d &characterWorld,
     if(charNum ==1)mirrorLeft = false;
     if(charNum ==0)mirrorLeft = true;
     bSwing = false;
+    bFixedMove = false;
     bDead = false;
     bDestroyRect = false;
+    bHookIt = false;
+    bDouPressed = false;
+    bRopeInControl = false;
     bInSky = false;
     alpha = 255;
     deadStep = 2;
@@ -77,8 +81,6 @@ void ttChar::setup(ofxBox2d &characterWorld,
     sd->name	= "footSenser";
     
     startTime = ofGetElapsedTimeMillis();
-    
-    cout<<dir.numFiles()<<endl;
 }
 //----------------------------------------------
 void ttChar::moveLeft(){
@@ -286,41 +288,41 @@ void ttChar::controlRope(){
         return;
     }
     
-    
     int size = (fabs(rects[0].getPosition().y - getPos.y)-100)/28+2;
     if (size>15) {
         size = 15;
     }
-    
-    
-    if (!joints.empty() && rects.size()>size) {
-        int counter = 0;
-        for (int i = 0 ; i<rects.size(); i++) {
-            if (rects[i].body->GetType() == 0) {
-                counter ++;
+        if (!joints.empty() && rects.size()>size) {
+            int counter = 0;
+            for (int i = 0 ; i<rects.size(); i++) {
+                if (rects[i].body->GetType() == 0) {
+                    counter ++;
+                }
             }
-        }
-    
-        if (ofGetElapsedTimeMillis()-startTime>30) {
-            world.getWorld()->DestroyJoint(joints.front());
-            world.getWorld()->DestroyBody(rects[1].body);
-            joints.erase(joints.begin());
-            rects.erase(rects.begin()+1);
-            
-            b2RevoluteJointDef revoluteJointDef;
-            revoluteJointDef.Initialize(rects[0].body, rects[1].body, rects[0].body->GetWorldCenter());
-            b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
-            revoluteJointDef.localAnchorA.Set(p.x, p.y);
-            p = screenPtToWorldPt(ofPoint(-14,0));
-            revoluteJointDef.localAnchorB.Set(p.x, p.y);
-            joints.front() = (b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef);
-            
-            if (counter>1) {
-                startTime = ofGetElapsedTimeMillis();
-            }
-        }
         
-    }
+            if (ofGetElapsedTimeMillis()-startTime>30) {
+                world.getWorld()->DestroyJoint(joints.front());
+                world.getWorld()->DestroyBody(rects[1].body);
+                joints.erase(joints.begin());
+                rects.erase(rects.begin()+1);
+                
+                b2RevoluteJointDef revoluteJointDef;
+                revoluteJointDef.Initialize(rects[0].body, rects[1].body, rects[0].body->GetWorldCenter());
+                b2Vec2 p = screenPtToWorldPt(ofPoint(0,0));
+                revoluteJointDef.localAnchorA.Set(p.x, p.y);
+                p = screenPtToWorldPt(ofPoint(-14,0));
+                revoluteJointDef.localAnchorB.Set(p.x, p.y);
+//                revoluteJointDef.enableLimit = true;
+//                revoluteJointDef.lowerAngle = -PI/3;
+//                revoluteJointDef.upperAngle = PI/3;
+                joints.front() = (b2RevoluteJoint*)world.world->CreateJoint(&revoluteJointDef);
+                
+                if (counter>1) {
+                    startTime = ofGetElapsedTimeMillis();
+                }
+            }
+            
+        }
        
 //            b2PolygonShape shape;
 //            b2Vec2 v2;
@@ -495,7 +497,7 @@ void ttChar::draw(){
     //turn left flip
     if (mirrorLeft) ofScale(-1, 1);
     //if no picture files, draw box2d rect instead
-    if ((int)sprite.size() <= 0 ) {
+    if ((int)sprite.size() <=0 ) {
         ofSetColor(255, 30, 220,100);
         character.draw();
     }
@@ -504,9 +506,12 @@ void ttChar::draw(){
     frameIndex = (int) (ofGetElapsedTimef() * 24) % sprite.size();
     
     if (!bSwing) {
-        if(character.getVelocity().lengthSquared() >  0){
+        if(character.getVelocity().lengthSquared() >  0)
+        {
             sprite[frameIndex].draw (0,0, adjustedHeight, adjustedHeight);
-        }else{
+        }
+        else
+        {
             sprite[16].draw(0,0, adjustedHeight, adjustedHeight);
         }
     }else{
