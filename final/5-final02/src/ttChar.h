@@ -11,7 +11,8 @@ enum _condition
     C_STOP,
     C_LEFT,
     C_RIGHT,
-    C_HOOK,
+    C_PUSH_ROPE,
+    C_HOOK_ROPE,
 };
 //-----------------------------------------------------------------------------
 static animation_t walkAnimation = {   0,  0,  24,  1,  1,  45, 0,  -1, -1, 1 };

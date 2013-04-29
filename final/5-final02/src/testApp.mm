@@ -150,7 +150,12 @@ void testApp::update(){
     //screen
     screen();
     //control
-    if (!control.bTouch[2]&&!control.bTouch[3]) {
+    
+    if (ofxAccelerometer.getForce().x>0.1) {
+         char_B.condition = C_PUSH_ROPE;
+    }
+    
+    else if (!control.bTouch[2]&&!control.bTouch[3]) {
         char_B.condition = C_STOP;
     }
     
@@ -163,7 +168,7 @@ void testApp::update(){
     }
     
     else if(control.bTouch[2]&&control.bTouch[3]){
-        char_B.condition = C_HOOK;
+        char_B.condition = C_HOOK_ROPE;
     }
 }
 
