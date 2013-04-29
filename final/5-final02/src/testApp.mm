@@ -154,11 +154,7 @@ void testApp::update(){
     //control char_A
     if (ofxAccelerometer.getForce().x<-0.1) {
         char_A.condition = C_PUSH_ROPE;
-        if (char_A.sprites[1]->animation.loops == 0) {
-            cout<<"ok"<<endl;
-        }
     }
-    
     else if (!control.bTouch[0]&&!control.bTouch[1]) {
         char_A.condition = C_STOP;
     }
@@ -195,6 +191,8 @@ void testApp::update(){
     else if(control.bTouch[2]&&control.bTouch[3]){
         char_B.condition = C_HOOK_ROPE;
     }
+    
+   
 }
 
 //--------------------------------------------------------------
@@ -205,6 +203,11 @@ void testApp::draw(){
     drawScene(0);
     accIndictor.draw();
     control.draw();
+    
+    
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
+
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int iDraw){
@@ -229,9 +232,19 @@ void testApp::drawScene(int iDraw){
         ofPopMatrix();
         
         sky.drawCloud();
-    
-
     }
+    
+    //rope
+    if (char_A.sprites[1]->animation.loops == 0) {
+        ofPoint pos;
+        ofPoint offset;
+        pos.x = screen_A.x;
+        pos.y = screen_A.y;
+        ofSetColor(0);
+        ofSetLineWidth(2.5);
+        ofLine(pos.x,pos.y, pos.x, 768-pos.y);
+    }
+    
 }
 //--------------------------------------------------------------
 void testApp::exit(){

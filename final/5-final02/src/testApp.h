@@ -62,6 +62,8 @@ class testApp : public ofxiPhoneApp{
         ttSky               sky;
         //Indictor
         ttIndicator         accIndictor;
+        //ropes
+        ofPolyline          rope_A, rope_B;
 };
 
 
