@@ -32,11 +32,12 @@ void testApp::setup(){
     control.setup();
     
     //char
+    char_A.setup(world_A, ofPoint(0,0), 0);
     char_B.setup(world_B, ofPoint(0,0), 1);
-    //translate
+    //camera
     translate_A.set(384,250);
     translate_B.set(384,768-250);
-//    camera_A = char_A.getPos;
+    camera_A = char_A.getPos;
     camera_B = char_B.getPos;
     screen();
     //thorn
@@ -146,11 +147,35 @@ void testApp::update(){
     }
 
     //Character
+    char_A.update();
     char_B.update();
     //screen update
     screen();
-    //control
+    //control char_A
+    if (ofxAccelerometer.getForce().x<-0.1) {
+        char_A.condition = C_PUSH_ROPE;
+        if (char_A.sprites[1]->animation.loops == 0) {
+            cout<<"ok"<<endl;
+        }
+    }
     
+    else if (!control.bTouch[0]&&!control.bTouch[1]) {
+        char_A.condition = C_STOP;
+    }
+    
+    else if (control.bTouch[0]&&!control.bTouch[1]) {
+        char_A.condition = C_LEFT;
+    }
+    
+    else if(control.bTouch[1]&&!control.bTouch[0]){
+        char_A.condition = C_RIGHT;
+    }
+    
+    else if(control.bTouch[0]&&control.bTouch[1]){
+        char_A.condition = C_HOOK_ROPE;
+    }
+    
+     //control char_B
     if (ofxAccelerometer.getForce().x>0.1) {
          char_B.condition = C_PUSH_ROPE;
     }
@@ -192,6 +217,7 @@ void testApp::drawScene(int iDraw){
         ground_A.draw();
         ground_A.drawPolyLine();
         thorns_A.draw();
+        char_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
@@ -242,15 +268,15 @@ void testApp::screen(){
     float catchUpSpeed = 0.03f;
     ofPoint catch_A, catch_B;
     
-//    char_A.getPos.x<0? A[0] = true: A[0] =false;
+    char_A.getPos.x<0? A[0] = true: A[0] =false;
     char_B.getPos.x<0? B[0] = true: B[0] =false;
     //camera setup
     if (A[0]) {
         catch_A.x = 0;
-//        catch_A.y = char_A.getPos.y;
+        catch_A.y = char_A.getPos.y;
     }else{
-//        catch_A.x = char_A.getPos.x;
-//        catch_A.y = char_A.getPos.y;
+        catch_A.x = char_A.getPos.x;
+        catch_A.y = char_A.getPos.y;
     }
    
     if (B[0]) {
@@ -263,8 +289,8 @@ void testApp::screen(){
     
     //calculate
 //    if (!rope_A.bRopeInUse && !char_A.bSwing && !char_B.bSwing) {
-//        camera_A.x = catchUpSpeed * catch_A.x + (1-catchUpSpeed) * camera_A.x;
-//        camera_A.y = catchUpSpeed * catch_A.y + (1-catchUpSpeed) * camera_A.y;
+       camera_A.x = catchUpSpeed * catch_A.x + (1-catchUpSpeed) * camera_A.x;
+       camera_A.y = catchUpSpeed * catch_A.y + (1-catchUpSpeed) * camera_A.y;
 //    }
 //   
 //    if (!rope_B.bRopeInUse && !char_A.bSwing && !char_B.bSwing) {

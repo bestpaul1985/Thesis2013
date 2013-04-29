@@ -15,8 +15,11 @@ enum _condition
     C_HOOK_ROPE,
 };
 //-----------------------------------------------------------------------------
-static animation_t walkAnimation = {   0,  0,  24,  1,  1,  75, 0,  -1, -1, 1 };
-static animation_t ropeAnimation = {   25,  0,  6,  1,  1,  75, 0,  1, -1, 1 };
+static animation_t walkAnimation_boy = {   0,  0,  19,  1,  1,  75, 0,  -1, -1, 1 };
+static animation_t ropeAnimation_boy = {   24,  0,  7,  1,  1,  75, 0,  1, -1, 1 };
+
+static animation_t walkAnimation_girl = {   0,  0,  24,  1,  1,  75, 0,  -1, -1, 1 };
+static animation_t ropeAnimation_girl = {   24,  0,  7,  1,  1,  75, 0,  1, -1, 1 };
 
 struct basicSprite {
 	animation_t animation;
@@ -32,7 +35,7 @@ public:
     
     _condition condition;
     
-    void setup(ofxBox2d &world, ofPoint SetPos, int charNum);
+    void setup(ofxBox2d &world, ofPoint SetPos, int CharNum);
     void update();
     void draw();
     
@@ -42,6 +45,7 @@ public:
     
     bool moveLeft;
     ofPoint getPos;
+    int charNum;
    
 };
 

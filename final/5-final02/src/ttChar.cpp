@@ -8,26 +8,43 @@
 #include "ttChar.h"
 
 //----------------------------------------------
-void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int charNum){
-    
+void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
+    charNum = CharNum;
     character.setPhysics(4.0f, 0.1f, 0.1);
     character.setup(world.getWorld(), SetPos.x, SetPos.y, 15, 33);
     character.body->SetLinearDamping(b2dNum(0.5));
     character.body->SetFixedRotation(true);
     
     spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
-	spriteRenderer->loadTexture("sprites/boySpritesAll.png", 2040, GL_NEAREST);
     
-    for (int i =0; i<2; i++) {
-        basicSprite * newSprite = new basicSprite();
-		newSprite->pos.set(0,0);
-		newSprite->speed=0;
-        if (i==0) {
-            newSprite->animation = walkAnimation;
-        }else{
-            newSprite->animation = ropeAnimation;
+    if (charNum == 0) {
+        spriteRenderer->loadTexture("sprites/grilSpritesAll.png", 2040, GL_NEAREST);
+        for (int i =0; i<2; i++) {
+            basicSprite * newSprite = new basicSprite();
+            newSprite->pos.set(0,0);
+            newSprite->speed=0;
+            if (i==0) {
+                newSprite->animation = walkAnimation_boy;
+            }else{
+                newSprite->animation = ropeAnimation_boy;
+            }
+            sprites.push_back(newSprite);
         }
-		sprites.push_back(newSprite);
+    }
+    
+    if (charNum == 1) {
+        spriteRenderer->loadTexture("sprites/boySpritesAll.png", 2040, GL_NEAREST);
+        for (int i =0; i<2; i++) {
+            basicSprite * newSprite = new basicSprite();
+            newSprite->pos.set(0,0);
+            newSprite->speed=0;
+            if (i==0) {
+                newSprite->animation = walkAnimation_girl;
+            }else{
+                newSprite->animation = ropeAnimation_girl;
+            }
+            sprites.push_back(newSprite);
+        }
     }
     
     moveLeft = false;
@@ -100,7 +117,14 @@ void ttChar::draw(){
     
     ofPushMatrix();
     ofTranslate(character.getPosition().x, character.getPosition().y);
-    moveLeft? ofScale(-1, 1):ofScale(1, 1);
+    if (charNum == 0) {
+        moveLeft? ofScale(1, 1):ofScale(-1, 1);
+    }
+    
+    if (charNum == 1) {
+        moveLeft? ofScale(-1, 1):ofScale(1, 1);
+    }
+    
     spriteRenderer->draw();
     ofPopMatrix();
 }
