@@ -41,10 +41,10 @@ void ttChar::setup(ofxBox2d &characterWorld,
     hold_Num = 0;
     
     color.set(255, 255, 255, 255);
-    character.setPhysics(4.0f, 0.1f, 0.1);
     
+    character.setPhysics(4.0f, 0.1f, 0.1);
     character.setup(world.getWorld(), setPos.x, setPos.y, setWidth, setHeight);
-    character.body->SetLinearDamping(b2dNum(0.999));
+    character.body->SetLinearDamping(b2dNum(0.99));
     character.body->SetFixedRotation(true);
     numFootContacts = 0;
     adjustedHeight = 85;

@@ -10,7 +10,6 @@
 #include "ttSetData.h"
 #include "ttControl.h"
 #include "ttGround.h"
-#include "ttRope.h"
 #include "ttThorn.h"
 #include "ttSky.h"
 #include "ttIndicator.h"
@@ -42,34 +41,27 @@ class testApp : public ofxiPhoneApp{
     
         void screen();
     
-        ofxBox2d        world_A,        world_B;
-        ofxBox2dRect    charDummy_A,    charDummy_B;
-        ofxBox2dCircle  ropeEnd_A,  ropeEnd_B;
-        ofxBox2dRect    item[ITEM_NUMBER];
-    
-        ttChar  char_A;
-        ttChar  char_B;
-        int numFootContacts_A, numFootContacts_B;
-    
-        ttControl control;
-           
-        ttGround  ground_A, ground_B;
-    
-        ofRectangle view_A,view_B;
-        ofPoint preTouch_A,preTouch_B;
-        ofPoint camPos_A,camPos_B;
-        ofPoint translate_A, translate_B;
-        ofPoint final_translate_A, final_translate_B;
-        ofPoint screen_A, screen_B;
-        ofPoint camera_A, camera_B;
-        //rope
-        ttRope rope_A,rope_B;
+        ofxBox2d            world_A,        world_B;
+        ofxBox2dRect        charDummy_A,    charDummy_B;
+        ofxBox2dCircle      ropeEnd_A,  ropeEnd_B;
+        ttChar              char_A,char_B;
+        int                 numFootContacts_A, numFootContacts_B;
+        ttControl           control;
+        ttGround            ground_A, ground_B;
+        ofRectangle         view_A,view_B;
+        ofPoint             preTouch_A,preTouch_B;
+        ofPoint             camPos_A,camPos_B;
+        ofPoint             translate_A, translate_B;
+        ofPoint             final_translate_A, final_translate_B;
+        ofPoint             screen_A, screen_B;
+        ofPoint             camera_A, camera_B;
+      
         //thorns
-        ttThorn thorns_A, thorns_B;
+        ttThorn             thorns_A, thorns_B;
         //sky
-        ttSky sky;
+        ttSky               sky;
         //Indictor
-        ttIndicator accIndictor;
+        ttIndicator         accIndictor;
 };
 
 

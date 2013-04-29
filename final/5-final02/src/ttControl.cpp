@@ -24,8 +24,7 @@ void ttControl::setup(){
     
     bAllTouch = false;
     diff.set(0, 0);
-    dis = 0;
-    touchId = -1;
+   
     RAD = 300;
     
     orgPos[0].set(0, 0);
@@ -43,10 +42,13 @@ void ttControl::setup(){
 void ttControl::draw(){
     
   
-    ofSetColor(204,204,204,30);
+    bTouch[0]? ofSetColor(204,204,204,150):ofSetColor(204,204,204,60);
     ofCircle(orgPos[0], RAD);
+    bTouch[1]? ofSetColor(204,204,204,150):ofSetColor(204,204,204,60);
     ofCircle(orgPos[1], RAD);
+    bTouch[2]? ofSetColor(204,204,204,150):ofSetColor(204,204,204,60);
     ofCircle(orgPos[2], RAD);
+    bTouch[3]? ofSetColor(204,204,204,150):ofSetColor(204,204,204,60);
     ofCircle(orgPos[3], RAD);
     
 //    if (bDrawButton) {

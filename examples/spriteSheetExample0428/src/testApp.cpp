@@ -24,8 +24,6 @@ void testApp::setup(){
         }else{
             newSprite->animation = ropeAnimation;
         }
-		
-//		newSprite->animation.index = i;
 		sprites.push_back(newSprite);
     }
 	
