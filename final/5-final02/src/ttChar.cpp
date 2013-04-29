@@ -32,6 +32,7 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int charNum){
     
     moveLeft = false;
     condition = C_STOP;
+    getPos = SetPos;
 }
 
 //----------------------------------------------
@@ -90,11 +91,12 @@ void ttChar::update(){
     spriteRenderer->update(time);
     sprites[0]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 5);
     spriteRenderer->addCenteredTile(&sprites[spritesNum]->animation, 0,0);
-
+    
+    getPos = character.getPosition();
 }
 //----------------------------------------------
 void ttChar::draw(){
-    character.draw();
+//    character.draw();
     
     ofPushMatrix();
     ofTranslate(character.getPosition().x, character.getPosition().y);

@@ -37,7 +37,7 @@ void testApp::setup(){
     translate_A.set(384,250);
     translate_B.set(384,768-250);
 //    camera_A = char_A.getPos;
-//    camera_B = char_B.getPos;
+    camera_B = char_B.getPos;
     screen();
     //thorn
     thorns_A.setup(world_A, 0);
@@ -147,7 +147,7 @@ void testApp::update(){
 
     //Character
     char_B.update();
-    //screen
+    //screen update
     screen();
     //control
     
@@ -243,7 +243,7 @@ void testApp::screen(){
     ofPoint catch_A, catch_B;
     
 //    char_A.getPos.x<0? A[0] = true: A[0] =false;
-//    char_B.getPos.x<0? B[0] = true: B[0] =false;
+    char_B.getPos.x<0? B[0] = true: B[0] =false;
     //camera setup
     if (A[0]) {
         catch_A.x = 0;
@@ -255,10 +255,10 @@ void testApp::screen(){
    
     if (B[0]) {
         catch_B.x = 0;
-//        catch_B.y = char_B.getPos.y;
+        catch_B.y = char_B.getPos.y;
     }else{
-//        catch_B.x = char_B.getPos.x;
-//        catch_B.y = char_B.getPos.y;
+        catch_B.x = char_B.getPos.x;
+        catch_B.y = char_B.getPos.y;
     }
     
     //calculate
@@ -268,8 +268,8 @@ void testApp::screen(){
 //    }
 //   
 //    if (!rope_B.bRopeInUse && !char_A.bSwing && !char_B.bSwing) {
-//        camera_B.x = catchUpSpeed * catch_B.x + (1-catchUpSpeed) * camera_B.x;
-//        camera_B.y = catchUpSpeed * catch_B.y + (1-catchUpSpeed) * camera_B.y;
+        camera_B.x = catchUpSpeed * catch_B.x + (1-catchUpSpeed) * camera_B.x;
+        camera_B.y = catchUpSpeed * catch_B.y + (1-catchUpSpeed) * camera_B.y;
 //    }
   
     screen_A.x = translate_A.x - camera_A.x,
