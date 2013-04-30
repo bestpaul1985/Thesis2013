@@ -63,6 +63,9 @@ void testApp::setup(){
     bDead_B = false;
     bInSky_A = false;
     bInSky_B = false;
+    //dog
+    dog.setup(world_B, 100,-100);
+   
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -355,6 +358,9 @@ void testApp::update(){
     //Character
     char_A.update();
     char_B.update();
+    
+    //dog
+    dog.update();
 }
 
 //--------------------------------------------------------------
@@ -396,12 +402,17 @@ void testApp::drawScene(int iDraw){
         ofPushMatrix();
         ofTranslate(screen_A);
         char_A.draw();
+        
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
+        dog.draw();
         char_B.draw();
+        
+
         ofPopMatrix();
+        
         
         ofPushMatrix();
         if (rope_condition_A == R_SWING) {

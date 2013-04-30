@@ -19,6 +19,7 @@
 		4C0DFA2F172E00D100645229 /* LinearTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C0DFA27172E00D100645229 /* LinearTexture.cpp */; };
 		4C0DFA30172E00D100645229 /* ofxSpriteSheetRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C0DFA29172E00D100645229 /* ofxSpriteSheetRenderer.cpp */; };
 		4C0DFA31172E00D100645229 /* PixelTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C0DFA2B172E00D100645229 /* PixelTexture.cpp */; };
+		4C0DFA6F1730686C00645229 /* ttDog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C0DFA6D1730686B00645229 /* ttDog.cpp */; };
 		4C296294170A155800CEF0FC /* ttSky.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C296292170A155800CEF0FC /* ttSky.cpp */; };
 		4C90B562170C946900FE43ED /* ttIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C90B560170C946800FE43ED /* ttIndicator.cpp */; };
 		4CB26E5E170407F4005E11E7 /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4CB26DF6170407F3005E11E7 /* install.xml */; };
@@ -123,6 +124,8 @@
 		4C0DFA2A172E00D100645229 /* ofxSpriteSheetRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSpriteSheetRenderer.h; sourceTree = "<group>"; };
 		4C0DFA2B172E00D100645229 /* PixelTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixelTexture.cpp; sourceTree = "<group>"; };
 		4C0DFA2C172E00D100645229 /* PixelTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelTexture.h; sourceTree = "<group>"; };
+		4C0DFA6D1730686B00645229 /* ttDog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttDog.cpp; sourceTree = "<group>"; };
+		4C0DFA6E1730686C00645229 /* ttDog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttDog.h; sourceTree = "<group>"; };
 		4C296292170A155800CEF0FC /* ttSky.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttSky.cpp; sourceTree = "<group>"; };
 		4C296293170A155800CEF0FC /* ttSky.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttSky.h; sourceTree = "<group>"; };
 		4C90B560170C946800FE43ED /* ttIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttIndicator.cpp; sourceTree = "<group>"; };
@@ -585,6 +588,8 @@
 				4C296293170A155800CEF0FC /* ttSky.h */,
 				4C90B560170C946800FE43ED /* ttIndicator.cpp */,
 				4C90B561170C946800FE43ED /* ttIndicator.h */,
+				4C0DFA6D1730686B00645229 /* ttDog.cpp */,
+				4C0DFA6E1730686C00645229 /* ttDog.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -744,6 +749,7 @@
 				4C0DFA2F172E00D100645229 /* LinearTexture.cpp in Sources */,
 				4C0DFA30172E00D100645229 /* ofxSpriteSheetRenderer.cpp in Sources */,
 				4C0DFA31172E00D100645229 /* PixelTexture.cpp in Sources */,
+				4C0DFA6F1730686C00645229 /* ttDog.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

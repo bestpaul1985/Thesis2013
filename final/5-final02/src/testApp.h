@@ -13,12 +13,16 @@
 #include "ttThorn.h"
 #include "ttSky.h"
 #include "ttIndicator.h"
+#include "ttDog.h"
+#include "ofxSpriteSheetRenderer.h"
+
 enum _rope_condition{
     R_NO_USE,
     R_PUSH,
     R_SWING,
     R_DESTROY,
 };
+
 
 class testApp : public ofxiPhoneApp{
     public:
@@ -78,10 +82,13 @@ class testApp : public ofxiPhoneApp{
         //ropes
         ofxBox2dJoint       rope_joint;
         ofxBox2dCircle      rope_anchor;
-       
+        //dog
+        ttDog dog;
+        //booleans
         bool                bSwing_left,bSwing_right;
         bool                bDead_A,bDead_B;
         bool                bInSky_A,bInSky_B;
+    
 };
 
 
