@@ -12,11 +12,10 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
     charNum = CharNum;
     character.setPhysics(4.0f, 0.1f, 0.1);
     character.setup(world.getWorld(), SetPos.x, SetPos.y, 15, 33);
-    character.body->SetLinearDamping(b2dNum(0.5));
     character.body->SetFixedRotation(true);
     
     spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
-    
+    b2Vec2 v2;
     if (charNum == 0) {
         spriteRenderer->loadTexture("sprites/grilSpritesAll.png", 2040, GL_NEAREST);
         for (int i =0; i<2; i++) {
@@ -30,6 +29,7 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
             }
             sprites.push_back(newSprite);
         }
+        v2.Set(b2dNum(0), b2dNum(-30));
     }
     
     if (charNum == 1) {
@@ -45,11 +45,22 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
             }
             sprites.push_back(newSprite);
         }
+        v2.Set(b2dNum(0), b2dNum(30));
     }
     
     moveLeft = false;
     condition = C_STOP;
     getPos = SetPos;
+    
+    b2PolygonShape shape;
+    shape.SetAsBox(b2dNum(10), b2dNum(10), v2 , b2dNum(0));
+	b2FixtureDef fixture;
+    fixture.isSensor = true;
+    fixture.shape = &shape;
+    b2Fixture* footSensorFixture = character.body->CreateFixture(&fixture);
+    footSensorFixture->SetUserData(new ttSetData());
+    ttSetData * sd = (ttSetData*)footSensorFixture->GetUserData();
+    sd->name	= "footSenser";
 }
 
 //----------------------------------------------
@@ -87,7 +98,7 @@ void ttChar::update(){
         }break;
             
         case C_HOOK_ROPE:{
-    
+            
         }break;
     }
     
@@ -109,11 +120,15 @@ void ttChar::update(){
     sprites[0]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 5);
     spriteRenderer->addCenteredTile(&sprites[spritesNum]->animation, 0,0);
     
-    getPos = character.getPosition();
+    if (condition !=C_HOOK_ROPE) {
+        getPos = character.getPosition();
+    }
+    
 }
 //----------------------------------------------
 void ttChar::draw(){
-//    character.draw();
+    ofSetColor(255, 100);
+    character.draw();
     
     ofPushMatrix();
     ofTranslate(character.getPosition().x, character.getPosition().y);
@@ -128,3 +143,4 @@ void ttChar::draw(){
     spriteRenderer->draw();
     ofPopMatrix();
 }
+//-----------------------------------------------

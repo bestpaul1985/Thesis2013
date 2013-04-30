@@ -13,8 +13,14 @@
 #include "ttThorn.h"
 #include "ttSky.h"
 #include "ttIndicator.h"
+enum _rope_condition{
+    R_NO_USE,
+    R_PUSH,
+    R_SWING,
+    R_DESTROY,
+};
+
 class testApp : public ofxiPhoneApp{
-	
     public:
         void setup();
         void update();
@@ -38,8 +44,9 @@ class testApp : public ofxiPhoneApp{
         void gotFocus();
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
+        void position();
     
-        void screen();
+        _rope_condition     rope_condition_A,rope_condition_B;
     
         ofxBox2d            world_A,        world_B;
         ofxBox2dRect        charDummy_A,    charDummy_B;
@@ -55,7 +62,13 @@ class testApp : public ofxiPhoneApp{
         ofPoint             final_translate_A, final_translate_B;
         ofPoint             screen_A, screen_B;
         ofPoint             camera_A, camera_B;
-      
+        ofPoint             char_pos_A, char_pos_B;
+    
+        ofPoint             hook_end_A, hook_end_B;
+        ofPoint             hook_start_A, hook_start_B;
+        ofPoint             rope_end_A, rope_end_B;
+        ofPoint             rope_start_A,rope_start_B;
+        float               hook_pct_A, hook_pct_B;
         //thorns
         ttThorn             thorns_A, thorns_B;
         //sky
@@ -63,7 +76,11 @@ class testApp : public ofxiPhoneApp{
         //Indictor
         ttIndicator         accIndictor;
         //ropes
-        ofPolyline          rope_A, rope_B;
+        ofxBox2dJoint       rope_joint;
+        ofxBox2dCircle      rope_anchor;
+       
+        bool                bSwing_left,bSwing_right;
+
 };
 
 

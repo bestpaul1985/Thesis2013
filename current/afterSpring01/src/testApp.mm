@@ -212,7 +212,7 @@ void testApp::update(){
     cout<< char_A.rects.size() <<
     char_B.rects.size() <<
     rope_B.bSwing <<
-   rope_A.bSwing << endl;
+    rope_A.bSwing << endl;
     
     //rope update
   

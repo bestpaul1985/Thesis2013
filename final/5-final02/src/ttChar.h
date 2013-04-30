@@ -5,6 +5,7 @@
 #include "ofxBox2d.h"
 #include "ofxSpriteSheetRenderer.h"
 #include "ttControl.h"
+#include "ttSetData.h"
 
 enum _condition
 {
@@ -13,13 +14,14 @@ enum _condition
     C_RIGHT,
     C_PUSH_ROPE,
     C_HOOK_ROPE,
+    C_DEAD,
 };
 //-----------------------------------------------------------------------------
-static animation_t walkAnimation_boy = {   0,  0,  19,  1,  1,  75, 0,  -1, -1, 1 };
-static animation_t ropeAnimation_boy = {   24,  0,  7,  1,  1,  75, 0,  1, -1, 1 };
+static animation_t walkAnimation_boy = {   0,  0,  19,  1,  1,  65, 0,  -1, -1, 1 };
+static animation_t ropeAnimation_boy = {   24,  0,  7,  1,  1,  45, 0,  1, -1, 1 };
 
 static animation_t walkAnimation_girl = {   0,  0,  24,  1,  1,  75, 0,  -1, -1, 1 };
-static animation_t ropeAnimation_girl = {   24,  0,  7,  1,  1,  75, 0,  1, -1, 1 };
+static animation_t ropeAnimation_girl = {   24,  0,  7,  1,  1,  45, 0,  1, -1, 1 };
 
 struct basicSprite {
 	animation_t animation;
