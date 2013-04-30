@@ -1,7 +1,7 @@
 #include "testApp.h"
-
 //--------------------------------------------------------------
-void testApp::setup(){	
+void testApp::setup(){
+    
 	// initialize the accelerometer
 	ofxAccelerometer.setup();
     ofxAccelerometer.setForceSmoothing(0.55f);
@@ -56,8 +56,11 @@ void testApp::setup(){
 
     rope_condition_A = R_NO_USE;
     rope_condition_B = R_NO_USE;
+    //booleans
     bSwing_left = false;
     bSwing_right = false;
+    bDead_A = false;
+    bDead_B = false;
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -69,14 +72,13 @@ void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
         if (aData && aData->name == "footSenser"){
             numFootContacts_A++;
             if (bData&&bData->name == "thorn") {
-//                char_A.bDead = true;
-            
+                bDead_A = true;
             }
         }
         else if (bData && bData->name == "footSenser"){
             numFootContacts_A++;
             if (aData&&aData->name == "thorn") {
-//                char_A.bDead = true;
+                 bDead_A = true;
             }
         }
         
@@ -92,8 +94,14 @@ void testApp::contactEnd_worldA(ofxBox2dContactArgs &e){
         
         if (aData && aData->name == "footSenser"){
             numFootContacts_A--;
+            if (bData&&bData->name == "thorn") {
+                bDead_A = false;
+            }
         }else if (bData && bData->name == "footSenser"){
             numFootContacts_A--;
+            if (bData&&bData->name == "thorn") {
+                bDead_A = false;
+            }
         }
     }
 }
@@ -107,13 +115,12 @@ void testApp::contactStart_worldB(ofxBox2dContactArgs &e){
         if (aData && aData->name == "footSenser"){
             numFootContacts_B++;
             if (bData&&bData->name == "thorn") {
-//                char_B.bDead = true;
-                char_A.condition = C_DEAD;
+                bDead_B = true;
             }
         }else if (bData && bData->name == "footSenser"){
             numFootContacts_B++;
             if (aData&&aData->name == "thorn") {
-//                char_B.bDead = true;
+                bDead_B = true;
             }
         }
     }
@@ -127,8 +134,14 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
         ttSetData * bData = (ttSetData*)e.b->GetUserData();
         if (aData && aData->name == "footSenser"){
             numFootContacts_B--;
+            if (bData&&bData->name == "thorn") {
+                bDead_B = false;
+            }
         }else if (bData && bData->name == "footSenser"){
             numFootContacts_B--;
+            if (bData&&bData->name == "thorn") {
+                bDead_B = false;
+            }
         } 
     }
 }
@@ -165,95 +178,102 @@ void testApp::update(){
         rope_condition_A = R_PUSH;
     }
     
-    
-    if (!control.bTouch[0]&&!control.bTouch[1]) {
-        
-        if (rope_condition_A==R_NO_USE) {
-            char_A.condition = C_STOP;
+    if (bDead_A) {
+        char_A.condition = C_DEAD;
+    }else{
+        if (!control.bTouch[0]&&!control.bTouch[1]) {
+            
+            if (rope_condition_A==R_NO_USE) {
+                char_A.condition = C_STOP;
+            }
+            
+            if (rope_condition_B == R_SWING) {
+                rope_condition_B = R_DESTROY;
+            }
+            
+            if (rope_condition_B == R_DESTROY) {
+                char_B.condition = C_STOP;
+            }
         }
         
-        if (rope_condition_B == R_SWING) {
-            rope_condition_B = R_DESTROY;
+        
+        if (control.bTouch[0]&&!control.bTouch[1]) {
+            if (rope_condition_A == R_NO_USE) {
+                char_A.condition = C_LEFT;
+            }
         }
         
-        if (rope_condition_B == R_DESTROY) {
-            char_B.condition = C_STOP;
+        if(control.bTouch[1]&&!control.bTouch[0]){
+            if (rope_condition_A == R_NO_USE) {
+                char_A.condition = C_RIGHT;
+            }
         }
-    }
-    
-    
-    if (control.bTouch[0]&&!control.bTouch[1]) {
-        if (rope_condition_A == R_NO_USE) {
-            char_A.condition = C_LEFT;
-        }
-    }
-    
-    if(control.bTouch[1]&&!control.bTouch[0]){
-        if (rope_condition_A == R_NO_USE) {
-            char_A.condition = C_RIGHT;
-        }
-    }
-    
-    if(control.bTouch[0]&&control.bTouch[1]){
-        if (rope_condition_B == R_PUSH) {
-            ofPoint dis =  hook_end_B - char_pos_A;
-            if ( fabs(dis.x)< 50 && dis.y<=60) {
-                char_A.condition = C_HOOK_ROPE;
-                rope_condition_B = R_SWING;
+        
+        if(control.bTouch[0]&&control.bTouch[1]){
+            if (rope_condition_B == R_PUSH) {
+                ofPoint dis =  hook_end_B - char_pos_A;
+                if ( fabs(dis.x)< 50 && dis.y<=60) {
+                    char_A.condition = C_HOOK_ROPE;
+                    rope_condition_B = R_SWING;
+                }
             }
         }
     }
     
-     //control char_B
+    //control char_B
     if (ofxAccelerometer.getForce().x>0.3 && rope_condition_B == R_NO_USE) {
         char_B.condition = C_PUSH_ROPE;
         hook_pct_B = 0;
         rope_condition_B = R_PUSH;
     }
     
-    if (!control.bTouch[2]&&!control.bTouch[3]) {
-        if (rope_condition_B==R_NO_USE) {
-            char_B.condition = C_STOP;
-        }
+    if (bDead_B) {
+        char_B.condition = C_DEAD;
+    }else{
+        
+         if (!control.bTouch[2]&&!control.bTouch[3]) {
+            if (rope_condition_B==R_NO_USE) {
+                char_B.condition = C_STOP;
+            }
+                
             
-        
-        if (rope_condition_A == R_SWING) {
-            rope_condition_A = R_DESTROY;
-        }
-        
-        if (rope_condition_A == R_DESTROY) {
-            char_A.condition = C_STOP;
-        }
-    }
-    
-    else if (control.bTouch[2]&&!control.bTouch[3]) {
-        if (rope_condition_B == R_NO_USE) {
-            char_B.condition = C_LEFT;
-        }
-        if (rope_condition_A == R_SWING) {
-            rope_condition_A = R_DESTROY;
-        }
-    }
-    
-    else if(control.bTouch[3]&&!control.bTouch[2]){
-        if (rope_condition_B == R_NO_USE) {
-            char_B.condition = C_RIGHT;
-        }
-        
-        if (rope_condition_A == R_SWING) {
-            rope_condition_A = R_DESTROY;
-        }
-    }
-    
-    else if(control.bTouch[2]&&control.bTouch[3]){
-        if (rope_condition_A == R_PUSH) {
-            ofPoint dis =  hook_end_A - char_pos_B;
-            if ( fabs(dis.x)< 50 && dis.y>=-60) {
-                char_B.condition = C_HOOK_ROPE;
-                rope_condition_A = R_SWING;
+            if (rope_condition_A == R_SWING) {
+                rope_condition_A = R_DESTROY;
+            }
+            
+            if (rope_condition_A == R_DESTROY) {
+                char_A.condition = C_STOP;
             }
         }
         
+        else if (control.bTouch[2]&&!control.bTouch[3]) {
+            if (rope_condition_B == R_NO_USE) {
+                char_B.condition = C_LEFT;
+            }
+            if (rope_condition_A == R_SWING) {
+                rope_condition_A = R_DESTROY;
+            }
+        }
+        
+        else if(control.bTouch[3]&&!control.bTouch[2]){
+            if (rope_condition_B == R_NO_USE) {
+                char_B.condition = C_RIGHT;
+            }
+            
+            if (rope_condition_A == R_SWING) {
+                rope_condition_A = R_DESTROY;
+            }
+        }
+        
+        else if(control.bTouch[2]&&control.bTouch[3]){
+            if (rope_condition_A == R_PUSH) {
+                ofPoint dis =  hook_end_A - char_pos_B;
+                if ( fabs(dis.x)< 50 && dis.y>=-60) {
+                    char_B.condition = C_HOOK_ROPE;
+                    rope_condition_A = R_SWING;
+                }
+            }
+        }
     }
     
     //swing A
@@ -362,15 +382,15 @@ void testApp::drawScene(int iDraw){
         ofPushMatrix();
         ofTranslate(screen_A);
         ground_A.draw();
-        ground_A.drawPolyLine();
-        thorns_A.draw();
+//        ground_A.drawPolyLine();
+//        thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
         ground_B.draw();
-        ground_B.drawPolyLine();
-        thorns_B.draw();
+//        ground_B.drawPolyLine();
+//        thorns_B.draw();
         ofPopMatrix();
         
         sky.drawCloud();
@@ -477,7 +497,7 @@ void testApp::deviceOrientationChanged(int newOrientation){}
 void testApp::position(){
 
     bool A[10],B[10];
-    float catchUpSpeed = 0.03f;
+    float catchUpSpeed = 0.05f;
     ofPoint catch_A, catch_B;
     
     char_A.getPos.x<0? A[0] = true: A[0] =false;

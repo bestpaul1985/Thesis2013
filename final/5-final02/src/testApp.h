@@ -80,7 +80,7 @@ class testApp : public ofxiPhoneApp{
         ofxBox2dCircle      rope_anchor;
        
         bool                bSwing_left,bSwing_right;
-
+        bool                bDead_A,bDead_B;
 };
 
 

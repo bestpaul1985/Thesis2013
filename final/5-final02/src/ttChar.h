@@ -40,6 +40,7 @@ public:
     void setup(ofxBox2d &world, ofPoint SetPos, int CharNum);
     void update();
     void draw();
+    void dead();
     
     ofxBox2dRect    character;
     ofxSpriteSheetRenderer * spriteRenderer;
