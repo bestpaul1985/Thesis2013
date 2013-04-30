@@ -10,11 +10,11 @@
 
 void ttDog::setup(ofxBox2d &world, float x, float y){
     dog.setPhysics(1.0f, 0.0f, 0.5f);
-    dog.setup(world.getWorld(),x,y,43,30);
+    dog.setup(world.getWorld(),x,y,58.5,39);
     dog.body->SetFixedRotation(true);
     
-    spriteRenderer = new ofxSpriteSheetRenderer(1, 1000, 0, 85);
-    spriteRenderer->loadTexture("sprites/dogSprites2.png", 2040, GL_NEAREST);
+    spriteRenderer = new ofxSpriteSheetRenderer(1, 1000, 0, 120);
+    spriteRenderer->loadTexture("sprites/dogSprites.png", 2040, GL_NEAREST);
     
     basicSprite_dog * newSprite = new basicSprite_dog();
     newSprite->pos.set(0,0);
