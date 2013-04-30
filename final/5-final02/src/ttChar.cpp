@@ -132,7 +132,7 @@ void ttChar::update(){
 //----------------------------------------------
 void ttChar::draw(){
     ofSetColor(255, 100);
-    character.draw();
+//    character.draw();
     
     ofPushMatrix();
     ofTranslate(character.getPosition().x, character.getPosition().y);

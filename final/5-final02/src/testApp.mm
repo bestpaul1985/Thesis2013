@@ -61,6 +61,8 @@ void testApp::setup(){
     bSwing_right = false;
     bDead_A = false;
     bDead_B = false;
+    bInSky_A = false;
+    bInSky_B = false;
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -153,19 +155,15 @@ void testApp::update(){
     
     //no jump in sky
     if (numFootContacts_A<=0) {
-//        char_A.bInSky = true;
-//        rope_A.bInSky = true;
+        bInSky_A = true;
     }else{
-//        char_A.bInSky = false;
-//        rope_A.bInSky = false;
+        bInSky_A = false;
     }
     
     if (numFootContacts_B<=0) {
-//        char_B.bInSky = true;
-//        rope_B.bInSky = true;
+        bInSky_B = true;
     }else{
-//        char_B.bInSky = false;
-//        rope_B.bInSky = false;
+        bInSky_B = false;
     }
 
     
@@ -183,7 +181,7 @@ void testApp::update(){
     }else{
         if (!control.bTouch[0]&&!control.bTouch[1]) {
             
-            if (rope_condition_A==R_NO_USE) {
+            if (rope_condition_A==R_NO_USE&& !bInSky_A) {
                 char_A.condition = C_STOP;
             }
             
@@ -232,7 +230,7 @@ void testApp::update(){
     }else{
         
          if (!control.bTouch[2]&&!control.bTouch[3]) {
-            if (rope_condition_B==R_NO_USE) {
+            if (rope_condition_B==R_NO_USE && !bInSky_B) {
                 char_B.condition = C_STOP;
             }
                 
