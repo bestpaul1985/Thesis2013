@@ -12,22 +12,22 @@
 #include "ofMain.h"
 #include "ofxBox2d.h"
 #include "ofxSpriteSheetRenderer.h"
-static animation_t run = {   0,  0,  16,  1,  1,  45, 0,  -1, -1, 1 };
+static animation_t RUN = {    0,  0,  6,  1,  0.71,  75, 0,  -1, -1, 1  };
 
-struct basicSprite_dog {
+
+struct DogSprite {
 	animation_t animation;
 	ofPoint pos;
-	float speed;
 };
-
 class ttDog{
 public:
     void setup(ofxBox2d &world, float x, float y);
     void update();
     void draw();
     ofxBox2dRect dog;
-    ofxSpriteSheetRenderer * spriteRenderer;
-    vector <basicSprite_dog * > sprites;
+    ofxSpriteSheetRenderer * renderer;
+    DogSprite *  sprites[1];
+
 };
 
 

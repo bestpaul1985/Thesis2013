@@ -64,7 +64,14 @@ void testApp::setup(){
     bInSky_A = false;
     bInSky_B = false;
     //dog
-    dog.setup(world_B, 100,-100);
+//    dog.setup(world_B, 100,-100);
+    spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 150);
+    spriteRenderer->loadTexture("sprites/dog7.png", 1950, GL_NEAREST);
+    Sprite * newSprite = new Sprite();
+    newSprite->pos.set(300,400);
+    newSprite->animation = GIRL;
+    sprites[0] =newSprite;
+
    
 }
 //--------------------------------------------------------------
@@ -152,7 +159,11 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
 }
 //--------------------------------------------------------------
 void testApp::update(){
-    
+    //dog
+//    dog.update();
+    spriteRenderer->clear();
+    spriteRenderer->update(ofGetElapsedTimeMillis());
+    spriteRenderer->addCenteredTile(&sprites[0]->animation, sprites[0]->pos.x, sprites[0]->pos.y);
     world_A.update();
     world_B.update();
     
@@ -353,14 +364,13 @@ void testApp::update(){
         bSwing_right = false;
     }
     
-    cout<<rope_condition_A<<"  "<<rope_condition_B<<endl;
+//    cout<<rope_condition_A<<"  "<<rope_condition_B<<endl;
     
     //Character
     char_A.update();
     char_B.update();
     
-    //dog
-    dog.update();
+   
 }
 
 //--------------------------------------------------------------
@@ -368,10 +378,11 @@ void testApp::draw(){
     ofColor dark(80);
     ofBackgroundGradient(dark, ofColor::black);
    
+    
     drawScene(0);
     accIndictor.draw();
     control.draw();
-    
+    spriteRenderer->draw();
     
 //    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
 //    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
@@ -407,12 +418,11 @@ void testApp::drawScene(int iDraw){
         
         ofPushMatrix();
         ofTranslate(screen_B);
-        dog.draw();
         char_B.draw();
-        
-
+//        dog.draw();
         ofPopMatrix();
         
+       
         
         ofPushMatrix();
         if (rope_condition_A == R_SWING) {

@@ -10,32 +10,29 @@
 
 void ttDog::setup(ofxBox2d &world, float x, float y){
     dog.setPhysics(1.0f, 0.0f, 0.5f);
-    dog.setup(world.getWorld(),x,y,58.5,39);
+    dog.setup(world.getWorld(),x,y,58.5,39);	
     dog.body->SetFixedRotation(true);
     
-    spriteRenderer = new ofxSpriteSheetRenderer(1, 1000, 0, 120);
-    spriteRenderer->loadTexture("sprites/dogSprites.png", 2040, GL_NEAREST);
+    renderer = new ofxSpriteSheetRenderer(1, 10000, 0, 330);
+    renderer->loadTexture("sprites/dog_new.png", 1980, GL_NEAREST);
+    DogSprite * newSprite = new DogSprite();
+    newSprite->pos.set(dog.getPosition());
+    newSprite->animation = RUN;
+    sprites[0] = newSprite;
     
-    basicSprite_dog * newSprite = new basicSprite_dog();
-    newSprite->pos.set(0,0);
-    newSprite->speed=0;
-    newSprite->animation = run;
-    sprites.push_back(newSprite);
+//    cout<< renderer->getSpriteSheetWidth() << endl;
+//    cout<< renderer->getTileSize() <<endl;
 }
 
 
 //------------------------------------------------------
 void ttDog::update(){
-    spriteRenderer->clear();
-    spriteRenderer->update(ofGetElapsedTimeMillis());
-    spriteRenderer->addCenteredTile(&sprites[0]->animation, sprites[0]->pos.x, sprites[0]->pos.y);
+    renderer->clear();
+    renderer->update(ofGetElapsedTimeMillis());
+    renderer->addCenteredTile(&sprites[0]->animation, sprites[0]->pos.x, sprites[0]->pos.y);
 }
 //------------------------------------------------------
 void ttDog::draw(){
     dog.draw();
-    ofPushMatrix();
-    ofTranslate(dog.getPosition().x, dog.getPosition().y);
-    spriteRenderer->draw();
-    ofPopMatrix();
-    
+    renderer->draw();
 }
