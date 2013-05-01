@@ -11,24 +11,24 @@ bool sortVertically(  basicSprite * a, basicSprite * b ) {
 void testApp::setup(){
 	ofSetFrameRate(60);
 	spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
+    spriteRenderer->loadTexture("boySpritesAll.png", 2040, GL_NEAREST);
+    
     spriteRenderer2 =  new ofxSpriteSheetRenderer(1, 10000, 0, 85);
-	spriteRenderer->loadTexture("boySpritesAll.png", 2040, GL_NEAREST);
-    spriteRenderer2->loadTexture("boySpritesAll.png", 2040, GL_NEAREST);
+    spriteRenderer2->loadTexture("grilSprites2.png", 595, GL_NEAREST);
+    
 	ofEnableAlphaBlending();
     
     
-    for (int i =0; i<2; i++) {
-        basicSprite * newSprite = new basicSprite();
-		newSprite->pos.set(300,400);
-		newSprite->speed=0;
-        if (i==0) {
-            newSprite->animation = walkAnimation;
-        }else{
-            newSprite->animation = ropeAnimation;
-        }
-		sprites.push_back(newSprite);
-    }
-	
+   
+    basicSprite * newSprite = new basicSprite();
+    newSprite->pos.set(300,400);
+    newSprite->animation = BOY;
+    sprites[0] =newSprite;
+
+    basicSprite * newSprite2 = new basicSprite();
+    newSprite2->pos.set(400,400);
+    newSprite2->animation = GIRL;
+    sprites[1] =newSprite2;
 	
     cout<<spriteRenderer->getSpriteSheetWidth()<<endl;
     cout<<spriteRenderer->getTileSize()<<endl;
@@ -51,17 +51,10 @@ void testApp::update(){
     
     spriteRenderer->update(ofGetElapsedTimeMillis());
     spriteRenderer2->update(ofGetElapsedTimeMillis());
-    if (rope) {
-        
-        spriteRenderer->addCenteredTile(&sprites[1]->animation, sprites[0]->pos.x, sprites[0]->pos.y);
-         spriteRenderer2->addCenteredTile(&sprites[1]->animation, sprites[0]->pos.x, sprites[0]->pos.y);
-    }else{
-         
-        spriteRenderer->addCenteredTile(&sprites[0]->animation, sprites[0]->pos.x, sprites[0]->pos.y);
-        
-        spriteRenderer2->addCenteredTile(&sprites[1]->animation, sprites[0]->pos.x, sprites[0]->pos.y);
-    }
+    spriteRenderer->addCenteredTile(&sprites[0]->animation, sprites[0]->pos.x, sprites[0]->pos.y);
     
+     spriteRenderer2->addCenteredTile(&sprites[1]->animation, sprites[1]->pos.x, sprites[1]->pos.y);
+    //   bool addCenteredTile     (animation_t* sprite,         float x, float y, int layer = -1,                        flipDirection f = F_NONE, float scale = 1.0,          int r=255, int g=255, int b=255, int alpha=255);
     
 	
     

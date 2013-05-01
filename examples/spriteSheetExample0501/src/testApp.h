@@ -6,13 +6,12 @@
 
 #include "ofxSpriteSheetRenderer.h"
 
-static animation_t walkAnimation = {   0,  0,  24,  1,  1,  45, 0,  -1, -1, 1 };
-static animation_t ropeAnimation = {   25,  0,  6,  1,  1,  45, 0,  -1, -1, 1 };
+static animation_t BOY = {   0,  0,  24,  1,  1,  45, 0,  -1, -1, 1 };
+static animation_t GIRL = {   0,  0,  7,  1,  1,  45, 0,  -1, -1, 1 };
 
 struct basicSprite {
 	animation_t animation;
 	ofPoint pos;
-	float speed;
 };
 
 class testApp : public ofBaseApp{
@@ -33,7 +32,7 @@ class testApp : public ofBaseApp{
 	
 	ofxSpriteSheetRenderer * spriteRenderer;
     ofxSpriteSheetRenderer * spriteRenderer2;
-	vector <basicSprite * > sprites;
+	basicSprite *  sprites[2];
     bool left, right, rope;
 };
 
