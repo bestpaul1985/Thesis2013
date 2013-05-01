@@ -67,7 +67,7 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
 void ttChar::update(){
     
     int spritesNum = 0;
-    ofPoint frc;
+    ofPoint frc(0,0);
     float time;
     
     spriteRenderer->clear();
@@ -121,6 +121,7 @@ void ttChar::update(){
     }
     
     spriteRenderer->update(time);
+    sprites[0]->animation.frame_duration = 75;
     sprites[0]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 5);
     spriteRenderer->addCenteredTile(&sprites[spritesNum]->animation, 0,0);
     

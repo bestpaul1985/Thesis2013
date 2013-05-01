@@ -353,7 +353,7 @@ void testApp::update(){
         bSwing_right = false;
     }
     
-    cout<<rope_condition_A<<"  "<<rope_condition_B<<endl;
+//    cout<<rope_condition_A<<"  "<<rope_condition_B<<endl;
     
     //Character
     char_A.update();
