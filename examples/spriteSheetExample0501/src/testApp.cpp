@@ -13,8 +13,8 @@ void testApp::setup(){
 	spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
     spriteRenderer->loadTexture("boySpritesAll.png", 2040, GL_NEAREST);
     
-    spriteRenderer2 =  new ofxSpriteSheetRenderer(1, 10000, 0, 150);
-    spriteRenderer2->loadTexture("dog7.png", 1950, GL_NEAREST);
+    spriteRenderer2 =  new ofxSpriteSheetRenderer(1, 10000, 0, 85);
+    spriteRenderer2->loadTexture("grilSprites2.png", 595, GL_NEAREST);
     
 	ofEnableAlphaBlending();
     
@@ -70,19 +70,21 @@ void testApp::draw(){
     ofTranslate(100, 0);
 	spriteRenderer2->draw();
     ofPopMatrix();
-    ofDrawBitmapStringHighlight("press 'a' or 'd' to move, hold 'f' to pull rope    "+ofToString( sprites[1]->animation.frame), 100, 100);
+    ofDrawBitmapStringHighlight("press 'a' or 'd' to move, hold 'f' to pull rope", 100, 100);
 }
 
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
     if (key == 'a') {
-       
-        sprites[1]->animation.frame +=1;
+        sprites[0]->pos.x-=5;
+        left = true;
+        
     }
     
     if (key == 'd') {
-        sprites[1]->animation.frame -=1;
+        sprites[0]->pos.x+=5;
+        right = true;
     }
     
     if (key=='f') {

@@ -22,12 +22,6 @@ enum _rope_condition{
     R_SWING,
     R_DESTROY,
 };
-static animation_t GIRL = {   0,  0,  13,  1,  1,  75, 0,  -1, -1, 1 };
-
-struct Sprite {
-	animation_t animation;
-	ofPoint pos;
-};
 
 
 class testApp : public ofxiPhoneApp{
@@ -94,9 +88,6 @@ class testApp : public ofxiPhoneApp{
         bool                bSwing_left,bSwing_right;
         bool                bDead_A,bDead_B;
         bool                bInSky_A,bInSky_B;
-    
-        ofxSpriteSheetRenderer * spriteRenderer;
-        Sprite *  sprites[1];
     
 };
 
