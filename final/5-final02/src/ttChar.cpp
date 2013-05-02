@@ -141,7 +141,8 @@ void ttChar::update(){
             spriteRenderer->update(ofGetElapsedTimeMillis());
             sprites[2]->animation.frame_duration = 120;
             sprites[2]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 3);
-            sprites[2]->pos.set(-12, 0);
+            if (charNum == 0) sprites[2]->pos.set(25, 5);
+            else sprites[2]->pos.set(-12, 0);
             spriteRenderer->addCenteredTile(&sprites[2]->animation, sprites[2]->pos.x,sprites[2]->pos.y);
             
         }break;
@@ -175,13 +176,27 @@ void ttChar::draw(){
     
     ofPushMatrix();
     ofTranslate(character.getPosition().x, character.getPosition().y);
-    ofRotateZ(-angle*RAD_TO_DEG);
+    
     if (charNum == 0) {
-        moveLeft? ofScale(1, 1):ofScale(-1, 1);
+        if (moveLeft) {
+            ofScale(1, 1);
+            ofRotateZ(angle*RAD_TO_DEG);
+        }else{
+            ofScale(-1, 1);
+            ofRotateZ(-angle*RAD_TO_DEG);
+        }  
+        
     }
     
     if (charNum == 1) {
-        moveLeft? ofScale(-1, 1):ofScale(1, 1);
+        if (moveLeft) {
+            ofScale(-1, 1);
+            ofRotateZ(angle*RAD_TO_DEG);
+        }else{
+            ofScale(1, 1);
+            ofRotateZ(-angle*RAD_TO_DEG);
+        }
+        
     }
     
     spriteRenderer->draw();
