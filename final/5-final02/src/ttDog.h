@@ -12,6 +12,12 @@
 #include "ofMain.h"
 #include "ofxBox2d.h"
 #include "ofxSpriteSheetRenderer.h"
+
+enum _dog_condition{
+    D_RUN,
+    D_BITE,
+};
+
 static animation_t RUN = {   0,  0,  15,  1,  1,  75, 0,  -1, -1, 1 };
 
 struct basicSprite_dog {
@@ -31,6 +37,9 @@ public:
     vector <basicSprite_dog * > sprites;
     ofPoint frc;
     bool flip;
+    ofPoint getPos;
+    _dog_condition condition;
+    ofRectangle killZone;
 };
 
 

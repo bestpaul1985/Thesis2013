@@ -59,12 +59,10 @@ void testApp::setup(){
     //booleans
     bSwing_left = false;
     bSwing_right = false;
-    bDead_A = false;
-    bDead_B = false;
     bInSky_A = false;
     bInSky_B = false;
     //dog
-    dog.setup(world_B, 100,-100);
+    dog.setup(world_B, 200,-100);
    
 }
 //--------------------------------------------------------------
@@ -77,13 +75,13 @@ void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
         if (aData && aData->name == "footSenser"){
             numFootContacts_A++;
             if (bData&&bData->name == "thorn") {
-                bDead_A = true;
+                char_A.condition = C_DEAD;
             }
         }
         else if (bData && bData->name == "footSenser"){
             numFootContacts_A++;
-            if (aData&&aData->name == "thorn") {
-                 bDead_A = true;
+            if (bData&&bData->name == "thorn") {
+                char_A.condition = C_DEAD;
             }
         }
         
@@ -99,14 +97,8 @@ void testApp::contactEnd_worldA(ofxBox2dContactArgs &e){
         
         if (aData && aData->name == "footSenser"){
             numFootContacts_A--;
-            if (bData&&bData->name == "thorn") {
-                bDead_A = false;
-            }
         }else if (bData && bData->name == "footSenser"){
             numFootContacts_A--;
-            if (bData&&bData->name == "thorn") {
-                bDead_A = false;
-            }
         }
     }
 }
@@ -120,12 +112,12 @@ void testApp::contactStart_worldB(ofxBox2dContactArgs &e){
         if (aData && aData->name == "footSenser"){
             numFootContacts_B++;
             if (bData&&bData->name == "thorn") {
-                bDead_B = true;
+                char_B.condition = C_DEAD;
             }
         }else if (bData && bData->name == "footSenser"){
             numFootContacts_B++;
-            if (aData&&aData->name == "thorn") {
-                bDead_B = true;
+            if (bData&&bData->name == "thorn") {
+               char_B.condition = C_DEAD;
             }
         }
     }
@@ -139,14 +131,8 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
         ttSetData * bData = (ttSetData*)e.b->GetUserData();
         if (aData && aData->name == "footSenser"){
             numFootContacts_B--;
-            if (bData&&bData->name == "thorn") {
-                bDead_B = false;
-            }
         }else if (bData && bData->name == "footSenser"){
             numFootContacts_B--;
-            if (bData&&bData->name == "thorn") {
-                bDead_B = false;
-            }
         } 
     }
 }
@@ -179,9 +165,7 @@ void testApp::update(){
         rope_condition_A = R_PUSH;
     }
     
-    if (bDead_A) {
-        char_A.condition = C_DEAD;
-    }else{
+    if (char_A.condition != C_DEAD) {
         if (!control.bTouch[0]&&!control.bTouch[1]) {
             
             if (rope_condition_A==R_NO_USE&& !bInSky_A) {
@@ -228,10 +212,7 @@ void testApp::update(){
         rope_condition_B = R_PUSH;
     }
     
-    if (bDead_B) {
-        char_B.condition = C_DEAD;
-    }else{
-        
+    if (char_B.condition != C_DEAD) {
          if (!control.bTouch[2]&&!control.bTouch[3]) {
             if (rope_condition_B==R_NO_USE && !bInSky_B) {
                 char_B.condition = C_STOP;
@@ -361,6 +342,11 @@ void testApp::update(){
     
     //dog
     dog.update();
+    if (dog.killZone.inside(char_B.getPos.x, char_B.getPos.y)) {
+        char_B.condition = C_DEAD;
+        dog.condition = D_BITE;
+    }
+
 }
 
 //--------------------------------------------------------------
@@ -373,8 +359,8 @@ void testApp::draw(){
     control.draw();
     
     
-//    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
-//    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
 
 }
 //-------------------------------------------------------------

@@ -86,7 +86,6 @@ class testApp : public ofxiPhoneApp{
         ttDog dog;
         //booleans
         bool                bSwing_left,bSwing_right;
-        bool                bDead_A,bDead_B;
         bool                bInSky_A,bInSky_B;
     
 };
