@@ -280,7 +280,9 @@ void testApp::update(){
             rope_joint.setFrequency(0.5);
         }
         
+//         char_B.rope_frame = ofClamp((462-rope_anchor.getPosition().distance(char_A.character.getPosition()))/5, 0, 39) ;
     }
+    
     
     if (rope_condition_A == R_DESTROY) {
         if (rope_joint.isSetup()) {
@@ -365,9 +367,10 @@ void testApp::update(){
     
     //dog
     dog.update();
-    if (dog.killZone.inside(char_B.getPos.x, char_B.getPos.y)) {
+    if (dog.killZone.inside(char_B.character.getPosition().x, char_B.character.getPosition().y)) {
         char_B.condition = C_DEAD;
         dog.condition = D_BITE;
+        rope_condition_A = R_DESTROY;
     }
 
 }
@@ -458,7 +461,7 @@ void testApp::drawScene(int iDraw){
         hook_pct_A +=speed;
         if (hook_pct_A > 1) hook_pct_A = 1;
         hook_end_A.x = hook_start_A.x;
-        hook_end_A.y = (1-hook_pct_A)*hook_start_A.y + hook_pct_A*(400+hook_start_A.y);
+        hook_end_A.y = (1-hook_pct_A)*hook_start_A.y + hook_pct_A*(500+hook_start_A.y);
         
 //        ofSetColor(0,100);
 //        ofLine(hook_start_A.x,hook_start_A.y,hook_end_A.x, hook_end_A.y);
@@ -472,7 +475,7 @@ void testApp::drawScene(int iDraw){
         hook_pct_B +=speed;
         if (hook_pct_B > 1) hook_pct_B = 1;
         hook_end_B.x = hook_start_B.x;
-        hook_end_B.y = (1-hook_pct_B)*hook_start_B.y + hook_pct_B*(hook_start_B.y-400);
+        hook_end_B.y = (1-hook_pct_B)*hook_start_B.y + hook_pct_B*(hook_start_B.y-500);
         
 //        ofSetColor(0,100);
 //        ofSetLineWidth(2.5);

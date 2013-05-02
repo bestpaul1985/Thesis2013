@@ -87,7 +87,7 @@ class testApp : public ofxiPhoneApp{
         //booleans
         bool                bSwing_left,bSwing_right;
         bool                bInSky_A,bInSky_B;
-    
+        
 };
 
 

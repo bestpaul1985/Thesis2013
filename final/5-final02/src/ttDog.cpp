@@ -68,9 +68,8 @@ void ttDog::update(){
 }
 //------------------------------------------------------
 void ttDog::draw(){
-//  dog.draw();
-    ofRect(killZone);
-    
+//    dog.draw();
+//    ofRect(killZone);
     ofPushMatrix();
     ofTranslate(dog.getPosition().x, dog.getPosition().y+15);
     flip? ofScale(-1, 1):ofScale(1, 1);

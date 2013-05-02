@@ -46,7 +46,8 @@ public:
     ofxBox2dRect    character;
     ofxSpriteSheetRenderer * spriteRenderer;
     ofxSpriteSheetRenderer * spriteRenderer2;
-	Sprite * sprites[3];
+    ofxSpriteSheetRenderer * spriteRenderer3;
+	Sprite * sprites[4];
     
     bool moveLeft;
     ofPoint getPos;

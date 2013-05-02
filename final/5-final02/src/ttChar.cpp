@@ -54,7 +54,7 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
         spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
         spriteRenderer2 = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
         spriteRenderer->loadTexture("sprites/boySpritesAll.png", 2040, GL_NEAREST);
-        spriteRenderer2->loadTexture("sprites/boy_push.png", 2040, GL_NEAREST);
+        spriteRenderer2->loadTexture("sprites/boy_push_Sprits.png", 2040, GL_NEAREST);
         
         Sprite * newSprite = new Sprite();
         newSprite->pos.set(0,0);
