@@ -14,7 +14,7 @@ void testApp::setup(){
     spriteRenderer->loadTexture("boySpritesAll.png", 2040, GL_NEAREST);
     
     spriteRenderer2 =  new ofxSpriteSheetRenderer(1, 10000, 0, 85);
-    spriteRenderer2->loadTexture("grilSprites2.png", 595, GL_NEAREST);
+    spriteRenderer2->loadTexture("boy_push_Sprits.png", 850, GL_NEAREST);
     
 	ofEnableAlphaBlending();
     

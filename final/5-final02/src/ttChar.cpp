@@ -32,34 +32,34 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
         spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
         spriteRenderer2 = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
         spriteRenderer->loadTexture("sprites/grilSpritesAll.png", 2040, GL_NEAREST);
-
+        spriteRenderer2->loadTexture("sprites/boy_push_Sprits.png", 2040, GL_NEAREST);
        
         Sprite * newSprite = new Sprite();
         newSprite->pos.set(0,0);
         newSprite->animation = GIRL_RUN;
-        sprites.push_back(newSprite);
+        sprites[0]=newSprite;
         
         Sprite * newSprite2 = new Sprite();
         newSprite2->pos.set(0,0);
         newSprite2->animation = GIRL_PUSH_ROPE;
-        sprites.push_back(newSprite2);
+        sprites[1]=newSprite2;
     }
     
     if (charNum == 1) {
         spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
         spriteRenderer2 = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
         spriteRenderer->loadTexture("sprites/boySpritesAll.png", 2040, GL_NEAREST);
-        spriteRenderer2->loadTexture("sprites/boy_push_rope.png", 850, GL_NEAREST);
+        spriteRenderer2->loadTexture("sprites/boy_push_Sprits.png", 2040, GL_NEAREST);
         
         Sprite * newSprite = new Sprite();
         newSprite->pos.set(0,0);
         newSprite->animation = BOY_RUN;
-        sprites.push_back(newSprite);
+        sprites[0]=newSprite;
         
         Sprite * newSprite2 = new Sprite();
-        newSprite2->pos.set(0,0);
+        newSprite2->pos.set(0,-170);
         newSprite2->animation = BOY_PUSH_ROPE;
-        sprites.push_back(newSprite2);
+        sprites[1] =newSprite2;
     }
     
     moveLeft = false;
@@ -72,11 +72,11 @@ void ttChar::update(){
     
     ofPoint frc(0,0);
     spriteRenderer->clear();
-    
+    spriteRenderer2->clear();
     // change conditions
     switch (condition) {
         case C_STOP:{
-
+            
             frc.x = character.getVelocity().x * -20;
 //            sprites[1]->animation.loops = 1;
             if (character.getVelocity().length()<0.5) {
@@ -119,8 +119,8 @@ void ttChar::update(){
             frc.x = character.getVelocity().x * -30;
             if ( character.getVelocity().length()<0.1 ){
                 spriteRenderer2->update(ofGetElapsedTimeMillis());
-                sprites[1]->animation.frame_duration = 75;
-                spriteRenderer2->addCenteredTile(&sprites[1]->animation, 0,0);
+                sprites[1]->animation.frame_duration = 35;
+                spriteRenderer2->addCenteredTile(&sprites[1]->animation,sprites[1]->pos.x,sprites[1]->pos.y);
             }
         }break;
             
@@ -158,6 +158,7 @@ void ttChar::draw(){
     }
     
     spriteRenderer->draw();
+    spriteRenderer2->draw();
     ofPopMatrix();
 }
 //-----------------------------------------------

@@ -210,6 +210,7 @@ void testApp::update(){
         char_B.condition = C_PUSH_ROPE;
         hook_pct_B = 0;
         rope_condition_B = R_PUSH;
+        
     }
     
     if (char_B.condition != C_DEAD) {

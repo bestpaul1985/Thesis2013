@@ -8,11 +8,11 @@
 #include "ttSetData.h"
 
 //-----------------------------------------------------------------------------
-static animation_t BOY_RUN =        {   0,  0,  19,  1,  1,  75, 0,  -1, -1, 1 };
-static animation_t BOY_PUSH_ROPE =  {   0,  0,  8,  1,  1,  75, 0,  1, -1, 1 };
-
 static animation_t GIRL_RUN =       {   0,  0,  24,  1,  1,  75, 0,  -1, -1, 1 };
 static animation_t GIRL_PUSH_ROPE = {   24,  0,  7,  1,  1,  75, 0,  1, -1, 1 };
+
+static animation_t BOY_RUN =        {   0,  0,  19,  1,  1,  75, 0,  -1, -1, 1 };
+static animation_t BOY_PUSH_ROPE =  {   0,  0,  9,  1,  9,  75, 0,  1, -1, 1 };
 
 enum _char_condition{
     C_STOP,
@@ -43,7 +43,7 @@ public:
     ofxBox2dRect    character;
     ofxSpriteSheetRenderer * spriteRenderer;
     ofxSpriteSheetRenderer * spriteRenderer2;
-	vector <Sprite * > sprites;
+	Sprite * sprites[2];
     
     bool moveLeft;
     ofPoint getPos;
