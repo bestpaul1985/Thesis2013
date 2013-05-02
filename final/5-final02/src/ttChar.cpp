@@ -32,7 +32,7 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
         spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
         spriteRenderer2 = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
         spriteRenderer->loadTexture("sprites/grilSpritesAll.png", 2040, GL_NEAREST);
-        spriteRenderer2->loadTexture("sprites/boy_push_Sprits.png", 2040, GL_NEAREST);
+        spriteRenderer2->loadTexture("sprites/girl_push.png", 2040, GL_NEAREST);
        
         Sprite * newSprite = new Sprite();
         newSprite->pos.set(0,0);
@@ -40,16 +40,21 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
         sprites[0]=newSprite;
         
         Sprite * newSprite2 = new Sprite();
-        newSprite2->pos.set(0,0);
+        newSprite2->pos.set(0,340);
         newSprite2->animation = GIRL_PUSH_ROPE;
         sprites[1]=newSprite2;
+        
+        Sprite * newSprite3 = new Sprite();
+        newSprite3->pos.set(0,0);
+        newSprite3->animation = GIRL_HOOK_ROPE;
+        sprites[2]=newSprite3;
     }
     
     if (charNum == 1) {
         spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
         spriteRenderer2 = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
         spriteRenderer->loadTexture("sprites/boySpritesAll.png", 2040, GL_NEAREST);
-        spriteRenderer2->loadTexture("sprites/boy_push_Sprits.png", 2040, GL_NEAREST);
+        spriteRenderer2->loadTexture("sprites/boy_push.png", 2040, GL_NEAREST);
         
         Sprite * newSprite = new Sprite();
         newSprite->pos.set(0,0);
@@ -60,11 +65,17 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
         newSprite2->pos.set(0,-170);
         newSprite2->animation = BOY_PUSH_ROPE;
         sprites[1] =newSprite2;
+        
+        Sprite * newSprite3 = new Sprite();
+        newSprite3->pos.set(0,0);
+        newSprite3->animation = BOY_HOOK_ROPE;
+        sprites[2]=newSprite3;
     }
     
     moveLeft = false;
     condition = C_STOP;
     getPos = SetPos;
+    angle = 0;
 }
 
 //----------------------------------------------
@@ -76,7 +87,7 @@ void ttChar::update(){
     // change conditions
     switch (condition) {
         case C_STOP:{
-            
+            sprites[1]->animation.loops = 1;
             frc.x = character.getVelocity().x * -20;
 //            sprites[1]->animation.loops = 1;
             if (character.getVelocity().length()<0.5) {
@@ -91,8 +102,6 @@ void ttChar::update(){
                 sprites[0]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 5);
                 spriteRenderer->addCenteredTile(&sprites[0]->animation, 0,0);
             }
-            
-           
         }break;
                 
         case C_LEFT:{
@@ -117,15 +126,32 @@ void ttChar::update(){
        
         case C_PUSH_ROPE:{
             frc.x = character.getVelocity().x * -30;
-            if ( character.getVelocity().length()<0.1 ){
+            if ( character.getVelocity().length()<0.1){
                 spriteRenderer2->update(ofGetElapsedTimeMillis());
+                sprites[1]->animation.index = 0;
+                sprites[1]->animation.total_frames = 8;
                 sprites[1]->animation.frame_duration = 35;
                 spriteRenderer2->addCenteredTile(&sprites[1]->animation,sprites[1]->pos.x,sprites[1]->pos.y);
             }
+
         }break;
             
         case C_HOOK_ROPE:{
             
+            spriteRenderer->update(ofGetElapsedTimeMillis());
+            sprites[2]->animation.frame_duration = 120;
+            sprites[2]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 3);
+            sprites[2]->pos.set(-12, 0);
+            spriteRenderer->addCenteredTile(&sprites[2]->animation, sprites[2]->pos.x,sprites[2]->pos.y);
+            
+        }break;
+            
+        case C_SWING_ROPE:{
+            
+            sprites[1]->animation.frame = 8;
+            sprites[1]->animation.total_frames = 1;
+            spriteRenderer2->addCenteredTile(&sprites[1]->animation,sprites[1]->pos.x,sprites[1]->pos.y);
+
         }break;
             
         case C_DEAD:{
@@ -149,6 +175,7 @@ void ttChar::draw(){
     
     ofPushMatrix();
     ofTranslate(character.getPosition().x, character.getPosition().y);
+    ofRotateZ(-angle*RAD_TO_DEG);
     if (charNum == 0) {
         moveLeft? ofScale(1, 1):ofScale(-1, 1);
     }
@@ -160,6 +187,8 @@ void ttChar::draw(){
     spriteRenderer->draw();
     spriteRenderer2->draw();
     ofPopMatrix();
+    
+   
 }
 //-----------------------------------------------
 void ttChar::dead(){

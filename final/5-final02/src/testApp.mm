@@ -4,7 +4,7 @@ void testApp::setup(){
     
 	// initialize the accelerometer
 	ofxAccelerometer.setup();
-    ofxAccelerometer.setForceSmoothing(0.55f);
+    ofxAccelerometer.setForceSmoothing(0.9f);
 	iPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_LEFT);
     ofEnableAlphaBlending();
     ofSetCircleResolution(8);
@@ -181,7 +181,7 @@ void testApp::update(){
             }
         }
         
-        
+            
         if (control.bTouch[0]&&!control.bTouch[1]) {
             if (rope_condition_A == R_NO_USE) {
                 char_A.condition = C_LEFT;
@@ -199,6 +199,7 @@ void testApp::update(){
                 ofPoint dis =  hook_end_B - char_pos_A;
                 if ( fabs(dis.x)< 50 && dis.y<=60) {
                     char_A.condition = C_HOOK_ROPE;
+                    char_B.condition = C_SWING_ROPE;
                     rope_condition_B = R_SWING;
                 }
             }
@@ -253,6 +254,7 @@ void testApp::update(){
                 ofPoint dis =  hook_end_A - char_pos_B;
                 if ( fabs(dis.x)< 50 && dis.y>=-60) {
                     char_B.condition = C_HOOK_ROPE;
+                    char_A.condition = C_SWING_ROPE;
                     rope_condition_A = R_SWING;
                 }
             }
@@ -319,7 +321,19 @@ void testApp::update(){
         }
         bSwing_right = true;
     }
+    if (rope_condition_A == R_SWING) {
+        ofPoint diff =  char_B.character.getPosition() - rope_anchor.getPosition();
+        char_B.angle = atan2(diff.x, diff.y);
+    }else{
+        char_B.angle = 0;
+    }
     
+    if (rope_condition_B == R_SWING) {
+        ofPoint diff =  char_A.character.getPosition() - rope_anchor.getPosition();
+        char_A.angle = atan2(diff.x, diff.y);
+    }else{
+        char_A.angle = 0;
+    }
     //reset
     if (ofxAccelerometer.getForce().x<0.3 && ofxAccelerometer.getForce().x>-0.3) {
         if (rope_condition_A !=R_SWING) {
@@ -389,42 +403,42 @@ void testApp::drawScene(int iDraw){
         ofPushMatrix();
         ofTranslate(screen_A);
         char_A.draw();
-        
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
         dog.draw();
         char_B.draw();
-        
+        ofPopMatrix();
 
-        ofPopMatrix();
         
         
-        ofPushMatrix();
         if (rope_condition_A == R_SWING) {
+            ofPushMatrix();
             ofTranslate(screen_B);
+            if (rope_joint.isSetup()) {
+                ofSetColor(0,100);
+//                rope_anchor.draw();
+                rope_joint.draw();
+            }
+//            ofCircle(char_B.character.getPosition().x, char_B.character.getPosition().y, 10);
+            ofPopMatrix();
         }
         
+        
+    
         if (rope_condition_B == R_SWING) {
-            ofTranslate(screen_A);
+             ofPushMatrix();
+             ofTranslate(screen_A);
+            if (rope_joint.isSetup()) {
+                ofSetColor(44);
+//                rope_anchor.draw();
+                rope_joint.draw();
+            }
+           
+//          ofCircle(char_A.character.getPosition().x, char_A.character.getPosition().y, 10);
+            ofPopMatrix();
         }
-        
-        if (rope_joint.isSetup()) {
-            ofSetColor(0,100);
-            rope_anchor.draw();
-            rope_joint.draw();
-        }
-        
-        if (rope_condition_A == R_SWING) {
-           ofCircle(char_B.character.getPosition().x, char_B.character.getPosition().y, 10);
-        }
-        
-        if (rope_condition_B == R_SWING) {
-           ofCircle(char_A.character.getPosition().x, char_A.character.getPosition().y, 10);
-        }
-        
-        ofPopMatrix();
 
     }
     
@@ -439,9 +453,9 @@ void testApp::drawScene(int iDraw){
         hook_end_A.x = hook_start_A.x;
         hook_end_A.y = (1-hook_pct_A)*hook_start_A.y + hook_pct_A*(500+hook_start_A.y);
         
-        ofSetColor(0,100);
-        ofLine(hook_start_A.x,hook_start_A.y,hook_end_A.x, hook_end_A.y);
-        ofCircle(hook_end_A.x, hook_end_A.y, 10);
+//        ofSetColor(0,100);
+//        ofLine(hook_start_A.x,hook_start_A.y,hook_end_A.x, hook_end_A.y);
+//        ofCircle(hook_end_A.x, hook_end_A.y, 10);
     }
     
     
@@ -453,10 +467,10 @@ void testApp::drawScene(int iDraw){
         hook_end_B.x = hook_start_B.x;
         hook_end_B.y = (1-hook_pct_B)*hook_start_B.y + hook_pct_B*(hook_start_B.y-500);
         
-        ofSetColor(0,100);
-        ofSetLineWidth(2.5);
-        ofLine(hook_start_B.x,hook_start_B.y,hook_end_B.x, hook_end_B.y);
-        ofCircle(hook_end_B.x, hook_end_B.y, 10);
+//        ofSetColor(0,100);
+//        ofSetLineWidth(2.5);
+//        ofLine(hook_start_B.x,hook_start_B.y,hook_end_B.x, hook_end_B.y);
+//        ofCircle(hook_end_B.x, hook_end_B.y, 10);
     }
 
     
@@ -536,14 +550,15 @@ void testApp::position(){
     char_pos_B = char_B.getPos + screen_B;
     //hook postion
     
-    ofPoint offset(15,0);
-    if (char_A.moveLeft) hook_start_A.x = char_pos_A.x - offset.x;
-    else hook_start_A.x = char_pos_A.x + offset.x;
-    hook_start_A.y = char_pos_A.y + offset.y;
+    ofPoint offset_A(10,8);
+    ofPoint offset_B(5,20);
+    if (char_A.moveLeft) hook_start_A.x = char_pos_A.x - offset_A.x;
+    else hook_start_A.x = char_pos_A.x + offset_A.x;
+    hook_start_A.y = char_pos_A.y + offset_A.y;
     
-    if (char_B.moveLeft) hook_start_B.x = char_pos_B.x - offset.x;
-    else hook_start_B.x = char_pos_B.x + offset.x;
-    hook_start_B.y = char_pos_B.y - offset.y;
+    if (char_B.moveLeft) hook_start_B.x = char_pos_B.x - offset_B.x;
+    else hook_start_B.x = char_pos_B.x + offset_B.x;
+    hook_start_B.y = char_pos_B.y - offset_B.y;
     //rope postion
     rope_start_A = hook_start_B - screen_A;
 //    rope_end_A = hook_end_B - screen_A;
