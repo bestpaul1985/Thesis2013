@@ -1,5 +1,3 @@
-#define ITEM_NUMBER 10
-
 #pragma once
 
 #include "ofMain.h"
@@ -44,9 +42,6 @@ class testApp : public ofxiPhoneApp, public ofxiPhoneExternalDisplay{
         void screen();
     
         ofxBox2d        world_A,        world_B;
-        ofxBox2dRect    charDummy_A,    charDummy_B;
-        ofxBox2dCircle  ropeEnd_A,  ropeEnd_B;
-        ofxBox2dRect    item[ITEM_NUMBER];
     
         ttChar  char_A;
         ttChar  char_B;
@@ -56,11 +51,7 @@ class testApp : public ofxiPhoneApp, public ofxiPhoneExternalDisplay{
            
         ttGround  ground_A, ground_B;
     
-        ofRectangle view_A,view_B;
-        ofPoint preTouch_A,preTouch_B;
-        ofPoint camPos_A,camPos_B;
         ofPoint translate_A, translate_B;
-        ofPoint final_translate_A, final_translate_B;
         ofPoint screen_A, screen_B;
         ofPoint camera_A, camera_B;
         //rope

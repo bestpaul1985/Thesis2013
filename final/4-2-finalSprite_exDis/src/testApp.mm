@@ -138,7 +138,6 @@ void testApp::update(){
         }
     }
     
-    
     world_A.update();
     world_B.update();
     
@@ -219,10 +218,10 @@ void testApp::update(){
         rope_A.bSwing = false;
     }
     
-    cout<< char_A.rects.size() <<
-    char_B.rects.size() <<
-    rope_B.bSwing <<
-    rope_A.bSwing << endl;
+//    cout<< char_A.rects.size() <<
+//    char_B.rects.size() <<
+//    rope_B.bSwing <<
+//   rope_A.bSwing << endl;
     
     //rope update
   
@@ -240,15 +239,15 @@ void testApp::update(){
 
 //--------------------------------------------------------------
 void testApp::draw(){
-    ofColor dark(80);
-    ofBackgroundGradient(dark, ofColor::black);
+//    ofColor dark(80);
+//    ofBackgroundGradient(dark, ofColor::black);
    
     drawScene(0);
-    accIndictor.draw();
+//    accIndictor.draw();
     control.draw();
     
-    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(screen_A,2), 50,50);
-    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(screen_B,2), 750,700);
+//    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(screen_A,2), 50,50);
+//    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(screen_B,2), 750,700);
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int iDraw){
@@ -274,31 +273,21 @@ void testApp::drawScene(int iDraw){
         
         sky.drawCloud();
         
-        ofPushMatrix();
-        ofTranslate(screen_A);
-        char_A.draw();
-        char_A.drawRope();
-        ofPopMatrix();
-        
-        ofPushMatrix();
-        ofTranslate(screen_B);
-        char_B.draw();
-        char_B.drawRope();
-        ofPopMatrix();
-        
-        
-        ofPushMatrix();
-        ofTranslate(screen_A);
-        char_A.drawRope();
-        ofPopMatrix();
-        
-        ofPushMatrix();
-        ofTranslate(screen_B);
-        char_B.drawRope();
-        ofPopMatrix();
-        
         rope_A.draw();
         rope_B.draw();
+        
+        ofPushMatrix();
+        ofTranslate(screen_A);
+        char_A.drawRope();
+        char_A.draw();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofTranslate(screen_B);
+        char_B.drawRope();
+        char_B.draw();
+        ofPopMatrix();
+        
     }
 }
 //--------------------------------------------------------------
