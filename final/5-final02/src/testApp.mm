@@ -63,8 +63,9 @@ void testApp::setup(){
     bInSky_B = false;
     //dog
     dog.setup(world_B, 200,-100);
+    dog2.setup(world_A, 200, 100);
     //emoji
-    emoji.setup();
+//    emoji.setup();
    
 }
 //--------------------------------------------------------------
@@ -369,13 +370,15 @@ void testApp::update(){
     
     //dog
     dog.update();
+    dog.update();
     if (dog.killZone.inside(char_B.character.getPosition().x, char_B.character.getPosition().y)) {
         char_B.condition = C_DEAD;
         dog.condition = D_BITE;
         rope_condition_A = R_DESTROY;
     }
     //emoji
-    emoji.update();
+//    emoji.update();
+   
 }
 
 //--------------------------------------------------------------
@@ -386,7 +389,8 @@ void testApp::draw(){
     drawScene(0);
     accIndictor.draw();
     control.draw();
-    emoji.draw();
+//    emoji.draw();
+    
     
     ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
     ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
@@ -416,6 +420,7 @@ void testApp::drawScene(int iDraw){
         
         ofPushMatrix();
         ofTranslate(screen_A);
+        dog2.update();
         char_A.draw();
         ofPopMatrix();
         

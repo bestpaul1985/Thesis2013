@@ -9,7 +9,7 @@
 #include "ttEmoji.h"
 void ttEmoji::setup(){
     
-    renderer =  new ofxSpriteSheetRenderer(1, 10000, 0, 85);
+    renderer =  new ofxSpriteSheetRenderer(1, 10000, 0, 80);
     renderer->loadTexture("sprites/emoji_all.png", 800, GL_NEAREST);
     
     for (int i=0; i<5; i++) {
@@ -24,12 +24,11 @@ void ttEmoji::setup(){
     }
     
     condition = E_LOVE;
-    
+    step = S_START;
+    alpha = 255;
     startTime = ofGetElapsedTimeMillis();
     duration = 1000;
-    alpha = 0;
     speed = 1;
-    step = S_START;
 }
 //-----------------------------------------
 void ttEmoji::update(){
@@ -70,9 +69,9 @@ void ttEmoji::update(){
 //-----------------------------------------
 void ttEmoji::draw(){
     ofSetColor(255, alpha);
-    renderer->draw();
-
     ofCircle(100, 100, 100);
+    renderer->draw();
+   
 }
 //-----------------------------------------
 void ttEmoji::timer(){

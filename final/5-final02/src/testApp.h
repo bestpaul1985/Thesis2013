@@ -84,6 +84,7 @@ class testApp : public ofxiPhoneApp{
         ofxBox2dCircle      rope_anchor;
         //dog
         ttDog dog;
+        ttDog dog2;
         //booleans
         bool                bSwing_left,bSwing_right;
         bool                bInSky_A,bInSky_B;
