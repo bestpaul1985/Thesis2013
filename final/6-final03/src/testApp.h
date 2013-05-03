@@ -16,6 +16,7 @@
 #include "ttDog.h"
 #include "ofxSpriteSheetRenderer.h"
 #include "ttEmoji.h"
+
 enum _rope_condition{
     R_NO_USE,
     R_PUSH,
@@ -87,8 +88,8 @@ class testApp : public ofxiPhoneApp{
         //booleans
         bool                bSwing_left,bSwing_right;
         bool                bInSky_A,bInSky_B;
-        //emoji
-        ttEmoji emoji;
+    
+        ttEmoji             emoji;
 };
 
 

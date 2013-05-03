@@ -63,9 +63,8 @@ void testApp::setup(){
     bInSky_B = false;
     //dog
     dog.setup(world_B, 200,-100);
-    //emoji
-    emoji.setup();
-   
+   //emoji
+//    emoji.setup();
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -374,6 +373,7 @@ void testApp::update(){
         dog.condition = D_BITE;
         rope_condition_A = R_DESTROY;
     }
+
     //emoji
     emoji.update();
 }
@@ -386,7 +386,7 @@ void testApp::draw(){
     drawScene(0);
     accIndictor.draw();
     control.draw();
-    emoji.draw();
+    
     
     ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
     ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
