@@ -94,6 +94,11 @@ void testApp::setup(){
     e_startTime_B= ofGetElapsedTimef();
     e_duration_B = 8000;
     happyness_B = 2;
+    
+    //score
+    font.loadFont("font/NewMedia Fett.ttf", 20);
+    score_A = 0;
+    score_B = 0;
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -480,7 +485,7 @@ void testApp::update(){
         if (chance == 1) happyness_A ++;
         if (happyness_A > 4) {
             happyness_A = 4;
-            preHappyness_A = -1;
+            preHappyness_A = 5;
         }
     }
 
@@ -490,26 +495,53 @@ void testApp::update(){
         if (chance == 1) happyness_B ++;
         if (happyness_B > 4) {
             happyness_B = 4;
-            preHappyness_B = -1;
+            preHappyness_B = 5;
         }
     }
     
     
     // emoji update
     if (preHappyness_A != happyness_A) {
-        if(happyness_A == 4) emoji_A.condition = E_LOVE;
-        if(happyness_A == 3) emoji_A.condition = E_LAUGHING;
-        if(happyness_A == 2) emoji_A.condition = E_HAPPY;
-        if(happyness_A == 1) emoji_A.condition = E_SURPRISE;
-        if(happyness_A == 0) emoji_A.condition = E_ANGRY;
-    }
-    
-    if (preHappyness_B != happyness_B) {
-        if(happyness_B == 4) emoji_B.condition = E_LOVE;
+        if(happyness_A == 4) {
+            emoji_A.condition = E_LOVE;
+            score_A+=5;
+        }
         if(happyness_B == 3) emoji_B.condition = E_LAUGHING;
         if(happyness_B == 2) emoji_B.condition = E_HAPPY;
         if(happyness_B == 1) emoji_B.condition = E_SURPRISE;
-        if(happyness_B == 0) emoji_B.condition = E_ANGRY;
+        
+        if(happyness_A == 0) {
+            emoji_A.condition = E_ANGRY;
+            score_A-=5;
+        }
+        if (happyness_A >preHappyness_A) {
+            if(happyness_A == 3) score_A+=3;
+            if(happyness_A == 2) score_A+=2;
+            if(happyness_A == 1) score_A+=1;
+        }
+        
+        
+    }
+    
+    if (preHappyness_B != happyness_B) {
+        if(happyness_B == 4) {
+            emoji_B.condition = E_LOVE;
+            score_B+=5;
+        }
+        if(happyness_B == 3) emoji_B.condition = E_LAUGHING;
+        if(happyness_B == 2) emoji_B.condition = E_HAPPY;
+        if(happyness_B == 1) emoji_B.condition = E_SURPRISE;
+        
+        if(happyness_B == 0) {
+            emoji_B.condition = E_ANGRY;
+            score_B-=5;
+        }
+        
+        if (happyness_B >preHappyness_B) {
+            if(happyness_B == 3) score_B+=3;
+            if(happyness_B == 2) score_B+=2;
+            if(happyness_B == 1) score_B+=1;
+        }
     }
     
     // emoji offset
@@ -527,10 +559,12 @@ void testApp::draw(){
     drawScene(0);
     accIndictor.draw();
     control.draw();
-   
     
-    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
-    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
+    ofSetColor(30, 30, 30);
+    font.drawString("SCORE_A\n"+ofToString(score_A), 100, ofGetHeight()/2);
+    font.drawString("SCORE_B\n"+ofToString(score_B), ofGetWidth()-200, ofGetHeight()/2);
+//    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
+//    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
 
 }
 //-------------------------------------------------------------
