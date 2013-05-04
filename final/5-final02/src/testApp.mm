@@ -69,12 +69,30 @@ void testApp::setup(){
     //emoji
     emoji_A.setup(char_A.character.getPosition(),0);
     emoji_B.setup(char_B.character.getPosition(),1);
+    image[0].loadImage("sprites/emoji_love.png");
+    image[1].loadImage("sprites/emoji_laughing.png");
+    image[2].loadImage("sprites/emoji_happy.png");
+    image[3].loadImage("sprites/emoji_supprise.png");
+    image[4].loadImage("sprites/emoji_angry.png");
+
+    emoji_A.image[0] = &image[0];
+    emoji_A.image[1] = &image[1];
+    emoji_A.image[2] = &image[2];
+    emoji_A.image[3] = &image[3];
+    emoji_A.image[4] = &image[4];
+    
+    emoji_B.image[0] = &image[0];
+    emoji_B.image[1] = &image[1];
+    emoji_B.image[2] = &image[2];
+    emoji_B.image[3] = &image[3];
+    emoji_B.image[4] = &image[4];
+    
     e_startTime_A= ofGetElapsedTimef();
-    e_duration_A = 5000;
+    e_duration_A = 8000;
     happyness_A = 2;
     
     e_startTime_B= ofGetElapsedTimef();
-    e_duration_B = 5000;
+    e_duration_B = 8000;
     happyness_B = 2;
 }
 //--------------------------------------------------------------
@@ -168,9 +186,9 @@ void testApp::update(){
     }
 
     
-    //screen update
+    //screen update-------------------------------
     position();
-    //control char_A
+    //control char_A-------------------------------
     if (ofxAccelerometer.getForce().x<-0.3 && rope_condition_A == R_NO_USE && rope_condition_B != R_SWING&& !bInSky_A) {
         char_A.condition = C_PUSH_ROPE;
         hook_pct_A = 0;
@@ -224,7 +242,7 @@ void testApp::update(){
         }
     }
     
-    //control char_B
+    //control char_B-------------------------------
     if (ofxAccelerometer.getForce().x>0.3 && rope_condition_B == R_NO_USE && rope_condition_A != R_SWING && !bInSky_B) {
         char_B.condition = C_PUSH_ROPE;
         hook_pct_B = 0;
@@ -248,7 +266,7 @@ void testApp::update(){
             }
         }
         
-        else if (control.bTouch[2]&&!control.bTouch[3]) {//charB left
+         if (control.bTouch[2]&&!control.bTouch[3]) {//charB left
             if (rope_condition_B == R_NO_USE) {
                 char_B.condition = C_LEFT;
             }
@@ -257,7 +275,7 @@ void testApp::update(){
             }
         }
         
-        else if(control.bTouch[3]&&!control.bTouch[2]){//charB right
+         if(control.bTouch[3]&&!control.bTouch[2]){//charB right
             if (rope_condition_B == R_NO_USE) {
                 char_B.condition = C_RIGHT;
             }
@@ -267,7 +285,7 @@ void testApp::update(){
             }
         }
         
-        else if(control.bTouch[2]&&control.bTouch[3]){//charB double press
+         if(control.bTouch[2]&&control.bTouch[3]){//charB double press
             if (rope_condition_A == R_PUSH) {
                 ofPoint dis =  hook_end_A - char_pos_B;
                 if ( fabs(dis.x)< 50 && dis.y>=-60) {
@@ -279,7 +297,7 @@ void testApp::update(){
         }
     }
     
-    //swing rope A
+    //swing rope A-------------------------------
     
     if (rope_condition_A == R_SWING) {
         
@@ -302,7 +320,7 @@ void testApp::update(){
             world_B.getWorld()->DestroyBody(rope_anchor.body);
         }
     }
-     //swing rope B
+     //swing rope B-------------------------------
     
     if (rope_condition_B == R_SWING) {
         
@@ -324,7 +342,7 @@ void testApp::update(){
         }
     }
     
-    //swing acclerometer
+    //swing acclerometer-------------------------------
     if (ofxAccelerometer.getForce().y > 0.4 && !bSwing_left) {
         if (rope_condition_A == R_SWING) {
             char_B.character.addForce(ofPoint(-30,0), 100);
@@ -373,11 +391,11 @@ void testApp::update(){
         bSwing_right = false;
     }
 
-    //Character
+    //Character-------------------------------
     char_A.update();
     char_B.update();
     
-    //dog
+    //dog-------------------------------
     dog_A.update();
     dog_B.update();
     if (dog_B.killZone.inside(char_B.character.getPosition().x, char_B.character.getPosition().y)) {
@@ -385,7 +403,7 @@ void testApp::update(){
         dog_B.condition = D_BITE;
         rope_condition_A = R_DESTROY;
     }
-    //emoji
+    //emoji-------------------------------
     int preHappyness_A= happyness_A;
     int preHappyness_B= happyness_B;
     
@@ -395,9 +413,12 @@ void testApp::update(){
     if (emoji_A.step == S_END) {
         e_startTime_A = ofGetElapsedTimeMillis();
     }
-    // getting angry A
     
-    
+    if (emoji_B.step == S_END) {
+        e_startTime_B = ofGetElapsedTimeMillis();
+    }
+        // getting angry
+        //wait too long
     if (char_A.condition == C_STOP) {
         if (ofGetElapsedTimeMillis() - e_startTime_A > e_duration_A && emoji_A.condition == E_NONE) {
             happyness_A --;
@@ -408,48 +429,73 @@ void testApp::update(){
         } 
     }
     
-    if (char_A.condition == C_DEAD) {
-        preHappyness_A = -1;
-        happyness_A = 0;
-    }
-    // getting angry B
     if (char_B.condition == C_STOP) {
         if (ofGetElapsedTimeMillis() - e_startTime_B > e_duration_B && emoji_B.condition == E_NONE) {
-            happyness_B --;
+            happyness_B--;
+            cout<<"1"<<endl;
         }
         if (happyness_B < 0){
             happyness_B = 0;
+            cout<<"2"<<endl;
             preHappyness_B = -1;
         }
     }
     
-    if (char_B.condition == C_DEAD) {
-        preHappyness_B = -1;
-        happyness_B= 3;
+        //DEAD
+    if (char_A.condition == C_DEAD) {
+        happyness_A = 0;
+        preHappyness_A = -1;
+        
     }
-     // getting happy A
-    if (char_A.character.getVelocity().length() > 5 && emoji_A.condition == E_NONE && char_A.condition != C_HOOK_ROPE) {
+    if (char_B.condition == C_DEAD) {
+        happyness_B = 0;
+        preHappyness_B = -1;
+    }
+        //swing rope
+    if (char_A.condition == C_SWING_ROPE) {
+        e_startTime_A = ofGetElapsedTimeMillis();
+        int chance = ofRandom(200);
+        if (chance == 1) happyness_A --;
+        if (happyness_A <1) {
+            happyness_A = 1;
+            preHappyness_A = -1;
+        }
+    }
+    
+    if (char_B.condition == C_SWING_ROPE) {
+        e_startTime_B = ofGetElapsedTimeMillis();
+        int chance = ofRandom(200);
+        if (chance == 1) happyness_B --;
+        if (happyness_B <1) {
+            happyness_B = 1;
+            preHappyness_B = -1;
+        }
+    }
+        
+        // getting happy
+        //run
+    if (char_A.character.getVelocity().length() > 5 && emoji_A.condition == E_NONE) {
         e_startTime_A = ofGetElapsedTimeMillis();
         int chance = ofRandom(100);
         if (chance == 1) happyness_A ++;
         if (happyness_A > 4) {
-            preHappyness_A = -1;
             happyness_A = 4;
+            preHappyness_A = -1;
         }
     }
-     // getting happy B
-    if (char_B.character.getVelocity().length() > 5 && emoji_B.condition == E_NONE && char_B.condition != C_HOOK_ROPE) {
+
+    if (char_B.character.getVelocity().length() > 5 && emoji_B.condition == E_NONE) {
         e_startTime_B = ofGetElapsedTimeMillis();
         int chance = ofRandom(100);
         if (chance == 1) happyness_B ++;
         if (happyness_B > 4) {
-            preHappyness_B = -1;
             happyness_B = 4;
+            preHappyness_B = -1;
         }
     }
     
     
-    // choose face
+    // emoji update
     if (preHappyness_A != happyness_A) {
         if(happyness_A == 4) emoji_A.condition = E_LOVE;
         if(happyness_A == 3) emoji_A.condition = E_LAUGHING;
@@ -465,7 +511,12 @@ void testApp::update(){
         if(happyness_B == 1) emoji_B.condition = E_SURPRISE;
         if(happyness_B == 0) emoji_B.condition = E_ANGRY;
     }
-    cout<<happyness_A<<endl;
+    
+    // emoji offset
+    char_A.condition == C_HOOK_ROPE? emoji_A.swing = true:emoji_A.swing = false;
+    char_B.condition == C_HOOK_ROPE?emoji_B.swing = true:emoji_B.swing = false;
+
+    cout<<ofGetElapsedTimeMillis() - e_startTime_B<<"  "<<char_B.condition<<endl;
 }
 
 //--------------------------------------------------------------

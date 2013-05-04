@@ -57,7 +57,7 @@ public:
     ofPoint pos;
     int charNum;
     bool moveLeft;
-    
-    ofImage image[5];
+    bool swing;
+    ofImage *image[5];
 };
 #endif /* defined(__springBreak05__ttEmoji__) */

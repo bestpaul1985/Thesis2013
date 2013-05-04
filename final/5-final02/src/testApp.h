@@ -93,6 +93,11 @@ class testApp : public ofxiPhoneApp{
         float e_startTime_A,e_startTime_B;
         float e_duration_A,e_duration_B;
         int happyness_A,happyness_B;
+        ofImage image[5];
+        int score_A, score_B;
+        //fonttype
+        ofTrueTypeFont font;
+        
 };
 
 
