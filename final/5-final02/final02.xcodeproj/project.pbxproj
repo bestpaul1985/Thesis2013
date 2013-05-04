@@ -588,6 +588,8 @@
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
+				4C6C57881735778100BFD9C1 /* ttRope.cpp */,
+				4C6C57891735778100BFD9C1 /* ttRope.h */,
 				4C02C60816EEDC210051C0DB /* ttChar.cpp */,
 				4C02C60916EEDC210051C0DB /* ttChar.h */,
 				476DDB351716377D005910CE /* ttEmoji.cpp */,
@@ -605,8 +607,6 @@
 				4C90B561170C946800FE43ED /* ttIndicator.h */,
 				4C0DFA6D1730686B00645229 /* ttDog.cpp */,
 				4C0DFA6E1730686C00645229 /* ttDog.h */,
-				4C6C57881735778100BFD9C1 /* ttRope.cpp */,
-				4C6C57891735778100BFD9C1 /* ttRope.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;

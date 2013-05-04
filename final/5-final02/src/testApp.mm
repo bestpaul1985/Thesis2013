@@ -53,14 +53,11 @@ void testApp::setup(){
     accIndictor.setup(ofxAccelerometer.getForce());
     
     //rope
-    hook_pct_A = 0;
-    hook_pct_B = 0;
+    rope_A.setup(world_B, char_A, char_B, rope_start_B, hook_start_A, hook_end_A, ofxAccelerometer.getForce(), 0);
+    rope_B.setup(world_A, char_B, char_A, rope_start_A, hook_start_B, hook_end_B, ofxAccelerometer.getForce(), 1);
 
-    rope_condition_A = R_NO_USE;
-    rope_condition_B = R_NO_USE;
     //booleans
-    bSwing_left = false;
-    bSwing_right = false;
+   
     bInSky_A = false;
     bInSky_B = false;
     //dog
@@ -187,208 +184,117 @@ void testApp::update(){
     //screen update-------------------------------
     position();
     //control char_A-------------------------------
-    if (ofxAccelerometer.getForce().x<-0.3 && rope_condition_A == R_NO_USE && rope_condition_B != R_SWING&& !bInSky_A) {
+    if (ofxAccelerometer.getForce().x<-0.3 && rope_A.condition == R_NO_USE && rope_B.condition != R_SWING&& !bInSky_A) {
         char_A.condition = C_PUSH_ROPE;
-        hook_pct_A = 0;
-        rope_condition_A = R_PUSH;
+        rope_A.hook_pct  = 0;
+        rope_A.condition = R_PUSH;
     }//charA pushRope
     
     if (char_A.condition != C_DEAD) {
         if (!control.bTouch[0]&&!control.bTouch[1]) {//charA noPress
             
-            if (rope_condition_A==R_NO_USE&& !bInSky_A) {
+            if (rope_A.condition==R_NO_USE&& !bInSky_A) {
                 char_A.condition = C_STOP;
             }
             
-            if (rope_condition_B == R_SWING) {
-                rope_condition_B = R_DESTROY;
+            if (rope_B.condition == R_SWING) {
+                rope_B.condition = R_DESTROY;
             }
             
-            if (rope_condition_B == R_DESTROY) {
+            if (rope_B.condition == R_DESTROY) {
                 char_B.condition = C_STOP;
             }
         }
         
             
         if (control.bTouch[0]&&!control.bTouch[1]) {//charA left
-            if (rope_condition_A == R_NO_USE) {
+            if (rope_A.condition == R_NO_USE) {
                 char_A.condition = C_LEFT;
             }
-            if (rope_condition_B == R_SWING) {
-                rope_condition_B = R_DESTROY;
+            if (rope_B.condition == R_SWING) {
+                rope_B.condition  = R_DESTROY;
             }
         }
         
         if(control.bTouch[1]&&!control.bTouch[0]){//charA right
-            if (rope_condition_A == R_NO_USE) {
+            if (rope_A.condition  == R_NO_USE) {
                 char_A.condition = C_RIGHT;
             }
-            if (rope_condition_B == R_SWING) {
-                rope_condition_B = R_DESTROY;
+            if (rope_B.condition  == R_SWING) {
+                rope_B.condition  = R_DESTROY;
             }
         }
         
         if(control.bTouch[0]&&control.bTouch[1]){//charA doublePress
-            if (rope_condition_B == R_PUSH) {
+            if (rope_B.condition  == R_PUSH) {
                 ofPoint dis =  hook_end_B - char_pos_A;
                 if ( fabs(dis.x)< 50 && dis.y<=60) {
                     char_A.condition = C_HOOK_ROPE;
                     char_B.condition = C_SWING_ROPE;
-                    rope_condition_B = R_SWING;
+                    rope_B.condition  = R_SWING;
                 }
             }
         }
     }
     
     //control char_B-------------------------------
-    if (ofxAccelerometer.getForce().x>0.3 && rope_condition_B == R_NO_USE && rope_condition_A != R_SWING && !bInSky_B) {
+    if (ofxAccelerometer.getForce().x>0.3 && rope_B.condition  == R_NO_USE && rope_A.condition != R_SWING && !bInSky_B) {
         char_B.condition = C_PUSH_ROPE;
-        hook_pct_B = 0;
-        rope_condition_B = R_PUSH;
+        rope_B.hook_pct = 0;
+        rope_B.condition  = R_PUSH;
         
     }//charB pushRope
     
     if (char_B.condition != C_DEAD) {
          if (!control.bTouch[2]&&!control.bTouch[3]) {//charB noPress
-            if (rope_condition_B==R_NO_USE && !bInSky_B) {
+            if (rope_B.condition==R_NO_USE && !bInSky_B) {
                 char_B.condition = C_STOP;
             }
                 
             
-            if (rope_condition_A == R_SWING) {
-                rope_condition_A = R_DESTROY;
+            if (rope_A.condition == R_SWING) {
+                rope_A.condition = R_DESTROY;
             }
             
-            if (rope_condition_A == R_DESTROY) {
+            if (rope_A.condition == R_DESTROY) {
                 char_A.condition = C_STOP;
             }
         }
         
          if (control.bTouch[2]&&!control.bTouch[3]) {//charB left
-            if (rope_condition_B == R_NO_USE) {
+            if (rope_B.condition == R_NO_USE) {
                 char_B.condition = C_LEFT;
             }
-            if (rope_condition_A == R_SWING) {
-                rope_condition_A = R_DESTROY;
+            if (rope_A.condition == R_SWING) {
+                rope_A.condition = R_DESTROY;
             }
         }
         
          if(control.bTouch[3]&&!control.bTouch[2]){//charB right
-            if (rope_condition_B == R_NO_USE) {
+            if (rope_B.condition == R_NO_USE) {
                 char_B.condition = C_RIGHT;
             }
             
-            if (rope_condition_A == R_SWING) {
-                rope_condition_A = R_DESTROY;
+            if (rope_A.condition == R_SWING) {
+                rope_A.condition = R_DESTROY;
             }
         }
         
          if(control.bTouch[2]&&control.bTouch[3]){//charB double press
-            if (rope_condition_A == R_PUSH) {
+            if (rope_A.condition == R_PUSH) {
                 ofPoint dis =  hook_end_A - char_pos_B;
                 if ( fabs(dis.x)< 50 && dis.y>=-60) {
                     char_B.condition = C_HOOK_ROPE;
                     char_A.condition = C_SWING_ROPE;
-                    rope_condition_A = R_SWING;
+                    rope_A.condition = R_SWING;
                 }
             }
         }
     }
-    
-    //swing rope A-------------------------------
-    
-    if (rope_condition_A == R_SWING) {
-        
-        if (!rope_joint.isSetup()) {
-            rope_anchor.setup(world_B.getWorld(), rope_start_B.x, rope_start_B.y, 10);
-            rope_joint.setup(world_B.getWorld(), rope_anchor.body, char_B.character.body);
-//            float length = fabs(rope_start_B.y - char_B.getPos.y) - 100;
-            float length = 250;
-            rope_joint.setLength(length);
-            rope_joint.setFrequency(0.5);
-        }
-        
-//         char_B.rope_frame = ofClamp((462-rope_anchor.getPosition().distance(char_A.character.getPosition()))/5, 0, 39) ;
-    }
-    
-    
-    if (rope_condition_A == R_DESTROY) {
-        if (rope_joint.isSetup()) {
-            rope_joint.destroy();
-            world_B.getWorld()->DestroyBody(rope_anchor.body);
-        }
-    }
-     //swing rope B-------------------------------
-    
-    if (rope_condition_B == R_SWING) {
-        
-        if (!rope_joint.isSetup()) {
-            rope_anchor.setup(world_A.getWorld(), rope_start_A.x, rope_start_A.y, 10);
-            rope_joint.setup(world_A.getWorld(), rope_anchor.body, char_A.character.body);
-//            float length = fabs(rope_start_A.y - char_A.getPos.y) - 100;
-            float length = 250;
-            rope_joint.setLength(length);
-            rope_joint.setFrequency(0.5);
-        }
-        
-    }
-    
-    if (rope_condition_B == R_DESTROY) {
-        if (rope_joint.isSetup()) {
-            rope_joint.destroy();
-            world_A.getWorld()->DestroyBody(rope_anchor.body);
-        }
-    }
-    
-    //swing acclerometer-------------------------------
-    if (ofxAccelerometer.getForce().y > 0.4 && !bSwing_left) {
-        if (rope_condition_A == R_SWING) {
-            char_B.character.addForce(ofPoint(-30,0), 100);
-        }
-        
-        if (rope_condition_B == R_SWING) {
-            char_A.character.addForce(ofPoint(-30,0), 100);
-        }
-        bSwing_left = true;
-    }
-    
-    if (ofxAccelerometer.getForce().y < -0.4 && !bSwing_right) {
-        if (rope_condition_A == R_SWING) {
-            char_B.character.addForce(ofPoint(30,0), 100);
-        }
-        if (rope_condition_B == R_SWING) {
-            char_A.character.addForce(ofPoint(30,0), 100);
-        }
-        bSwing_right = true;
-    }
-    if (rope_condition_A == R_SWING) {
-        ofPoint diff =  char_B.character.getPosition() - rope_anchor.getPosition();
-        char_B.angle = atan2(diff.x, diff.y);
-    }else{
-        char_B.angle = 0;
-    }
-    
-    if (rope_condition_B == R_SWING) {
-        ofPoint diff =  char_A.character.getPosition() - rope_anchor.getPosition();
-        char_A.angle = PI-atan2(diff.x, diff.y);
-    }else{
-        char_A.angle = 0;
-    }
-    //reset
-    if (ofxAccelerometer.getForce().x<0.3 && ofxAccelerometer.getForce().x>-0.3) {
-        if (rope_condition_A !=R_SWING) {
-            rope_condition_A = R_NO_USE;
-        }
-        if (rope_condition_B !=R_SWING) {
-            rope_condition_B = R_NO_USE;
-        }
-    }
-    
-    if (ofxAccelerometer.getForce().y<0.4 && ofxAccelerometer.getForce().y>-0.4) {
-        bSwing_left = false;
-        bSwing_right = false;
-    }
-
+    //rope--------------------------------------
+    rope_A.update();
+    rope_B.update();
+   
     //Character-------------------------------
     char_A.update();
     char_B.update();
@@ -399,7 +305,7 @@ void testApp::update(){
     if (dog_B.killZone.inside(char_B.character.getPosition().x, char_B.character.getPosition().y)) {
         char_B.condition = C_DEAD;
         dog_B.condition = D_BITE;
-        rope_condition_A = R_DESTROY;
+        rope_A.condition = R_DESTROY;
     }
     //emoji-------------------------------
     emoji_A.update(char_A.character.getPosition(), char_A.moveLeft);
@@ -423,8 +329,8 @@ void testApp::draw(){
     
     emoji_A.diagram(800,400);
     emoji_B.diagram(300,400);
-//    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
-//    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
 
 }
 //-------------------------------------------------------------
@@ -462,67 +368,12 @@ void testApp::drawScene(int iDraw){
         char_B.draw();
         emoji_B.draw();
         ofPopMatrix();
-
+    }
         //draw swing rope A
-        
-        if (rope_condition_A == R_SWING) {
-            ofPushMatrix();
-            ofTranslate(screen_B);
-            if (rope_joint.isSetup()) {
-                ofSetColor(44,220);
-//                rope_anchor.draw();
-                rope_joint.draw();
-            }
-//            ofCircle(char_B.character.getPosition().x, char_B.character.getPosition().y, 10);
-            ofPopMatrix();
-        }
-        
-         //draw swing rope B
-        if (rope_condition_B == R_SWING) {
-             ofPushMatrix();
-             ofTranslate(screen_A);
-            if (rope_joint.isSetup()) {
-                ofSetColor(44,220);
-//                rope_anchor.draw();
-                rope_joint.draw();
-            }
-           
-//          ofCircle(char_A.character.getPosition().x, char_A.character.getPosition().y, 10);
-            ofPopMatrix();
-        }
-
-    }
-    
-   
-   
-    //push rope
-  
-    if (rope_condition_A == R_PUSH) {
-        float speed = 0.1f;
-        hook_pct_A +=speed;
-        if (hook_pct_A > 1) hook_pct_A = 1;
-        hook_end_A.x = hook_start_A.x;
-        hook_end_A.y = (1-hook_pct_A)*hook_start_A.y + hook_pct_A*(500+hook_start_A.y);
-        
-//        ofSetColor(0,100);
-//        ofLine(hook_start_A.x,hook_start_A.y,hook_end_A.x, hook_end_A.y);
-//        ofCircle(hook_end_A.x, hook_end_A.y, 10);
-    }
-    
-    
-    
-    if (rope_condition_B == R_PUSH) {
-        float speed = 0.1f;
-        hook_pct_B +=speed;
-        if (hook_pct_B > 1) hook_pct_B = 1;
-        hook_end_B.x = hook_start_B.x;
-        hook_end_B.y = (1-hook_pct_B)*hook_start_B.y + hook_pct_B*(hook_start_B.y-500);
-        
-//        ofSetColor(0,100);
-//        ofSetLineWidth(2.5);
-//        ofLine(hook_start_B.x,hook_start_B.y,hook_end_B.x, hook_end_B.y);
-//        ofCircle(hook_end_B.x, hook_end_B.y, 10);
-    }
+        rope_A.draw_swing(screen_B);
+        rope_A.draw_push();
+        rope_B.draw_swing(screen_A);
+        rope_B.draw_push();
 }
 //--------------------------------------------------------------
 void testApp::exit(){
@@ -579,12 +430,12 @@ void testApp::position(){
     }
     
     
-    if (rope_condition_B != R_SWING) {
+    if (rope_B.condition != R_SWING) {
         camera_A.x = catchUpSpeed * catch_A.x + (1-catchUpSpeed) * camera_A.x;
         camera_A.y = catchUpSpeed * catch_A.y + (1-catchUpSpeed) * camera_A.y;
     }
        
-    if (rope_condition_A != R_SWING) {
+    if (rope_A.condition != R_SWING) {
         camera_B.x = catchUpSpeed * catch_B.x + (1-catchUpSpeed) * camera_B.x;
         camera_B.y = catchUpSpeed * catch_B.y + (1-catchUpSpeed) * camera_B.y;
     }
@@ -599,8 +450,8 @@ void testApp::position(){
     char_pos_B = char_B.getPos + screen_B;
     //hook postion
     
-    ofPoint offset_A(10,8);
-    ofPoint offset_B(5,20);
+    ofPoint offset_A(15,8);
+    ofPoint offset_B(-4,22);
     if (char_A.moveLeft) hook_start_A.x = char_pos_A.x - offset_A.x;
     else hook_start_A.x = char_pos_A.x + offset_A.x;
     hook_start_A.y = char_pos_A.y + offset_A.y;

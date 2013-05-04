@@ -15,12 +15,7 @@
 #include "ttIndicator.h"
 #include "ttDog.h"
 #include "ttEmoji.h"
-enum _rope_condition{
-    R_NO_USE,
-    R_PUSH,
-    R_SWING,
-    R_DESTROY,
-};
+#include "ttRope.h"
 
 
 class testApp : public ofxiPhoneApp{
@@ -48,10 +43,7 @@ class testApp : public ofxiPhoneApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
         void position();
-    
 
-    
-        _rope_condition     rope_condition_A,rope_condition_B;
     
         ofxBox2d            world_A,        world_B;
         ofxBox2dRect        charDummy_A,    charDummy_B;
@@ -73,20 +65,18 @@ class testApp : public ofxiPhoneApp{
         ofPoint             hook_start_A, hook_start_B;
         ofPoint             rope_end_A, rope_end_B;
         ofPoint             rope_start_A,rope_start_B;
-        float               hook_pct_A, hook_pct_B;
+       
         //thorns
         ttThorn             thorns_A, thorns_B;
         //sky
         ttSky               sky;
         //Indictor
         ttIndicator         accIndictor;
-        //ropes
-        ofxBox2dJoint       rope_joint;
-        ofxBox2dCircle      rope_anchor;
+        //rope
+        ttRope rope_A, rope_B;
         //dog
         ttDog dog_A, dog_B;
         //booleans
-        bool                bSwing_left,bSwing_right;
         bool                bInSky_A,bInSky_B;
         //emoji
         ttEmoji emoji_A,emoji_B;
