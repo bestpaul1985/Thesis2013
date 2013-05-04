@@ -60,6 +60,7 @@ void testApp::setup(){
    
     bInSky_A = false;
     bInSky_B = false;
+    bStatistics = false;
     //dog
     dog_A.setup(world_A, 200, 100, 0);
     dog_B.setup(world_B, 200, -100, 1);
@@ -88,7 +89,10 @@ void testApp::setup(){
     
     //score
     font.loadFont("font/NewMedia Fett.ttf", 20);
-   
+    
+    //meun
+    leve_menu.set(ofGetWidth(),ofGetHeight()/2);
+    meunRadius = 100;
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -323,14 +327,20 @@ void testApp::draw(){
     accIndictor.draw();
     control.draw();
     
-    ofSetColor(30, 30, 30);
-    font.drawString("SCORE_A\n"+ofToString(emoji_A.score), 100, ofGetHeight()/2);
-    font.drawString("SCORE_B\n"+ofToString(emoji_B.score), ofGetWidth()-200, ofGetHeight()/2);
+    //meun
+    bStatistics? ofSetColor(204,204,204,150):ofSetColor(204,204,204,60);
+    ofCircle(leve_menu, meunRadius);
     
-    emoji_A.diagram(800,400);
-    emoji_B.diagram(300,400);
-    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
-    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
+    if (bStatistics) {
+        ofSetColor(30, 30, 30);
+        font.drawString("SCORE_A\n"+ofToString(emoji_A.score), ofGetWidth()/2, ofGetHeight()/2-300);
+        font.drawString("SCORE_B\n"+ofToString(emoji_B.score), ofGetWidth()/2, ofGetHeight()/2+300);
+        emoji_A.diagram(800,400);
+        emoji_B.diagram(300,400);
+    }
+   
+//    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
+//    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
 
 }
 //-------------------------------------------------------------
@@ -383,7 +393,10 @@ void testApp::exit(){
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs & touch){
     control.touchDown(touch.x, touch.y,touch.id);
-    
+    ofPoint pos(touch.x, touch.y);
+    if (leve_menu.distance(pos)< meunRadius) {
+        bStatistics = !bStatistics;
+    }
 }
 
 //--------------------------------------------------------------

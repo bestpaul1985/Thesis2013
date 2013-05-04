@@ -78,12 +78,16 @@ class testApp : public ofxiPhoneApp{
         ttDog dog_A, dog_B;
         //booleans
         bool                bInSky_A,bInSky_B;
+        bool                bStatistics;
+                         
         //emoji
         ttEmoji emoji_A,emoji_B;
         ofImage image[5];
         //fonttype
         ofTrueTypeFont font;
-        
+        //meun
+        ofPoint leve_menu;
+        float meunRadius;
 };
 
 
