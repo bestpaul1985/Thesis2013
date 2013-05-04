@@ -16,7 +16,7 @@
 #include "ttDog.h"
 #include "ttEmoji.h"
 #include "ttRope.h"
-
+#include "ttRabit.h"
 
 class testApp : public ofxiPhoneApp{
     public:
@@ -76,6 +76,8 @@ class testApp : public ofxiPhoneApp{
         ttRope rope_A, rope_B;
         //dog
         ttDog dog_A, dog_B;
+        //rabit
+        ttRabit rabit_A,rabit_B;
         //booleans
         bool                bInSky_A,bInSky_B;
         bool                bStatistics;
@@ -88,6 +90,9 @@ class testApp : public ofxiPhoneApp{
         //meun
         ofPoint leve_menu;
         float meunRadius;
+        //render
+        ofxSpriteSheetRenderer *rabit_Render;
+        ofxSpriteSheetRenderer *dog_Render;
 };
 
 

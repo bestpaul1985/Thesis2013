@@ -57,13 +57,22 @@ void testApp::setup(){
     rope_B.setup(world_A, char_B, char_A, rope_start_A, hook_start_B, hook_end_B, ofxAccelerometer.getForce(), 1);
 
     //booleans
-   
     bInSky_A = false;
     bInSky_B = false;
     bStatistics = false;
+    
+    //renderers
+    dog_Render = new ofxSpriteSheetRenderer(1, 1000, 0, 120);
+    dog_Render ->loadTexture("sprites/all_dog.png", 2040, GL_NEAREST);
+    rabit_Render = new ofxSpriteSheetRenderer(1, 1000, 0, 30);
+    rabit_Render ->loadTexture("sprites/rabit.png", 2040, GL_NEAREST);
+    
     //dog
-    dog_A.setup(world_A, 200, 100, 0);
-    dog_B.setup(world_B, 200, -100, 1);
+    dog_A.setup(world_A,dog_Render, 200, 100, 0);
+    dog_B.setup(world_B,dog_Render, 200, -100, 1);
+    //rabit
+    rabit_A.setup(world_A,rabit_Render, -200, 100, 0);
+    rabit_B.setup(world_B,rabit_Render, -200, -100, 1);
     //emoji
     emoji_A.setup(char_A.character.getPosition(),char_A,0);
     emoji_B.setup(char_B.character.getPosition(),char_B,1);
@@ -92,7 +101,7 @@ void testApp::setup(){
     
     //meun
     leve_menu.set(ofGetWidth(),ofGetHeight()/2);
-    meunRadius = 100;
+    meunRadius = 70;
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -311,6 +320,9 @@ void testApp::update(){
         dog_B.condition = D_BITE;
         rope_A.condition = R_DESTROY;
     }
+    //rabit-------------------------------
+    rabit_A.update();
+    rabit_B.update();
     //emoji-------------------------------
     emoji_A.update(char_A.character.getPosition(), char_A.moveLeft);
     emoji_B.update(char_B.character.getPosition(), char_B.moveLeft);
@@ -368,6 +380,7 @@ void testApp::drawScene(int iDraw){
         ofPushMatrix();
         ofTranslate(screen_A);
         dog_A.draw();
+        rabit_A.draw();
         char_A.draw();
         emoji_A.draw();
         ofPopMatrix();
@@ -375,6 +388,7 @@ void testApp::drawScene(int iDraw){
         ofPushMatrix();
         ofTranslate(screen_B);
         dog_B.draw();
+        rabit_B.draw();
         char_B.draw();
         emoji_B.draw();
         ofPopMatrix();

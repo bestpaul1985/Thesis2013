@@ -8,18 +8,17 @@
 
 #include "ttDog.h"
 
-void ttDog::setup(ofxBox2d &world, float x, float y,int num){
+void ttDog::setup(ofxBox2d &world, ofxSpriteSheetRenderer *render, float x, float y,int num){
     dog.setPhysics(1.0f, 0.0f, 0.5f);
     dog.setup(world.getWorld(),x,y,30);
     dogNum = num;
     
-    spriteRenderer = new ofxSpriteSheetRenderer(1, 1000, 0, 120);
-    spriteRenderer->loadTexture("sprites/all_dog.png", 2040, GL_NEAREST);
-    
+    spriteRenderer = render;
     basicSprite_dog * newSprite = new basicSprite_dog();
     newSprite->pos.set(0,0);
     newSprite->animation = RUN;
     sprites.push_back(newSprite);
+    
     frc.set(50, 0);
     flip = false;
     getPos = dog.getPosition();
@@ -83,6 +82,7 @@ void ttDog::draw(){
     ofPopMatrix();
    
 }
+//------------------------------------------------------
 void ttDog::run(){
     
     if (dog.getPosition().x>500) {
