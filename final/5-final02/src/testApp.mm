@@ -420,6 +420,9 @@ void testApp::draw(){
     ofSetColor(30, 30, 30);
     font.drawString("SCORE_A\n"+ofToString(emoji_A.score), 100, ofGetHeight()/2);
     font.drawString("SCORE_B\n"+ofToString(emoji_B.score), ofGetWidth()-200, ofGetHeight()/2);
+    
+    emoji_A.diagram(800,400);
+    emoji_B.diagram(300,400);
 //    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
 //    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
 

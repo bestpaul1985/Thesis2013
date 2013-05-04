@@ -48,7 +48,9 @@ public:
     void draw();
     void timer();
     void control();
-    void diagram();
+    void diagram(float x, float y);
+    
+    
     //animation
     emoji_Sprite * sprites[5];
     ofxSpriteSheetRenderer * emoji_renderer[5];
@@ -77,7 +79,8 @@ public:
     int num_happy;
     int num_surprise;
     int num_laughing;
-
-
+    
+    //fonttype
+    ofTrueTypeFont font;
 };
 #endif /* defined(__springBreak05__ttEmoji__) */

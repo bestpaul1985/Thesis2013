@@ -31,6 +31,8 @@ void ttEmoji::setup(ofPoint Pos,ttChar &Character,int CharNum){
     num_happy = 0;
     num_surprise = 0;
     num_laughing = 0;
+    
+    font.loadFont("font/NewMedia Fett.ttf", 12);
 }
 //-----------------------------------------
 void ttEmoji::update(ofPoint Pos, bool move_left){
@@ -167,7 +169,14 @@ void ttEmoji::control(){
     //run
     if (character->character.getVelocity().length() > 5 && condition == E_NONE) {
         e_startTime = ofGetElapsedTimeMillis();
-        int chance = ofRandom(100);
+        
+        int chance;
+        if (happyness == 0)chance = ofRandom(50);
+        if (happyness == 1)chance = ofRandom(100);
+        if (happyness == 2)chance = ofRandom(150);
+        if (happyness == 3)chance = ofRandom(200);
+        if (happyness == 4)chance = ofRandom(250);
+        
         if (chance == 1) happyness ++;
         if (happyness> 4) {
             happyness = 4;
@@ -219,17 +228,108 @@ void ttEmoji::control(){
  
     // emoji offset
     character->condition == C_HOOK_ROPE? swing = true:swing = false;
-  
+
 }
 
 
 //----------------------------------------------------
-void diagram(){
-
-    ofPoint orgPt(300,400);
+void ttEmoji::diagram(float x, float y){
     
+    
+    float orgRadius = 100;
+    
+    int max;
+    int number[5];
+    float angle[5];
+    float radius[5];
+    ofPoint pts[5];
+    ofRectangle rect[5];
+    ofPoint icon_pts[5];
+    ofPolyline path;
+    float offSet = 40;
+//    number[4] = num_love;
+//    number[3] = num_laughing;
+//    number[2] = num_happy;
+//    number[1] = num_surprise;
+//    number[0] = num_angry;
+    number[4] = 10;
+    number[3] = 20;
+    number[2] = 30;
+    number[1] = 40;
+    number[0] = 50;
+    
+    angle[4] = 288;
+    angle[3] = 216;
+    angle[2] = 144;
+    angle[1] = 72;
+    angle[0] = 0;
+
+    for (int i=1; i<5; i++) {
+        max = MAX(number[i], number[i-1]);
+    }
+
+    radius[4] = ofMap(number[4], 0, max, 10, orgRadius, true);
+    radius[3] = ofMap(number[3], 0, max, 10, orgRadius, true);
+    radius[2] = ofMap(number[2], 0, max, 10, orgRadius, true);
+    radius[1] = ofMap(number[1], 0, max, 10, orgRadius, true);
+    radius[0] = ofMap(number[0], 0, max, 10, orgRadius, true);
+    
+     // draw the path
+    for (int i=0; i<5; i++) {
+        pts[i].x =  radius[i]*cos(angle[i]*DEG_TO_RAD);
+        pts[i].y = radius[i]*-sin(angle[i]*DEG_TO_RAD);
+        icon_pts[i].x = (radius[i]+offSet)*cos(angle[i]*DEG_TO_RAD);
+        icon_pts[i].y = (radius[i]+offSet)*-sin(angle[i]*DEG_TO_RAD);
+        path.addVertex(pts[i]);
+    }
+    path.close();
+    
+   
+    
+    
+    // draw the mesh
+    ofMesh mesh;
+    ofMesh meshBG;
+    meshBG.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
+    vector < ofPoint > meshPts = path.getVertices();
+    for (int i = 0; i < meshPts.size(); i++){
+        meshBG.addVertex(meshPts[i]);
+    }
+   
+
+    ofPushMatrix();
+    ofTranslate(x, y);
+    
+    if (charNum == 0) {
+        ofScale(-1, -1);
+    }else{
+        ofScale(1, 1);
+    }
+    ofSetColor(255,120,0,100);
+    ofFill();
+    meshBG.draw();
+    for (int i=0; i<5; i++) {
+        ofSetColor(255, 30, 100);
+        ofLine(0,0, pts[i].x, pts[i].y);
+    }
+    ofSetColor(30, 30, 30);
+    path.draw();
+    
+    for (int i=0; i<5; i++) {
+        ofSetColor(255);
+        image[i]->draw(icon_pts[i].x -image[i]->getWidth()/2, icon_pts[i].y-image[i]->getHeight()/2);
+        rect[i] = font.getStringBoundingBox(ofToString(number[i]), 0, 0);
+        font.drawString(ofToString(number[i]),icon_pts[i].x - rect[i].getWidth()/2,icon_pts[i].y + image[i]->getHeight()/2 + rect[i].getHeight());
+    }
+    
+    ofPopMatrix();
+//    for (int i=0; i<5; i++) {
+//        cout<<"number["<<i<<"]: "<<number[i]<<"  pts["<<i<<"]: "<<pts[i]<<endl;
+//    }
 
 }
+    
+
 
 
 
