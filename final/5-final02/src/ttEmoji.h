@@ -11,6 +11,7 @@
 
 #include "ofMain.h"
 #include "ofxSpriteSheetRenderer.h"
+#include "ttChar.h"
 
 static animation_t EMOJI_LOVE =         {  0,  0,  1,  1,  1,  75, 0,  -1, -1, 1 };
 static animation_t EMOJI_HAPPY =        {  0,  0,  1,  1,  1,  75, 0,  -1, -1, 1 };
@@ -38,13 +39,17 @@ enum _emoji_step{
     S_WAIT,
     S_END,
 };
+//--------------------------------------------------
 class ttEmoji{
 public:
     
-    void setup(ofPoint Pos, int CharNum);
+    void setup(ofPoint Pos,ttChar &Character,int CharNum);
     void update(ofPoint Pos, bool move_left);
     void draw();
     void timer();
+    void control();
+    void diagram();
+    //animation
     emoji_Sprite * sprites[5];
     ofxSpriteSheetRenderer * emoji_renderer[5];
     _emoji_condition condition;
@@ -59,5 +64,20 @@ public:
     bool moveLeft;
     bool swing;
     ofImage *image[5];
+    
+    //control
+    ttChar *character;
+    float e_startTime;
+    float e_duration;
+    //socre
+    int happyness;
+    int score;
+    int num_love;
+    int num_angry;
+    int num_happy;
+    int num_surprise;
+    int num_laughing;
+
+
 };
 #endif /* defined(__springBreak05__ttEmoji__) */

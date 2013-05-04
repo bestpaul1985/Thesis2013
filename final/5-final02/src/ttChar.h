@@ -53,6 +53,7 @@ public:
     int charNum;
     float angle;
     int step;
+   
 };
 
 #endif /* defined(__thatThey__ttChar__) */

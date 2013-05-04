@@ -184,6 +184,7 @@ void ttChar::update(){
         getPos = character.getPosition();
     }
     
+  
 }
 //----------------------------------------------
 void ttChar::draw(){

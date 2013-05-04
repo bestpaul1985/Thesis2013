@@ -67,8 +67,8 @@ void testApp::setup(){
     dog_A.setup(world_A, 200, 100, 0);
     dog_B.setup(world_B, 200, -100, 1);
     //emoji
-    emoji_A.setup(char_A.character.getPosition(),0);
-    emoji_B.setup(char_B.character.getPosition(),1);
+    emoji_A.setup(char_A.character.getPosition(),char_A,0);
+    emoji_B.setup(char_B.character.getPosition(),char_B,1);
     image[0].loadImage("sprites/emoji_love.png");
     image[1].loadImage("sprites/emoji_laughing.png");
     image[2].loadImage("sprites/emoji_happy.png");
@@ -87,18 +87,11 @@ void testApp::setup(){
     emoji_B.image[3] = &image[3];
     emoji_B.image[4] = &image[4];
     
-    e_startTime_A= ofGetElapsedTimef();
-    e_duration_A = 8000;
-    happyness_A = 2;
     
-    e_startTime_B= ofGetElapsedTimef();
-    e_duration_B = 8000;
-    happyness_B = 2;
     
     //score
     font.loadFont("font/NewMedia Fett.ttf", 20);
-    score_A = 0;
-    score_B = 0;
+   
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -409,146 +402,10 @@ void testApp::update(){
         rope_condition_A = R_DESTROY;
     }
     //emoji-------------------------------
-    int preHappyness_A= happyness_A;
-    int preHappyness_B= happyness_B;
-    
     emoji_A.update(char_A.character.getPosition(), char_A.moveLeft);
     emoji_B.update(char_B.character.getPosition(), char_B.moveLeft);
-
-    if (emoji_A.step == S_END) {
-        e_startTime_A = ofGetElapsedTimeMillis();
-    }
-    
-    if (emoji_B.step == S_END) {
-        e_startTime_B = ofGetElapsedTimeMillis();
-    }
-        // getting angry
-        //wait too long
-    if (char_A.condition == C_STOP) {
-        if (ofGetElapsedTimeMillis() - e_startTime_A > e_duration_A && emoji_A.condition == E_NONE) {
-            happyness_A --;
-        }
-        if (happyness_A < 0){
-         happyness_A = 0;
-         preHappyness_A = -1;
-        } 
-    }
-    
-    if (char_B.condition == C_STOP) {
-        if (ofGetElapsedTimeMillis() - e_startTime_B > e_duration_B && emoji_B.condition == E_NONE) {
-            happyness_B--;
-            cout<<"1"<<endl;
-        }
-        if (happyness_B < 0){
-            happyness_B = 0;
-            cout<<"2"<<endl;
-            preHappyness_B = -1;
-        }
-    }
-    
-        //DEAD
-    if (char_A.condition == C_DEAD) {
-        happyness_A = 0;
-        preHappyness_A = -1;
-        
-    }
-    if (char_B.condition == C_DEAD) {
-        happyness_B = 0;
-        preHappyness_B = -1;
-    }
-        //swing rope
-    if (char_A.condition == C_SWING_ROPE) {
-        e_startTime_A = ofGetElapsedTimeMillis();
-        int chance = ofRandom(200);
-        if (chance == 1) happyness_A --;
-        if (happyness_A <1) {
-            happyness_A = 1;
-            preHappyness_A = -1;
-        }
-    }
-    
-    if (char_B.condition == C_SWING_ROPE) {
-        e_startTime_B = ofGetElapsedTimeMillis();
-        int chance = ofRandom(200);
-        if (chance == 1) happyness_B --;
-        if (happyness_B <1) {
-            happyness_B = 1;
-            preHappyness_B = -1;
-        }
-    }
-        
-        // getting happy
-        //run
-    if (char_A.character.getVelocity().length() > 5 && emoji_A.condition == E_NONE) {
-        e_startTime_A = ofGetElapsedTimeMillis();
-        int chance = ofRandom(100);
-        if (chance == 1) happyness_A ++;
-        if (happyness_A > 4) {
-            happyness_A = 4;
-            preHappyness_A = 5;
-        }
-    }
-
-    if (char_B.character.getVelocity().length() > 5 && emoji_B.condition == E_NONE) {
-        e_startTime_B = ofGetElapsedTimeMillis();
-        int chance = ofRandom(100);
-        if (chance == 1) happyness_B ++;
-        if (happyness_B > 4) {
-            happyness_B = 4;
-            preHappyness_B = 5;
-        }
-    }
-    
-    
-    // emoji update
-    if (preHappyness_A != happyness_A) {
-        if(happyness_A == 4) {
-            emoji_A.condition = E_LOVE;
-            score_A+=5;
-        }
-        if(happyness_B == 3) emoji_B.condition = E_LAUGHING;
-        if(happyness_B == 2) emoji_B.condition = E_HAPPY;
-        if(happyness_B == 1) emoji_B.condition = E_SURPRISE;
-        
-        if(happyness_A == 0) {
-            emoji_A.condition = E_ANGRY;
-            score_A-=5;
-        }
-        if (happyness_A >preHappyness_A) {
-            if(happyness_A == 3) score_A+=3;
-            if(happyness_A == 2) score_A+=2;
-            if(happyness_A == 1) score_A+=1;
-        }
-        
-        
-    }
-    
-    if (preHappyness_B != happyness_B) {
-        if(happyness_B == 4) {
-            emoji_B.condition = E_LOVE;
-            score_B+=5;
-        }
-        if(happyness_B == 3) emoji_B.condition = E_LAUGHING;
-        if(happyness_B == 2) emoji_B.condition = E_HAPPY;
-        if(happyness_B == 1) emoji_B.condition = E_SURPRISE;
-        
-        if(happyness_B == 0) {
-            emoji_B.condition = E_ANGRY;
-            score_B-=5;
-        }
-        
-        if (happyness_B >preHappyness_B) {
-            if(happyness_B == 3) score_B+=3;
-            if(happyness_B == 2) score_B+=2;
-            if(happyness_B == 1) score_B+=1;
-        }
-    }
-    
-    // emoji offset
-    char_A.condition == C_HOOK_ROPE? emoji_A.swing = true:emoji_A.swing = false;
-    char_B.condition == C_HOOK_ROPE?emoji_B.swing = true:emoji_B.swing = false;
-
-    cout<<ofGetElapsedTimeMillis() - e_startTime_B<<"  "<<char_B.condition<<endl;
+    emoji_A.control();
+    emoji_B.control();
 }
 
 //--------------------------------------------------------------
@@ -561,8 +418,8 @@ void testApp::draw(){
     control.draw();
     
     ofSetColor(30, 30, 30);
-    font.drawString("SCORE_A\n"+ofToString(score_A), 100, ofGetHeight()/2);
-    font.drawString("SCORE_B\n"+ofToString(score_B), ofGetWidth()-200, ofGetHeight()/2);
+    font.drawString("SCORE_A\n"+ofToString(emoji_A.score), 100, ofGetHeight()/2);
+    font.drawString("SCORE_B\n"+ofToString(emoji_B.score), ofGetWidth()-200, ofGetHeight()/2);
 //    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
 //    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
 
