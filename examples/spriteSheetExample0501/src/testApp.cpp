@@ -10,11 +10,12 @@ bool sortVertically(  basicSprite * a, basicSprite * b ) {
 //--------------------------------------------------------------
 void testApp::setup(){
 	ofSetFrameRate(60);
+    ofBackground(30);
 	spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
     spriteRenderer->loadTexture("boySpritesAll.png", 2040, GL_NEAREST);
     
-    spriteRenderer2 =  new ofxSpriteSheetRenderer(1, 10000, 0, 85);
-    spriteRenderer2->loadTexture("boy_push_Sprits.png", 850, GL_NEAREST);
+    spriteRenderer2 =  new ofxSpriteSheetRenderer(1, 10000, 0, 80);
+    spriteRenderer2->loadTexture("emoji_all_2.png", 2040, GL_NEAREST);
     
 	ofEnableAlphaBlending();
     

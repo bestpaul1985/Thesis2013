@@ -7,94 +7,148 @@
 //
 
 #include "ttEmoji.h"
-void ttEmoji::setup(){
+void ttEmoji::setup(ofPoint Pos, int CharNum){
     
-    renderer =  new ofxSpriteSheetRenderer(1, 10000, 0, 80);
-    renderer->loadTexture("sprites/emoji_all.png", 800, GL_NEAREST);
+    charNum = CharNum;
+    pos = Pos;
+    emoji_renderer[0] = new ofxSpriteSheetRenderer(1, 100, 0, 35);
+    emoji_renderer[1] = new ofxSpriteSheetRenderer(1, 100, 0, 35);
+    emoji_renderer[2] = new ofxSpriteSheetRenderer(1, 100, 0, 36);
+    emoji_renderer[3] = new ofxSpriteSheetRenderer(1, 100, 0, 35);
+    emoji_renderer[4] = new ofxSpriteSheetRenderer(1, 100, 0, 36);
+    emoji_renderer[0]->loadTexture("sprites/emoji_love.png", 500, GL_NEAREST);
+    emoji_renderer[1]->loadTexture("sprites/emoji_happy.png", 500, GL_NEAREST);
+    emoji_renderer[2]->loadTexture("sprites/emoji_laughing.png", 500, GL_NEAREST);
+    emoji_renderer[3]->loadTexture("sprites/emoji_supprise.png", 500, GL_NEAREST);
+    emoji_renderer[4]->loadTexture("sprites/emoji_angry.png", 500, GL_NEAREST);
+
+    emoji_Sprite * newSprite = new emoji_Sprite();
+    newSprite->pos = pos;
+    newSprite->animation = EMOJI_LOVE;
+    sprites[0]=newSprite;
     
-    for (int i=0; i<5; i++) {
-        emoji_Sprite * newSprite = new emoji_Sprite ();
-        newSprite->pos.set(100,100);
-        if       (i==0)     newSprite->animation = EMOJI_LOVE;
-        else if  (i==1)     newSprite->animation = EMOJI_HAPPY;
-        else if  (i==2)     newSprite->animation = EMOJI_LAUGHING;
-        else if  (i==3)     newSprite->animation = EMOJI_SURPRISE;
-        else if  (i==4)     newSprite->animation = EMOJI_ANGRY;
-        sprites[i]=newSprite;
-    }
+    emoji_Sprite * newSprite1 = new emoji_Sprite();
+    newSprite1->pos = pos;
+    newSprite1->animation = EMOJI_HAPPY;
+    sprites[1]=newSprite;
     
-    condition = E_LOVE;
+    emoji_Sprite * newSprite2 = new emoji_Sprite();
+    newSprite2->pos = pos;
+    newSprite2->animation = EMOJI_SURPRISE;
+    sprites[2]=newSprite;
+    
+    emoji_Sprite * newSprite3 = new emoji_Sprite();
+    newSprite3->pos=pos;
+    newSprite3->animation = EMOJI_LAUGHING;
+    sprites[3]=newSprite;
+    
+    emoji_Sprite * newSprite4 = new emoji_Sprite();
+    newSprite4->pos = pos;
+    newSprite4->animation = EMOJI_ANGRY;
+    sprites[4]=newSprite;
+    
+    condition = E_NONE;
     step = S_START;
-    alpha = 255;
+    alpha = 0;
     startTime = ofGetElapsedTimeMillis();
     duration = 1000;
     speed = 1;
+    moveLeft = false;
 }
 //-----------------------------------------
-void ttEmoji::update(){
-    renderer->clear();
+void ttEmoji::update(ofPoint Pos, bool move_left){
+    pos = Pos;
+    moveLeft = move_left;
+    emoji_renderer[0]->clear();
+    emoji_renderer[1]->clear();
+    emoji_renderer[2]->clear();
+    emoji_renderer[3]->clear();
+    emoji_renderer[4]->clear();
+    
     switch (condition) {
         case E_NONE:{
-            startTime = ofGetElapsedTimeMillis();
             step = S_START;
-        }break;
+        }
+            break;
         case E_LOVE:{
-            renderer->update(ofGetElapsedTimeMillis());
-            renderer->addCenteredTile(&sprites[1]->animation, sprites[1]->pos.x,sprites[1]->pos.y);
-        }break;
+            
+            timer();
+            emoji_renderer[0]->update(ofGetElapsedTimeMillis());
+            emoji_renderer[0]->addCenteredTile(&sprites[0]->animation, 0,0,-1,F_NONE,1,255,255,255,alpha);
+        }
+            break;
         case E_HAPPY:{
             timer();
-            renderer->update(ofGetElapsedTimeMillis());
-            renderer->addCenteredTile(&sprites[2]->animation, sprites[1]->pos.x,sprites[1]->pos.y);
-        }break;
+            emoji_renderer[1]->update(ofGetElapsedTimeMillis());
+            emoji_renderer[1]->addCenteredTile(&sprites[1]->animation, 0,0,-1,F_NONE,1,255,255,255,alpha);
+        }
+            break;
         case E_SURPRISE:{
             timer();
-            renderer->update(ofGetElapsedTimeMillis());
-            renderer->addCenteredTile(&sprites[3]->animation, sprites[1]->pos.x,sprites[1]->pos.y);
-        }break;
+            emoji_renderer[2]->update(ofGetElapsedTimeMillis());
+            emoji_renderer[2]->addCenteredTile(&sprites[2]->animation, 0,0,-1,F_NONE,1,255,255,255,alpha);
+        }
+            break;
         case E_LAUGHING:{
             timer();
-            renderer->update(ofGetElapsedTimeMillis());
-            renderer->addCenteredTile(&sprites[4]->animation, sprites[1]->pos.x,sprites[1]->pos.y);
-        }break;
+            emoji_renderer[3]->update(ofGetElapsedTimeMillis());
+            emoji_renderer[3]->addCenteredTile(&sprites[3]->animation,0,0,-1,F_NONE,1,255,255,255,alpha);
+        }
+            break;
         case E_ANGRY:{
             timer();
-            renderer->update(ofGetElapsedTimeMillis());
-            renderer->addCenteredTile(&sprites[5]->animation, sprites[1]->pos.x,sprites[1]->pos.y);
-        }break;
+            emoji_renderer[4]->update(ofGetElapsedTimeMillis());
+            emoji_renderer[4]->addCenteredTile(&sprites[4]->animation, 0,0,-1,F_NONE,1,255,255,255,alpha);
+        }
+            break;
     }
-
-    
 }
 //-----------------------------------------
 void ttEmoji::draw(){
-    ofSetColor(255, alpha);
-    ofCircle(100, 100, 100);
-    renderer->draw();
-   
+    ofPoint offSet;
+    if (charNum == 0) moveLeft?offSet.set(35, -30):offSet.set(-35, -30);
+    else moveLeft?offSet.set(30, 40):offSet.set(-30, 40);
+    pos = pos - offSet;
+    
+    ofPushMatrix();
+    ofTranslate(pos);
+    if (charNum ==0) ofScale(1, -1);
+    moveLeft? ofScale(-1, 1):ofScale(1, 1);
+    
+    if (condition == E_LOVE)  emoji_renderer[0]->draw();
+    if (condition == E_HAPPY)  emoji_renderer[1]->draw();
+    if (condition == E_LAUGHING)  emoji_renderer[2]->draw();
+    if (condition == E_SURPRISE)  emoji_renderer[3]->draw();
+    if (condition == E_ANGRY)  emoji_renderer[4]->draw();
+    
+    ofPopMatrix();
 }
 //-----------------------------------------
 void ttEmoji::timer(){
 
     if (step==S_START) {
-        alpha+=1;
+        alpha+=20;
         if (alpha >255) {
             alpha = 255;
             startTime = ofGetElapsedTimeMillis();
             step = S_WAIT;
         }
-    }else if(step==S_WAIT){
+    }
+    
+    if(step==S_WAIT){
         if (ofGetElapsedTimeMillis() - startTime > duration) {
             step = S_END;
         }
-    }else if(step == S_END){
-        alpha-=1;
+    }
+    
+    if(step == S_END){
+        alpha-=30;
         if (alpha <0) {
             alpha = 0;
+            
             condition = E_NONE;
         }
     }
-    
 }
 
 

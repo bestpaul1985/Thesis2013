@@ -28,7 +28,7 @@ struct basicSprite_dog {
 
 class ttDog{
 public:
-    void setup(ofxBox2d &world, float x, float y);
+    void setup(ofxBox2d &world, float x, float y,int num);
     void update();
     void draw();
     void run();
@@ -40,6 +40,7 @@ public:
     ofPoint getPos;
     _dog_condition condition;
     ofRectangle killZone;
+    int dogNum;
 };
 
 

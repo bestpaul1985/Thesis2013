@@ -9,6 +9,8 @@ void testApp::setup(){
     ofEnableAlphaBlending();
     ofSetCircleResolution(8);
     ofSetLineWidth(2.5);
+    ofSetFrameRate(60);
+    ofEnableSmoothing();
     // setup world A
     world_A.init();
     world_A.setFPS(60);
@@ -62,11 +64,18 @@ void testApp::setup(){
     bInSky_A = false;
     bInSky_B = false;
     //dog
-    dog.setup(world_B, 200,-100);
-    dog2.setup(world_A, 200, 100);
+    dog_A.setup(world_A, 200, 100, 0);
+    dog_B.setup(world_B, 200, -100, 1);
     //emoji
-//    emoji.setup();
-   
+    emoji_A.setup(char_A.character.getPosition(),0);
+    emoji_B.setup(char_B.character.getPosition(),1);
+    e_startTime_A= ofGetElapsedTimef();
+    e_duration_A = 5000;
+    happyness_A = 2;
+    
+    e_startTime_B= ofGetElapsedTimef();
+    e_duration_B = 5000;
+    happyness_B = 2;
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -369,16 +378,94 @@ void testApp::update(){
     char_B.update();
     
     //dog
-    dog.update();
-    dog.update();
-    if (dog.killZone.inside(char_B.character.getPosition().x, char_B.character.getPosition().y)) {
+    dog_A.update();
+    dog_B.update();
+    if (dog_B.killZone.inside(char_B.character.getPosition().x, char_B.character.getPosition().y)) {
         char_B.condition = C_DEAD;
-        dog.condition = D_BITE;
+        dog_B.condition = D_BITE;
         rope_condition_A = R_DESTROY;
     }
     //emoji
-//    emoji.update();
-   
+    int preHappyness_A= happyness_A;
+    int preHappyness_B= happyness_B;
+    
+    emoji_A.update(char_A.character.getPosition(), char_A.moveLeft);
+    emoji_B.update(char_B.character.getPosition(), char_B.moveLeft);
+
+    if (emoji_A.step == S_END) {
+        e_startTime_A = ofGetElapsedTimeMillis();
+    }
+    // getting angry A
+    
+    
+    if (char_A.condition == C_STOP) {
+        if (ofGetElapsedTimeMillis() - e_startTime_A > e_duration_A && emoji_A.condition == E_NONE) {
+            happyness_A --;
+        }
+        if (happyness_A < 0){
+         happyness_A = 0;
+         preHappyness_A = -1;
+        } 
+    }
+    
+    if (char_A.condition == C_DEAD) {
+        preHappyness_A = -1;
+        happyness_A = 0;
+    }
+    // getting angry B
+    if (char_B.condition == C_STOP) {
+        if (ofGetElapsedTimeMillis() - e_startTime_B > e_duration_B && emoji_B.condition == E_NONE) {
+            happyness_B --;
+        }
+        if (happyness_B < 0){
+            happyness_B = 0;
+            preHappyness_B = -1;
+        }
+    }
+    
+    if (char_B.condition == C_DEAD) {
+        preHappyness_B = -1;
+        happyness_B= 3;
+    }
+     // getting happy A
+    if (char_A.character.getVelocity().length() > 5 && emoji_A.condition == E_NONE && char_A.condition != C_HOOK_ROPE) {
+        e_startTime_A = ofGetElapsedTimeMillis();
+        int chance = ofRandom(100);
+        if (chance == 1) happyness_A ++;
+        if (happyness_A > 4) {
+            preHappyness_A = -1;
+            happyness_A = 4;
+        }
+    }
+     // getting happy B
+    if (char_B.character.getVelocity().length() > 5 && emoji_B.condition == E_NONE && char_B.condition != C_HOOK_ROPE) {
+        e_startTime_B = ofGetElapsedTimeMillis();
+        int chance = ofRandom(100);
+        if (chance == 1) happyness_B ++;
+        if (happyness_B > 4) {
+            preHappyness_B = -1;
+            happyness_B = 4;
+        }
+    }
+    
+    
+    // choose face
+    if (preHappyness_A != happyness_A) {
+        if(happyness_A == 4) emoji_A.condition = E_LOVE;
+        if(happyness_A == 3) emoji_A.condition = E_LAUGHING;
+        if(happyness_A == 2) emoji_A.condition = E_HAPPY;
+        if(happyness_A == 1) emoji_A.condition = E_SURPRISE;
+        if(happyness_A == 0) emoji_A.condition = E_ANGRY;
+    }
+    
+    if (preHappyness_B != happyness_B) {
+        if(happyness_B == 4) emoji_B.condition = E_LOVE;
+        if(happyness_B == 3) emoji_B.condition = E_LAUGHING;
+        if(happyness_B == 2) emoji_B.condition = E_HAPPY;
+        if(happyness_B == 1) emoji_B.condition = E_SURPRISE;
+        if(happyness_B == 0) emoji_B.condition = E_ANGRY;
+    }
+    cout<<happyness_A<<endl;
 }
 
 //--------------------------------------------------------------
@@ -389,8 +476,7 @@ void testApp::draw(){
     drawScene(0);
     accIndictor.draw();
     control.draw();
-//    emoji.draw();
-    
+   
     
     ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
     ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
@@ -420,14 +506,16 @@ void testApp::drawScene(int iDraw){
         
         ofPushMatrix();
         ofTranslate(screen_A);
-        dog2.update();
+        dog_A.draw();
         char_A.draw();
+        emoji_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
-        dog.draw();
+        dog_B.draw();
         char_B.draw();
+        emoji_B.draw();
         ofPopMatrix();
 
         //draw swing rope A
@@ -490,8 +578,6 @@ void testApp::drawScene(int iDraw){
 //        ofLine(hook_start_B.x,hook_start_B.y,hook_end_B.x, hook_end_B.y);
 //        ofCircle(hook_end_B.x, hook_end_B.y, 10);
     }
-
-    
 }
 //--------------------------------------------------------------
 void testApp::exit(){

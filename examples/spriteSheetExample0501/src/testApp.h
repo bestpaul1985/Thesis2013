@@ -7,7 +7,7 @@
 #include "ofxSpriteSheetRenderer.h"
 
 static animation_t BOY = {   0,  0,  24,  1,  1,  45, 0,  -1, -1, 1 };
-static animation_t GIRL = {   0,  0,  8,  1,  10,  45, 0,  -1, -1, 1 };
+static animation_t GIRL = {   0,  0,  1,  1,  1,  45, 0,  -1, -1, 1 };
 
 struct basicSprite {
 	animation_t animation;

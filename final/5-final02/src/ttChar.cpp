@@ -30,9 +30,9 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
  
     if (charNum == 0) {
         spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
-        spriteRenderer2 = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
-        spriteRenderer->loadTexture("sprites/grilSpritesAll.png", 2040, GL_NEAREST);
-        spriteRenderer2->loadTexture("sprites/girl_push.png", 2040, GL_NEAREST);
+        spriteRenderer2 = new ofxSpriteSheetRenderer(1, 10000, 0, 84);
+        spriteRenderer->loadTexture("sprites/all_girl.png", 2040, GL_NEAREST);
+        spriteRenderer2->loadTexture("sprites/push_girl.png", 1000, GL_NEAREST);
        
         Sprite * newSprite = new Sprite();
         newSprite->pos.set(0,0);
@@ -51,11 +51,12 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
     }
     
     if (charNum == 1) {
-        spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
-        spriteRenderer2 = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
-        spriteRenderer->loadTexture("sprites/boySpritesAll.png", 2040, GL_NEAREST);
-        spriteRenderer2->loadTexture("sprites/boy_push_Sprits.png", 2040, GL_NEAREST);
-        
+        spriteRenderer = new ofxSpriteSheetRenderer(1, 10000, 0, 39);
+        spriteRenderer2 = new ofxSpriteSheetRenderer(1, 10000, 0, 84);
+        spriteRenderer3 = new  ofxSpriteSheetRenderer(1, 10000, 0, 84);
+        spriteRenderer->loadTexture("sprites/run_boy.png", 1000, GL_NEAREST);
+        spriteRenderer2->loadTexture("sprites/push_boy.png", 1000, GL_NEAREST);
+        spriteRenderer3->loadTexture("sprites/pull_boy.png", 1000, GL_NEAREST);
         Sprite * newSprite = new Sprite();
         newSprite->pos.set(0,0);
         newSprite->animation = BOY_RUN;
@@ -76,6 +77,7 @@ void ttChar::setup(ofxBox2d &world, ofPoint SetPos, int CharNum){
     condition = C_STOP;
     getPos = SetPos;
     angle = 0;
+    step = 0;
 }
 
 //----------------------------------------------
@@ -84,12 +86,15 @@ void ttChar::update(){
     ofPoint frc(0,0);
     spriteRenderer->clear();
     spriteRenderer2->clear();
+    if (charNum == 1) {
+        spriteRenderer3->clear();
+    }
     // change conditions
     switch (condition) {
         case C_STOP:{
             sprites[1]->animation.loops = 1;
             frc.x = character.getVelocity().x * -20;
-//            sprites[1]->animation.loops = 1;
+
             if (character.getVelocity().length()<0.5) {
                 spriteRenderer->update(ofGetElapsedTimeMillis());
                 sprites[0]->animation.frame = 0;
@@ -97,8 +102,7 @@ void ttChar::update(){
                 spriteRenderer->addCenteredTile(&sprites[0]->animation, 0,0);
             }else{
                 spriteRenderer->update(ofGetElapsedTimeMillis());
-                sprites[0]->animation.total_frames = 19;
-                sprites[0]->animation.frame_duration = 75;
+                sprites[0]->animation.frame_duration = 100;
                 sprites[0]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 5);
                 spriteRenderer->addCenteredTile(&sprites[0]->animation, 0,0);
             }
@@ -108,20 +112,24 @@ void ttChar::update(){
             moveLeft = true;
             if ( character.getVelocity().x > -5 ) frc.x = -50;
             spriteRenderer->update(ofGetElapsedTimeMillis());
-            sprites[0]->animation.total_frames = 19;
-            sprites[0]->animation.frame_duration = 75;
+           
+            sprites[0]->animation.total_frames = 13;
+            sprites[0]->animation.frame_duration = 120;
             sprites[0]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 5);
             spriteRenderer->addCenteredTile(&sprites[0]->animation, 0,0);
         }break;
 
         case C_RIGHT:{
+            step = 2;
             moveLeft = false;
             if ( character.getVelocity().x < 5 ) frc.x = 50;
             spriteRenderer->update(ofGetElapsedTimeMillis());
-            sprites[0]->animation.total_frames = 19;
-            sprites[0]->animation.frame_duration = 75;
+            
+            sprites[0]->animation.total_frames = 13;
+            sprites[0]->animation.frame_duration = 120;
             sprites[0]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 5);
             spriteRenderer->addCenteredTile(&sprites[0]->animation, 0,0);
+           
         }break;
        
         case C_PUSH_ROPE:{
@@ -137,13 +145,21 @@ void ttChar::update(){
         }break;
             
         case C_HOOK_ROPE:{
-            
-            spriteRenderer->update(ofGetElapsedTimeMillis());
-            sprites[2]->animation.frame_duration = 120;
-            sprites[2]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 3);
-            if (charNum == 0) sprites[2]->pos.set(25, 5);
-            else sprites[2]->pos.set(-12, 0);
-            spriteRenderer->addCenteredTile(&sprites[2]->animation, sprites[2]->pos.x,sprites[2]->pos.y);
+            if (charNum == 0) {
+                spriteRenderer->update(ofGetElapsedTimeMillis());
+                sprites[2]->animation.frame_duration = 120;
+                sprites[2]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 3);
+                sprites[2]->pos.set(25, 5);
+                spriteRenderer->addCenteredTile(&sprites[2]->animation, sprites[2]->pos.x,sprites[2]->pos.y);
+            }else{
+                
+                spriteRenderer3->update(ofGetElapsedTimeMillis());
+                sprites[2]->animation.frame_duration = 120;
+                sprites[2]->animation.frame_duration /= ofClamp(fabs(character.getVelocity().x), 1, 3);
+                sprites[2]->pos.set(-12, 0);
+                spriteRenderer3->addCenteredTile(&sprites[2]->animation, sprites[2]->pos.x,sprites[2]->pos.y);
+            }
+           
             
         }break;
             
@@ -201,6 +217,9 @@ void ttChar::draw(){
     
     spriteRenderer->draw();
     spriteRenderer2->draw();
+    if (charNum == 1) {
+        spriteRenderer3 ->draw(); 
+    }
     ofPopMatrix();
     
    

@@ -11,11 +11,12 @@
 
 #include "ofMain.h"
 #include "ofxSpriteSheetRenderer.h"
-static animation_t EMOJI_LOVE =         {  0,   1,  3,  1,  1,  75, 0,  -1, -1, 1 };
-static animation_t EMOJI_HAPPY =        {  24,  1,  1,  1,  1,  75, 0,  -1, -1, 1 };
-static animation_t EMOJI_SURPRISE =     {  48,  1,  1,  1,  1,  75, 0,  -1, -1, 1 };
-static animation_t EMOJI_LAUGHING =     {  72,  1,  1,  1,  1,  75, 0,  -1, -1, 1 };
-static animation_t EMOJI_ANGRY =        {  96,  1,  1,  1,  1,  75, 0,  -1, -1, 1 };
+
+static animation_t EMOJI_LOVE =         {  0,  0,  1,  1,  1,  75, 0,  -1, -1, 1 };
+static animation_t EMOJI_HAPPY =        {  0,  0,  1,  1,  1,  75, 0,  -1, -1, 1 };
+static animation_t EMOJI_SURPRISE =     {  0,  0,  1,  1,  1,  75, 0,  -1, -1, 1 };
+static animation_t EMOJI_LAUGHING =     {  0,  0,  1,  1,  1,  75, 0,  -1, -1, 1 };
+static animation_t EMOJI_ANGRY =        {  0,  0,  1,  1,  1,  75, 0,  -1, -1, 1 };
 
 struct emoji_Sprite {
 	animation_t animation;
@@ -40,12 +41,12 @@ enum _emoji_step{
 class ttEmoji{
 public:
     
-    void setup();
-    void update();
+    void setup(ofPoint Pos, int CharNum);
+    void update(ofPoint Pos, bool move_left);
     void draw();
     void timer();
     emoji_Sprite * sprites[5];
-    ofxSpriteSheetRenderer * renderer;
+    ofxSpriteSheetRenderer * emoji_renderer[5];
     _emoji_condition condition;
     
     float startTime;
@@ -53,5 +54,10 @@ public:
     float alpha;
     float speed;
     _emoji_step step;
+    ofPoint pos;
+    int charNum;
+    bool moveLeft;
+    
+    ofImage image[5];
 };
 #endif /* defined(__springBreak05__ttEmoji__) */

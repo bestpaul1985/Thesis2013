@@ -14,7 +14,6 @@
 #include "ttSky.h"
 #include "ttIndicator.h"
 #include "ttDog.h"
-#include "ofxSpriteSheetRenderer.h"
 #include "ttEmoji.h"
 enum _rope_condition{
     R_NO_USE,
@@ -50,6 +49,8 @@ class testApp : public ofxiPhoneApp{
         void deviceOrientationChanged(int newOrientation);
         void position();
     
+
+    
         _rope_condition     rope_condition_A,rope_condition_B;
     
         ofxBox2d            world_A,        world_B;
@@ -83,13 +84,15 @@ class testApp : public ofxiPhoneApp{
         ofxBox2dJoint       rope_joint;
         ofxBox2dCircle      rope_anchor;
         //dog
-        ttDog dog;
-        ttDog dog2;
+        ttDog dog_A, dog_B;
         //booleans
         bool                bSwing_left,bSwing_right;
         bool                bInSky_A,bInSky_B;
         //emoji
-        ttEmoji emoji;
+        ttEmoji emoji_A,emoji_B;
+        float e_startTime_A,e_startTime_B;
+        float e_duration_A,e_duration_B;
+        int happyness_A,happyness_B;
 };
 
 
