@@ -36,9 +36,9 @@ class testApp : public ofxiPhoneApp{
         void deviceOrientationChanged(int newOrientation);
     
     
-        baseScene * scenes[SCENE_NUMBER];
+        vector<baseScene * > scenes;
         int currentScene;
-    
-    };
+        ofRectangle rect[2];
+};
 
 
