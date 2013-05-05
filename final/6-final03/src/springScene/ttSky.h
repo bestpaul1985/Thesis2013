@@ -12,16 +12,16 @@
 #include "ofMain.h"
 class ttSky{
 public:
-    void setup();
+    void setup(ofImage *_skyBg,ofImage *_cloud01,ofImage *_cloud02,ofImage *_cloud03);
     void drawBg();
     void drawCloud();
     
-    ofImage skyBg;
-    ofImage cloud01;
-    ofImage cloud02;
-    ofImage cloud03;
     float speed01,speed02,speed03;
     ofPoint pos01,pos02,pos03;
+    ofImage *skyBg;
+    ofImage *cloud01;
+    ofImage *cloud02;
+    ofImage *cloud03;
 };
 
 #endif /* defined(__springBreak04__ttSky__) */
