@@ -93,6 +93,9 @@ class testApp : public ofxiPhoneApp{
         //render
         ofxSpriteSheetRenderer *rabit_Render;
         ofxSpriteSheetRenderer *dog_Render;
+    
+        //scenes
+        int currentScene;
 };
 
 
