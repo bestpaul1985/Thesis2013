@@ -11,8 +11,9 @@
 class baseScene {
 	
 
-	public: 
-	
+	public:
+
+    virtual ~baseScene(){};
 	virtual void setup(){};
 	virtual void update(){};
 	virtual void draw(){};

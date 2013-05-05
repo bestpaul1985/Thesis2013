@@ -1,7 +1,8 @@
 #include "springScene.h"
 
 //--------------------------------------------------------------
-void springScene::setup(){	
+void springScene::setup(){
+	end = false;
     // initialize the accelerometer
 	ofxAccelerometer.setup();
     ofxAccelerometer.setForceSmoothing(0.9f);
@@ -101,7 +102,7 @@ void springScene::setup(){
     //meun
     leve_menu.set(ofGetWidth(),ofGetHeight()/2);
     meunRadius = 70;
-
+    end =true;
 }
 //--------------------------------------------------------------
 void springScene::contactStart_worldA(ofxBox2dContactArgs &e){

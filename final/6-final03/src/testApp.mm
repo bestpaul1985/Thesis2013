@@ -7,35 +7,38 @@ void testApp::setup(){
     
 	scenes[0] = new openingScene();
     scenes[1] = new springScene();
-	scenes[4] = new squareScene();
-	scenes[2] = new circleScene();
-	scenes[3] = new imageScene();
+    
 
-	currentScene = 0;
+	currentScene = 1;
 	
-	for (int i = 0; i < SCENE_NUMBER; i++){
-		scenes[i]->setup();
-        scenes[i]->goToScene = i+1;
-        scenes[4]->goToScene = 0;
-	}
+    scenes[0]->setup();
+	scenes[1]->setup();
     
 	
 }
 //--------------------------------------------------------------
 void testApp::update(){
-	scenes[currentScene]->update();
     
-    for (int i = 0; i < SCENE_NUMBER; i++){
-        if (scenes[i]->end == true) {
-            currentScene=scenes[i]->goToScene;
-            scenes[i]->end = false;
+    
+    if (currentScene == 3) {
+        scenes[1] = new springScene();
+        scenes[1]->setup();
+        if (scenes[1]->end == true) {
+            currentScene = 1;
         }
+    }
+    
+    if (currentScene == 1) {
+        scenes[currentScene]->update();
     }
 
 }
 //--------------------------------------------------------------
 void testApp::draw(){
-	scenes[currentScene]->draw();
+    if (currentScene == 1) {
+        scenes[currentScene]->draw();
+
+    }
 }
 //--------------------------------------------------------------
 void testApp::exit(){
@@ -46,13 +49,16 @@ void testApp::exit(){
 void testApp::touchDown(ofTouchEventArgs & touch){
     
     
-   
-        currentScene++;
-        currentScene %= SCENE_NUMBER;
+    if (currentScene == 1) {
+        delete scenes[1];
+        currentScene = 3;
+    }
     
-	
+    
+    
+        
 //	((circleScene*)scenes[1])->sayHello();
-    scenes[currentScene]->touchDown(touch);
+//    scenes[currentScene]->touchDown(touch);
     
 }
 

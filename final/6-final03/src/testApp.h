@@ -15,7 +15,6 @@
 #include "imageScene.h"
 
 
-
 class testApp : public ofxiPhoneApp{
 	
     public:
