@@ -9,7 +9,7 @@
 #include "ttGround.h"
 
 
-void ttGround::setup(int levelNum, int charNum, ofxBox2d *world){
+void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
     vector <string> strLines;
     levelNo = levelNum;
     charNo  = charNum;
@@ -76,7 +76,7 @@ void ttGround::setup(int levelNum, int charNum, ofxBox2d *world){
 				}
 			}
             poly.setPhysics(0.0f, 0.0f, 0.1f);
-			poly.create(world->getWorld());
+			poly.create(world.getWorld());
 			ground.push_back(poly);
 		}
 	}

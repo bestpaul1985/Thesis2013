@@ -1,8 +1,7 @@
 #include "springScene.h"
 
 //--------------------------------------------------------------
-void springScene::setup(){
-
+void springScene::setup(){	
     // initialize the accelerometer
 	ofxAccelerometer.setup();
     ofxAccelerometer.setForceSmoothing(0.9f);
@@ -11,16 +10,23 @@ void springScene::setup(){
     ofSetLineWidth(2.5);
     ofSetFrameRate(60);
     ofEnableSmoothing();
-  
+    // setup world A
+    world_A.init();
+    world_A.setFPS(60);
+    world_A.setGravity(0,-10);
+    // setup world B
+    world_B.init();
+    world_B.setFPS(60);
+    world_B.setGravity(0, 10);
     //Map
     ground_A.setup(1, 0, world_A);
     ground_B.setup(1, 1, world_B);
     
     //Listener
-	ofAddListener(world_A->contactStartEvents, this, &springScene::contactStart_worldA);
-	ofAddListener(world_A->contactEndEvents, this, &springScene::contactEnd_worldA);
-    ofAddListener(world_A->contactStartEvents,this, &springScene::contactStart_worldB);
-    ofAddListener(world_A->contactEndEvents,this, &springScene::contactEnd_worldB);
+	ofAddListener(world_A.contactStartEvents, this, &springScene::contactStart_worldA);
+	ofAddListener(world_A.contactEndEvents, this, &springScene::contactEnd_worldA);
+    ofAddListener(world_B.contactStartEvents,this, &springScene::contactStart_worldB);
+    ofAddListener(world_B.contactEndEvents,this, &springScene::contactEnd_worldB);
     numFootContacts_A = 0;
     numFootContacts_B = 0;
     
@@ -28,8 +34,8 @@ void springScene::setup(){
     control.setup();
     
     //char
-    char_A.setup(world_A, ofPoint(0,0),char_Render[0],char_Render[1],char_Render[2],char_Render[3],char_Render[4], 0);
-    char_B.setup(world_B, ofPoint(0,0),char_Render[0],char_Render[1],char_Render[2],char_Render[3],char_Render[4], 1);
+    char_A.setup(world_A, ofPoint(0,0), 0);
+    char_B.setup(world_B, ofPoint(0,0), 1);
     //camera
     translate_A.set(384,250);
     translate_B.set(384,768-250);
@@ -40,7 +46,7 @@ void springScene::setup(){
     thorns_B.setup(world_B, 1);
     
     //sky
-    sky.setup(skyBg,cloud01,cloud02,cloud03);
+    sky.setup();
     
     //indictor
     accIndictor.setup(ofxAccelerometer.getForce());
@@ -55,7 +61,11 @@ void springScene::setup(){
     bStatistics = false;
     
     //renderers
-  
+    dog_Render = new ofxSpriteSheetRenderer(1, 1000, 0, 120);
+    dog_Render ->loadTexture("sprites/all_dog.png", 2040, GL_NEAREST);
+    rabit_Render = new ofxSpriteSheetRenderer(1, 1000, 0, 30);
+    rabit_Render ->loadTexture("sprites/rabit.png", 2040, GL_NEAREST);
+    
     //dog
     dog_A.setup(world_A,dog_Render, 200, 100, 0);
     dog_B.setup(world_B,dog_Render, 200, -100, 1);
@@ -65,18 +75,23 @@ void springScene::setup(){
     //emoji
     emoji_A.setup(char_A.character.getPosition(),char_A,0);
     emoji_B.setup(char_B.character.getPosition(),char_B,1);
-   
-    emoji_A.image[0] = image[0];
-    emoji_A.image[1] = image[1];
-    emoji_A.image[2] = image[2];
-    emoji_A.image[3] = image[3];
-    emoji_A.image[4] = image[4];
+    image[0].loadImage("sprites/emoji_love.png");
+    image[1].loadImage("sprites/emoji_laughing.png");
+    image[2].loadImage("sprites/emoji_happy.png");
+    image[3].loadImage("sprites/emoji_supprise.png");
+    image[4].loadImage("sprites/emoji_angry.png");
     
-    emoji_B.image[0] = image[0];
-    emoji_B.image[1] = image[1];
-    emoji_B.image[2] = image[2];
-    emoji_B.image[3] = image[3];
-    emoji_B.image[4] = image[4];
+    emoji_A.image[0] = &image[0];
+    emoji_A.image[1] = &image[1];
+    emoji_A.image[2] = &image[2];
+    emoji_A.image[3] = &image[3];
+    emoji_A.image[4] = &image[4];
+    
+    emoji_B.image[0] = &image[0];
+    emoji_B.image[1] = &image[1];
+    emoji_B.image[2] = &image[2];
+    emoji_B.image[3] = &image[3];
+    emoji_B.image[4] = &image[4];
     
     
     
@@ -162,8 +177,8 @@ void springScene::contactEnd_worldB(ofxBox2dContactArgs &e){
 
 //--------------------------------------------------------------
 void springScene::update(){
-    world_A->update();
-    world_B->update();
+    world_A.update();
+    world_B.update();
     
     //no jump in sky
     if (numFootContacts_A<=0) {

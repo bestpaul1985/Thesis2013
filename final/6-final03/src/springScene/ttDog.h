@@ -28,7 +28,7 @@ struct basicSprite_dog {
 
 class ttDog{
 public:
-    void setup(ofxBox2d *world,ofxSpriteSheetRenderer *render, float x, float y,int num);
+    void setup(ofxBox2d &world,ofxSpriteSheetRenderer *render, float x, float y,int num);
     void update();
     void draw();
     void run();

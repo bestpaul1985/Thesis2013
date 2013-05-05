@@ -6,8 +6,7 @@
 
 
 #include "ofMain.h"
-#include "ofxSpriteSheetRenderer.h"
-#include "ofxBox2d.h"
+
 
 class baseScene {
 	
@@ -29,14 +28,12 @@ class baseScene {
     virtual void gotMemoryWarning(){};
     virtual void deviceOrientationChanged(int newOrientation){};
     
-    ofImage *image[5];
-    ofxSpriteSheetRenderer *dog_Render;
-    ofxSpriteSheetRenderer *rabit_Render;
-    ofxSpriteSheetRenderer *char_Render[5];
-    ofImage *skyBg;
-    ofImage *cloud01;
-    ofImage *cloud02;
-    ofImage *cloud03;
-    ofxBox2d            *world_A,        *world_B;
+    
+	
+    int goToScene;
+    bool end;
+	
+    float startTime;
+    float delayTime = 2;
 };
 #endif
