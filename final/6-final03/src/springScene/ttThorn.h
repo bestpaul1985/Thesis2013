@@ -6,7 +6,7 @@
 
 class ttThorn{
 public:
-    void setup(ofxBox2d *world,int charnum);
+    void setup(ofxBox2d &world,int charnum);
     void draw();
 
     ofRectangle shape;

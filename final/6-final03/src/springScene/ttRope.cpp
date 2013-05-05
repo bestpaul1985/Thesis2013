@@ -9,7 +9,7 @@
 #include "ttRope.h"
 
 //----------------------------------------
-void ttRope::setup(ofxBox2d *_world_B, ttChar &_A, ttChar &_B,ofPoint &_rope_start_B, ofPoint &hook_start_A, ofPoint &hook_end_A, ofPoint &_accFrc, int CharNum){
+void ttRope::setup(ofxBox2d &_world_B, ttChar &_A, ttChar &_B,ofPoint &_rope_start_B, ofPoint &hook_start_A, ofPoint &hook_end_A, ofPoint &_accFrc, int CharNum){
     A = &_A;
     B = &_B;
     charNum = CharNum;
@@ -32,8 +32,8 @@ void ttRope::update(){
     //swing rope A-------------------------------
     if (condition == R_SWING) {
         if (!rope_joint.isSetup()) {
-            rope_anchor.setup(world_B->getWorld(), rope_start->x, rope_start->y, 10);
-            rope_joint.setup(world_B->getWorld(), rope_anchor.body, B->character.body);
+            rope_anchor.setup(world_B.getWorld(), rope_start->x, rope_start->y, 10);
+            rope_joint.setup(world_B.getWorld(), rope_anchor.body, B->character.body);
 //          float length = fabs(rope_start_B.y - char_B.getPos.y) - 100;
             float length = 250;
             rope_joint.setLength(length);
@@ -46,7 +46,7 @@ void ttRope::update(){
     if (condition == R_DESTROY) {
         if (rope_joint.isSetup()) {
             rope_joint.destroy();
-            world_B->getWorld()->DestroyBody(rope_anchor.body);
+            world_B.getWorld()->DestroyBody(rope_anchor.body);
         }
     }
         //swing acclerometer-------------------------------

@@ -37,16 +37,17 @@ public:
    
     _char_condition condition;
     
-    void setup(ofxBox2d *world, ofPoint SetPos,ofxSpriteSheetRenderer *render0,ofxSpriteSheetRenderer *render1,ofxSpriteSheetRenderer *render2,ofxSpriteSheetRenderer *render3,ofxSpriteSheetRenderer *render4, int CharNum);
+    void setup(ofxBox2d &world, ofPoint SetPos, int CharNum);
     void update();
     void draw();
     void dead();
     
     ofxBox2dRect    character;
-    ofxSpriteSheetRenderer * char_render[3];
-  
-    
+    ofxSpriteSheetRenderer * spriteRenderer;
+    ofxSpriteSheetRenderer * spriteRenderer2;
+    ofxSpriteSheetRenderer * spriteRenderer3;
 	Sprite * sprites[4];
+    
     bool moveLeft;
     ofPoint getPos;
     int charNum;
