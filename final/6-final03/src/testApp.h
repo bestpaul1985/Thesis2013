@@ -8,13 +8,19 @@
 
 #include "baseScene.h"
 #include "openingScene.h"
-#include "springScene.h"
+#include "level01.h"
+#include "level02.h"
 //example scenes
 #include "circleScene.h"
 #include "squareScene.h"
 #include "imageScene.h"
 
-
+enum _scene_loader{
+    L_NONE,
+    L_MAIN,
+    L_LEVEL01,
+    L_LEVEL02,
+};
 
 class testApp : public ofxiPhoneApp{
 	
@@ -35,10 +41,10 @@ class testApp : public ofxiPhoneApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
     
-    
-        baseScene * scenes[SCENE_NUMBER];
+        vector<baseScene *> scenes;
         int currentScene;
-    
-    };
+        _scene_loader loader;
+        ofRectangle rect[2];
+};
 
 
