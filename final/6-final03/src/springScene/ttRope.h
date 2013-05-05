@@ -21,11 +21,11 @@ enum _rope_condition{
 
 class ttRope{
 public:
-    void setup(ofxBox2d &_world_B,ttChar &_A, ttChar &_B,ofPoint &_rope_start_B,ofPoint &hook_start_A,ofPoint &hook_end_A,ofPoint &_accFrc, int CharNum);
+    void setup(ofxBox2d *_world_B,ttChar &_A, ttChar &_B,ofPoint &_rope_start_B,ofPoint &hook_start_A,ofPoint &hook_end_A,ofPoint &_accFrc, int CharNum);
     void update();
     void draw_swing(ofPoint screen_B);
     void draw_push();
-    ofxBox2d world_B;
+    ofxBox2d *world_B;
     ttChar* A, *B;
     int charNum;
     _rope_condition condition;

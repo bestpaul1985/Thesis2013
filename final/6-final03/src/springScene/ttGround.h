@@ -13,7 +13,7 @@
 #include "ofxBox2d.h"
 class ttGround{
     public:
-    void setup(int levelNum, int charNum, ofxBox2d &world);
+    void setup(int levelNum, int charNum, ofxBox2d *world);
     void draw();
     void drawPolyLine();
     
