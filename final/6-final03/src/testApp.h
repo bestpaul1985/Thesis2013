@@ -41,7 +41,7 @@ class testApp : public ofxiPhoneApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
     
-        baseScene *scenes[3];
+        vector<baseScene *> scenes;
         int currentScene;
         _scene_loader loader;
         ofRectangle rect[2];
