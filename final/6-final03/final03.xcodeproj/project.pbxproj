@@ -17,7 +17,6 @@
 		476DDB6017175C42005910CE /* springScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 476DDB5F17175C41005910CE /* springScene.mm */; };
 		47A165F317041B1E00286F73 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F217041B1E00286F73 /* Default-Portrait@2x~ipad.png */; };
 		47A165F517041B8300286F73 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F417041B8300286F73 /* Default-Portrait~ipad.png */; };
-		4C0421271736F50100C7B33A /* level01.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C0421261736F50100C7B33A /* level01.mm */; };
 		4C8F578B17368FD700300F86 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 4C8F578117368FD700300F86 /* README */; };
 		4C8F578C17368FD700300F86 /* CollageTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F578317368FD700300F86 /* CollageTexture.cpp */; };
 		4C8F578D17368FD700300F86 /* LinearTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F578517368FD700300F86 /* LinearTexture.cpp */; };
@@ -132,8 +131,6 @@
 		476DDB5F17175C41005910CE /* springScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = springScene.mm; sourceTree = "<group>"; };
 		47A165F217041B1E00286F73 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		47A165F417041B8300286F73 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		4C0421251736F50100C7B33A /* level01.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = level01.h; sourceTree = "<group>"; };
-		4C0421261736F50100C7B33A /* level01.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = level01.mm; sourceTree = "<group>"; };
 		4C8F578117368FD700300F86 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		4C8F578317368FD700300F86 /* CollageTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollageTexture.cpp; sourceTree = "<group>"; };
 		4C8F578417368FD700300F86 /* CollageTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollageTexture.h; sourceTree = "<group>"; };
@@ -373,8 +370,6 @@
 		476DDB4417175C0B005910CE /* scene */ = {
 			isa = PBXGroup;
 			children = (
-				4C0421251736F50100C7B33A /* level01.h */,
-				4C0421261736F50100C7B33A /* level01.mm */,
 				476DDB5F17175C41005910CE /* springScene.mm */,
 				476DDB5E17175C41005910CE /* springScene.h */,
 				4C8F579E17369E8700300F86 /* ttChar.cpp */,
@@ -832,7 +827,6 @@
 				4C8F57BA17369E8700300F86 /* ttRope.cpp in Sources */,
 				4C8F57BB17369E8700300F86 /* ttSky.cpp in Sources */,
 				4C8F57BC17369E8700300F86 /* ttThorn.cpp in Sources */,
-				4C0421271736F50100C7B33A /* level01.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
