@@ -171,18 +171,17 @@ void ttEmoji::control(){
         e_startTime = ofGetElapsedTimeMillis();
         
         int chance;
-        
         if (happyness == 0)chance = ofRandom(50);
         if (happyness == 1)chance = ofRandom(100);
         if (happyness == 2)chance = ofRandom(150);
         if (happyness == 3)chance = ofRandom(200);
         if (happyness == 4)chance = ofRandom(250);
+        
         if (chance == 1) happyness ++;
         if (happyness> 4) {
             happyness = 4;
             preHappyness = 5;
         }
- 
     }
     
     
