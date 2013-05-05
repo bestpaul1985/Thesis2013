@@ -4,94 +4,80 @@
 void testApp::setup(){
     
 	iPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_LEFT);
+    scenes.push_back(new openingScene());
+    currentScene = 0;
+    rect[0].set(100, 100, 100, 100);
+    rect[1].set(400, 100, 100, 100);
+    scenes[0]->setup();
     
-	scenes[0] = new openingScene();
-    scenes[1] = new springScene();
-	scenes[4] = new squareScene();
-	scenes[2] = new circleScene();
-	scenes[3] = new imageScene();
-
-	currentScene = 0;
-	
-	for (int i = 0; i < SCENE_NUMBER; i++){
-		scenes[i]->setup();
-        scenes[i]->goToScene = i+1;
-        scenes[4]->goToScene = 0;
-	}
-    
-	
 }
 //--------------------------------------------------------------
 void testApp::update(){
-	scenes[currentScene]->update();
-    
-    for (int i = 0; i < SCENE_NUMBER; i++){
-        if (scenes[i]->end == true) {
-            currentScene=scenes[i]->goToScene;
-            scenes[i]->end = false;
-        }
-    }
-
+	
+    scenes[0]->update();
 }
 //--------------------------------------------------------------
 void testApp::draw(){
-	scenes[currentScene]->draw();
+
+    scenes[0]->draw();
+    ofSetColor(255, 255, 255);
+    ofRect(rect[0]);
+    ofRect(rect[1]);
+
 }
 //--------------------------------------------------------------
 void testApp::exit(){
-
 }
-
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs & touch){
-    
-    
    
-        currentScene++;
-        currentScene %= SCENE_NUMBER;
-    
-	
-//	((circleScene*)scenes[1])->sayHello();
-    scenes[currentScene]->touchDown(touch);
-    
+    if(rect[0].inside(touch.x,touch.y)){
+        scenes.pop_back();
+        scenes.push_back(new springScene());
+    }
+
+    if(rect[1].inside(touch.x,touch.y)){
+        scenes.pop_back();
+        scenes.push_back(new springScene());
+    }
 }
 
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
-    scenes[currentScene]->touchMoved(touch);
+    scenes[0]->touchMoved(touch);
 }
 
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
-    scenes[currentScene]->touchUp(touch);
+    scenes[0]->touchUp(touch);
 }
 
 //--------------------------------------------------------------
 void testApp::touchDoubleTap(ofTouchEventArgs & touch){
-    scenes[currentScene]->touchDoubleTap(touch);
+    scenes[0]->touchDoubleTap(touch);
 }
 
 //--------------------------------------------------------------
 void testApp::touchCancelled(ofTouchEventArgs & touch){
-    scenes[currentScene]->touchCancelled(touch);
+    scenes[0]->touchCancelled(touch);
 }
 
 //--------------------------------------------------------------
 void testApp::lostFocus(){
-    scenes[currentScene]->lostFocus();
+    scenes[0]->lostFocus();
 }
 
 //--------------------------------------------------------------
 void testApp::gotFocus(){
-    scenes[currentScene]->gotFocus();
+    scenes[0]->gotFocus();
 }
 
 //--------------------------------------------------------------
 void testApp::gotMemoryWarning(){
-    scenes[currentScene]->gotMemoryWarning();
+    scenes[0]->gotMemoryWarning();
 }
 
 //--------------------------------------------------------------
 void testApp::deviceOrientationChanged(int newOrientation){
-    scenes[currentScene]->deviceOrientationChanged(newOrientation);
+    scenes[0]->deviceOrientationChanged(newOrientation);
 }
