@@ -6,6 +6,7 @@
 #include "ofxiPhone.h"
 #include "ofxiPhoneExtras.h"
 
+#include "ofxBox2d.h"
 #include "baseScene.h"
 
 #include "ttChar.h"
@@ -47,6 +48,7 @@ class springScene : public baseScene{
         void deviceOrientationChanged(int newOrientation);
         void position();
     
+    ofxBox2d            world_A,        world_B;
     ofxBox2dRect        charDummy_A,    charDummy_B;
     ofxBox2dCircle      ropeEnd_A,  ropeEnd_B;
     ttChar              char_A,char_B;
@@ -85,14 +87,15 @@ class springScene : public baseScene{
     
     //emoji
     ttEmoji emoji_A,emoji_B;
+    ofImage image[5];
     //fonttype
     ofTrueTypeFont font;
     //meun
     ofPoint leve_menu;
     float meunRadius;
     //render
-//    ofxSpriteSheetRenderer *rabit_Render;
-//    ofxSpriteSheetRenderer *dog_Render;
+    ofxSpriteSheetRenderer *rabit_Render;
+    ofxSpriteSheetRenderer *dog_Render;
 };
 
 

@@ -380,6 +380,8 @@
 				4C8F57A317369E8700300F86 /* ttDog.h */,
 				4C8F57A417369E8700300F86 /* ttEmoji.cpp */,
 				4C8F57A517369E8700300F86 /* ttEmoji.h */,
+				4C8F57A617369E8700300F86 /* ttGround.cpp */,
+				4C8F57A717369E8700300F86 /* ttGround.h */,
 				4C8F57A817369E8700300F86 /* ttIndicator.cpp */,
 				4C8F57A917369E8700300F86 /* ttIndicator.h */,
 				4C8F57AA17369E8700300F86 /* ttRabit.cpp */,
@@ -391,8 +393,6 @@
 				4C8F57B017369E8700300F86 /* ttSky.h */,
 				4C8F57B117369E8700300F86 /* ttThorn.cpp */,
 				4C8F57B217369E8700300F86 /* ttThorn.h */,
-				4C8F57A617369E8700300F86 /* ttGround.cpp */,
-				4C8F57A717369E8700300F86 /* ttGround.h */,
 			);
 			name = scene;
 			path = springScene;

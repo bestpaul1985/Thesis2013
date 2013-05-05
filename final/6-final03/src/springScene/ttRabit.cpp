@@ -9,9 +9,9 @@
 #include "ttRabit.h"
 
 //-------------------------------------------------
-void ttRabit::setup(ofxBox2d *world,ofxSpriteSheetRenderer *render,float x, float y, int num){
+void ttRabit::setup(ofxBox2d &world,ofxSpriteSheetRenderer *render,float x, float y, int num){
     rabit.setPhysics(1.0f, 0.0f, 0.5f);
-    rabit.setup(world->getWorld(),x,y,10);
+    rabit.setup(world.getWorld(),x,y,10);
     rabitNum = num;
     
     rabitRender = render;
