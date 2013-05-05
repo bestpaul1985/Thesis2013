@@ -8,12 +8,12 @@
 
 #include "ttSky.h"
 
-void ttSky::setup(){
+void ttSky::setup(ofImage *_skyBg,ofImage *_cloud01,ofImage *_cloud02,ofImage *_cloud03){
 
-    skyBg.loadImage("sprites/bg/sky/background.png");
-    cloud01.loadImage("sprites/bg/sky/cloud01.png");
-    cloud02.loadImage("sprites/bg/sky/cloud02.png");
-    cloud03.loadImage("sprites/bg/sky/cloud03.png");
+    skyBg   =   _skyBg;
+    cloud01 =   _cloud01;
+    cloud02 =   _cloud02;
+    cloud03 =   _cloud03;
     speed01 = 0.5;
     speed02 = 0.7;
     speed03 = 1.0;
@@ -24,7 +24,7 @@ void ttSky::setup(){
 
 void ttSky::drawBg(){
     ofSetColor(255, 255, 255);
-    skyBg.draw(0,0);
+    skyBg->draw(0,0);
 }
 
 
@@ -35,27 +35,27 @@ void ttSky::drawCloud(){
     pos01.x+=speed01;
     ofPushMatrix();
     if (pos01.x>ofGetWidth()) {
-        pos01.x = -cloud01.getWidth()-50;
+        pos01.x = -cloud01->getWidth()-50;
     }
     ofTranslate(pos01);
-    cloud01.draw(0, 0);
+    cloud01->draw(0, 0);
     ofPopMatrix();
     
     pos02.x-=speed02;
     ofPushMatrix();
-    if (pos02.x<-cloud02.getWidth()) {
-        pos02.x = ofGetWidth()+cloud02.getWidth()+389;
+    if (pos02.x<-cloud02->getWidth()) {
+        pos02.x = ofGetWidth()+cloud02->getWidth()+389;
     }
     ofTranslate(pos02);
-    cloud02.draw(0, 0);
+    cloud02->draw(0, 0);
     ofPopMatrix();
     
     pos03.x+=speed03;
     ofPushMatrix();
     if (pos03.x>ofGetWidth()) {
-        pos03.x = -cloud03.getWidth()-818;
+        pos03.x = -cloud03->getWidth()-818;
     }
     ofTranslate(pos03);
-    cloud03.draw(0, 0);
+    cloud03->draw(0, 0);
     ofPopMatrix();
 }
