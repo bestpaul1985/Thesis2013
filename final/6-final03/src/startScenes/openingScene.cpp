@@ -9,7 +9,8 @@
 #include "openingScene.h"
 
 void openingScene::setup(){
-    end = false;
+    SETUP = false;
+    SETUP = true;
 }
 
 void openingScene::update(){
@@ -20,17 +21,12 @@ void openingScene::draw(){
     
     ofColor dark(40);
     ofBackgroundGradient(dark, ofColor::black);
-    
     drawLogo(ofGetWidth()/2, ofGetHeight()/2, 2);
 }
 
 
 
 void openingScene::drawLogo(int x, int y, float scale){
-    
-    if (ofRandom(200)==0) {
-        end = true;
-    }
     
     ofPushMatrix();
     ofTranslate(x,y);
