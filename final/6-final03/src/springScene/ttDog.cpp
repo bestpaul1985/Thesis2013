@@ -8,9 +8,9 @@
 
 #include "ttDog.h"
 
-void ttDog::setup(ofxBox2d *world, ofxSpriteSheetRenderer *render, float x, float y,int num){
+void ttDog::setup(ofxBox2d &world, ofxSpriteSheetRenderer *render, float x, float y,int num){
     dog.setPhysics(1.0f, 0.0f, 0.5f);
-    dog.setup(world->getWorld(),x,y,30);
+    dog.setup(world.getWorld(),x,y,30);
     dogNum = num;
     
     spriteRenderer = render;
