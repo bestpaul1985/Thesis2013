@@ -45,7 +45,6 @@ public:
     ofPoint                         getPos;
     rabit_condition                 condition;
     ofRectangle                     detectZone;
-    ofPoint                         *velocity;
     int                             rabitNum;
 };
 

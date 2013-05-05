@@ -18,7 +18,6 @@ void testApp::setup(){
         scenes[i]->goToScene = i+1;
         scenes[4]->goToScene = 0;
 	}
-    
 	
 }
 //--------------------------------------------------------------
