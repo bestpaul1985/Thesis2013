@@ -29,6 +29,11 @@ class baseScene {
     virtual void deviceOrientationChanged(int newOrientation){};
     
     
-    bool SETUP;
+	
+    int goToScene;
+    bool end;
+	
+    float startTime;
+    float delayTime = 2;
 };
 #endif
