@@ -14,10 +14,9 @@
 		476DDA6617160790005910CE /* imageScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 476DDA6017160790005910CE /* imageScene.cpp */; };
 		476DDA6717160790005910CE /* squareScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 476DDA6217160790005910CE /* squareScene.cpp */; };
 		476DDA6C17160D85005910CE /* openingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 476DDA6A17160D85005910CE /* openingScene.cpp */; };
-		4C0421111736AB2100C7B33A /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0421101736AB2100C7B33A /* Default-Portrait~ipad.png */; };
-		4C0421131736AB2B00C7B33A /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0421121736AB2B00C7B33A /* Default-Landscape~ipad.png */; };
-		4C04211F1736DE8E00C7B33A /* level01.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C04211E1736DE8E00C7B33A /* level01.mm */; };
-		4C0421221736DF1D00C7B33A /* level02.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C0421211736DF1D00C7B33A /* level02.mm */; };
+		476DDB6017175C42005910CE /* springScene.mm in Sources */ = {isa = PBXBuildFile; fileRef = 476DDB5F17175C41005910CE /* springScene.mm */; };
+		47A165F317041B1E00286F73 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F217041B1E00286F73 /* Default-Portrait@2x~ipad.png */; };
+		47A165F517041B8300286F73 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F417041B8300286F73 /* Default-Portrait~ipad.png */; };
 		4C8F578B17368FD700300F86 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 4C8F578117368FD700300F86 /* README */; };
 		4C8F578C17368FD700300F86 /* CollageTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F578317368FD700300F86 /* CollageTexture.cpp */; };
 		4C8F578D17368FD700300F86 /* LinearTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F578517368FD700300F86 /* LinearTexture.cpp */; };
@@ -125,15 +124,13 @@
 		476DDA6117160790005910CE /* imageScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageScene.h; sourceTree = "<group>"; };
 		476DDA6217160790005910CE /* squareScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = squareScene.cpp; sourceTree = "<group>"; };
 		476DDA6317160790005910CE /* squareScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = squareScene.h; sourceTree = "<group>"; };
-		476DDA6417160790005910CE /* baseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baseScene.h; path = ../baseScene.h; sourceTree = "<group>"; };
-		476DDA6A17160D85005910CE /* openingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = openingScene.cpp; path = ../startScenes/openingScene.cpp; sourceTree = "<group>"; };
-		476DDA6B17160D85005910CE /* openingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = openingScene.h; path = ../startScenes/openingScene.h; sourceTree = "<group>"; };
-		4C0421101736AB2100C7B33A /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		4C0421121736AB2B00C7B33A /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
-		4C04211D1736DE8E00C7B33A /* level01.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = level01.h; sourceTree = "<group>"; };
-		4C04211E1736DE8E00C7B33A /* level01.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = level01.mm; sourceTree = "<group>"; };
-		4C0421201736DF1D00C7B33A /* level02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = level02.h; sourceTree = "<group>"; };
-		4C0421211736DF1D00C7B33A /* level02.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = level02.mm; sourceTree = "<group>"; };
+		476DDA6417160790005910CE /* baseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseScene.h; sourceTree = "<group>"; };
+		476DDA6A17160D85005910CE /* openingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = openingScene.cpp; sourceTree = "<group>"; };
+		476DDA6B17160D85005910CE /* openingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = openingScene.h; sourceTree = "<group>"; };
+		476DDB5E17175C41005910CE /* springScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = springScene.h; sourceTree = "<group>"; };
+		476DDB5F17175C41005910CE /* springScene.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = springScene.mm; sourceTree = "<group>"; };
+		47A165F217041B1E00286F73 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		47A165F417041B8300286F73 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		4C8F578117368FD700300F86 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		4C8F578317368FD700300F86 /* CollageTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollageTexture.cpp; sourceTree = "<group>"; };
 		4C8F578417368FD700300F86 /* CollageTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollageTexture.h; sourceTree = "<group>"; };
@@ -143,27 +140,27 @@
 		4C8F578817368FD700300F86 /* ofxSpriteSheetRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSpriteSheetRenderer.h; sourceTree = "<group>"; };
 		4C8F578917368FD700300F86 /* PixelTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PixelTexture.cpp; sourceTree = "<group>"; };
 		4C8F578A17368FD700300F86 /* PixelTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelTexture.h; sourceTree = "<group>"; };
-		4C8F579E17369E8700300F86 /* ttChar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ttChar.cpp; path = springScene/ttChar.cpp; sourceTree = "<group>"; };
-		4C8F579F17369E8700300F86 /* ttChar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ttChar.h; path = springScene/ttChar.h; sourceTree = "<group>"; };
-		4C8F57A017369E8700300F86 /* ttControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ttControl.cpp; path = springScene/ttControl.cpp; sourceTree = "<group>"; };
-		4C8F57A117369E8700300F86 /* ttControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ttControl.h; path = springScene/ttControl.h; sourceTree = "<group>"; };
-		4C8F57A217369E8700300F86 /* ttDog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ttDog.cpp; path = springScene/ttDog.cpp; sourceTree = "<group>"; };
-		4C8F57A317369E8700300F86 /* ttDog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ttDog.h; path = springScene/ttDog.h; sourceTree = "<group>"; };
-		4C8F57A417369E8700300F86 /* ttEmoji.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ttEmoji.cpp; path = springScene/ttEmoji.cpp; sourceTree = "<group>"; };
-		4C8F57A517369E8700300F86 /* ttEmoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ttEmoji.h; path = springScene/ttEmoji.h; sourceTree = "<group>"; };
-		4C8F57A617369E8700300F86 /* ttGround.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ttGround.cpp; path = springScene/ttGround.cpp; sourceTree = "<group>"; };
-		4C8F57A717369E8700300F86 /* ttGround.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ttGround.h; path = springScene/ttGround.h; sourceTree = "<group>"; };
-		4C8F57A817369E8700300F86 /* ttIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ttIndicator.cpp; path = springScene/ttIndicator.cpp; sourceTree = "<group>"; };
-		4C8F57A917369E8700300F86 /* ttIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ttIndicator.h; path = springScene/ttIndicator.h; sourceTree = "<group>"; };
-		4C8F57AA17369E8700300F86 /* ttRabit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ttRabit.cpp; path = springScene/ttRabit.cpp; sourceTree = "<group>"; };
-		4C8F57AB17369E8700300F86 /* ttRabit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ttRabit.h; path = springScene/ttRabit.h; sourceTree = "<group>"; };
-		4C8F57AC17369E8700300F86 /* ttRope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ttRope.cpp; path = springScene/ttRope.cpp; sourceTree = "<group>"; };
-		4C8F57AD17369E8700300F86 /* ttRope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ttRope.h; path = springScene/ttRope.h; sourceTree = "<group>"; };
-		4C8F57AE17369E8700300F86 /* ttSetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ttSetData.h; path = springScene/ttSetData.h; sourceTree = "<group>"; };
-		4C8F57AF17369E8700300F86 /* ttSky.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ttSky.cpp; path = springScene/ttSky.cpp; sourceTree = "<group>"; };
-		4C8F57B017369E8700300F86 /* ttSky.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ttSky.h; path = springScene/ttSky.h; sourceTree = "<group>"; };
-		4C8F57B117369E8700300F86 /* ttThorn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ttThorn.cpp; path = springScene/ttThorn.cpp; sourceTree = "<group>"; };
-		4C8F57B217369E8700300F86 /* ttThorn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ttThorn.h; path = springScene/ttThorn.h; sourceTree = "<group>"; };
+		4C8F579E17369E8700300F86 /* ttChar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttChar.cpp; sourceTree = "<group>"; };
+		4C8F579F17369E8700300F86 /* ttChar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttChar.h; sourceTree = "<group>"; };
+		4C8F57A017369E8700300F86 /* ttControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttControl.cpp; sourceTree = "<group>"; };
+		4C8F57A117369E8700300F86 /* ttControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttControl.h; sourceTree = "<group>"; };
+		4C8F57A217369E8700300F86 /* ttDog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttDog.cpp; sourceTree = "<group>"; };
+		4C8F57A317369E8700300F86 /* ttDog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttDog.h; sourceTree = "<group>"; };
+		4C8F57A417369E8700300F86 /* ttEmoji.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttEmoji.cpp; sourceTree = "<group>"; };
+		4C8F57A517369E8700300F86 /* ttEmoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttEmoji.h; sourceTree = "<group>"; };
+		4C8F57A617369E8700300F86 /* ttGround.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttGround.cpp; sourceTree = "<group>"; };
+		4C8F57A717369E8700300F86 /* ttGround.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttGround.h; sourceTree = "<group>"; };
+		4C8F57A817369E8700300F86 /* ttIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttIndicator.cpp; sourceTree = "<group>"; };
+		4C8F57A917369E8700300F86 /* ttIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttIndicator.h; sourceTree = "<group>"; };
+		4C8F57AA17369E8700300F86 /* ttRabit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttRabit.cpp; sourceTree = "<group>"; };
+		4C8F57AB17369E8700300F86 /* ttRabit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttRabit.h; sourceTree = "<group>"; };
+		4C8F57AC17369E8700300F86 /* ttRope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttRope.cpp; sourceTree = "<group>"; };
+		4C8F57AD17369E8700300F86 /* ttRope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttRope.h; sourceTree = "<group>"; };
+		4C8F57AE17369E8700300F86 /* ttSetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttSetData.h; sourceTree = "<group>"; };
+		4C8F57AF17369E8700300F86 /* ttSky.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttSky.cpp; sourceTree = "<group>"; };
+		4C8F57B017369E8700300F86 /* ttSky.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttSky.h; sourceTree = "<group>"; };
+		4C8F57B117369E8700300F86 /* ttThorn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttThorn.cpp; sourceTree = "<group>"; };
+		4C8F57B217369E8700300F86 /* ttThorn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttThorn.h; sourceTree = "<group>"; };
 		4C8F57BE1736A02900300F86 /* applogosm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = applogosm.png; sourceTree = "<group>"; };
 		4C8F57C01736A02F00300F86 /* applogo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = applogo2.png; sourceTree = "<group>"; };
 		4CB26DF6170407F3005E11E7 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
@@ -315,10 +312,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				4C0421121736AB2B00C7B33A /* Default-Landscape~ipad.png */,
-				4C0421101736AB2100C7B33A /* Default-Portrait~ipad.png */,
 				4C8F57C01736A02F00300F86 /* applogo2.png */,
 				4C8F57BE1736A02900300F86 /* applogosm.png */,
+				47A165F417041B8300286F73 /* Default-Portrait~ipad.png */,
+				47A165F217041B1E00286F73 /* Default-Portrait@2x~ipad.png */,
 				E4D8936A11527B74007E1F53 /* src */,
 				BB24E1F710DAA51900E9C588 /* openFrameworks */,
 				BB16F26B0F2B646B00518274 /* addons */,
@@ -361,18 +358,43 @@
 			path = exampleScenes;
 			sourceTree = "<group>";
 		};
-		476DDB4417175C0B005910CE /* scenes */ = {
+		476DDA6917160D37005910CE /* startScenes */ = {
 			isa = PBXGroup;
 			children = (
-				476DDA6417160790005910CE /* baseScene.h */,
 				476DDA6A17160D85005910CE /* openingScene.cpp */,
 				476DDA6B17160D85005910CE /* openingScene.h */,
-				4C04211E1736DE8E00C7B33A /* level01.mm */,
-				4C04211D1736DE8E00C7B33A /* level01.h */,
-				4C0421211736DF1D00C7B33A /* level02.mm */,
-				4C0421201736DF1D00C7B33A /* level02.h */,
 			);
-			name = scenes;
+			path = startScenes;
+			sourceTree = "<group>";
+		};
+		476DDB4417175C0B005910CE /* scene */ = {
+			isa = PBXGroup;
+			children = (
+				476DDB5F17175C41005910CE /* springScene.mm */,
+				476DDB5E17175C41005910CE /* springScene.h */,
+				4C8F579E17369E8700300F86 /* ttChar.cpp */,
+				4C8F579F17369E8700300F86 /* ttChar.h */,
+				4C8F57A017369E8700300F86 /* ttControl.cpp */,
+				4C8F57A117369E8700300F86 /* ttControl.h */,
+				4C8F57A217369E8700300F86 /* ttDog.cpp */,
+				4C8F57A317369E8700300F86 /* ttDog.h */,
+				4C8F57A417369E8700300F86 /* ttEmoji.cpp */,
+				4C8F57A517369E8700300F86 /* ttEmoji.h */,
+				4C8F57A617369E8700300F86 /* ttGround.cpp */,
+				4C8F57A717369E8700300F86 /* ttGround.h */,
+				4C8F57A817369E8700300F86 /* ttIndicator.cpp */,
+				4C8F57A917369E8700300F86 /* ttIndicator.h */,
+				4C8F57AA17369E8700300F86 /* ttRabit.cpp */,
+				4C8F57AB17369E8700300F86 /* ttRabit.h */,
+				4C8F57AC17369E8700300F86 /* ttRope.cpp */,
+				4C8F57AD17369E8700300F86 /* ttRope.h */,
+				4C8F57AE17369E8700300F86 /* ttSetData.h */,
+				4C8F57AF17369E8700300F86 /* ttSky.cpp */,
+				4C8F57B017369E8700300F86 /* ttSky.h */,
+				4C8F57B117369E8700300F86 /* ttThorn.cpp */,
+				4C8F57B217369E8700300F86 /* ttThorn.h */,
+			);
+			name = scene;
 			path = springScene;
 			sourceTree = "<group>";
 		};
@@ -632,29 +654,10 @@
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
-				476DDB4417175C0B005910CE /* scenes */,
-				4C8F579E17369E8700300F86 /* ttChar.cpp */,
-				4C8F579F17369E8700300F86 /* ttChar.h */,
-				4C8F57A017369E8700300F86 /* ttControl.cpp */,
-				4C8F57A117369E8700300F86 /* ttControl.h */,
-				4C8F57A217369E8700300F86 /* ttDog.cpp */,
-				4C8F57A317369E8700300F86 /* ttDog.h */,
-				4C8F57A417369E8700300F86 /* ttEmoji.cpp */,
-				4C8F57A517369E8700300F86 /* ttEmoji.h */,
-				4C8F57A617369E8700300F86 /* ttGround.cpp */,
-				4C8F57A717369E8700300F86 /* ttGround.h */,
-				4C8F57A817369E8700300F86 /* ttIndicator.cpp */,
-				4C8F57A917369E8700300F86 /* ttIndicator.h */,
-				4C8F57AA17369E8700300F86 /* ttRabit.cpp */,
-				4C8F57AB17369E8700300F86 /* ttRabit.h */,
-				4C8F57AC17369E8700300F86 /* ttRope.cpp */,
-				4C8F57AD17369E8700300F86 /* ttRope.h */,
-				4C8F57AE17369E8700300F86 /* ttSetData.h */,
-				4C8F57AF17369E8700300F86 /* ttSky.cpp */,
-				4C8F57B017369E8700300F86 /* ttSky.h */,
-				4C8F57B117369E8700300F86 /* ttThorn.cpp */,
-				4C8F57B217369E8700300F86 /* ttThorn.h */,
+				476DDA6417160790005910CE /* baseScene.h */,
+				476DDB4417175C0B005910CE /* scene */,
 				476DDA5D17160790005910CE /* exampleScenes */,
+				476DDA6917160D37005910CE /* startScenes */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -730,11 +733,11 @@
 				E41D3ED713B38FB500A75A5D /* Project.xcconfig in Resources */,
 				E41D3EE613B3906D00A75A5D /* CoreOF.xcconfig in Resources */,
 				4CB26E5E170407F4005E11E7 /* install.xml in Resources */,
+				47A165F317041B1E00286F73 /* Default-Portrait@2x~ipad.png in Resources */,
+				47A165F517041B8300286F73 /* Default-Portrait~ipad.png in Resources */,
 				4C8F578B17368FD700300F86 /* README in Resources */,
 				4C8F57BF1736A02900300F86 /* applogosm.png in Resources */,
 				4C8F57C11736A02F00300F86 /* applogo2.png in Resources */,
-				4C0421111736AB2100C7B33A /* Default-Portrait~ipad.png in Resources */,
-				4C0421131736AB2B00C7B33A /* Default-Landscape~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -809,6 +812,7 @@
 				476DDA6617160790005910CE /* imageScene.cpp in Sources */,
 				476DDA6717160790005910CE /* squareScene.cpp in Sources */,
 				476DDA6C17160D85005910CE /* openingScene.cpp in Sources */,
+				476DDB6017175C42005910CE /* springScene.mm in Sources */,
 				4C8F578C17368FD700300F86 /* CollageTexture.cpp in Sources */,
 				4C8F578D17368FD700300F86 /* LinearTexture.cpp in Sources */,
 				4C8F578E17368FD700300F86 /* ofxSpriteSheetRenderer.cpp in Sources */,
@@ -823,8 +827,6 @@
 				4C8F57BA17369E8700300F86 /* ttRope.cpp in Sources */,
 				4C8F57BB17369E8700300F86 /* ttSky.cpp in Sources */,
 				4C8F57BC17369E8700300F86 /* ttThorn.cpp in Sources */,
-				4C04211F1736DE8E00C7B33A /* level01.mm in Sources */,
-				4C0421221736DF1D00C7B33A /* level02.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
