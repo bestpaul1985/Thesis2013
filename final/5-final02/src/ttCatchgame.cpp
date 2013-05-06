@@ -24,13 +24,7 @@ void ttCatchgame::setup(ofPoint &_accFrc, ttControl &_control){
     accFrc  = &_accFrc;
     control = &_control;
     bFinish = false;
-    
-    currentMode = 1;
-    
-    
 }
-
-
 
 void ttCatchgame::update(){
     ofPoint accelIn = *accFrc;
@@ -82,10 +76,8 @@ void ttCatchgame::draw(){
     runAlgorithm(3);
     ofCircle(targetPos, targetSize);
     
-    if (indicator>goal){
-        bFinish = true;
-        indicator = 0;
-    }
+    if (indicator>goal)bFinish = true;
+    
     
 }
 
@@ -111,11 +103,3 @@ void ttCatchgame::runAlgorithm(int mode){
 
 
 
-void ttCatchgame::reset(int mode, float incSpeed, float decSpeed){
-    bFinish = false;
-    currentMode = mode;
-    indicator = 0;
-    
-    increaseSpeed = incSpeed;
-    decreaseSpeed = decSpeed;
-}

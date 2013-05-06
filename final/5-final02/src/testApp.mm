@@ -74,7 +74,6 @@ void testApp::setup(){
     levelOver_B = false;
     levelRester = true;
     bStatistics = false;
-    bMiniGame = false;
     //renderers
 //    dog_Render = new ofxSpriteSheetRenderer(1, 1000, 0, 120);
 //    dog_Render ->loadTexture("sprites/all_dog.png", 2040, GL_NEAREST);
@@ -228,14 +227,11 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
 }
 //--------------------------------------------------------------
 void testApp::update(){
-    world_A.update();
-    world_B.update();
+    
 
     switch (condition) {
         case MAIN_MEUN:{
             if (levelRester) {
-                groundNew_A.destroy();
-                groundNew_B.destroy();
                 groundNew_A.setup("levelTxt/level1var1A.txt", world_A);
                 groundNew_B.setup("levelTxt/level1var1B.txt", world_B);
                 levelRester = false;
@@ -243,10 +239,10 @@ void testApp::update(){
             
             if (control.bAllTouch) {
                 timer ++;
-                if (timer>70) {
+                if (timer>100) {
                     timer = 0;
                     condition = LEVEL_1;
-                    levelRester = true;
+                    gameReset();
                 }
             }
             
@@ -256,86 +252,28 @@ void testApp::update(){
         case LEVEL_1:{
             
             if (levelRester) {
-                groundNew_A.destroy();
-                groundNew_B.destroy();
                 groundNew_A.setup("levelTxt/level1var1A.txt", world_A);
                 groundNew_B.setup("levelTxt/level1var1B.txt", world_B);
                 levelRester = false;
             }
             
             if (!game_menu.show) {
+                world_A.update();
+                world_B.update();
                 gamePlay(0);
             }
-            
             if (game_menu.goMain) {
                 game_menu.goMain = false;
                 condition = MAIN_MEUN;
             }
         
-            
             if (levelOver_A && levelOver_B) {
                 char_A.condition = C_MINIGAME;
                 char_B.condition = C_MINIGAME;
                 rope_A.condition = R_MINIGAME;
                 rope_B.condition = R_MINIGAME;
-                
-                catchGame.update(); 
-            }
-            
-            
-            if (catchGame.bFinish) {
-                    bStatistics = true;
-                    catchGame.bFinish = false;
-                }
-                
-            if (bStatistics && control.bAllTouch) {
-                
-                timer ++;
-                if (timer > 70) {
-                    timer = 0;
-                    condition = LEVEL_2;
-                    levelRester = true;
-                    bStatistics = false;
-                    char_A.condition = C_STOP;
-                    char_B.condition = C_STOP;
-                    rope_A.condition = R_NO_USE;
-                    rope_B.condition = R_NO_USE;
-                    char_A.character.setPosition(0, 0);
-                    char_B.character.setPosition(0, 0);
-                    levelOver_A = false;
-                    levelOver_B = false;
-                }
-            }
-        }break;
-        case LEVEL_2:{
-            if (levelRester) {
-                groundNew_A.destroy();
-                groundNew_B.destroy();
-                groundNew_A.setup("levelTxt/level1var1A.txt", world_A);
-                groundNew_B.setup("levelTxt/level1var1B.txt", world_B);
-                levelRester = false;
-            }
-            
-            if (!game_menu.show) {
-                gamePlay(0);
-            }
-            
-            if (game_menu.goMain) {
-                game_menu.goMain = false;
-                condition = MAIN_MEUN;
-            }
-            
-            
-            if (levelOver_A && levelOver_B) {
-                char_A.condition = C_MINIGAME;
-                char_B.condition = C_MINIGAME;
-                rope_A.condition = R_MINIGAME;
-                rope_B.condition = R_MINIGAME;
-                
                 catchGame.update();
-                
             }
-            
             
             if (catchGame.bFinish) {
                 bStatistics = true;
@@ -343,21 +281,55 @@ void testApp::update(){
             }
             
             if (bStatistics && control.bAllTouch) {
-                
                 timer ++;
-                if (timer > 70) {
+                if (timer > 100) {
+                    timer = 0;
+                    condition = LEVEL_2;
+                    gameReset();
+                    groundNew_A.destroy();
+                    groundNew_B.destroy();
+                }
+            }
+            
+        }break;
+        case LEVEL_2:{
+            if (levelRester) {
+                groundNew_A.setup("levelTxt/level1var1A.txt", world_A);
+                groundNew_B.setup("levelTxt/level1var1B.txt", world_B);
+                levelRester = false;
+            }
+            
+            if (!game_menu.show) {
+                world_A.update();
+                world_B.update();
+                gamePlay(0);
+            }
+            if (game_menu.goMain) {
+                game_menu.goMain = false;
+                condition = MAIN_MEUN;
+            }
+            
+            if (levelOver_A && levelOver_B) {
+                char_A.condition = C_MINIGAME;
+                char_B.condition = C_MINIGAME;
+                rope_A.condition = R_MINIGAME;
+                rope_B.condition = R_MINIGAME;
+                catchGame.update();
+            }
+            
+            if (catchGame.bFinish) {
+                bStatistics = true;
+                catchGame.bFinish = false;
+            }
+            
+            if (bStatistics && control.bAllTouch) {
+                timer ++;
+                if (timer > 100) {
                     timer = 0;
                     condition = MAIN_MEUN;
-                    levelRester = true;
-                    bStatistics = false;
-                    char_A.condition = C_STOP;
-                    char_B.condition = C_STOP;
-                    rope_A.condition = R_NO_USE;
-                    rope_B.condition = R_NO_USE;
-                    char_A.character.setPosition(0, 0);
-                    char_B.character.setPosition(0, 0);
-                    levelOver_A = false;
-                    levelOver_B = false;
+                    gameReset();
+                    groundNew_A.destroy();
+                    groundNew_B.destroy();
                 }
             }
             
@@ -480,19 +452,13 @@ void testApp::exit(){
 void testApp::touchDown(ofTouchEventArgs & touch){
     
     switch (condition) {
-        case MAIN_MEUN:{
+        case MAIN_MEUN:
             
-        } break;
+            break;
             
-        case LEVEL_1:{
+        case LEVEL_1:
             game_menu.touchDown(touch.x, touch.y,touch.id);
-        }break;
-        case LEVEL_2:{
-            game_menu.touchDown(touch.x, touch.y,touch.id);
-        }   break;
-        case LEVEL_3:{
-            game_menu.touchDown(touch.x, touch.y,touch.id);
-        }break;
+            break;
     }
     
     control.touchDown(touch.x, touch.y,touch.id);
@@ -903,8 +869,6 @@ void testApp::gameReset(){
     levelOver_B = false;
     bStatistics = false;
     levelRester = true;
-    game_menu.show = false;
-    game_menu.goMain = false;
     numFootContacts_A = 0;
     numFootContacts_B = 0;
     rope_A.condition = R_NO_USE;
