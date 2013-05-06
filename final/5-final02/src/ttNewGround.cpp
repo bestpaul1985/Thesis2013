@@ -44,9 +44,7 @@ void ttNewGround::setup(string url, ofxBox2d &World){
 
 void ttNewGround::draw(){
     ofSetColor(30);
-    if (ground.alive) {
-        ground.draw();
-    }
+    ground.draw();
 }
 
 
