@@ -21,8 +21,8 @@ void testApp::setup(){
     world_B.setGravity(0, 10);
     //Map
    
-    ground_A.setup(0, 0, world_A);
-    ground_B.setup(0, 1, world_B);
+    ground_A.setup( 0, world_A);
+    ground_B.setup( 1, world_B);
     
     //Listener
 	ofAddListener(world_A.contactStartEvents, this, &testApp::contactStart_worldA);
@@ -240,7 +240,7 @@ void testApp::update(){
             camera_A.set(0, 0);
             camera_B.set(0, 0);
             levelRester = true;
-            catchGame.
+            catchGame.bFinish = false;
             
             if (control.bAllTouch) {
                 gameEnd_time++;
@@ -437,27 +437,52 @@ void testApp::drawScene(int level){
     sky.drawBg();
 
    
-    ofPushMatrix();
-    ofTranslate(screen_A);
-    ground_A.draw();
-    ground_A.drawPolyLine();
-    thorns_A.draw();
-    ofPopMatrix();
-    
-    ofPushMatrix();
-    ofTranslate(screen_B);
-    ground_B.draw();
-    ground_B.drawPolyLine();
-    thorns_B.draw();
-    ofPopMatrix();
-    
+                
+        
     if (level == 0) {
-      
+        ofPushMatrix();
+        ofTranslate(screen_A);
+        ground_A.draw(0);
+        ground_A.drawPolyLine(0);
+        thorns_A.draw();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofTranslate(screen_B);
+        ground_B.draw(0);
+        ground_B.drawPolyLine(0);
+        thorns_B.draw();
+        ofPopMatrix();
     }
     if (level == 1) {
+        ofPushMatrix();
+        ofTranslate(screen_A);
+        ground_A.draw(1);
+        ground_A.drawPolyLine(1);
+        thorns_A.draw();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofTranslate(screen_B);
+        ground_B.draw(1);
+        ground_B.drawPolyLine(1);
+        thorns_B.draw();
+        ofPopMatrix();
     }
     if (level == 2) {
-     
+        ofPushMatrix();
+        ofTranslate(screen_A);
+        ground_A.draw(2);
+        ground_A.drawPolyLine(2);
+        thorns_A.draw();
+        ofPopMatrix();
+        
+        ofPushMatrix();
+        ofTranslate(screen_B);
+        ground_B.draw(2);
+        ground_B.drawPolyLine(2);
+        thorns_B.draw();
+        ofPopMatrix();
     }
     
     

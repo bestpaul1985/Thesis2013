@@ -75,8 +75,8 @@
 		4CB26E87170407F4005E11E7 /* ofxBox2dPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26E57170407F4005E11E7 /* ofxBox2dPolygon.cpp */; };
 		4CB26E88170407F4005E11E7 /* ofxBox2dRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26E5A170407F4005E11E7 /* ofxBox2dRect.cpp */; };
 		4CCD3A7816F3D9A00095BCB1 /* ttControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD3A7616F3D9A00095BCB1 /* ttControl.cpp */; };
-		4CD294E01737EA6700E525AA /* ttGround.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD294DE1737EA6600E525AA /* ttGround.cpp */; };
 		4CFA0E0C1709135B00DAD3D4 /* ttThorn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA0E0A1709135A00DAD3D4 /* ttThorn.cpp */; };
+		4CFEE4C317022C0E007399D9 /* ttGround.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEE4C117022C0E007399D9 /* ttGround.cpp */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
 		53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
@@ -250,10 +250,10 @@
 		4CCD3A7616F3D9A00095BCB1 /* ttControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttControl.cpp; sourceTree = "<group>"; };
 		4CCD3A7716F3D9A00095BCB1 /* ttControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttControl.h; sourceTree = "<group>"; };
 		4CCD3B2B16F563B80095BCB1 /* ttSetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttSetData.h; sourceTree = "<group>"; };
-		4CD294DE1737EA6600E525AA /* ttGround.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttGround.cpp; sourceTree = "<group>"; };
-		4CD294DF1737EA6700E525AA /* ttGround.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttGround.h; sourceTree = "<group>"; };
 		4CFA0E0A1709135A00DAD3D4 /* ttThorn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttThorn.cpp; sourceTree = "<group>"; };
 		4CFA0E0B1709135B00DAD3D4 /* ttThorn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttThorn.h; sourceTree = "<group>"; };
+		4CFEE4C117022C0E007399D9 /* ttGround.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttGround.cpp; sourceTree = "<group>"; };
+		4CFEE4C217022C0E007399D9 /* ttGround.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttGround.h; sourceTree = "<group>"; };
 		5326AEA710A23A0500278DE6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		BB16EBD10F2B2A9500518274 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -609,9 +609,9 @@
 				476DDB351716377D005910CE /* ttEmoji.cpp */,
 				476DDB361716377D005910CE /* ttEmoji.h */,
 				4CCD3A7616F3D9A00095BCB1 /* ttControl.cpp */,
-				4CD294DE1737EA6600E525AA /* ttGround.cpp */,
-				4CD294DF1737EA6700E525AA /* ttGround.h */,
 				4CCD3A7716F3D9A00095BCB1 /* ttControl.h */,
+				4CFEE4C117022C0E007399D9 /* ttGround.cpp */,
+				4CFEE4C217022C0E007399D9 /* ttGround.h */,
 				4CCD3B2B16F563B80095BCB1 /* ttSetData.h */,
 				4CFA0E0A1709135A00DAD3D4 /* ttThorn.cpp */,
 				4CFA0E0B1709135B00DAD3D4 /* ttThorn.h */,
@@ -739,6 +739,7 @@
 				E4D8936F11527B74007E1F53 /* testApp.mm in Sources */,
 				4C02C60A16EEDC210051C0DB /* ttChar.cpp in Sources */,
 				4CCD3A7816F3D9A00095BCB1 /* ttControl.cpp in Sources */,
+				4CFEE4C317022C0E007399D9 /* ttGround.cpp in Sources */,
 				4CB26E5F170407F4005E11E7 /* b2BroadPhase.cpp in Sources */,
 				4CB26E60170407F4005E11E7 /* b2CollideCircle.cpp in Sources */,
 				4CB26E61170407F4005E11E7 /* b2CollidePolygon.cpp in Sources */,
@@ -795,7 +796,6 @@
 				4C0421341737297200C7B33A /* mainMenu.cpp in Sources */,
 				4C0421371737444000C7B33A /* inGameMenu.cpp in Sources */,
 				4CAB88241737C41D00AB4BDB /* ttCatchgame.cpp in Sources */,
-				4CD294E01737EA6700E525AA /* ttGround.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
