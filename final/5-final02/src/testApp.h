@@ -20,6 +20,7 @@
 #include "mainMenu.h"
 #include "inGameMenu.h"
 #include "ttCatchgame.h"
+
 enum game_condition {
     MAIN_MEUN,
     LEVEL_1,
@@ -54,6 +55,7 @@ class testApp : public ofxiPhoneApp{
         void position(int level);
         void gamePlay(int level);
         void gameEnd(int level);
+       
         game_condition condition;
     
         ofxBox2d            world_A,        world_B;
