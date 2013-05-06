@@ -18,6 +18,7 @@ public:
     void update();
     void draw();
     void runAlgorithm(int mode);
+    void reset(int mode, float incSpeed, float decSpeed);
     
     ofPoint     start,
                 cursorIn,
@@ -34,6 +35,8 @@ public:
     ttControl   *control;
     
     bool        bFinish;
+    int         currentMode;
+    
 };
 
 

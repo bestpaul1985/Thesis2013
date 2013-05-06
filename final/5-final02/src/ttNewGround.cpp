@@ -10,7 +10,6 @@
 
 void ttNewGround::setup(string url, ofxBox2d &World){
     world = &World;
-    
     vector <string> strLines;
     ifstream f;
     f.open(ofToDataPath(url).c_str());
@@ -21,8 +20,8 @@ void ttNewGround::setup(string url, ofxBox2d &World){
         strLines.push_back(ptStr);
     }
     f.close();
-    
-	for (int i=0; i<strLines.size(); i++) {
+
+    for (int i=0; i<strLines.size(); i++) {
 		vector <string> pts = ofSplitString(strLines[i], ",");
 		if(pts.size() > 0) {
 			ofxBox2dPolygon poly;
@@ -33,9 +32,9 @@ void ttNewGround::setup(string url, ofxBox2d &World){
 					poly.addVertex(x, y);
 				}
 			}
-            poly.setPhysics(0.0f, 0.0f, 0.1f);
+            poly.setPhysics(0.0f, 0.0f, 0.5f);
 			poly.create(world->getWorld());
-			ground = poly;
+			ground.push_back(poly);
 		}
 	}
 }
@@ -43,13 +42,17 @@ void ttNewGround::setup(string url, ofxBox2d &World){
 
 
 void ttNewGround::draw(){
-    ofSetColor(30);
-    ground.draw();
+    ofSetColor(ofColor::blueViolet);
+    for (int i=0; i<ground.size(); i++) {
+		ground[i].draw();
+	}
 }
 
 
 void ttNewGround::destroy(){
-    ground.destroy();
+    for (int i=0; i<ground.size(); i++) {
+		ground[i].destroy();
+	}
 }
 
 
