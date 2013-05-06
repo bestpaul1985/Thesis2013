@@ -66,7 +66,7 @@ class testApp : public ofxiPhoneApp{
         int                 numFootContacts_A, numFootContacts_B;
         ttControl           control;
         ttGround            ground_A, ground_B;
-        ttNewGround         groundNew_A,groundNew_B;
+        ttNewGround         gourndNew_A,gourndNew_B;
         ofRectangle         view_A,view_B;
         ofPoint             preTouch_A,preTouch_B;
         ofPoint             camPos_A,camPos_B;
