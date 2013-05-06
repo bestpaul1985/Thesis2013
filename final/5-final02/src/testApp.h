@@ -83,7 +83,7 @@ class testApp : public ofxiPhoneApp{
         //mainMenu
         ofImage logo;
         ofImage mainMenuText;
-        //gameMenu
+        //gameMenu  
         mainMenu main_menu;
         inGameMenu game_menu;
         //thorns
@@ -104,6 +104,7 @@ class testApp : public ofxiPhoneApp{
         bool                bStatistics;
         bool                levelOver_A, levelOver_B;
         bool                levelRester;
+        bool                bMiniGame;
         //emoji
         ttEmoji emoji_A,emoji_B;
         ofImage image[5];
