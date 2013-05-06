@@ -19,10 +19,12 @@
 #include "ttRabit.h"
 #include "mainMenu.h"
 #include "inGameMenu.h"
+#include "ttCatchgame.h"
 enum game_condition {
     MAIN_MEUN,
     LEVEL_1,
     LEVEL_2,
+    LEVEL_3
 };
 
 class testApp : public ofxiPhoneApp{
@@ -96,7 +98,9 @@ class testApp : public ofxiPhoneApp{
         //booleans
         bool                bInSky_A,bInSky_B;
         bool                bStatistics;
-        bool                levelOver;
+        bool                levelOver_A, levelOver_B;
+        bool                levelRester;
+        
         //emoji
         ttEmoji emoji_A,emoji_B;
         ofImage image[5];
@@ -105,9 +109,12 @@ class testApp : public ofxiPhoneApp{
         //render
         ofxSpriteSheetRenderer *rabit_Render;
         ofxSpriteSheetRenderer *dog_Render;
+        ofxSpriteSheetRenderer *char_Render[5];
         //gameEnd;
         ofImage gameEnd_bg;
         ofTrueTypeFont gameEnd_font;
+        //minigame
+        ttCatchgame catchGame;
 };
 
 

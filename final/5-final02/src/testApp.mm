@@ -7,7 +7,7 @@ void testApp::setup(){
     ofxAccelerometer.setForceSmoothing(0.9f);
 	iPhoneSetOrientation(OFXIPHONE_ORIENTATION_LANDSCAPE_LEFT);
     ofEnableAlphaBlending();
-    ofSetCircleResolution(8);
+    ofSetCircleResolution(6);
     ofSetLineWidth(2.5);
     ofSetFrameRate(60);
     ofEnableSmoothing();
@@ -35,16 +35,27 @@ void testApp::setup(){
     control.setup();
     
     //char
-    char_A.setup(world_A, ofPoint(0,0), 0);
-    char_B.setup(world_B, ofPoint(0,0), 1);
+    char_Render[0] = new ofxSpriteSheetRenderer(1, 10000, 0, 85);
+    char_Render[1] = new ofxSpriteSheetRenderer(1, 10000, 0, 84);
+    char_Render[2] = new ofxSpriteSheetRenderer(1, 10000, 0, 39);
+    char_Render[3] = new ofxSpriteSheetRenderer(1, 10000, 0, 84);
+    char_Render[4] = new  ofxSpriteSheetRenderer(1, 10000, 0, 84);
+    char_Render[0]->loadTexture("sprites/all_girl.png", 2040, GL_NEAREST);
+    char_Render[1]->loadTexture("sprites/push_girl.png", 1000, GL_NEAREST);
+    char_Render[2] ->loadTexture("sprites/run_boy.png", 1000, GL_NEAREST);
+    char_Render[3] ->loadTexture("sprites/push_boy.png", 1000, GL_NEAREST);
+    char_Render[4] ->loadTexture("sprites/pull_boy.png", 1000, GL_NEAREST);
+    
+    char_A.setup(world_A, ofPoint(0,0), 0,char_Render[0],char_Render[1],char_Render[1]);
+    char_B.setup(world_B, ofPoint(0,0), 1,char_Render[2],char_Render[3],char_Render[4]);
     //camera
-    translate_A.set(384,250);
-    translate_B.set(384,768-250);
+    translate_A.set(384,768/2);
+    translate_B.set(384,768/2);
     camera_A = char_A.getPos;
     camera_B = char_B.getPos;
     //thorn
-    thorns_A.setup(world_A, 0);
-    thorns_B.setup(world_B, 1);
+    thorns_A.setup(world_A, 0,0);
+    thorns_B.setup(world_B, 0,1);
     
     //sky
     skyBg.loadImage("sprites/bg/sky/background.png");
@@ -59,21 +70,23 @@ void testApp::setup(){
     //booleans
     bInSky_A = false;
     bInSky_B = false;
+    levelOver_A = false;
+    levelOver_B = false;
+    levelRester = false;
     bStatistics = false;
-    levelOver = false;
     //renderers
     dog_Render = new ofxSpriteSheetRenderer(1, 1000, 0, 120);
     dog_Render ->loadTexture("sprites/all_dog.png", 2040, GL_NEAREST);
     rabit_Render = new ofxSpriteSheetRenderer(1, 1000, 0, 30);
     rabit_Render ->loadTexture("sprites/rabit.png", 2040, GL_NEAREST);
     
-//    //dog
-//    dog_A.setup(world_A,dog_Render, 200, 100, 0);
-//    dog_B.setup(world_B,dog_Render, 200, -100, 1);
-//    //rabit
-//    rabit_A.setup(world_A,rabit_Render, -200, 100, 0);
-//    rabit_B.setup(world_B,rabit_Render, -200, -100, 1);
-//    //emoji
+    //dog
+    dog_A.setup(world_A,dog_Render, -1000, 2000, 0);
+    dog_B.setup(world_B,dog_Render, -1000, 2000, 1);
+    //rabit
+    rabit_A.setup(world_A,rabit_Render, -200, 2000, 0);
+    rabit_B.setup(world_B,rabit_Render, -200, 2000, 1);
+    //emoji
     emoji_A.setup(char_A.character.getPosition(),char_A,0);
     emoji_B.setup(char_B.character.getPosition(),char_B,1);
     image[0].loadImage("sprites/emoji_love.png");
@@ -110,6 +123,9 @@ void testApp::setup(){
     //gameEnd;
     gameEnd_bg.loadImage("menu/emojigraph72.png");
     gameEnd_font.loadFont("font/NewMedia Fett.ttf", 12);
+    
+    //minigame
+    catchGame.setup(ofxAccelerometer.getForce(), control);
 }
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -123,11 +139,19 @@ void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
             if (bData&&bData->name == "thorn") {
                 char_A.condition = C_DEAD;
             }
+            
+            if (bData&&bData->name == "door" && condition != MAIN_MEUN) {
+                levelOver_A = true;
+            }
         }
         else if (bData && bData->name == "footSenser"){
             numFootContacts_A++;
             if (bData&&bData->name == "thorn") {
                 char_A.condition = C_DEAD;
+            }
+            
+            if (bData&&bData->name == "door" && condition != MAIN_MEUN) {
+                levelOver_A = true;
             }
         }
         
@@ -143,8 +167,14 @@ void testApp::contactEnd_worldA(ofxBox2dContactArgs &e){
         
         if (aData && aData->name == "footSenser"){
             numFootContacts_A--;
+            if (bData&&bData->name == "door" && condition != MAIN_MEUN) {
+                levelOver_A = false;
+            }
         }else if (bData && bData->name == "footSenser"){
             numFootContacts_A--;
+            if (bData&&bData->name == "door" && condition != MAIN_MEUN) {
+                levelOver_A = false;
+            }
         }
     }
 }
@@ -160,10 +190,16 @@ void testApp::contactStart_worldB(ofxBox2dContactArgs &e){
             if (bData&&bData->name == "thorn") {
                 char_B.condition = C_DEAD;
             }
+            if (bData&&bData->name == "door" && condition != MAIN_MEUN) {
+                levelOver_B = true;
+            }
         }else if (bData && bData->name == "footSenser"){
             numFootContacts_B++;
             if (bData&&bData->name == "thorn") {
                char_B.condition = C_DEAD;
+            }
+            if (bData&&bData->name == "door" && condition != MAIN_MEUN) {
+                levelOver_B = true;
             }
         }
     }
@@ -177,15 +213,20 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
         ttSetData * bData = (ttSetData*)e.b->GetUserData();
         if (aData && aData->name == "footSenser"){
             numFootContacts_B--;
+            if (bData&&bData->name == "door" && condition != MAIN_MEUN) {
+                levelOver_B = false;
+            }
         }else if (bData && bData->name == "footSenser"){
             numFootContacts_B--;
+            if (bData&&bData->name == "door" && condition != MAIN_MEUN) {
+                levelOver_B = false;
+            }
         } 
     }
 }
 //--------------------------------------------------------------
 void testApp::update(){
-    world_A.update();
-    world_B.update();
+    
 
     switch (condition) {
         case MAIN_MEUN:{
@@ -193,29 +234,106 @@ void testApp::update(){
             char_B.character.setPosition(0, 0);
             camera_A.set(0, 0);
             camera_B.set(0, 0);
+            levelRester = true;
             if (control.bAllTouch) {
                 condition = LEVEL_1;
             }
         }break;
-        case LEVEL_1:
+        case LEVEL_1:{
+                           
+//                if (control.bAllTouch) {
+//                    char_A.character.setVelocity(0, 0);
+//                    char_B.character.setVelocity(0, 0);
+//                    condition = LEVEL_2;
+//                    levelOver_A = false;
+//                    levelOver_B = false;
+//                    levelRester = true;
+//                    char_A.character.setPosition(0, 0);
+//                    char_B.character.setPosition(0, 0);
+//                    camera_A.set(0, 0);
+//                    camera_B.set(0, 0);
+//                }
+           
+               
+                if (!game_menu.show) {
+                    world_A.update();
+                    world_B.update();
+                    gamePlay(0);
+                }
+                if (game_menu.goMain) {
+                    game_menu.goMain = false;
+                    condition = MAIN_MEUN;
+                }
             
-            if (!game_menu.show) {
-                gamePlay(0);
-                bStatistics =false;
-            }else{
-                bStatistics = true;
+                if (levelOver_A && levelOver_B) {
+                    char_A.condition = C_MINIGAME;
+                    char_B.condition = C_MINIGAME;
+                    rope_A.condition = R_MINIGAME;
+                    rope_B.condition = R_MINIGAME;
+                    catchGame.update();
+                }
+            
+        }break;
+        case LEVEL_2:{
+            if (levelOver_A && levelOver_B) {
+                char_A.character.setVelocity(0, 0);
+                char_B.character.setVelocity(0, 0);
+                if (control.bAllTouch) {
+                    condition = LEVEL_3;
+                    levelOver_A = false;
+                    levelOver_B = false;
+                    levelRester = true;
+                    char_A.character.setPosition(0, 0);
+                    char_B.character.setPosition(0, 0);
+                    camera_A.set(0, 0);
+                    camera_B.set(0, 0);
+                }
+            }
+            else
+            {
+                if (!game_menu.show) {
+                    world_A.update();
+                    world_B.update();
+                    gamePlay(1);
+                }
+                
+                if (game_menu.goMain) {
+                    game_menu.goMain = false;
+                    condition = MAIN_MEUN;
+                }
             }
             
-            if (game_menu.goMain) {
-                game_menu.goMain = false;
-                bStatistics = false;
-                condition = MAIN_MEUN;
+        }break;
+        case LEVEL_3:{
+            
+            if (levelOver_A && levelOver_B) {
+                char_A.character.setVelocity(0, 0);
+                char_B.character.setVelocity(0, 0);
+                if (control.bAllTouch) {
+                    condition = MAIN_MEUN;
+                    levelOver_A = false;
+                    levelOver_B = false;
+                    levelRester = true;
+                    char_A.character.setPosition(0, 0);
+                    char_B.character.setPosition(0, 0);
+                    camera_A.set(0, 0);
+                    camera_B.set(0, 0);
+                }
             }
-            
-            break;
-        case LEVEL_2:
-            
-            break;
+            else
+            {
+                if (!game_menu.show) {
+                    world_A.update();
+                    world_B.update();
+                    gamePlay(2);
+                }
+                
+                if (game_menu.goMain) {
+                    game_menu.goMain = false;
+                    condition = MAIN_MEUN;
+                }
+            }
+        }break;
     }
 }
 
@@ -231,12 +349,38 @@ void testApp::draw(){
             
             drawScene(0);
             game_menu.draw();
-            if (bStatistics)gameEnd(0);
+            if (levelOver_A && levelOver_B) {
+                catchGame.draw();
+                rope_A.draw_minigame(ofPoint(500,500));
+                rope_B.draw_minigame(ofPoint(500,500));
+            }
+            if (bStatistics) {
+                gameEnd(0);
+            }
             control.draw();
+            
         }break;
         case LEVEL_2:{
-        
-        
+            if (levelOver_A && levelOver_B) {
+                gameEnd(1);
+            }
+            else{
+                drawScene(1);
+                game_menu.draw();
+            }
+            control.draw();
+            
+        }break;
+        case LEVEL_3:{
+            if (levelOver_A && levelOver_B) {
+                gameEnd(2);
+            }
+            else{
+                drawScene(2);
+                game_menu.draw();
+            }
+            control.draw();
+            
         }break;
     }
     
@@ -248,10 +392,10 @@ void testApp::draw(){
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int level){
+    sky.drawBg();
 
-    if (level == 0) {
-        sky.drawBg();
-        
+   
+                
         ofPushMatrix();
         ofTranslate(screen_A);
 //        ground_A.draw();
@@ -267,32 +411,36 @@ void testApp::drawScene(int level){
         ofPopMatrix();
         
         sky.drawCloud();
+    if (level == 0) {
+      
+    }
+    if (level == 1) {
         
+    }
+    if (level == 2) {
+        
+    }
+    
         ofPushMatrix();
         ofTranslate(screen_A);
-//        dog_A.draw();
-//        rabit_A.draw();
         char_A.draw();
         emoji_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
-//        dog_B.draw();
-//        rabit_B.draw();
         char_B.draw();
         emoji_B.draw();
         ofPopMatrix();
-        
+    
         //draw swing rope A
         rope_A.draw_swing(screen_B);
         rope_A.draw_push();
         rope_B.draw_swing(screen_A);
         rope_B.draw_push();
-    }
     
     
-        
+            
 }
 //--------------------------------------------------------------
 void testApp::exit(){
@@ -339,11 +487,11 @@ void testApp::position(int level){
     bool A[10],B[10];
     float catchUpSpeed = 0.05f;
     ofPoint catch_A, catch_B;
-    
+   
     if (level == 0) {
         char_A.getPos.x<0? A[0] = true: A[0] =false;
         char_B.getPos.x<0? B[0] = true: B[0] =false;
-        
+   
         char_A.getPos.x>1690? A[1] = true: A[1] =false;
         char_B.getPos.x>1690? B[1] = true: B[1] =false;
         
@@ -391,8 +539,8 @@ void testApp::position(int level){
     //char postion
     char_pos_A = char_A.getPos + screen_A;
     char_pos_B = char_B.getPos + screen_B;
-    //hook postion
     
+    //hook postion
     ofPoint offset_A(15,8);
     ofPoint offset_B(-4,22);
     if (char_A.moveLeft) hook_start_A.x = char_pos_A.x - offset_A.x;
@@ -402,18 +550,46 @@ void testApp::position(int level){
     if (char_B.moveLeft) hook_start_B.x = char_pos_B.x - offset_B.x;
     else hook_start_B.x = char_pos_B.x + offset_B.x;
     hook_start_B.y = char_pos_B.y - offset_B.y;
+   
     //rope postion
     rope_start_A = hook_start_B - screen_A;
-//    rope_end_A = hook_end_B - screen_A;
+//  rope_end_A = hook_end_B - screen_A;
    
     rope_start_B = hook_start_A - screen_B;
-//    rope_end_B = hook_end_A - screen_B;
+//  rope_end_B = hook_end_A - screen_B;
 
 }
 
 //--------------------------------------------------------------
 void testApp::gamePlay(int level){
 
+    if (level == 0 && levelRester) {
+        dog_A.dog.setPosition(-1000, 2000);
+        dog_B.dog.setPosition(-1000, 2000);
+        
+        thorns_A.setup(world_A, 0,0);
+        thorns_B.setup(world_B, 0,1);
+        levelRester = false;
+    }
+    
+    if (level == 1 && levelRester) {
+        rabit_A.rabit.setPosition(0, 0);
+        rabit_A.rabit.setPosition(0, 0);
+        
+        thorns_A.setup(world_A, 0,0);
+        thorns_B.setup(world_B, 0,1);
+        levelRester = false;
+    }
+    
+    if (level == 2 && levelRester) {
+        dog_A.dog.setPosition(0, 0);
+        dog_B.dog.setPosition(0, 0);
+        
+        thorns_A.setup(world_A, 0,0);
+        thorns_B.setup(world_B, 0,1);
+        levelRester = false;
+    }
+    
     //no jump in sky
     if (numFootContacts_A<=0) {
         bInSky_A = true;
@@ -427,17 +603,16 @@ void testApp::gamePlay(int level){
         bInSky_B = false;
     }
     
-    
     //screen update-------------------------------
     position(level);
     //control char_A-------------------------------
-    if (ofxAccelerometer.getForce().x<-0.3 && rope_A.condition == R_NO_USE && rope_B.condition != R_SWING&& !bInSky_A) {
+    if (ofxAccelerometer.getForce().x<-0.3 && rope_A.condition == R_NO_USE && rope_B.condition != R_SWING&& !bInSky_A&&char_A.condition != C_MINIGAME) {
         char_A.condition = C_PUSH_ROPE;
         rope_A.hook_pct  = 0;
         rope_A.condition = R_PUSH;
     }//charA pushRope
     
-    if (char_A.condition != C_DEAD) {
+    if (char_A.condition != C_DEAD&&char_A.condition != C_MINIGAME) {
         if (!control.bTouch[0]&&!control.bTouch[1]) {//charA noPress
             
             if (rope_A.condition==R_NO_USE&& !bInSky_A) {
@@ -485,14 +660,14 @@ void testApp::gamePlay(int level){
     }
     
     //control char_B-------------------------------
-    if (ofxAccelerometer.getForce().x>0.3 && rope_B.condition  == R_NO_USE && rope_A.condition != R_SWING && !bInSky_B) {
+    if (ofxAccelerometer.getForce().x>0.3 && rope_B.condition  == R_NO_USE && rope_A.condition != R_SWING && !bInSky_B&&char_B.condition != C_MINIGAME) {
         char_B.condition = C_PUSH_ROPE;
         rope_B.hook_pct = 0;
         rope_B.condition  = R_PUSH;
         
     }//charB pushRope
     
-    if (char_B.condition != C_DEAD) {
+    if (char_B.condition != C_DEAD&&char_B.condition != C_MINIGAME) {
         if (!control.bTouch[2]&&!control.bTouch[3]) {//charB noPress
             if (rope_B.condition==R_NO_USE && !bInSky_B) {
                 char_B.condition = C_STOP;
@@ -570,8 +745,7 @@ void testApp::gamePlay(int level){
         rabit_B.update();
     }
    
-
-  
+    
 }
 
 //--------------------------------------------------------------

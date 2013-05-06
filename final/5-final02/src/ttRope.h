@@ -17,6 +17,7 @@ enum _rope_condition{
     R_PUSH,
     R_SWING,
     R_DESTROY,
+    R_MINIGAME,
 };
 
 class ttRope{
@@ -25,6 +26,7 @@ public:
     void update();
     void draw_swing(ofPoint screen_B);
     void draw_push();
+    void draw_minigame(ofPoint End);
     ofxBox2d world_B;
     ttChar* A, *B;
     int charNum;

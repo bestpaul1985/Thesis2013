@@ -30,6 +30,7 @@
 		4C6C578A1735778100BFD9C1 /* ttRope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C57881735778100BFD9C1 /* ttRope.cpp */; };
 		4C6C578D17359F6700BFD9C1 /* ttRabit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C578B17359F6700BFD9C1 /* ttRabit.cpp */; };
 		4C90B562170C946900FE43ED /* ttIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C90B560170C946800FE43ED /* ttIndicator.cpp */; };
+		4CAB88241737C41D00AB4BDB /* ttCatchgame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB88221737C41D00AB4BDB /* ttCatchgame.cpp */; };
 		4CB26E5E170407F4005E11E7 /* install.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4CB26DF6170407F3005E11E7 /* install.xml */; };
 		4CB26E5F170407F4005E11E7 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26DFB170407F3005E11E7 /* b2BroadPhase.cpp */; };
 		4CB26E60170407F4005E11E7 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26DFD170407F3005E11E7 /* b2CollideCircle.cpp */; };
@@ -150,6 +151,8 @@
 		4C6C578C17359F6700BFD9C1 /* ttRabit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttRabit.h; sourceTree = "<group>"; };
 		4C90B560170C946800FE43ED /* ttIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttIndicator.cpp; sourceTree = "<group>"; };
 		4C90B561170C946800FE43ED /* ttIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttIndicator.h; sourceTree = "<group>"; };
+		4CAB88221737C41D00AB4BDB /* ttCatchgame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttCatchgame.cpp; sourceTree = "<group>"; };
+		4CAB88231737C41D00AB4BDB /* ttCatchgame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttCatchgame.h; sourceTree = "<group>"; };
 		4CB26DF6170407F3005E11E7 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		4CB26DF9170407F3005E11E7 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		4CB26DFB170407F3005E11E7 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -597,6 +600,8 @@
 				E4D8936B11527B74007E1F53 /* main.mm */,
 				E4D8936D11527B74007E1F53 /* testApp.mm */,
 				E4D8936C11527B74007E1F53 /* testApp.h */,
+				4CAB88221737C41D00AB4BDB /* ttCatchgame.cpp */,
+				4CAB88231737C41D00AB4BDB /* ttCatchgame.h */,
 				4C6C57881735778100BFD9C1 /* ttRope.cpp */,
 				4C6C57891735778100BFD9C1 /* ttRope.h */,
 				4C02C60816EEDC210051C0DB /* ttChar.cpp */,
@@ -790,6 +795,7 @@
 				4C6C578D17359F6700BFD9C1 /* ttRabit.cpp in Sources */,
 				4C0421341737297200C7B33A /* mainMenu.cpp in Sources */,
 				4C0421371737444000C7B33A /* inGameMenu.cpp in Sources */,
+				4CAB88241737C41D00AB4BDB /* ttCatchgame.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,12 +6,13 @@
 
 class ttThorn{
 public:
-    void setup(ofxBox2d &world,int charnum);
+    void setup(ofxBox2d &World,int level,int charnum);
     void draw();
-
+    void destroy();
     ofRectangle shape;
     int charNum;
     vector<ofxBox2dRect>    thorns;
+    ofxBox2d *world;
 };
 
 

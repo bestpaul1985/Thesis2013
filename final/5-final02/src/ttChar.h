@@ -23,6 +23,7 @@ enum _char_condition{
     C_SWING_ROPE,
     C_HOOK_ROPE,
     C_DEAD,
+    C_MINIGAME,
 };
 
 
@@ -37,15 +38,13 @@ public:
    
     _char_condition condition;
     
-    void setup(ofxBox2d &world, ofPoint SetPos, int CharNum);
+    void setup(ofxBox2d &world, ofPoint SetPos,int CharNum,ofxSpriteSheetRenderer  *char_Render0,ofxSpriteSheetRenderer  *char_Render1,ofxSpriteSheetRenderer  *char_Render2);
     void update();
     void draw();
     void dead();
     
     ofxBox2dRect    character;
-    ofxSpriteSheetRenderer * spriteRenderer;
-    ofxSpriteSheetRenderer * spriteRenderer2;
-    ofxSpriteSheetRenderer * spriteRenderer3;
+    ofxSpriteSheetRenderer * char_render[3];
 	Sprite * sprites[4];
     
     bool moveLeft;

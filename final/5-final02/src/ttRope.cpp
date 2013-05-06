@@ -75,10 +75,9 @@ void ttRope::update(){
         B->angle = 0;
     }
     
-    
     //reset
     if (accFrc->x<0.3 && accFrc->x>-0.3) {
-        if (condition !=R_SWING) {
+        if (condition !=R_SWING && condition !=R_MINIGAME) {
             condition = R_NO_USE;
         }
      
@@ -112,21 +111,29 @@ void ttRope::draw_push(){
     if (condition == R_PUSH) {
         float offset;
         charNum==0? offset = 500:offset = -500;
-        
         float speed = 0.1f;
         hook_pct +=speed;
         if (hook_pct > 1) hook_pct = 1;
         hook_end->x = hook_start->x;
         hook_end->y = (1-hook_pct)*hook_start->y + hook_pct*(hook_start->y+offset);
-            
-//        ofSetColor(0,100);
-//        ofLine(hook_start->x,hook_start->y,hook_end->x, hook_end->y);
-//        ofSetColor(255,0,100);
-//        ofCircle(hook_end->x, hook_end->y, 10);
+        
+        ofSetColor(0,100);
+        ofLine(hook_start->x,hook_start->y,hook_end->x, hook_end->y);
+        ofSetColor(255,0,100);
+        ofCircle(hook_end->x, hook_end->y, 10);
         }
+  
 }
-
-
+//----------------------------------------
+void ttRope::draw_minigame(ofPoint End){
+    if (condition == R_MINIGAME) {
+        float offset;
+        charNum==0? offset = 500:offset = -500;
+        ofSetColor(44,220);
+        ofLine(hook_start->x, hook_start->y,End.x,End.y);
+    }
+    cout<<hook_end->x<<"  "<<hook_end->y<<endl;
+}
 
 
 
