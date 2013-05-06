@@ -20,10 +20,9 @@ void testApp::setup(){
     world_B.setFPS(60);
     world_B.setGravity(0, 10);
     //Map
-//    ground_A.setup(0, 0, world_A);
-//    ground_B.setup(0, 1, world_B);
-    gourndNew_A.setup("levelTxt/level1var1A.txt", world_A);
-    gourndNew_B.setup("levelTxt/level1var1B.txt", world_B);
+    ground_A.setup(0, 0, world_A);
+    ground_B.setup(0, 1, world_B);
+    
     //Listener
 	ofAddListener(world_A.contactStartEvents, this, &testApp::contactStart_worldA);
 	ofAddListener(world_A.contactEndEvents, this, &testApp::contactEnd_worldA);
@@ -232,17 +231,36 @@ void testApp::update(){
 
     switch (condition) {
         case MAIN_MEUN:{
-            gameReset();
+            char_A.character.setPosition(0, 0);
+            char_B.character.setPosition(0, 0);
+            camera_A.set(0, 0);
+            camera_B.set(0, 0);
             levelRester = true;
             if (control.bAllTouch) {
                 timer ++;
                 if (timer>150) {
                     timer = 0;
                     condition = LEVEL_1;
+
                 }
             }
         }break;
         case LEVEL_1:{
+                           
+//                if (control.bAllTouch) {
+//                    char_A.character.setVelocity(0, 0);
+//                    char_B.character.setVelocity(0, 0);
+//                    condition = LEVEL_2;
+//                    levelOver_A = false;
+//                    levelOver_B = false;
+//                    levelRester = true;
+//                    char_A.character.setPosition(0, 0);
+//                    char_B.character.setPosition(0, 0);
+//                    camera_A.set(0, 0);
+//                    camera_B.set(0, 0);
+//                }
+           
+               
                 if (!game_menu.show) {
                     world_A.update();
                     world_B.update();
@@ -273,7 +291,7 @@ void testApp::update(){
                 if (timer > 150) {
                     timer = 0;
                     condition = MAIN_MEUN;
-                    gameReset();
+                    bStatistics = false;
                 }
             }
             
@@ -348,13 +366,15 @@ void testApp::drawScene(int level){
                 
         ofPushMatrix();
         ofTranslate(screen_A);
-        gourndNew_A.draw();
+        ground_A.draw();
+        ground_A.drawPolyLine();
         thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
-        gourndNew_B.draw();
+        ground_B.draw();
+        ground_B.drawPolyLine();
         thorns_B.draw();
         ofPopMatrix();
         
@@ -809,23 +829,7 @@ void testApp::gameEnd(int level){
 }
 
 //--------------------------------------------------------
-void testApp::gameReset(){
-    bInSky_A = false;
-    bInSky_B = false;
-    levelOver_A = false;
-    levelOver_B = false;
-    bStatistics = false;
-    condition = MAIN_MEUN;
-    numFootContacts_A = 0;
-    numFootContacts_B = 0;
-    rope_A.condition = R_NO_USE;
-    rope_B.condition = R_NO_USE;
-    char_A.condition = C_STOP;
-    char_B.condition = C_STOP;
-    char_A.character.setPosition(0, 0);
-    char_B.character.setPosition(0, 0);
-    camera_A.set(0, 0);
-    camera_B.set(0, 0);
-}
+
+
 
 

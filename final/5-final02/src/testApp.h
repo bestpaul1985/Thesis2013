@@ -20,7 +20,7 @@
 #include "mainMenu.h"
 #include "inGameMenu.h"
 #include "ttCatchgame.h"
-#include "ttNewGround.h"
+
 enum game_condition {
     MAIN_MEUN,
     LEVEL_1,
@@ -55,8 +55,7 @@ class testApp : public ofxiPhoneApp{
         void position(int level);
         void gamePlay(int level);
         void gameEnd(int level);
-        void gameReset();
-    
+       
         game_condition condition;
     
         ofxBox2d            world_A,        world_B;
@@ -66,7 +65,6 @@ class testApp : public ofxiPhoneApp{
         int                 numFootContacts_A, numFootContacts_B;
         ttControl           control;
         ttGround            ground_A, ground_B;
-        ttNewGround         gourndNew_A,gourndNew_B;
         ofRectangle         view_A,view_B;
         ofPoint             preTouch_A,preTouch_B;
         ofPoint             camPos_A,camPos_B;
