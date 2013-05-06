@@ -92,9 +92,11 @@ class testApp : public ofxiPhoneApp{
         //rope
         ttRope rope_A, rope_B;
         //dog
-        ttDog dog_A, dog_B;
+        vector<ttDog>  dog_A;
+        vector<ttDog>  dog_B;
         //rabit
-        ttRabit rabit_A,rabit_B;
+        vector<ttRabit> rabit_A;
+        vector<ttRabit> rabit_B;
         //booleans
         bool                bInSky_A,bInSky_B;
         bool                bStatistics;

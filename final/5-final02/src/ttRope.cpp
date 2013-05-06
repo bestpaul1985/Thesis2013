@@ -132,7 +132,8 @@ void ttRope::draw_minigame(ofPoint End){
         ofSetColor(44,220);
         ofLine(hook_start->x, hook_start->y,End.x,End.y);
     }
-    cout<<hook_end->x<<"  "<<hook_end->y<<endl;
+    
+//    cout<<hook_end->x<<"  "<<hook_end->y<<endl;
 }
 
 

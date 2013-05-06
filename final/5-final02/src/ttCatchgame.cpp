@@ -77,8 +77,6 @@ void ttCatchgame::draw(){
     ofCircle(targetPos, targetSize);
     
     if (indicator>goal)bFinish = true;
-    
-    
 }
 
 
