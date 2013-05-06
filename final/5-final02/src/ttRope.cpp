@@ -37,7 +37,7 @@ void ttRope::update(){
 //          float length = fabs(rope_start_B.y - char_B.getPos.y) - 100;
             float length = 250;
             rope_joint.setLength(length);
-            rope_joint.setFrequency(0.5);
+            rope_joint.setFrequency(0.95);
         }
 //          char_B.rope_frame = ofClamp((462-rope_anchor.getPosition().distance(char_A.character.getPosition()))/5, 0, 39) ;
     }

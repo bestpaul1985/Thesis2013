@@ -20,8 +20,8 @@ void testApp::setup(){
     world_B.setFPS(60);
     world_B.setGravity(0, 10);
     //Map
-    ground_A.setup(1, 0, world_A);
-    ground_B.setup(1, 1, world_B);
+    ground_A.setup(0, 0, world_A);
+    ground_B.setup(0, 1, world_B);
     
     //Listener
 	ofAddListener(world_A.contactStartEvents, this, &testApp::contactStart_worldA);
@@ -67,13 +67,13 @@ void testApp::setup(){
     rabit_Render = new ofxSpriteSheetRenderer(1, 1000, 0, 30);
     rabit_Render ->loadTexture("sprites/rabit.png", 2040, GL_NEAREST);
     
-    //dog
-    dog_A.setup(world_A,dog_Render, 200, 100, 0);
-    dog_B.setup(world_B,dog_Render, 200, -100, 1);
-    //rabit
-    rabit_A.setup(world_A,rabit_Render, -200, 100, 0);
-    rabit_B.setup(world_B,rabit_Render, -200, -100, 1);
-    //emoji
+//    //dog
+//    dog_A.setup(world_A,dog_Render, 200, 100, 0);
+//    dog_B.setup(world_B,dog_Render, 200, -100, 1);
+//    //rabit
+//    rabit_A.setup(world_A,rabit_Render, -200, 100, 0);
+//    rabit_B.setup(world_B,rabit_Render, -200, -100, 1);
+//    //emoji
     emoji_A.setup(char_A.character.getPosition(),char_A,0);
     emoji_B.setup(char_B.character.getPosition(),char_B,1);
     image[0].loadImage("sprites/emoji_love.png");
@@ -200,7 +200,7 @@ void testApp::update(){
         case LEVEL_1:
             
             if (!game_menu.show) {
-                gamePlay();
+                gamePlay(0);
                 bStatistics =false;
             }else{
                 bStatistics = true;
@@ -231,7 +231,7 @@ void testApp::draw(){
             
             drawScene(0);
             game_menu.draw();
-            if (bStatistics)gameEnd();
+            if (bStatistics)gameEnd(0);
             control.draw();
         }break;
         case LEVEL_2:{
@@ -242,44 +242,44 @@ void testApp::draw(){
     
 
        
-//    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
-//    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
+    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
 
 }
 //-------------------------------------------------------------
-void testApp::drawScene(int iDraw){
+void testApp::drawScene(int level){
 
-    if (iDraw == 0) {
+    if (level == 0) {
         sky.drawBg();
         
         ofPushMatrix();
         ofTranslate(screen_A);
-        ground_A.draw();
-//        ground_A.drawPolyLine();
-//        thorns_A.draw();
+//        ground_A.draw();
+        ground_A.drawPolyLine();
+        thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
-        ground_B.draw();
-//        ground_B.drawPolyLine();
-//        thorns_B.draw();
+//        ground_B.draw();
+        ground_B.drawPolyLine();
+        thorns_B.draw();
         ofPopMatrix();
         
         sky.drawCloud();
         
         ofPushMatrix();
         ofTranslate(screen_A);
-        dog_A.draw();
-        rabit_A.draw();
+//        dog_A.draw();
+//        rabit_A.draw();
         char_A.draw();
         emoji_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
-        dog_B.draw();
-        rabit_B.draw();
+//        dog_B.draw();
+//        rabit_B.draw();
         char_B.draw();
         emoji_B.draw();
         ofPopMatrix();
@@ -290,6 +290,8 @@ void testApp::drawScene(int iDraw){
         rope_B.draw_swing(screen_A);
         rope_B.draw_push();
     }
+    
+    
         
 }
 //--------------------------------------------------------------
@@ -332,31 +334,44 @@ void testApp::gotFocus(){}
 void testApp::gotMemoryWarning(){}
 void testApp::deviceOrientationChanged(int newOrientation){}
 //--------------------------------------------------------------
-void testApp::position(){
+void testApp::position(int level){
 
     bool A[10],B[10];
     float catchUpSpeed = 0.05f;
     ofPoint catch_A, catch_B;
     
-    char_A.getPos.x<0? A[0] = true: A[0] =false;
-    char_B.getPos.x<0? B[0] = true: B[0] =false;
-    //camera setup
-    if (A[0]) {
-        catch_A.x = 0;
-        catch_A.y = char_A.getPos.y;
-    }else{
-        catch_A.x = char_A.getPos.x;
-        catch_A.y = char_A.getPos.y;
+    if (level == 0) {
+        char_A.getPos.x<0? A[0] = true: A[0] =false;
+        char_B.getPos.x<0? B[0] = true: B[0] =false;
+        
+        char_A.getPos.x>1690? A[1] = true: A[1] =false;
+        char_B.getPos.x>1690? B[1] = true: B[1] =false;
+        
+        //camera setup
+        if (A[0]) {
+            catch_A.x = 0;
+            catch_A.y = char_A.getPos.y;
+        }else if(A[1]){
+            catch_A.x = 1690;
+            catch_A.y = -180;
+        }else{
+            catch_A.x = char_A.getPos.x;
+            catch_A.y = char_A.getPos.y;
+        }
+        
+        if (B[0]) {
+            catch_B.x = 0;
+            catch_B.y = char_B.getPos.y;
+        }else if(B[1]){
+            catch_B.x = 1690;
+            catch_B.y = 180;
+        }else{
+            catch_B.x = char_B.getPos.x;
+            catch_B.y = char_B.getPos.y;
+        }
+
     }
-   
-    if (B[0]) {
-        catch_B.x = 0;
-        catch_B.y = char_B.getPos.y;
-    }else{
-        catch_B.x = char_B.getPos.x;
-        catch_B.y = char_B.getPos.y;
-    }
-    
+        
     
     if (rope_B.condition != R_SWING) {
         camera_A.x = catchUpSpeed * catch_A.x + (1-catchUpSpeed) * camera_A.x;
@@ -397,7 +412,7 @@ void testApp::position(){
 }
 
 //--------------------------------------------------------------
-void testApp::gamePlay(){
+void testApp::gamePlay(int level){
 
     //no jump in sky
     if (numFootContacts_A<=0) {
@@ -414,7 +429,7 @@ void testApp::gamePlay(){
     
     
     //screen update-------------------------------
-    position();
+    position(level);
     //control char_A-------------------------------
     if (ofxAccelerometer.getForce().x<-0.3 && rope_A.condition == R_NO_USE && rope_B.condition != R_SWING&& !bInSky_A) {
         char_A.condition = C_PUSH_ROPE;
@@ -531,26 +546,36 @@ void testApp::gamePlay(){
     char_A.update();
     char_B.update();
     
-    //dog-------------------------------
-    dog_A.update();
-    dog_B.update();
-    if (dog_B.killZone.inside(char_B.character.getPosition().x, char_B.character.getPosition().y)) {
-        char_B.condition = C_DEAD;
-        dog_B.condition = D_BITE;
-        rope_A.condition = R_DESTROY;
-    }
-    //rabit-------------------------------
-    rabit_A.update();
-    rabit_B.update();
     //emoji-------------------------------
     emoji_A.update(char_A.character.getPosition(), char_A.moveLeft);
     emoji_B.update(char_B.character.getPosition(), char_B.moveLeft);
     emoji_A.control();
     emoji_B.control();
+    //dog-------------------------------
+    if (level == 0) {
+        
+    }
+    
+    if (level == 1) {
+        //dog-------------------------------
+        dog_A.update();
+        dog_B.update();
+        if (dog_B.killZone.inside(char_B.character.getPosition().x, char_B.character.getPosition().y)) {
+            char_B.condition = C_DEAD;
+            dog_B.condition = D_BITE;
+            rope_A.condition = R_DESTROY;
+        }
+        //rabit-------------------------------
+        rabit_A.update();
+        rabit_B.update();
+    }
+   
+
+  
 }
 
 //--------------------------------------------------------------
-void testApp::gameEnd(){
+void testApp::gameEnd(int level){
     float orgRadius = 180;
     int max;
     int number[5];
@@ -558,7 +583,6 @@ void testApp::gameEnd(){
     float radius[5];
     ofPoint pts[5];
     ofPoint orgPos(ofGetWidth()/2, ofGetHeight()/2);
-    ofRectangle rect[5];
     ofPoint icon_pts[5];
     ofPolyline path;
     float offSet = 30;
@@ -658,6 +682,7 @@ void testApp::gameEnd(){
     
     ofSetColor(255);
     gameEnd_bg.draw(0,0);
+    
    
 }
 

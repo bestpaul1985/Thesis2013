@@ -32,7 +32,7 @@ class testApp : public ofxiPhoneApp{
         void draw();
         void exit();
         
-        void drawScene(int iCameraDraw);
+        void drawScene(int level);
     
         void touchDown(ofTouchEventArgs & touch);
         void touchMoved(ofTouchEventArgs & touch);
@@ -49,9 +49,9 @@ class testApp : public ofxiPhoneApp{
         void gotFocus();
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
-        void position();
-        void gamePlay();
-        void gameEnd();
+        void position(int level);
+        void gamePlay(int level);
+        void gameEnd(int level);
         game_condition condition;
     
         ofxBox2d            world_A,        world_B;

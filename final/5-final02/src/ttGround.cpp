@@ -14,10 +14,10 @@ void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
     levelNo = levelNum;
     charNo  = charNum;
     
-	if (levelNo == 1) {
+	if (levelNo == 0) {
         if (charNo == 0 ) {
             ifstream f;
-            f.open(ofToDataPath("levelTxt/level01_A.txt").c_str());
+            f.open(ofToDataPath("levelTxt/level02_A.txt").c_str());
             
             while (!f.eof()) {
                 string ptStr;
@@ -41,7 +41,7 @@ void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
         
         if (charNo == 1) {
             ifstream f;
-            f.open(ofToDataPath("levelTxt/level01_B.txt").c_str());
+            f.open(ofToDataPath("levelTxt/level02_B.txt").c_str());
             while (!f.eof()) {
                 string ptStr;
                 getline(f, ptStr);
@@ -91,13 +91,13 @@ void ttGround::draw(){
     for (int i = 0 ; i< bgImg.size(); i++) {
         if (levelNo == 1) {
 //            float imgMul = bgImg[0].width*(ofGetHeight()/2)/bgImg[0].height;
-            float imgMul = 717;
+            float imgMul = 483*(384)/386;
             if (charNo == 0) {
                 ofSetColor(255,255);
-                bgImg[i].draw(-1000 + (imgMul*i)-i ,-300, imgMul, 495);
+                bgImg[i].draw(-410 + (imgMul*i)-i ,-250, imgMul, 384);
             }
             if (charNo == 1) {
-                bgImg[i].draw(-1000 + (imgMul*i)-i ,-200, imgMul, 495);
+                bgImg[i].draw(-410 + (imgMul*i)-i ,-133, imgMul, 384);
             }
         }
     }
