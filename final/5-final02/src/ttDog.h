@@ -12,13 +12,13 @@
 #include "ofMain.h"
 #include "ofxBox2d.h"
 #include "ofxSpriteSheetRenderer.h"
-
+#include "ttChar.h"
+static animation_t _dog_run = {   0,  0,  15,  1,  1,  75, 0,  -1, -1, 1 };
 enum _dog_condition{
     D_RUN,
     D_BITE,
 };
 
-static animation_t RUN = {   0,  0,  15,  1,  1,  75, 0,  -1, -1, 1 };
 
 struct basicSprite_dog {
 	animation_t animation;
@@ -28,21 +28,42 @@ struct basicSprite_dog {
 
 class ttDog{
 public:
-    void setup(ofxBox2d &world,ofxSpriteSheetRenderer *render, float x, float y,int num);
+    void setup(ofxBox2d &world,ofxSpriteSheetRenderer *render,ttChar &Target,float x, float y,int num);
     void update();
     void draw();
     void run();
-    ofxBox2dCircle dog;
-    ofxSpriteSheetRenderer * spriteRenderer;
-    vector <basicSprite_dog * > sprites;
-    ofPoint frc;
-    bool flip;
-    ofPoint getPos;
-    _dog_condition condition;
-    ofRectangle killZone;
-    int dogNum;
+    
+    
+    
+    ofxBox2dCircle                  dog;
+    ofxSpriteSheetRenderer *        spriteRenderer;
+    vector <basicSprite_dog * >     sprites;
+    ofPoint                         frc;
+    bool                            flip;
+    ofPoint                         getPos;
+    _dog_condition                  condition;
+    ofRectangle                     killZone;
+    ttChar                          *target;
+    int                             dogNum;
 };
-
-
-
 #endif /* defined(__final02__ttDog__) */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

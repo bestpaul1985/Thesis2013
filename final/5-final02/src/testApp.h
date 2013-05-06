@@ -20,6 +20,7 @@
 #include "mainMenu.h"
 #include "inGameMenu.h"
 #include "ttCatchgame.h"
+#include "ttBirds.h"
 enum game_condition {
     MAIN_MEUN,
     LEVEL_1,
@@ -97,6 +98,9 @@ class testApp : public ofxiPhoneApp{
         //rabit
         vector<ttRabit> rabit_A;
         vector<ttRabit> rabit_B;
+        //rabit
+        vector<ttBirds> birds_A;
+        vector<ttBirds> birds_B;
         //booleans
         bool                bInSky_A,bInSky_B;
         bool                bStatistics;
@@ -111,6 +115,7 @@ class testApp : public ofxiPhoneApp{
         ofxSpriteSheetRenderer *rabit_Render;
         ofxSpriteSheetRenderer *dog_Render;
         ofxSpriteSheetRenderer *char_Render[5];
+        ofxSpriteSheetRenderer *bird_Render;
         //gameEnd;
         ofImage gameEnd_bg;
         ofTrueTypeFont gameEnd_font;

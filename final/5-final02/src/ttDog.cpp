@@ -8,15 +8,15 @@
 
 #include "ttDog.h"
 
-void ttDog::setup(ofxBox2d &world, ofxSpriteSheetRenderer *render, float x, float y,int num){
+void ttDog::setup(ofxBox2d &world, ofxSpriteSheetRenderer *render,ttChar &Target, float x, float y,int num){
     dog.setPhysics(1.0f, 0.0f, 0.5f);
     dog.setup(world.getWorld(),x,y,30);
     dogNum = num;
-    
+    target = &Target;
     spriteRenderer = render;
     basicSprite_dog * newSprite = new basicSprite_dog();
     newSprite->pos.set(0,0);
-    newSprite->animation = RUN;
+    newSprite->animation = _dog_run;
     sprites.push_back(newSprite);
     
     frc.set(50, 0);
@@ -99,6 +99,11 @@ void ttDog::run(){
 
     if (fabs(dog.getVelocity().x) <3) {
         dog.addForce(frc, 10);
+    }
+    
+    if (killZone.inside(target->character.getPosition().x, target->character.getPosition().y)) {
+        target->condition = C_DEAD;
+        condition = D_BITE;
     }
    
 }

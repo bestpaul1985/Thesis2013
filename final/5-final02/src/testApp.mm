@@ -45,8 +45,8 @@ void testApp::setup(){
     char_Render[3] ->loadTexture("sprites/push_boy.png", 1000, GL_NEAREST);
     char_Render[4] ->loadTexture("sprites/pull_boy.png", 1000, GL_NEAREST);
     
-    char_A.setup(world_A, ofPoint(0,0), 0,char_Render[0],char_Render[1],char_Render[1]);
-    char_B.setup(world_B, ofPoint(0,0), 1,char_Render[2],char_Render[3],char_Render[4]);
+    char_A.setup(world_A, ofPoint(0,-100), 0,char_Render[0],char_Render[1],char_Render[1]);
+    char_B.setup(world_B, ofPoint(0,100), 1,char_Render[2],char_Render[3],char_Render[4]);
     //camera
     translate_A.set(384,768/2);
     translate_B.set(384,768/2);
@@ -78,6 +78,9 @@ void testApp::setup(){
     dog_Render ->loadTexture("sprites/all_dog.png", 2040, GL_NEAREST);
     rabit_Render = new ofxSpriteSheetRenderer(1, 1000, 0, 30);
     rabit_Render ->loadTexture("sprites/rabit.png", 2040, GL_NEAREST);
+    bird_Render =new ofxSpriteSheetRenderer(1,1000,0,120);
+    bird_Render ->loadTexture("sprites/all_dog.png", 2040, GL_NEAREST);
+   
     
 //    //dog
 //    dog_A.setup(world_A,dog_Render, -1000, 2000, 0);
@@ -230,7 +233,8 @@ void testApp::update(){
 
     switch (condition) {
         case MAIN_MEUN:{
-
+            
+            
             char_A.character.setPosition(0, 0);
             char_B.character.setPosition(0, 0);
             camera_A.set(0, 0);
@@ -249,15 +253,19 @@ void testApp::update(){
         case LEVEL_1:{
             
             if (levelRester) {
-              
+                ttBirds bird;
+                bird.setup(world_A, bird_Render, char_A, 200, 200, 0);
+                birds_A.push_back(bird);
+                
                 ground_A.setup(0, 0, world_A);
                 ground_B.setup(0, 1, world_B);
                 levelRester = false;
             }else{
                 if (!game_menu.show) {
+                    birds_A[0].update();
+                    gamePlay(0);
                     world_A.update();
                     world_B.update();
-                    gamePlay(0);
                 }
                 if (game_menu.goMain) {
                     game_menu.goMain = false;
@@ -308,9 +316,9 @@ void testApp::update(){
             
             
             if (!game_menu.show) {
+                gamePlay(0);
                 world_A.update();
                 world_B.update();
-                gamePlay(0);
             }
             if (game_menu.goMain) {
                 game_menu.goMain = false;
@@ -356,7 +364,6 @@ void testApp::update(){
         }break;
     }
     
-     cout<<catchGame.bFinish<<endl;
 }
 //--------------------------------------------------------------
 void testApp::gamePlay(int level){
@@ -384,9 +391,45 @@ void testApp::gamePlay(int level){
         rope_A.hook_pct  = 0;
         rope_A.condition = R_PUSH;
     }//charA pushRope
+    if (char_A.condition == C_DEAD) {
+        rope_B.condition = R_DESTROY;
+    }
     
     if (char_A.condition != C_DEAD&&char_A.condition != C_MINIGAME) {
-        if (!control.bTouch[0]&&!control.bTouch[1]) {//charA noPress
+       
+        
+        if(control.bTouch[0]&&control.bTouch[1]){//charA doublePress
+            if (rope_B.condition  == R_PUSH) {
+                ofPoint dis =  hook_end_B - char_pos_A;
+                if ( fabs(dis.x)< 50 && dis.y<=60) {
+                    char_A.condition = C_HOOK_ROPE;
+                    char_B.condition = C_SWING_ROPE;
+                    rope_B.condition  = R_SWING;
+                }
+            }
+        }
+        
+        else if (control.bTouch[0]&&!control.bTouch[1]) {//charA left
+            if (rope_A.condition == R_NO_USE) {
+                char_A.condition = C_LEFT;
+            }
+            if (rope_B.condition == R_SWING) {
+                rope_B.condition  = R_DESTROY;
+            }
+        }
+        
+       else if(control.bTouch[1]&&!control.bTouch[0]){//charA right
+            if (rope_A.condition  == R_NO_USE) {
+                char_A.condition = C_RIGHT;
+            }
+            if (rope_B.condition  == R_SWING) {
+                rope_B.condition  = R_DESTROY;
+            }
+        }
+        
+      
+        
+       else if (!control.bTouch[0]&&!control.bTouch[1]) {//charA noPress
             
             if (rope_A.condition==R_NO_USE&& !bInSky_A) {
                 char_A.condition = C_STOP;
@@ -400,36 +443,6 @@ void testApp::gamePlay(int level){
                 char_B.condition = C_STOP;
             }
         }
-        
-        
-        if (control.bTouch[0]&&!control.bTouch[1]) {//charA left
-            if (rope_A.condition == R_NO_USE) {
-                char_A.condition = C_LEFT;
-            }
-            if (rope_B.condition == R_SWING) {
-                rope_B.condition  = R_DESTROY;
-            }
-        }
-        
-        if(control.bTouch[1]&&!control.bTouch[0]){//charA right
-            if (rope_A.condition  == R_NO_USE) {
-                char_A.condition = C_RIGHT;
-            }
-            if (rope_B.condition  == R_SWING) {
-                rope_B.condition  = R_DESTROY;
-            }
-        }
-        
-        if(control.bTouch[0]&&control.bTouch[1]){//charA doublePress
-            if (rope_B.condition  == R_PUSH) {
-                ofPoint dis =  hook_end_B - char_pos_A;
-                if ( fabs(dis.x)< 50 && dis.y<=60) {
-                    char_A.condition = C_HOOK_ROPE;
-                    char_B.condition = C_SWING_ROPE;
-                    rope_B.condition  = R_SWING;
-                }
-            }
-        }
     }
     
     //control char_B-------------------------------
@@ -440,8 +453,42 @@ void testApp::gamePlay(int level){
         
     }//charB pushRope
     
+    if (char_B.condition == C_DEAD) {
+        rope_A.condition = R_DESTROY;
+    }
+    
     if (char_B.condition != C_DEAD&&char_B.condition != C_MINIGAME) {
-        if (!control.bTouch[2]&&!control.bTouch[3]) {//charB noPress
+                
+        if (control.bTouch[2]&&!control.bTouch[3]) {//charB left
+            if (rope_B.condition == R_NO_USE) {
+                char_B.condition = C_LEFT;
+            }
+            if (rope_A.condition == R_SWING) {
+                rope_A.condition = R_DESTROY;
+            }
+        }
+        
+        else if(control.bTouch[3]&&!control.bTouch[2]){//charB right
+            if (rope_B.condition == R_NO_USE) {
+                char_B.condition = C_RIGHT;
+            }
+            
+            if (rope_A.condition == R_SWING) {
+                rope_A.condition = R_DESTROY;
+            }
+        }
+        
+        else if(control.bTouch[2]&&control.bTouch[3]){//charB double press
+            if (rope_A.condition == R_PUSH) {
+                ofPoint dis =  hook_end_A - char_pos_B;
+                if ( fabs(dis.x)< 50 && dis.y>=-60) {
+                    char_B.condition = C_HOOK_ROPE;
+                    char_A.condition = C_SWING_ROPE;
+                    rope_A.condition = R_SWING;
+                }
+            }
+        }
+        else if (!control.bTouch[2]&&!control.bTouch[3]) {//charB noPress
             if (rope_B.condition==R_NO_USE && !bInSky_B) {
                 char_B.condition = C_STOP;
             }
@@ -455,36 +502,7 @@ void testApp::gamePlay(int level){
                 char_A.condition = C_STOP;
             }
         }
-        
-        if (control.bTouch[2]&&!control.bTouch[3]) {//charB left
-            if (rope_B.condition == R_NO_USE) {
-                char_B.condition = C_LEFT;
-            }
-            if (rope_A.condition == R_SWING) {
-                rope_A.condition = R_DESTROY;
-            }
-        }
-        
-        if(control.bTouch[3]&&!control.bTouch[2]){//charB right
-            if (rope_B.condition == R_NO_USE) {
-                char_B.condition = C_RIGHT;
-            }
-            
-            if (rope_A.condition == R_SWING) {
-                rope_A.condition = R_DESTROY;
-            }
-        }
-        
-        if(control.bTouch[2]&&control.bTouch[3]){//charB double press
-            if (rope_A.condition == R_PUSH) {
-                ofPoint dis =  hook_end_A - char_pos_B;
-                if ( fabs(dis.x)< 50 && dis.y>=-60) {
-                    char_B.condition = C_HOOK_ROPE;
-                    char_A.condition = C_SWING_ROPE;
-                    rope_A.condition = R_SWING;
-                }
-            }
-        }
+
     }
     //rope--------------------------------------
     rope_A.update();
@@ -500,24 +518,12 @@ void testApp::gamePlay(int level){
     emoji_A.control();
     emoji_B.control();
     //dog-------------------------------
-//    if (level == 0) {
-//        
-//    }
-//    
-//    if (level == 1) {
-//        //dog-------------------------------
-//        dog_A.update();
-//        dog_B.update();
-//        if (dog_B.killZone.inside(char_B.character.getPosition().x, char_B.character.getPosition().y)) {
-//            char_B.condition = C_DEAD;
-//            dog_B.condition = D_BITE;
-//            rope_A.condition = R_DESTROY;
-//        }
-//        //rabit-------------------------------
+
+
+        //rabit-------------------------------
 //        rabit_A.update();
 //        rabit_B.update();
-//    }
-    
+//    
     
 }
 
@@ -651,8 +657,8 @@ void testApp::draw(){
             game_menu.draw();
             if (levelOver_A && levelOver_B) {
                 catchGame.draw();
-                rope_A.draw_minigame(ofPoint(500,500));
-                rope_B.draw_minigame(ofPoint(500,500));
+                rope_A.draw_minigame(catchGame.cursorIn);
+                rope_B.draw_minigame(catchGame.cursorIn);
             }
             if (bStatistics) {
                 gameEnd(0);
@@ -697,10 +703,9 @@ void testApp::draw(){
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int level){
+    
     sky.drawBg();
-
-   
-                
+    
         ofPushMatrix();
         ofTranslate(screen_A);
         ground_A.draw();
@@ -717,10 +722,15 @@ void testApp::drawScene(int level){
         
         sky.drawCloud();
     if (level == 0) {
-      
+        ofPushMatrix();
+        ofTranslate(screen_A);
+        for (int i=0; i<birds_A.size(); i++) {
+             birds_A[i].draw();
+        }
+        ofPopMatrix();
     }
     if (level == 1) {
-        
+      
     }
     if (level == 2) {
         
@@ -728,6 +738,7 @@ void testApp::drawScene(int level){
     
         ofPushMatrix();
         ofTranslate(screen_A);
+   
         char_A.draw();
         emoji_A.draw();
         ofPopMatrix();
