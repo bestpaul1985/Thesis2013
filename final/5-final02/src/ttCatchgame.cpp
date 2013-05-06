@@ -17,7 +17,7 @@ void ttCatchgame::setup(ofPoint &_accFrc, ttControl &_control){
     cursorSize  = 60;
     targetSize  = 30;
     goal        = 350;
-    increaseSpeed = 5;
+    increaseSpeed = 0.5;
     decreaseSpeed = 3.5;
     
     accXeno.set(0,0);
