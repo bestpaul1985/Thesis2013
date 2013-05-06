@@ -16,8 +16,8 @@ public:
     void setup(string url, ofxBox2d &World);
     void draw();
     void destroy();
-    vector <ofPolyline>			lines;
-    vector <ofxBox2dPolygon>	ground;
+    ofPolyline line;
+    ofxBox2dPolygon ground;
     vector<ofImage> bgImg;
     ofxBox2d *world;
 };
