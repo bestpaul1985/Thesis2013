@@ -76,7 +76,6 @@
 		4CB26E88170407F4005E11E7 /* ofxBox2dRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26E5A170407F4005E11E7 /* ofxBox2dRect.cpp */; };
 		4CCD3A7816F3D9A00095BCB1 /* ttControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CCD3A7616F3D9A00095BCB1 /* ttControl.cpp */; };
 		4CD294E61737F91900E525AA /* ttNewGround.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD294E41737F91900E525AA /* ttNewGround.cpp */; };
-		4CD294EB1738091C00E525AA /* ttGroundImages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD294E91738091B00E525AA /* ttGroundImages.cpp */; };
 		4CFA0E0C1709135B00DAD3D4 /* ttThorn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CFA0E0A1709135A00DAD3D4 /* ttThorn.cpp */; };
 		4CFEE4C317022C0E007399D9 /* ttGround.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEE4C117022C0E007399D9 /* ttGround.cpp */; };
 		5326AEA810A23A0500278DE6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5326AEA710A23A0500278DE6 /* CoreLocation.framework */; };
@@ -254,8 +253,6 @@
 		4CCD3B2B16F563B80095BCB1 /* ttSetData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttSetData.h; sourceTree = "<group>"; };
 		4CD294E41737F91900E525AA /* ttNewGround.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttNewGround.cpp; sourceTree = "<group>"; };
 		4CD294E51737F91900E525AA /* ttNewGround.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttNewGround.h; sourceTree = "<group>"; };
-		4CD294E91738091B00E525AA /* ttGroundImages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttGroundImages.cpp; sourceTree = "<group>"; };
-		4CD294EA1738091C00E525AA /* ttGroundImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttGroundImages.h; sourceTree = "<group>"; };
 		4CFA0E0A1709135A00DAD3D4 /* ttThorn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttThorn.cpp; sourceTree = "<group>"; };
 		4CFA0E0B1709135B00DAD3D4 /* ttThorn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttThorn.h; sourceTree = "<group>"; };
 		4CFEE4C117022C0E007399D9 /* ttGround.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttGround.cpp; sourceTree = "<group>"; };
@@ -620,8 +617,6 @@
 				4CFEE4C217022C0E007399D9 /* ttGround.h */,
 				4CD294E41737F91900E525AA /* ttNewGround.cpp */,
 				4CD294E51737F91900E525AA /* ttNewGround.h */,
-				4CD294E91738091B00E525AA /* ttGroundImages.cpp */,
-				4CD294EA1738091C00E525AA /* ttGroundImages.h */,
 				4CCD3B2B16F563B80095BCB1 /* ttSetData.h */,
 				4CFA0E0A1709135A00DAD3D4 /* ttThorn.cpp */,
 				4CFA0E0B1709135B00DAD3D4 /* ttThorn.h */,
@@ -807,7 +802,6 @@
 				4C0421371737444000C7B33A /* inGameMenu.cpp in Sources */,
 				4CAB88241737C41D00AB4BDB /* ttCatchgame.cpp in Sources */,
 				4CD294E61737F91900E525AA /* ttNewGround.cpp in Sources */,
-				4CD294EB1738091C00E525AA /* ttGroundImages.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

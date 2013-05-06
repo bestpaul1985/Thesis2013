@@ -56,6 +56,7 @@ class testApp : public ofxiPhoneApp{
         void gamePlay(int level);
         void gameEnd(int level);
         void gameReset();
+    
         game_condition condition;
     
         ofxBox2d            world_A,        world_B;
@@ -64,8 +65,8 @@ class testApp : public ofxiPhoneApp{
         ttChar              char_A,char_B;
         int                 numFootContacts_A, numFootContacts_B;
         ttControl           control;
-//        ttGround            ground_A, ground_B;
-//        ttNewGround         groundNew_A,groundNew_B;
+        ttGround            ground_A, ground_B;
+        ttNewGround         groundNew_A,groundNew_B;
         ofRectangle         view_A,view_B;
         ofPoint             preTouch_A,preTouch_B;
         ofPoint             camPos_A,camPos_B;
@@ -119,9 +120,6 @@ class testApp : public ofxiPhoneApp{
         ttCatchgame catchGame;
     
         int timer;
-        
-        vector <ofPolyline>			lines;
-        vector <ofxBox2dPolygon>	polyLines;
 };
 
 
