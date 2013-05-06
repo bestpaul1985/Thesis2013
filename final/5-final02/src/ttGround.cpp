@@ -17,7 +17,7 @@ void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
 	if (levelNo == 0) {
         if (charNo == 0 ) {
             ifstream f;
-            f.open(ofToDataPath("levelTxt/level1var1A.txt").c_str());
+            f.open(ofToDataPath("levelTxt/level01_A.txt").c_str());
             
             while (!f.eof()) {
                 string ptStr;
@@ -36,11 +36,12 @@ void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
                     bgImg.back().loadImage(filePath);
                 }
             }
+//            bgImg.loadImage("sprites/bg/slices/lv1_worldA_01.png");
         }
         
         if (charNo == 1) {
             ifstream f;
-            f.open(ofToDataPath("levelTxt/level1var1B.txt").c_str());
+            f.open(ofToDataPath("levelTxt/level01_B.txt").c_str());
             while (!f.eof()) {
                 string ptStr;
                 getline(f, ptStr);
@@ -58,6 +59,7 @@ void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
                     bgImg.back().loadImage(filePath);
                 }
             }
+//            bgImg.loadImage("sprites/bg/lv1_worldB.png");
         }
     }
     
