@@ -20,6 +20,7 @@
 #include "mainMenu.h"
 #include "inGameMenu.h"
 #include "ttCatchgame.h"
+
 enum game_condition {
     MAIN_MEUN,
     LEVEL_1,

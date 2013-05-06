@@ -9,6 +9,8 @@
 #ifndef __final02lv1__ttCatchgame__
 #define __final02lv1__ttCatchgame__
 
+#include <iostream>
+
 #include "ofMain.h"
 #include "ttControl.h"
 
@@ -17,7 +19,6 @@ public:
     void setup(ofPoint &_accFrc, ttControl &_control);
     void update();
     void draw();
-    void runAlgorithm(int mode);
     
     ofPoint     start,
                 cursorIn,
@@ -28,12 +29,9 @@ public:
     float       indicator,
                 goal,
                 targetSize,
-                cursorSize,
-                increaseSpeed,
-                decreaseSpeed;
+                cursorSize;
     ttControl   *control;
     
-    bool        bFinish;
 };
 
 
