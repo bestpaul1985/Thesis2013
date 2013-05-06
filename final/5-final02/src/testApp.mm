@@ -22,33 +22,6 @@ void testApp::setup(){
     //ground
 //    ground_A.setup(0, 0, world_A);
 //    ground_B.setup(0, 1, world_B);
-    ifstream f;
-	f.open(ofToDataPath("lines.txt").c_str());
-	vector <string> strLines;
-	while (!f.eof()) {
-		string ptStr;
-		getline(f, ptStr);
-		strLines.push_back(ptStr);
-	}
-	f.close();
-	
-	for (int i=0; i<strLines.size(); i++) {
-		vector <string> pts = ofSplitString(strLines[i], ",");
-		if(pts.size() > 0) {
-			ofxBox2dPolygon poly;
-			for (int j=0; j<pts.size(); j+=2) {
-				if(pts[j].size() > 0) {
-					float x = ofToFloat(pts[j]);
-					float y = ofToFloat(pts[j+1]);
-					poly.addVertex(x, y);
-				}
-			}
-			poly.create(world_A.getWorld());
-			polyLines.push_back(poly);
-		}
-	}
-    
-    
     
     //Listener
 	ofAddListener(world_A.contactStartEvents, this, &testApp::contactStart_worldA);
@@ -259,8 +232,8 @@ void testApp::update(){
     switch (condition) {
         case MAIN_MEUN:{
             if (levelRester) {
-//                ground("levelTxt/level1var2A.txt", "levelTxt/level1var2B.txt", world_A, world_B);
-
+                groundNew_A.setup("levelTxt/level1var1A.txt", world_A);
+                groundNew_B.setup("levelTxt/level1var1B.txt", world_B);
                 levelRester = false;
             }
             
@@ -279,6 +252,8 @@ void testApp::update(){
         case LEVEL_1:{
             
             if (levelRester) {
+                groundNew_A.setup("levelTxt/level1var1A.txt", world_A);
+                groundNew_B.setup("levelTxt/level1var1B.txt", world_B);
                 levelRester = false;
             }
             
@@ -308,18 +283,19 @@ void testApp::update(){
             if (bStatistics && control.bAllTouch) {
                 timer ++;
                 if (timer > 100) {
-                   
+                    timer = 0;
                     condition = LEVEL_2;
                     gameReset();
-                    timer = 0;
-                    cout<<"1"<<endl;
+                    groundNew_A.destroy();
+                    groundNew_B.destroy();
                 }
             }
             
         }break;
         case LEVEL_2:{
-            
             if (levelRester) {
+                groundNew_A.setup("levelTxt/level1var1A.txt", world_A);
+                groundNew_B.setup("levelTxt/level1var1B.txt", world_B);
                 levelRester = false;
             }
             
@@ -331,7 +307,6 @@ void testApp::update(){
             if (game_menu.goMain) {
                 game_menu.goMain = false;
                 condition = MAIN_MEUN;
-                gameReset();
             }
             
             if (levelOver_A && levelOver_B) {
@@ -340,12 +315,10 @@ void testApp::update(){
                 rope_A.condition = R_MINIGAME;
                 rope_B.condition = R_MINIGAME;
                 catchGame.update();
-                cout<<"0"<<endl;
             }
             
             if (catchGame.bFinish) {
                 bStatistics = true;
-                cout<<"1"<<endl;
                 catchGame.bFinish = false;
             }
             
@@ -355,8 +328,8 @@ void testApp::update(){
                     timer = 0;
                     condition = MAIN_MEUN;
                     gameReset();
-                  
-                    cout<<"2"<<endl;
+                    groundNew_A.destroy();
+                    groundNew_B.destroy();
                 }
             }
             
@@ -422,14 +395,19 @@ void testApp::draw(){
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int level){
-        sky.drawBg();
+    sky.drawBg();
+
+   
+                
         ofPushMatrix();
         ofTranslate(screen_A);
+        groundNew_A.draw();
         thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
+        groundNew_B.draw();
         thorns_B.draw();
         ofPopMatrix();
         
@@ -890,8 +868,9 @@ void testApp::gameReset(){
     levelOver_A = false;
     levelOver_B = false;
     bStatistics = false;
-    catchGame.bFinish = false;
     levelRester = true;
+    numFootContacts_A = 0;
+    numFootContacts_B = 0;
     rope_A.condition = R_NO_USE;
     rope_B.condition = R_NO_USE;
     char_A.condition = C_STOP;
@@ -902,7 +881,5 @@ void testApp::gameReset(){
     camera_B.set(0, 0);
     
 }
-
-
 
 
