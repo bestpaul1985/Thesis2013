@@ -113,6 +113,7 @@ class testApp : public ofxiPhoneApp{
         //gameEnd;
         ofImage gameEnd_bg;
         ofTrueTypeFont gameEnd_font;
+        float gameEnd_time;
         //minigame
         ttCatchgame catchGame;
 };

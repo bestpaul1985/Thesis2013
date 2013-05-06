@@ -20,8 +20,9 @@ void testApp::setup(){
     world_B.setFPS(60);
     world_B.setGravity(0, 10);
     //Map
-    ground_A.setup(0, 0, world_A);
-    ground_B.setup(0, 1, world_B);
+   
+    ground_A.setup( 0, world_A);
+    ground_B.setup( 1, world_B);
     
     //Listener
 	ofAddListener(world_A.contactStartEvents, this, &testApp::contactStart_worldA);
@@ -123,7 +124,7 @@ void testApp::setup(){
     //gameEnd;
     gameEnd_bg.loadImage("menu/emojigraph72.png");
     gameEnd_font.loadFont("font/NewMedia Fett.ttf", 12);
-    
+    gameEnd_time = 0;
     //minigame
     catchGame.setup(ofxAccelerometer.getForce(), control);
 }
@@ -224,36 +225,38 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
         } 
     }
 }
-//--------------------------------------------------------------
+//------ttupdate--------------------------------------------------------
 void testApp::update(){
     
 
     switch (condition) {
         case MAIN_MEUN:{
+            char_A.condition = C_STOP;
+            char_B.condition = C_STOP;
             char_A.character.setPosition(0, 0);
             char_B.character.setPosition(0, 0);
+            rope_A.condition = R_NO_USE;
+            rope_B.condition = R_NO_USE;
             camera_A.set(0, 0);
             camera_B.set(0, 0);
             levelRester = true;
+            catchGame.bFinish = false;
+            
             if (control.bAllTouch) {
+                gameEnd_time++;
+            }else{
+                gameEnd_time-=2;
+                if (gameEnd_time<0) {
+                    gameEnd_time = 0;
+                }
+            }
+            
+            if (gameEnd_time > 100) {
+                gameEnd_time = 0;
                 condition = LEVEL_1;
             }
         }break;
         case LEVEL_1:{
-                           
-//                if (control.bAllTouch) {
-//                    char_A.character.setVelocity(0, 0);
-//                    char_B.character.setVelocity(0, 0);
-//                    condition = LEVEL_2;
-//                    levelOver_A = false;
-//                    levelOver_B = false;
-//                    levelRester = true;
-//                    char_A.character.setPosition(0, 0);
-//                    char_B.character.setPosition(0, 0);
-//                    camera_A.set(0, 0);
-//                    camera_B.set(0, 0);
-//                }
-           
                
                 if (!game_menu.show) {
                     world_A.update();
@@ -273,63 +276,101 @@ void testApp::update(){
                     catchGame.update();
                 }
             
-        }break;
-        case LEVEL_2:{
-            if (levelOver_A && levelOver_B) {
-                char_A.character.setVelocity(0, 0);
-                char_B.character.setVelocity(0, 0);
+            if (gameEnd_time>100) {
                 if (control.bAllTouch) {
-                    condition = LEVEL_3;
+                    char_A.condition = C_STOP;
+                    char_B.condition = C_STOP;
                     levelOver_A = false;
                     levelOver_B = false;
                     levelRester = true;
+                    catchGame.bFinish = false;
+                    gameEnd_time = 0;
                     char_A.character.setPosition(0, 0);
                     char_B.character.setPosition(0, 0);
                     camera_A.set(0, 0);
                     camera_B.set(0, 0);
+                    rope_A.condition = R_NO_USE;
+                    rope_B.condition = R_NO_USE;
+                    condition = LEVEL_2;
                 }
             }
-            else
-            {
-                if (!game_menu.show) {
-                    world_A.update();
-                    world_B.update();
-                    gamePlay(1);
-                }
+           
+        }break;
+        case LEVEL_2:{
+            
+            if (!game_menu.show) {
+                world_A.update();
+                world_B.update();
+                gamePlay(1);
                 
-                if (game_menu.goMain) {
-                    game_menu.goMain = false;
-                    condition = MAIN_MEUN;
-                }
+            }
+            if (game_menu.goMain) {
+                game_menu.goMain = false;
+                condition = MAIN_MEUN;
             }
             
+            if (levelOver_A && levelOver_B) {
+                char_A.condition = C_MINIGAME;
+                char_B.condition = C_MINIGAME;
+                rope_A.condition = R_MINIGAME;
+                rope_B.condition = R_MINIGAME;
+                catchGame.update();
+            }
+            
+            if (gameEnd_time>200) {
+                if (control.bAllTouch) {
+                    char_A.condition = C_STOP;
+                    char_B.condition = C_STOP;
+                    levelOver_A = false;
+                    levelOver_B = false;
+                    levelRester = true;
+                    catchGame.bFinish = false;
+                    gameEnd_time = 0;
+                    char_A.character.setPosition(0, 0);
+                    char_B.character.setPosition(0, 0);
+                    rope_A.condition = R_NO_USE;
+                    rope_B.condition = R_NO_USE;
+                    camera_A.set(0, 0);
+                    camera_B.set(0, 0);
+                    condition = LEVEL_3;
+                }
+            }
         }break;
         case LEVEL_3:{
             
+            if (!game_menu.show) {
+                world_A.update();
+                world_B.update();
+                gamePlay(2);
+            }
+            if (game_menu.goMain) {
+                game_menu.goMain = false;
+                condition = MAIN_MEUN;
+            }
+            
             if (levelOver_A && levelOver_B) {
-                char_A.character.setVelocity(0, 0);
-                char_B.character.setVelocity(0, 0);
+                char_A.condition = C_MINIGAME;
+                char_B.condition = C_MINIGAME;
+                rope_A.condition = R_MINIGAME;
+                rope_B.condition = R_MINIGAME;
+                catchGame.update();
+            }
+            
+            if (gameEnd_time>200) {
                 if (control.bAllTouch) {
-                    condition = MAIN_MEUN;
+                    char_A.condition = C_STOP;
+                    char_B.condition = C_STOP;
                     levelOver_A = false;
                     levelOver_B = false;
                     levelRester = true;
+                    catchGame.bFinish = false;
+                    gameEnd_time = 0;
                     char_A.character.setPosition(0, 0);
                     char_B.character.setPosition(0, 0);
+                    rope_A.condition = R_NO_USE;
+                    rope_B.condition = R_NO_USE;
                     camera_A.set(0, 0);
                     camera_B.set(0, 0);
-                }
-            }
-            else
-            {
-                if (!game_menu.show) {
-                    world_A.update();
-                    world_B.update();
-                    gamePlay(2);
-                }
-                
-                if (game_menu.goMain) {
-                    game_menu.goMain = false;
                     condition = MAIN_MEUN;
                 }
             }
@@ -337,7 +378,7 @@ void testApp::update(){
     }
 }
 
-//--------------------------------------------------------------
+//-----------ttdraw---------------------------------------------------
 void testApp::draw(){
     
     switch (condition) {
@@ -354,8 +395,9 @@ void testApp::draw(){
                 rope_A.draw_minigame(ofPoint(500,500));
                 rope_B.draw_minigame(ofPoint(500,500));
             }
-            if (bStatistics) {
-                gameEnd(0);
+            
+            if (catchGame.bFinish) {
+                 gameEnd(0);
             }
             control.draw();
             
@@ -390,36 +432,61 @@ void testApp::draw(){
     ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
 
 }
-//-------------------------------------------------------------
+//-------ttdrawScene------------------------------------------------------
 void testApp::drawScene(int level){
     sky.drawBg();
 
    
                 
+        
+    if (level == 0) {
         ofPushMatrix();
         ofTranslate(screen_A);
-//        ground_A.draw();
-        ground_A.drawPolyLine();
+        ground_A.draw(0);
+        ground_A.drawPolyLine(0);
         thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
-//        ground_B.draw();
-        ground_B.drawPolyLine();
+        ground_B.draw(0);
+        ground_B.drawPolyLine(0);
         thorns_B.draw();
         ofPopMatrix();
-        
-        sky.drawCloud();
-    if (level == 0) {
-      
     }
     if (level == 1) {
+        ofPushMatrix();
+        ofTranslate(screen_A);
+        ground_A.draw(1);
+        ground_A.drawPolyLine(1);
+        thorns_A.draw();
+        ofPopMatrix();
         
+        ofPushMatrix();
+        ofTranslate(screen_B);
+        ground_B.draw(1);
+        ground_B.drawPolyLine(1);
+        thorns_B.draw();
+        ofPopMatrix();
     }
     if (level == 2) {
+        ofPushMatrix();
+        ofTranslate(screen_A);
+        ground_A.draw(2);
+        ground_A.drawPolyLine(2);
+        thorns_A.draw();
+        ofPopMatrix();
         
+        ofPushMatrix();
+        ofTranslate(screen_B);
+        ground_B.draw(2);
+        ground_B.drawPolyLine(2);
+        thorns_B.draw();
+        ofPopMatrix();
     }
+    
+    
+    sky.drawCloud();
     
         ofPushMatrix();
         ofTranslate(screen_A);
@@ -450,16 +517,9 @@ void testApp::exit(){
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs & touch){
     
-    switch (condition) {
-        case MAIN_MEUN:
-            
-            break;
-            
-        case LEVEL_1:
-            game_menu.touchDown(touch.x, touch.y,touch.id);
-            break;
+    if (condition != MAIN_MEUN) {
+        game_menu.touchDown(touch.x, touch.y,touch.id);
     }
-    
     control.touchDown(touch.x, touch.y,touch.id);
     ofPoint pos(touch.x, touch.y);
 }
@@ -560,13 +620,12 @@ void testApp::position(int level){
 
 }
 
-//--------------------------------------------------------------
+//-ttgameplay-------------------------------------------------------------
 void testApp::gamePlay(int level){
 
     if (level == 0 && levelRester) {
         dog_A.dog.setPosition(-1000, 2000);
         dog_B.dog.setPosition(-1000, 2000);
-        
         thorns_A.setup(world_A, 0,0);
         thorns_B.setup(world_B, 0,1);
         levelRester = false;
@@ -575,7 +634,7 @@ void testApp::gamePlay(int level){
     if (level == 1 && levelRester) {
         rabit_A.rabit.setPosition(0, 0);
         rabit_A.rabit.setPosition(0, 0);
-        
+      
         thorns_A.setup(world_A, 0,0);
         thorns_B.setup(world_B, 0,1);
         levelRester = false;
@@ -584,7 +643,6 @@ void testApp::gamePlay(int level){
     if (level == 2 && levelRester) {
         dog_A.dog.setPosition(0, 0);
         dog_B.dog.setPosition(0, 0);
-        
         thorns_A.setup(world_A, 0,0);
         thorns_B.setup(world_B, 0,1);
         levelRester = false;
@@ -748,7 +806,7 @@ void testApp::gamePlay(int level){
     
 }
 
-//--------------------------------------------------------------
+//-------ttgameend------------------------------------------------------
 void testApp::gameEnd(int level){
     float orgRadius = 180;
     int max;
@@ -825,7 +883,6 @@ void testApp::gameEnd(int level){
 //    path.draw();
     ofPopMatrix();
     
-   ;
     for (int i=0; i<5; i++) {
         ofPushMatrix();
         ofRectangle rect;
@@ -857,6 +914,14 @@ void testApp::gameEnd(int level){
     ofSetColor(255);
     gameEnd_bg.draw(0,0);
     
+    if (control.bAllTouch) {
+        gameEnd_time ++;
+    }else{
+        gameEnd_time -=2;
+        if (gameEnd_time <0) {
+            gameEnd_time = 0;
+        }
+    }
    
 }
 

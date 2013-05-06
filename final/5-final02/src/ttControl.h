@@ -29,7 +29,6 @@ public:
     bool bTouch[4];
     int touchID[4];
     bool bAllTouch;
-  
    
 };
 
