@@ -17,6 +17,13 @@
 #include "ttEmoji.h"
 #include "ttRope.h"
 #include "ttRabit.h"
+#include "mainMenu.h"
+#include "inGameMenu.h"
+enum game_condition {
+    MAIN_MEUN,
+    LEVEL_1,
+    LEVEL_2,
+};
 
 class testApp : public ofxiPhoneApp{
     public:
@@ -43,7 +50,9 @@ class testApp : public ofxiPhoneApp{
         void gotMemoryWarning();
         void deviceOrientationChanged(int newOrientation);
         void position();
-
+        void gamePlay();
+        void gameEnd();
+        game_condition condition;
     
         ofxBox2d            world_A,        world_B;
         ofxBox2dRect        charDummy_A,    charDummy_B;
@@ -65,11 +74,17 @@ class testApp : public ofxiPhoneApp{
         ofPoint             hook_start_A, hook_start_B;
         ofPoint             rope_end_A, rope_end_B;
         ofPoint             rope_start_A,rope_start_B;
-       
+        //mainMenu
+        ofImage logo;
+        ofImage mainMenuText;
+        //gameMenu
+        mainMenu main_menu;
+        inGameMenu game_menu;
         //thorns
         ttThorn             thorns_A, thorns_B;
         //sky
         ttSky               sky;
+        ofImage             skyBg;
         //Indictor
         ttIndicator         accIndictor;
         //rope
@@ -81,18 +96,18 @@ class testApp : public ofxiPhoneApp{
         //booleans
         bool                bInSky_A,bInSky_B;
         bool                bStatistics;
-                         
+        bool                levelOver;
         //emoji
         ttEmoji emoji_A,emoji_B;
         ofImage image[5];
         //fonttype
         ofTrueTypeFont font;
-        //meun
-        ofPoint leve_menu;
-        float meunRadius;
         //render
         ofxSpriteSheetRenderer *rabit_Render;
         ofxSpriteSheetRenderer *dog_Render;
+        //gameEnd;
+        ofImage gameEnd_bg;
+        ofTrueTypeFont gameEnd_font;
 };
 
 

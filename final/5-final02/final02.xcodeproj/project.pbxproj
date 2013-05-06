@@ -12,6 +12,8 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		476DDB371716377D005910CE /* ttEmoji.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 476DDB351716377D005910CE /* ttEmoji.cpp */; };
 		4C02C60A16EEDC210051C0DB /* ttChar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C02C60816EEDC210051C0DB /* ttChar.cpp */; };
+		4C0421341737297200C7B33A /* mainMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C0421321737297200C7B33A /* mainMenu.cpp */; };
+		4C0421371737444000C7B33A /* inGameMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C0421351737443E00C7B33A /* inGameMenu.cpp */; };
 		4C07ED211731AF8E003140AB /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F417041B8300286F73 /* Default-Portrait~ipad.png */; };
 		4C07ED221731AF97003140AB /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 47A165F217041B1E00286F73 /* Default-Portrait@2x~ipad.png */; };
 		4C07ED2817327AD6003140AB /* applogosm.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C07ED2717327AD6003140AB /* applogosm.png */; };
@@ -121,6 +123,10 @@
 		47A165F417041B8300286F73 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		4C02C60816EEDC210051C0DB /* ttChar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttChar.cpp; sourceTree = "<group>"; };
 		4C02C60916EEDC210051C0DB /* ttChar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ttChar.h; sourceTree = "<group>"; };
+		4C0421321737297200C7B33A /* mainMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mainMenu.cpp; sourceTree = "<group>"; };
+		4C0421331737297200C7B33A /* mainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mainMenu.h; sourceTree = "<group>"; };
+		4C0421351737443E00C7B33A /* inGameMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = inGameMenu.cpp; sourceTree = "<group>"; };
+		4C0421361737443F00C7B33A /* inGameMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inGameMenu.h; sourceTree = "<group>"; };
 		4C07ED2717327AD6003140AB /* applogosm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = applogosm.png; sourceTree = "<group>"; };
 		4C07ED2917327ADA003140AB /* applogo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = applogo2.png; sourceTree = "<group>"; };
 		4C07ED2B17327B42003140AB /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
@@ -612,6 +618,10 @@
 				4C0DFA6E1730686C00645229 /* ttDog.h */,
 				4C6C578B17359F6700BFD9C1 /* ttRabit.cpp */,
 				4C6C578C17359F6700BFD9C1 /* ttRabit.h */,
+				4C0421321737297200C7B33A /* mainMenu.cpp */,
+				4C0421331737297200C7B33A /* mainMenu.h */,
+				4C0421351737443E00C7B33A /* inGameMenu.cpp */,
+				4C0421361737443F00C7B33A /* inGameMenu.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -778,6 +788,8 @@
 				4C0DFA6F1730686C00645229 /* ttDog.cpp in Sources */,
 				4C6C578A1735778100BFD9C1 /* ttRope.cpp in Sources */,
 				4C6C578D17359F6700BFD9C1 /* ttRabit.cpp in Sources */,
+				4C0421341737297200C7B33A /* mainMenu.cpp in Sources */,
+				4C0421371737444000C7B33A /* inGameMenu.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

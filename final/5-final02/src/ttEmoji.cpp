@@ -80,10 +80,10 @@ void ttEmoji::draw(){
     }
     
     moveLeft? offSet.set(offSet.x, offSet.y):offSet.set(-offSet.x, offSet.y);
-    pos = pos - offSet;
+    ofPoint POS = character->character.getPosition() - offSet;
     
     ofPushMatrix();
-    ofTranslate(pos);
+    ofTranslate(POS);
     if (charNum ==0) ofScale(1, -1);
     moveLeft? ofScale(-1, 1):ofScale(1, 1);
     
@@ -247,16 +247,16 @@ void ttEmoji::diagram(float x, float y){
     ofPoint icon_pts[5];
     ofPolyline path;
     float offSet = 40;
-//    number[4] = num_love;
-//    number[3] = num_laughing;
-//    number[2] = num_happy;
-//    number[1] = num_surprise;
-//    number[0] = num_angry;
-    number[4] = 10;
-    number[3] = 20;
-    number[2] = 30;
-    number[1] = 40;
-    number[0] = 50;
+    number[0] = num_love;
+    number[1] = num_laughing;
+    number[2] = num_happy;
+    number[3] = num_surprise;
+    number[4] = num_angry;
+//    number[4] = 10;
+//    number[3] = 20;
+//    number[2] = 30;
+//    number[1] = 40;
+//    number[0] = 50;
     
     angle[4] = 288;
     angle[3] = 216;
@@ -268,12 +268,13 @@ void ttEmoji::diagram(float x, float y){
         max = MAX(number[i], number[i-1]);
     }
 
-    radius[4] = ofMap(number[4], 0, max, 10, orgRadius, true);
-    radius[3] = ofMap(number[3], 0, max, 10, orgRadius, true);
-    radius[2] = ofMap(number[2], 0, max, 10, orgRadius, true);
-    radius[1] = ofMap(number[1], 0, max, 10, orgRadius, true);
+  
     radius[0] = ofMap(number[0], 0, max, 10, orgRadius, true);
-    
+    radius[1] = ofMap(number[1], 0, max, 10, orgRadius, true);
+    radius[2] = ofMap(number[2], 0, max, 10, orgRadius, true);
+    radius[3] = ofMap(number[3], 0, max, 10, orgRadius, true);
+    radius[4] = ofMap(number[4], 0, max, 10, orgRadius, true);
+
      // draw the path
     for (int i=0; i<5; i++) {
         pts[i].x =  radius[i]*cos(angle[i]*DEG_TO_RAD);
@@ -308,12 +309,12 @@ void ttEmoji::diagram(float x, float y){
     ofSetColor(255,120,0,100);
     ofFill();
     meshBG.draw();
-    for (int i=0; i<5; i++) {
-        ofSetColor(255, 30, 100);
-        ofLine(0,0, pts[i].x, pts[i].y);
-    }
-    ofSetColor(30, 30, 30);
-    path.draw();
+//    for (int i=0; i<5; i++) {
+//        ofSetColor(255, 30, 100);
+//        ofLine(0,0, pts[i].x, pts[i].y);
+//    }
+//    ofSetColor(30, 30, 30);
+//    path.draw();
     
     for (int i=0; i<5; i++) {
         ofSetColor(255);

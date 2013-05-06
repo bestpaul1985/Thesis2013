@@ -12,11 +12,11 @@
 #include "ofMain.h"
 class ttSky{
 public:
-    void setup();
+    void setup(ofImage &sky);
     void drawBg();
     void drawCloud();
     
-    ofImage skyBg;
+    ofImage *skyBg;
     ofImage cloud01;
     ofImage cloud02;
     ofImage cloud03;

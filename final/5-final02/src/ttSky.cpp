@@ -8,9 +8,9 @@
 
 #include "ttSky.h"
 
-void ttSky::setup(){
+void ttSky::setup(ofImage &sky){
 
-    skyBg.loadImage("sprites/bg/sky/background.png");
+    skyBg = &sky;
     cloud01.loadImage("sprites/bg/sky/cloud01.png");
     cloud02.loadImage("sprites/bg/sky/cloud02.png");
     cloud03.loadImage("sprites/bg/sky/cloud03.png");
@@ -24,7 +24,7 @@ void ttSky::setup(){
 
 void ttSky::drawBg(){
     ofSetColor(255, 255, 255);
-    skyBg.draw(0,0);
+    skyBg->draw(0,0);
 }
 
 
