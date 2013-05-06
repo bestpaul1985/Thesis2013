@@ -100,7 +100,6 @@ class testApp : public ofxiPhoneApp{
         bool                bStatistics;
         bool                levelOver_A, levelOver_B;
         bool                levelRester;
-        
         //emoji
         ttEmoji emoji_A,emoji_B;
         ofImage image[5];
@@ -115,6 +114,8 @@ class testApp : public ofxiPhoneApp{
         ofTrueTypeFont gameEnd_font;
         //minigame
         ttCatchgame catchGame;
+    
+        int timer;
 };
 
 

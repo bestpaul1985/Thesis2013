@@ -17,7 +17,7 @@ void ttCatchgame::setup(ofPoint &_accFrc, ttControl &_control){
     cursorSize  = 60;
     targetSize  = 30;
     goal        = 350;
-    increaseSpeed = 0.5;
+    increaseSpeed = 5;
     decreaseSpeed = 3.5;
     
     accXeno.set(0,0);
@@ -76,7 +76,7 @@ void ttCatchgame::draw(){
     runAlgorithm(3);
     ofCircle(targetPos, targetSize);
     
-    if (indicator>goal)ofDrawBitmapStringHighlight("YAY! You win!", start.x-30,start.y);
+    if (indicator>goal)bFinish = true;
     
     
 }
