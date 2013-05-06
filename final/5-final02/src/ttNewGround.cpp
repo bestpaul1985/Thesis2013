@@ -49,7 +49,9 @@ void ttNewGround::draw(){
 
 
 void ttNewGround::destroy(){
-    ground.destroy();
+
+    ground.clear();
+ 
 }
 
 
