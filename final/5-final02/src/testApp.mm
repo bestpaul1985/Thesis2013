@@ -580,17 +580,17 @@ void testApp::gameEnd(int level){
 
     
     if (cue_Num == 1) {
-            img->draw(512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+            img->draw(512-(img->getWidth()/2)/4*3,660-(img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
         }
     if (cue_Num == 2) {
-            img->draw(512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
-            img->draw(54+512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+            img->draw(512-(img->getWidth()/2)/4*3,660-(img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+            img->draw(54+512-(img->getWidth()/2)/4*3,660-(img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
         }
         
     if (cue_Num == 3) {
-            img->draw(-54+512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
-            img->draw(512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
-            img->draw(54+512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+            img->draw(-54+512-(img->getWidth()/2)/4*3,660-(img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+            img->draw(512-(img->getWidth()/2)/4*3,660-(img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+            img->draw(54+512-(img->getWidth()/2)/4*3,660-(img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
         }
     
     
@@ -873,8 +873,9 @@ void testApp::LEVEL_UPDATE_0(){
         }
         
         for (int i=0; i<bCue.size(); i++) {
+            cout<<"ok"<<endl;
             if (char_A.character.getPosition().distance(posCue[i])< 36 || char_B.character.getPosition().distance(posCue[i])< 36  ) {
-                if ( bCue[i]) {
+                if (bCue[i]) {
                     bCue[i] = false;
                     cue_Num ++;
                 }
