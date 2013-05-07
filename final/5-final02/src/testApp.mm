@@ -810,17 +810,15 @@ void testApp::LEVEL_UPDATE_0(){
         posCue.clear();
         
         ofPoint  cuePos[3];
-        
         cuePos[0].set(460, -138);
         cuePos[1].set(460, 138);
         cuePos[2].set(1910, -9);
         
         for (int i=0; i<3; i++) {
-            cue[i] = &D8;
             cue.push_back(&D8);
+            posCue.push_back(cuePos[i]);
             bool temCue = true;
             bCue.push_back(temCue);
-            posCue.push_back(cuePos[i]);
         }
         
         cueScreen.push_back(&screen_A);
