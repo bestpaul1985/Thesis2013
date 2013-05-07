@@ -129,14 +129,11 @@ void ttChar::update(){
        
         case C_PUSH_ROPE:{
             frc.x = character.getVelocity().x * -30;
-            if ( character.getVelocity().length()<0.1){
-                char_render[1]->update(ofGetElapsedTimeMillis());
-                sprites[1]->animation.index = 0;
-                sprites[1]->animation.total_frames = 8;
-                sprites[1]->animation.frame_duration = 35;
-                char_render[1]->addCenteredTile(&sprites[1]->animation,sprites[1]->pos.x,sprites[1]->pos.y);
-            }
+            char_render[1]->update(ofGetElapsedTimeMillis());
 
+            sprites[1]->animation.total_frames = 8;
+            sprites[1]->animation.frame_duration = 35;
+            char_render[1]->addCenteredTile(&sprites[1]->animation,sprites[1]->pos.x,sprites[1]->pos.y);
         }break;
             
         case C_HOOK_ROPE:{

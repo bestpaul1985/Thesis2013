@@ -130,6 +130,12 @@ void testApp::setup(){
     //minigame
     catchGame.setup(ofxAccelerometer.getForce(), control);
     timer = 0;
+    //elements
+    element[0].loadImage("visualcue/d4.png");
+    element[1].loadImage("visualcue/d6.png");
+    element[2].loadImage("visualcue/d8.png");
+    element[3].loadImage("visualcue/d12.png");
+    element[4].loadImage("visualcue/d20.png");
 }   
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){

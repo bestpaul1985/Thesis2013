@@ -128,6 +128,8 @@ class testApp : public ofxiPhoneApp{
         ttCatchgame catchGame;
     
         int timer;
+        //elements
+        ofImage element[5];
 };
 
 
