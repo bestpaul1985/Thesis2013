@@ -47,20 +47,18 @@ void testApp::setup(){
     char_A.setup(world_A, ofPoint(0,-200), 0,char_Render[0],char_Render[1],char_Render[1]);
     char_B.setup(world_B, ofPoint(0,200), 1,char_Render[2],char_Render[3],char_Render[4]);
     //camera
-    translate_A.set(384,768/2);
-    translate_B.set(384,768/2);
+    translate_A.set(384,384);
+    translate_B.set(384,384);
     camera_A = char_A.getPos;
     camera_B = char_B.getPos;
     //thorn
     thorns_A.setup(world_A, 0,0);
     thorns_B.setup(world_B, 0,1);
-    
     //sky
     skyBg.loadImage("sprites/bg/sky/background.png");
     sky.setup(skyBg);
     //indictor
-    accIndictor.setup(ofxAccelerometer.getForce());
-    
+//    accIndictor.setup(ofxAccelerometer.getForce());
     //rope
     rope_A.setup(world_B, char_A, char_B, rope_start_B, hook_start_A, hook_end_A, ofxAccelerometer.getForce(), 0);
     rope_B.setup(world_A, char_B, char_A, rope_start_A, hook_start_B, hook_end_B, ofxAccelerometer.getForce(), 1);
@@ -237,13 +235,22 @@ void testApp::update(){
             char_B.character.setPosition(0, 0);
             camera_A.set(0, 0);
             camera_B.set(0, 0);
-            
+           
             if (control.bAllTouch) {
                 timer ++;
                 if (timer>50) {
                     timer = 0;
                     condition = LEVEL_0;
                     levelRester = true;
+                    
+                    char_A.character.setPosition(0, -100);
+                    char_B.character.setPosition(0, 100);
+                    char_A.condition = C_STOP;
+                    char_B.condition = C_STOP;
+                    rope_A.condition = R_NO_USE;
+                    rope_B.condition = R_NO_USE;
+                    cue_Num = 0;
+
                 }
             }
         }break;
@@ -435,13 +442,6 @@ void testApp::gamePlay(int level){
     emoji_B.update(char_B.character.getPosition(), char_B.moveLeft);
     emoji_A.control();
     emoji_B.control();
-    //dog-------------------------------
-
-
-        //rabit-------------------------------
-//        rabit_A.update();
-//        rabit_B.update();
-//    
     
 }
 //--------------------------------------------------------------
@@ -713,6 +713,7 @@ void testApp::position(int level){
     bool A[10],B[10];
     float catchUpSpeed = 0.05f;
     ofPoint catch_A, catch_B;
+    ofPoint trans_catch_A, trans_catch_B;
    
 //    if (level == 0) {
         char_A.getPos.x<0? A[0] = true: A[0] =false;
@@ -725,26 +726,52 @@ void testApp::position(int level){
         if (A[0]) {
             catch_A.x = 0;
             catch_A.y = char_A.getPos.y;
+            translate_A.x =384;
+            translate_A.y =384;
         }else if(A[1]){
             catch_A.x = 1690;
-            catch_A.y = -180;
+            catch_A.y =  char_A.getPos.y;
+            float speed = 1;
+            translate_A.x -=speed;
+            if (translate_A.x <0) {
+                translate_A.x = 0;
+            }
+            translate_A.y =384;
         }else{
             catch_A.x = char_A.getPos.x;
             catch_A.y = char_A.getPos.y;
+            translate_A.x =384;
+            translate_A.y =384;
         }
         
         if (B[0]) {
             catch_B.x = 0;
             catch_B.y = char_B.getPos.y;
+            translate_B.x =384;
+            translate_B.y =384;
         }else if(B[1]){
             catch_B.x = 1690;
-            catch_B.y = 180;
+            catch_B.y = char_B.getPos.y;
+            float speed = 1;
+            translate_B.x -=speed;
+            if (translate_B.x <0) {
+                translate_B.x = 0;
+            }
+            translate_B.y =384;
         }else{
             catch_B.x = char_B.getPos.x;
             catch_B.y = char_B.getPos.y;
+            translate_B.x =384;
+            translate_B.y =384;
         }
 
 //    }
+    
+//    translate_A.x =  catchUpSpeed * trans_catch_A.x + (1-catchUpSpeed) * translate_A.x;
+//    translate_A.x =  catchUpSpeed * trans_catch_B.x + (1-catchUpSpeed) * translate_A.x;
+//    translate_B.x =  catchUpSpeed * trans_catch_A.x + (1-catchUpSpeed) * translate_B.x;
+//    translate_B.x =  catchUpSpeed * trans_catch_B.x + (1-catchUpSpeed) * translate_B.x;
+
     
     
     if (rope_B.condition != R_SWING && char_A.condition != C_MINIGAME) {
@@ -758,7 +785,6 @@ void testApp::position(int level){
     }
     
     
-  
     screen_A.x = translate_A.x - camera_A.x,
     screen_A.y = translate_A.y;
     
@@ -804,7 +830,7 @@ void testApp::LEVEL_UPDATE_0(){
         ofPoint  cuePos[3];
         cuePos[0].set(460, -138);
         cuePos[1].set(460, 138);
-        cuePos[2].set(1910, -9);
+        cuePos[2].set(2190, -36);
         
         for (int i=0; i<3; i++) {
             cue.push_back(&D8);
@@ -852,8 +878,8 @@ void testApp::LEVEL_UPDATE_0(){
                 timer = 0;
                 bStatistics = false;
                 
-                char_A.character.setPosition(100, 0);
-                char_B.character.setPosition(-100, 0);
+                char_A.character.setPosition(0, 0);
+                char_B.character.setPosition(0, 0);
                 char_A.condition = C_STOP;
                 char_B.condition = C_STOP;
                 rope_A.condition = R_NO_USE;

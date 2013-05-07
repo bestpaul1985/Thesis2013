@@ -12,7 +12,7 @@
 void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
    
     if (charNum == 0) {
-        url[0] = "levelTxt/A/level1var1A.txt";
+        url[0] = "levelTxt/A/level1var1_Paul_A.txt";
         url[1] = "levelTxt/A/level1var2A.txt";
         url[2] = "levelTxt/A/level1var3A.txt";
         
@@ -27,7 +27,7 @@ void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
         imgs[2] = "bg/ground";
     }
     else{
-        url[0] = "levelTxt/B/level1var1B.txt";
+        url[0] = "levelTxt/B/level1var1_Paul_B.txt";
         url[1] = "levelTxt/B/level1var2B.txt";
         url[2] = "levelTxt/B/level1var3B.txt";
         
@@ -94,7 +94,7 @@ void ttGround::draw(){
     for (int i = 0 ; i< bgImg.size(); i++) {
         
         float imgMul = bgImg[0].width*(ofGetHeight()/2)/bgImg[0].height;
-        cout<<imgMul<<endl;
+       
         if (charNo == 0) {
             bgImg[i].draw(-502 + (imgMul*i), -456, imgMul, 384);
         }

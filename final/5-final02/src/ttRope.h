@@ -39,6 +39,7 @@ public:
     ofPoint             *hook_end;
     ofPoint             *hook_start;
     ofPoint             *accFrc;
+    ofPoint             preAccFrc;
     
 };
 

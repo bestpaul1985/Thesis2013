@@ -26,6 +26,7 @@ void ttRope::setup(ofxBox2d &_world_B, ttChar &_A, ttChar &_B,ofPoint &_rope_sta
     hook_end = &hook_end_A;
     hook_start = &hook_start_A;
     accFrc = &_accFrc;
+    preAccFrc = *accFrc;
 }
 //----------------------------------------
 void ttRope::update(){
@@ -52,18 +53,28 @@ void ttRope::update(){
         //swing acclerometer-------------------------------
     if (accFrc->y > 0.4 && !bSwing_left) {
         if (condition == R_SWING) {
-            B->character.addForce(ofPoint(-30,0), 100);
+            
+            float frc = ofMap(accFrc->y - preAccFrc.y, 0.01, 0.1, -30, -100,true);
+            B->character.addForce(ofPoint(frc,0), 100);
+//            cout<<"L: " <<accFrc->y - preAccFrc.y << "frc: "<< frc<<endl;
+
         }
         bSwing_left = true;
+        bSwing_right = false;
     }
     
     if (accFrc->y < -0.4 && !bSwing_right) {
         if (condition == R_SWING) {
             B->character.addForce(ofPoint(30,0), 100);
+            float frc = ofMap(accFrc->y - preAccFrc.y, -0.01, -0.1, 30, 100,true);
+//            cout<<"R: " <<accFrc->y - preAccFrc.y << "frc: "<< frc<<endl;
+
         }
-    
         bSwing_right = true;
+        bSwing_left = false;
     }
+    
+    
     if (condition == R_SWING) {
         ofPoint diff =  B->character.getPosition() - rope_anchor.getPosition();
         if (charNum == 0) {
@@ -87,7 +98,8 @@ void ttRope::update(){
         bSwing_left = false;
         bSwing_right = false;
     }
-
+   
+    preAccFrc = *accFrc;
 }
 
 //----------------------------------------

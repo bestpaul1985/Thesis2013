@@ -16,7 +16,7 @@ void ttThorn::setup(ofxBox2d &World, int level, int charnum){
     if (level == 0) {
         if (charNum == 0) {
             ofxBox2dRect thorn;
-            shape.set(200,-230,43,65);
+            shape.set(1925,-247,65,95);
             thorn.setPhysics(0.0f, 0.2f, 0.3f);
             thorn.setup(world->getWorld(), shape);
             thorn.body->GetFixtureList()->SetSensor(true);
@@ -29,7 +29,7 @@ void ttThorn::setup(ofxBox2d &World, int level, int charnum){
         
         if (charNum == 1) {
             ofxBox2dRect thorn;
-            shape.set(-200,193,43,65);
+            shape.set(2429,154,65,95);
             thorn.setPhysics(0.0f, 0.2f, 0.3f);
             thorn.setup(world->getWorld(), shape);
             thorn.body->GetFixtureList()->SetSensor(true);
