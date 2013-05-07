@@ -805,17 +805,28 @@ void testApp::LEVEL_UPDATE_0(){
         ground_B.setup(0, 1, world_B);
         
         //cub setup------------------
+        cue.clear();
+        cueScreen.clear();
+        posCue.clear();
+        
+        ofPoint  cuePos[3];
+        
+        cuePos[0].set(460, -138);
+        cuePos[1].set(460, 138);
+        cuePos[2].set(1910, -9);
+        
         for (int i=0; i<3; i++) {
             cue[i] = &D8;
-            bCue[i] = true;
+            cue.push_back(&D8);
+            bool temCue = true;
+            bCue.push_back(temCue);
+            posCue.push_back(cuePos[i]);
         }
-        posCue[0].set(460, -138);
-        posCue[1].set(460, 138);
-        posCue[2].set(1910, -9);
         
-        cueScreen[0] = &screen_A;
-        cueScreen[1] = &screen_B;
-        cueScreen[2] = &screen_A;
+        cueScreen.push_back(&screen_A);
+        cueScreen.push_back(&screen_B);
+        cueScreen.push_back(&screen_A);
+      
         
         levelRester = false;
     }
@@ -863,7 +874,7 @@ void testApp::LEVEL_UPDATE_0(){
             }
         }
         
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<bCue.size(); i++) {
             if (char_A.character.getPosition().distance(posCue[i])< 36 || char_B.character.getPosition().distance(posCue[i])< 36  ) {
                 if ( bCue[i]) {
                     bCue[i] = false;
@@ -880,12 +891,11 @@ void testApp::LEVEL_DRAW_0(){
     
     drawScene(0);
     //cub draw--------------------
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<cue.size(); i++) {
         if (bCue[i]) {
             ofSetColor(255);
             cue[i]->draw( posCue[i].x + cueScreen[i]->x-cue[i]->getWidth()/2,
                           posCue[i].y + cueScreen[i]->y-cue[i]->getHeight()/2);
-           
         }
     }
     

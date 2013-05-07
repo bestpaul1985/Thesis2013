@@ -146,12 +146,11 @@ class testApp : public ofxiPhoneApp{
     
         int timer;
         //cue
-        ofImage D4,D6,D8,D12,D20;
-        ofImage* cue[3];
-        bool  bCue[3];
-        ofPoint posCue[3];
-        ofPoint *cueScreen[3];
-        vector<ttVisualcue> cues;
+        ofImage D4,D6,D8,D12,D20;        
+        vector<bool>bCue;
+        vector<ofPoint>posCue;
+        vector<ofPoint*>cueScreen;
+        vector<ofImage*>cue;
         int cue_Num;
 };
 
