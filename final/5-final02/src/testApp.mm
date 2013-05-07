@@ -130,7 +130,7 @@ void testApp::setup(){
     //minigame
     catchGame.setup(ofxAccelerometer.getForce(), control);
     timer = 0;
-}
+}   
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
     if(e.a != NULL && e.b != NULL) {
@@ -245,16 +245,15 @@ void testApp::update(){
                 timer ++;
                 if (timer>50) {
                     timer = 0;
-                    condition = LEVEL_1;
+                    condition = LEVEL_6;
                     levelRester = true;
                 }
             }
         }break;
-    
-        case LEVEL_1:{
-            
+        case LEVEL_0:{
             if (levelRester) {
-                                
+                ground_A.destroy();
+                ground_B.destroy();
                 ground_A.setup(0, 0, world_A);
                 ground_B.setup(0, 1, world_B);
                 ttBirds bird;
@@ -264,6 +263,63 @@ void testApp::update(){
             }else{
                 if (!game_menu.show) {
                     gamePlay(0);
+                    
+                }
+                if (game_menu.goMain) {
+                    game_menu.goMain = false;
+                    condition = MAIN_MEUN;
+                }
+                
+                if (levelOver_A && levelOver_B) {
+                    char_A.condition = C_MINIGAME;
+                    char_B.condition = C_MINIGAME;
+                    rope_A.condition = R_MINIGAME;
+                    rope_B.condition = R_MINIGAME;
+                    catchGame.update();
+                }
+                
+                if (catchGame.bFinish) {
+                    bStatistics = true;
+                    catchGame.bFinish = false;
+                    catchGame.indicator = 0;
+                    levelOver_A = false;
+                    levelOver_B = false;
+                }
+                
+                if (bStatistics && control.bAllTouch) {
+                    timer ++;
+                    if (timer > 70) {
+                        timer = 0;
+                        
+                        bStatistics = false;
+                        char_A.character.setPosition(0, 0);
+                        char_B.character.setPosition(0, 0);
+                        char_A.condition = C_STOP;
+                        char_B.condition = C_STOP;
+                        rope_A.condition = R_NO_USE;
+                        rope_B.condition = R_NO_USE;
+                        
+                        condition = LEVEL_1;
+                    }
+                }
+            }
+
+        }break;
+            
+        case LEVEL_1:{
+            
+            if (levelRester) {
+                ground_A.destroy();
+                ground_B.destroy();
+                ground_A.setup(1, 0, world_A);
+                ground_B.setup(1, 1, world_B);
+                ttBirds bird;
+                bird.setup(world_A, bird_Render, char_A, 0, 300, 0);
+                birds_A.push_back(bird);
+                levelRester = false;
+            }else{
+                if (!game_menu.show) {
+                    gamePlay(1);
                    
                 }
                 if (game_menu.goMain) {
@@ -291,7 +347,7 @@ void testApp::update(){
                     timer ++;
                     if (timer > 70) {
                         timer = 0;
-                        condition = LEVEL_2;
+                        
                         bStatistics = false;
                         char_A.character.setPosition(0, 0);
                         char_B.character.setPosition(0, 0);
@@ -299,6 +355,8 @@ void testApp::update(){
                         char_B.condition = C_STOP;
                         rope_A.condition = R_NO_USE;
                         rope_B.condition = R_NO_USE;
+                        
+                        condition = LEVEL_2;
                     }
                 }
             }
@@ -308,14 +366,16 @@ void testApp::update(){
         }break;
         case LEVEL_2:{
             if (levelRester) {
-                ground_A.setup(1, 0, world_A);
-                ground_B.setup(1, 1, world_B);
+                ground_A.destroy();
+                ground_B.destroy();
+                ground_A.setup(2, 0, world_A);
+                ground_B.setup(2, 1, world_B);
                 levelRester = false;
             }else{
             
             
             if (!game_menu.show) {
-                gamePlay(0);
+                gamePlay(2);
             }
             if (game_menu.goMain) {
                 game_menu.goMain = false;
@@ -342,7 +402,7 @@ void testApp::update(){
                 timer ++;
                 if (timer > 70) {
                     timer = 0;
-                    condition = MAIN_MEUN;
+                    
                     bStatistics = false;
                     char_A.character.setPosition(0, 0);
                     char_B.character.setPosition(0, 0);
@@ -350,6 +410,8 @@ void testApp::update(){
                     char_B.condition = C_STOP;
                     rope_A.condition = R_NO_USE;
                     rope_B.condition = R_NO_USE;
+                    
+                    condition = LEVEL_3;
                 }
             }
         }
@@ -357,7 +419,224 @@ void testApp::update(){
            
         }break;
         case LEVEL_3:{
+            if (levelRester) {
+                ground_A.destroy();
+                ground_B.destroy();
+                ground_A.setup(3, 0, world_A);
+                ground_B.setup(3, 1, world_B);
+                ttBirds bird;
+                bird.setup(world_A, bird_Render, char_A, 0, 300, 0);
+                birds_A.push_back(bird);
+                levelRester = false;
+            }else{
+                if (!game_menu.show) {
+                    gamePlay(3);
+                    
+                }
+                if (game_menu.goMain) {
+                    game_menu.goMain = false;
+                    condition = MAIN_MEUN;
+                }
+                
+                if (levelOver_A && levelOver_B) {
+                    char_A.condition = C_MINIGAME;
+                    char_B.condition = C_MINIGAME;
+                    rope_A.condition = R_MINIGAME;
+                    rope_B.condition = R_MINIGAME;
+                    catchGame.update();
+                }
+                
+                if (catchGame.bFinish) {
+                    bStatistics = true;
+                    catchGame.bFinish = false;
+                    catchGame.indicator = 0;
+                    levelOver_A = false;
+                    levelOver_B = false;
+                }
+                
+                if (bStatistics && control.bAllTouch) {
+                    timer ++;
+                    if (timer > 70) {
+                        timer = 0;
+                        
+                        bStatistics = false;
+                        char_A.character.setPosition(0, 0);
+                        char_B.character.setPosition(0, 0);
+                        char_A.condition = C_STOP;
+                        char_B.condition = C_STOP;
+                        rope_A.condition = R_NO_USE;
+                        rope_B.condition = R_NO_USE;
+                        
+                        condition = LEVEL_4;
+                    }
+                }
+            }
+
             
+        }break;
+            
+        case LEVEL_4:{
+            if (levelRester) {
+                ground_A.destroy();
+                ground_B.destroy();
+                ground_A.setup(4, 0, world_A);
+                ground_B.setup(4, 1, world_B);
+                ttBirds bird;
+                bird.setup(world_A, bird_Render, char_A, 0, 300, 0);
+                birds_A.push_back(bird);
+                levelRester = false;
+            }else{
+                if (!game_menu.show) {
+                    gamePlay(4);
+                    
+                }
+                if (game_menu.goMain) {
+                    game_menu.goMain = false;
+                    condition = MAIN_MEUN;
+                }
+                
+                if (levelOver_A && levelOver_B) {
+                    char_A.condition = C_MINIGAME;
+                    char_B.condition = C_MINIGAME;
+                    rope_A.condition = R_MINIGAME;
+                    rope_B.condition = R_MINIGAME;
+                    catchGame.update();
+                }
+                
+                if (catchGame.bFinish) {
+                    bStatistics = true;
+                    catchGame.bFinish = false;
+                    catchGame.indicator = 0;
+                    levelOver_A = false;
+                    levelOver_B = false;
+                }
+                
+                if (bStatistics && control.bAllTouch) {
+                    timer ++;
+                    if (timer > 70) {
+                        timer = 0;
+                        
+                        bStatistics = false;
+                        char_A.character.setPosition(0, 0);
+                        char_B.character.setPosition(0, 0);
+                        char_A.condition = C_STOP;
+                        char_B.condition = C_STOP;
+                        rope_A.condition = R_NO_USE;
+                        rope_B.condition = R_NO_USE;
+                        
+                        condition = LEVEL_5;
+                    }
+                }
+            }
+
+        }break;
+        case LEVEL_5:{
+            if (levelRester) {
+                ground_A.destroy();
+                ground_B.destroy();
+                ground_A.setup(5, 0, world_A);
+                ground_B.setup(5, 1, world_B);
+                ttBirds bird;
+                bird.setup(world_A, bird_Render, char_A, 0, 300, 0);
+                birds_A.push_back(bird);
+                levelRester = false;
+            }else{
+                if (!game_menu.show) {
+                    gamePlay(5);
+                    
+                }
+                if (game_menu.goMain) {
+                    game_menu.goMain = false;
+                    condition = MAIN_MEUN;
+                }
+                
+                if (levelOver_A && levelOver_B) {
+                    char_A.condition = C_MINIGAME;
+                    char_B.condition = C_MINIGAME;
+                    rope_A.condition = R_MINIGAME;
+                    rope_B.condition = R_MINIGAME;
+                    catchGame.update();
+                }
+                
+                if (catchGame.bFinish) {
+                    bStatistics = true;
+                    catchGame.bFinish = false;
+                    catchGame.indicator = 0;
+                    levelOver_A = false;
+                    levelOver_B = false;
+                }
+                
+                if (bStatistics && control.bAllTouch) {
+                    timer ++;
+                    if (timer > 70) {
+                        timer = 0;
+                        
+                        bStatistics = false;
+                        char_A.character.setPosition(0, 0);
+                        char_B.character.setPosition(0, 0);
+                        char_A.condition = C_STOP;
+                        char_B.condition = C_STOP;
+                        rope_A.condition = R_NO_USE;
+                        rope_B.condition = R_NO_USE;
+                        
+                        condition = LEVEL_6;
+                    }
+                }
+            }
+        }break;
+        case LEVEL_6:{
+            if (levelRester) {
+                ground_A.destroy();
+                ground_B.destroy();
+                ground_A.setup(6, 0, world_A);
+                ground_B.setup(6, 1, world_B);
+                ttBirds bird;
+                bird.setup(world_A, bird_Render, char_A, 0, 300, 0);
+                birds_A.push_back(bird);
+                levelRester = false;
+            }else{
+                if (!game_menu.show) {
+                    gamePlay(6);
+                    
+                }
+                if (game_menu.goMain) {
+                    game_menu.goMain = false;
+                    condition = MAIN_MEUN;
+                }
+                
+                if (levelOver_A && levelOver_B) {
+                    char_A.condition = C_MINIGAME;
+                    char_B.condition = C_MINIGAME;
+                    rope_A.condition = R_MINIGAME;
+                    rope_B.condition = R_MINIGAME;
+                    catchGame.update();
+                }
+                
+                if (catchGame.bFinish) {
+                    bStatistics = true;
+                    catchGame.bFinish = false;
+                    catchGame.indicator = 0;
+                    levelOver_A = false;
+                    levelOver_B = false;
+                }
+                
+                if (bStatistics && control.bAllTouch) {
+                    timer ++;
+                    if (timer > 70) {
+                        timer = 0;
+                        
+                        bStatistics = false;
+                        char_A.character.setPosition(0, 0);
+                        char_B.character.setPosition(0, 0);
+                        char_A.condition = C_STOP;
+                        char_B.condition = C_STOP;
+                        rope_A.condition = R_NO_USE;
+                        rope_B.condition = R_NO_USE;
+                        
+                        condition = MAIN_MEUN;
+                    }
+                }
+            }
         }break;
     }
     
@@ -654,7 +933,6 @@ void testApp::draw(){
             control.draw();
         } break;
         case LEVEL_1:{
-            
             drawScene(0);
             game_menu.draw();
             if (levelOver_A && levelOver_B) {
@@ -683,6 +961,45 @@ void testApp::draw(){
             
         }break;
         case LEVEL_3:{
+            drawScene(0);
+            game_menu.draw();
+            if (levelOver_A && levelOver_B) {
+                catchGame.draw();
+                rope_A.draw_minigame(ofPoint(500,500));
+                rope_B.draw_minigame(ofPoint(500,500));
+            }
+            if (bStatistics) {
+                gameEnd(0);
+            }
+            control.draw();
+        }break;
+        case LEVEL_4:{
+            drawScene(0);
+            game_menu.draw();
+            if (levelOver_A && levelOver_B) {
+                catchGame.draw();
+                rope_A.draw_minigame(ofPoint(500,500));
+                rope_B.draw_minigame(ofPoint(500,500));
+            }
+            if (bStatistics) {
+                gameEnd(0);
+            }
+            control.draw();
+        }break;
+        case LEVEL_5:{
+            drawScene(0);
+            game_menu.draw();
+            if (levelOver_A && levelOver_B) {
+                catchGame.draw();
+                rope_A.draw_minigame(ofPoint(500,500));
+                rope_B.draw_minigame(ofPoint(500,500));
+            }
+            if (bStatistics) {
+                gameEnd(0);
+            }
+            control.draw();
+        }break;
+        case LEVEL_6:{
             drawScene(0);
             game_menu.draw();
             if (levelOver_A && levelOver_B) {
@@ -796,7 +1113,7 @@ void testApp::position(int level){
     float catchUpSpeed = 0.05f;
     ofPoint catch_A, catch_B;
    
-    if (level == 0) {
+//    if (level == 0) {
         char_A.getPos.x<0? A[0] = true: A[0] =false;
         char_B.getPos.x<0? B[0] = true: B[0] =false;
    
@@ -826,8 +1143,8 @@ void testApp::position(int level){
             catch_B.y = char_B.getPos.y;
         }
 
-    }
-        
+//    }
+    
     
     if (rope_B.condition != R_SWING) {
         camera_A.x = catchUpSpeed * catch_A.x + (1-catchUpSpeed) * camera_A.x;

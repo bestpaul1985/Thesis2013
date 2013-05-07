@@ -22,8 +22,8 @@ class ttGround{
     
     vector<ofImage> bgImg;
     int levelNo, charNo;
-    string url[3];
-    string imgs[3];
+    string url[7];
+    string imgs[7];
 };
 
 #endif /* defined(__springBreak01__ground__) */
