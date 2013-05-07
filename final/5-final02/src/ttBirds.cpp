@@ -9,8 +9,9 @@
 #include "ttBirds.h"
 
 void ttBirds::setup(ofxBox2d &World, ofxSpriteSheetRenderer *render,ttChar &Target, float x, float y,int num){
-    bird.setPhysics(.3f, 0.0f, 0.5f);
+    
     world = &World;
+    bird.setPhysics(1.0f, 0.5f, 0.5f);
     bird.setup(world->getWorld(),x,y,10);
     birdNum = num;
     target = &Target;
@@ -24,26 +25,30 @@ void ttBirds::setup(ofxBox2d &World, ofxSpriteSheetRenderer *render,ttChar &Targ
     flip = false;
     getPos = bird.getPosition();
     condition = BIRD_FLY;
-    killZone.setFromCenter(bird.getPosition(), 100+30, 50+66);
+    killZone.setFromCenter(bird.getPosition(), 50, 50);
+    radius = 100;
 }
 
 
 //------------------------------------------------------
 void ttBirds::update(){
     
-    frc.x = bird.getVelocity().x * -3;
+   
     
     switch (condition) {
         case BIRD_FLY:{
-            fly();
+            
+            
             bird.body->ApplyForce(bird.body->GetMass() * -world->getWorld()->GetGravity(), bird.body->GetWorldCenter());
+            fly();
+
             spriteRenderer->clear();
             spriteRenderer->update(ofGetElapsedTimeMillis());
             sprites[0]->animation.loops = -1;
-            sprites[0]->animation.frame_duration  = 130;
+            sprites[0]->animation.frame_duration  = 75;
             sprites[0]->animation.frame_duration /= ofClamp(fabs(bird.getVelocity().x), 1, 3);
             spriteRenderer->addCenteredTile(&sprites[0]->animation, sprites[0]->pos.x, sprites[0]->pos.y);
-            killZone.setFromCenter(bird.getPosition(), 100+30, 50+66);
+            killZone.setFromCenter(bird.getPosition(),50, 50);
         }
             break;
             
@@ -73,9 +78,11 @@ void ttBirds::update(){
 }
 //------------------------------------------------------
 void ttBirds::draw(){
+    
+    ofSetColor(220, 30, 100,100);
+    ofCircle(bird.getPosition(), radius);
     ofSetColor(220, 30, 255);
     bird.draw();
-    ofRect(killZone);
     
     ofPushMatrix();
     if(birdNum==0){
@@ -88,33 +95,24 @@ void ttBirds::draw(){
     flip? ofScale(-1, 1):ofScale(1, 1);
     spriteRenderer->draw();
     ofPopMatrix();
-    
-    
-    
+    cout<<bird.getPosition()<<endl;
 }
 //------------------------------------------------------
 void ttBirds::fly(){
-
+    if (bird.getPosition().x>2000) {
+        frc.x =-50;
+        bird.setPosition(2000, bird.getPosition().y);
+        flip = true;
+    }
     
-//    if (bird.getPosition().x>500) {
-//        frc.x =-50;
-//        bird.setPosition(500, bird.getPosition().y);
-//        flip = true;
-//    }
-//    
-//    if (bird.getPosition().x<200) {
-//        frc.x =50;
-//        bird.setPosition(200, bird.getPosition().y);
-//        flip = false;
-//    }
+    if (bird.getPosition().x<-200) {
+        frc.x =50;
+        bird.setPosition(-200, bird.getPosition().y);
+        flip = false;
+    }
     
-//    if (fabs(bird.getVelocity().x) <3) {
-//        bird.addForce(frc, 1);
-//    }
-    
-//    if (killZone.inside(target->character.getPosition().x, target->character.getPosition().y)) {
-//        target->condition = C_DEAD;
-//        condition = BIRD_ATTACK;
-//    }
+    if (fabs(bird.getVelocity().x) <3) {
+        bird.addForce(frc, 3);
+    }
     
 }

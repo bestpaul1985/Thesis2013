@@ -78,10 +78,11 @@ void testApp::setup(){
     dog_Render ->loadTexture("sprites/all_dog.png", 2040, GL_NEAREST);
     rabit_Render = new ofxSpriteSheetRenderer(1, 1000, 0, 30);
     rabit_Render ->loadTexture("sprites/rabit.png", 2040, GL_NEAREST);
-    bird_Render =new ofxSpriteSheetRenderer(1,1000,0,120);
-    bird_Render ->loadTexture("sprites/all_dog.png", 2040, GL_NEAREST);
+    bird_Render =new ofxSpriteSheetRenderer(1,1000,0,100);
+    bird_Render ->loadTexture("sprites/all_bird.png", 2040, GL_NEAREST);
    
-    
+   
+
 //    //dog
 //    dog_A.setup(world_A,dog_Render, -1000, 2000, 0);
 //    dog_B.setup(world_B,dog_Render, -1000, 2000, 1);
@@ -253,19 +254,17 @@ void testApp::update(){
         case LEVEL_1:{
             
             if (levelRester) {
-                ttBirds bird;
-                bird.setup(world_A, bird_Render, char_A, 200, 200, 0);
-                birds_A.push_back(bird);
-                
+                                
                 ground_A.setup(0, 0, world_A);
                 ground_B.setup(0, 1, world_B);
+                ttBirds bird;
+                bird.setup(world_A, bird_Render, char_A, 0, 300, 0);
+                birds_A.push_back(bird);
                 levelRester = false;
             }else{
                 if (!game_menu.show) {
-                    birds_A[0].update();
                     gamePlay(0);
-                    world_A.update();
-                    world_B.update();
+                   
                 }
                 if (game_menu.goMain) {
                     game_menu.goMain = false;
@@ -317,8 +316,6 @@ void testApp::update(){
             
             if (!game_menu.show) {
                 gamePlay(0);
-                world_A.update();
-                world_B.update();
             }
             if (game_menu.goMain) {
                 game_menu.goMain = false;
@@ -368,7 +365,12 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::gamePlay(int level){
     
+    for (int i=0; i<birds_A.size(); i++) {
+        birds_A[0].update();
+    }
     
+    world_A.update();
+    world_B.update();
     
     //no jump in sky
     if (numFootContacts_A<=0) {
@@ -722,12 +724,11 @@ void testApp::drawScene(int level){
         
         sky.drawCloud();
     if (level == 0) {
-        ofPushMatrix();
-        ofTranslate(screen_A);
+       
         for (int i=0; i<birds_A.size(); i++) {
              birds_A[i].draw();
         }
-        ofPopMatrix();
+       
     }
     if (level == 1) {
       

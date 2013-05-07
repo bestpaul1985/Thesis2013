@@ -14,7 +14,7 @@
 #include "ofxSpriteSheetRenderer.h"
 #include "ttChar.h"
 
-static animation_t _bird_fly = {   0,  0,  15,  1,  1,  75, 0,  -1, -1, 1 };
+static animation_t _bird_fly = {   0,  0,  13,  1,  1,  75, 0,  -1, -1, 1 };
 
 enum _bird_condition{
     BIRD_FLY,
@@ -43,7 +43,7 @@ public:
     vector <basicSprite_ttBirds * >     sprites;
     ofPoint                             frc;
     ofPoint                             getPos;
-    
+    float                               radius;
     ofRectangle                         killZone;
     ttChar                              *target;
     int                                 birdNum;
