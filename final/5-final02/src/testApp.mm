@@ -245,7 +245,7 @@ void testApp::update(){
                 timer ++;
                 if (timer>50) {
                     timer = 0;
-                    condition = LEVEL_6;
+                    condition = LEVEL_0;
                     levelRester = true;
                 }
             }
@@ -807,7 +807,6 @@ void testApp::gamePlay(int level){
 //    
     
 }
-
 //--------------------------------------------------------------
 void testApp::gameEnd(int level){
     float orgRadius = 180;
@@ -926,28 +925,47 @@ void testApp::gameEnd(int level){
 }
 //--------------------------------------------------------------
 void testApp::draw(){
-    
+    ofPoint pt[2];
+    float radius = 40;
     switch (condition) {
         case MAIN_MEUN:{
             main_menu.draw();
             control.draw();
         } break;
-        case LEVEL_1:{
+        case LEVEL_0:{
             drawScene(0);
             game_menu.draw();
             if (levelOver_A && levelOver_B) {
                 catchGame.draw();
-                rope_A.draw_minigame(catchGame.cursorIn);
-                rope_B.draw_minigame(catchGame.cursorIn);
+                pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
+                pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
+                pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
+                pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
+                rope_A.draw_minigame(pt[0]);
+                rope_B.draw_minigame(pt[1]);
             }
             if (bStatistics) {
                 gameEnd(0);
+            }
+            control.draw();
+            
+        }break;
+        case LEVEL_1:{
+            drawScene(1);
+            game_menu.draw();
+            if (levelOver_A && levelOver_B) {
+                catchGame.draw();
+                rope_A.draw_minigame(ofPoint(500,500));
+                rope_B.draw_minigame(ofPoint(500,500));
+            }
+            if (bStatistics) {
+                gameEnd(1);
             }
             control.draw();
             
         }break;
         case LEVEL_2:{
-            drawScene(0);
+            drawScene(2);
             game_menu.draw();
             if (levelOver_A && levelOver_B) {
                 catchGame.draw();
@@ -955,13 +973,12 @@ void testApp::draw(){
                 rope_B.draw_minigame(ofPoint(500,500));
             }
             if (bStatistics) {
-                gameEnd(0);
+                gameEnd(2);
             }
             control.draw();
-            
         }break;
         case LEVEL_3:{
-            drawScene(0);
+            drawScene(3);
             game_menu.draw();
             if (levelOver_A && levelOver_B) {
                 catchGame.draw();
@@ -969,12 +986,12 @@ void testApp::draw(){
                 rope_B.draw_minigame(ofPoint(500,500));
             }
             if (bStatistics) {
-                gameEnd(0);
+                gameEnd(3);
             }
             control.draw();
         }break;
         case LEVEL_4:{
-            drawScene(0);
+            drawScene(4);
             game_menu.draw();
             if (levelOver_A && levelOver_B) {
                 catchGame.draw();
@@ -982,12 +999,12 @@ void testApp::draw(){
                 rope_B.draw_minigame(ofPoint(500,500));
             }
             if (bStatistics) {
-                gameEnd(0);
+                gameEnd(4);
             }
             control.draw();
         }break;
         case LEVEL_5:{
-            drawScene(0);
+            drawScene(5);
             game_menu.draw();
             if (levelOver_A && levelOver_B) {
                 catchGame.draw();
@@ -995,12 +1012,12 @@ void testApp::draw(){
                 rope_B.draw_minigame(ofPoint(500,500));
             }
             if (bStatistics) {
-                gameEnd(0);
+                gameEnd(5);
             }
             control.draw();
         }break;
         case LEVEL_6:{
-            drawScene(0);
+            drawScene(6);
             game_menu.draw();
             if (levelOver_A && levelOver_B) {
                 catchGame.draw();
@@ -1008,7 +1025,7 @@ void testApp::draw(){
                 rope_B.draw_minigame(ofPoint(500,500));
             }
             if (bStatistics) {
-                gameEnd(0);
+                gameEnd(6);
             }
             control.draw();
         }break;
@@ -1040,19 +1057,28 @@ void testApp::drawScene(int level){
         ofPopMatrix();
         
         sky.drawCloud();
-    if (level == 0) {
-       
-        for (int i=0; i<birds_A.size(); i++) {
-             birds_A[i].draw();
+        if (level == 0) {
+            
+            for (int i=0; i<birds_A.size(); i++) {
+                birds_A[i].draw();
+                }
         }
-       
-    }
-    if (level == 1) {
-      
-    }
-    if (level == 2) {
-        
-    }
+        if (level == 1) {
+
+        }
+        if (level == 2) {
+
+        }if (level == 3) {
+
+        }
+        if (level == 4) {
+
+        }if (level == 5) {
+
+        }
+        if (level == 6) {
+
+        }
     
         ofPushMatrix();
         ofTranslate(screen_A);
@@ -1080,7 +1106,6 @@ void testApp::drawScene(int level){
 void testApp::exit(){
 
 }
-
 //--------------------------------------------------------------
 void testApp::touchDown(ofTouchEventArgs & touch){
    
@@ -1088,13 +1113,11 @@ void testApp::touchDown(ofTouchEventArgs & touch){
     control.touchDown(touch.x, touch.y,touch.id);
     ofPoint pos(touch.x, touch.y);
 }
-
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
     control.touchMove(touch.x, touch.y,touch.id);
     
 }
-
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
     control.touchUp(touch.x, touch.y,touch.id);

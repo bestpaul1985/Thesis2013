@@ -24,7 +24,7 @@ void inGameMenu::update(){
 void inGameMenu::draw(){
     
     if (show) {
-        ofSetColor(30,100);
+        ofSetColor(30,180);
         ofRect(0, 0, ofGetWidth(), ofGetHeight());
         ofSetColor(255,200);
 //        ofCircle(orgPos, 200);

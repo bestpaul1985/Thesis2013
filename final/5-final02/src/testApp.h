@@ -21,7 +21,6 @@
 #include "inGameMenu.h"
 #include "ttCatchgame.h"
 #include "ttBirds.h"
-#include "ttNewGround.h"
 
 enum game_condition {
     MAIN_MEUN,
