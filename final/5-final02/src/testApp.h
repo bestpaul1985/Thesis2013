@@ -154,6 +154,7 @@ class testApp : public ofxiPhoneApp{
         vector<ofPoint*>cueScreen;
         vector<ofImage*>cue;
         int cue_Num;
+    
 };
 
 

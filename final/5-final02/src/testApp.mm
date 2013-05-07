@@ -235,7 +235,9 @@ void testApp::update(){
             char_B.character.setPosition(0, 0);
             camera_A.set(0, 0);
             camera_B.set(0, 0);
-           
+            world_A.update();
+            world_B.update();
+            
             if (control.bAllTouch) {
                 timer ++;
                 if (timer>50) {
@@ -631,6 +633,7 @@ void testApp::draw(){
     ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
     ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
 
+    
 }
 //-------------------------------------------------------------
 void testApp::drawScene(int level){
@@ -714,7 +717,7 @@ void testApp::position(int level){
     float catchUpSpeed = 0.05f;
     ofPoint catch_A, catch_B;
     ofPoint trans_catch_A, trans_catch_B;
-   
+    float tran_speed = 5;
 //    if (level == 0) {
         char_A.getPos.x<0? A[0] = true: A[0] =false;
         char_B.getPos.x<0? B[0] = true: B[0] =false;
@@ -731,8 +734,7 @@ void testApp::position(int level){
         }else if(A[1]){
             catch_A.x = 1690;
             catch_A.y =  char_A.getPos.y;
-            float speed = 1;
-            translate_A.x -=speed;
+            translate_A.x -=tran_speed;
             if (translate_A.x <0) {
                 translate_A.x = 0;
             }
@@ -743,7 +745,7 @@ void testApp::position(int level){
             translate_A.x =384;
             translate_A.y =384;
         }
-        
+    
         if (B[0]) {
             catch_B.x = 0;
             catch_B.y = char_B.getPos.y;
@@ -752,8 +754,7 @@ void testApp::position(int level){
         }else if(B[1]){
             catch_B.x = 1690;
             catch_B.y = char_B.getPos.y;
-            float speed = 1;
-            translate_B.x -=speed;
+            translate_B.x -=tran_speed;
             if (translate_B.x <0) {
                 translate_B.x = 0;
             }
@@ -1335,7 +1336,6 @@ void testApp::LEVEL_UPDATE_6(){
     }
 
 }
-
 //--------------------------------------------------------------
 void testApp::LEVEL_DRAW_1(){
     ofPoint pt[2];

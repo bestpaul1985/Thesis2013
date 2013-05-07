@@ -11,9 +11,9 @@
 void ttSky::setup(ofImage &sky){
 
     skyBg = &sky;
-    cloud01.loadImage("sprites/bg/sky/cloud01.png");
-    cloud02.loadImage("sprites/bg/sky/cloud02.png");
-    cloud03.loadImage("sprites/bg/sky/cloud03.png");
+    cloud01.loadImage("bg/sky/cloud01.png");
+    cloud02.loadImage("bg/sky/cloud02.png");
+    cloud03.loadImage("bg/sky/cloud03.png");
     speed01 = 0.5;
     speed02 = 0.7;
     speed03 = 1.0;
