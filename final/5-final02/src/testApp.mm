@@ -576,130 +576,28 @@ void testApp::draw(){
             control.draw();
         } break;
         case LEVEL_0:{
-            drawScene(0);
-            game_menu.draw();
-            if (levelOver_A && levelOver_B) {
-                catchGame.draw();
-                pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
-                pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
-                pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
-                pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
-                rope_A.draw_minigame(pt[0]);
-                rope_B.draw_minigame(pt[1]);
-            }
-            if (bStatistics) {
-                gameEnd(0);
-            }
-            control.draw();
-            
+            LEVEL_DRAW_0();
         }break;
         case LEVEL_1:{
-            drawScene(1);
-            game_menu.draw();
-            if (levelOver_A && levelOver_B) {
-                catchGame.draw();
-                pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
-                pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
-                pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
-                pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
-                rope_A.draw_minigame(pt[0]);
-                rope_B.draw_minigame(pt[1]);
-            }
-            if (bStatistics) {
-                gameEnd(1);
-            }
-            control.draw();
-            
+            LEVEL_DRAW_1();
         }break;
         case LEVEL_2:{
-            drawScene(2);
-            game_menu.draw();
-            if (levelOver_A && levelOver_B) {
-                catchGame.draw();
-                pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
-                pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
-                pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
-                pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
-                rope_A.draw_minigame(pt[0]);
-                rope_B.draw_minigame(pt[1]);
-            }
-            if (bStatistics) {
-                gameEnd(2);
-            }
-            control.draw();
+            LEVEL_DRAW_2();
         }break;
         case LEVEL_3:{
-            drawScene(3);
-            game_menu.draw();
-            if (levelOver_A && levelOver_B) {
-                catchGame.draw();
-                pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
-                pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
-                pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
-                pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
-                rope_A.draw_minigame(pt[0]);
-                rope_B.draw_minigame(pt[1]);
-            }
-            if (bStatistics) {
-                gameEnd(3);
-            }
-            control.draw();
+            LEVEL_DRAW_3();
         }break;
         case LEVEL_4:{
-            drawScene(4);
-            game_menu.draw();
-            if (levelOver_A && levelOver_B) {
-                catchGame.draw();
-                pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
-                pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
-                pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
-                pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
-                rope_A.draw_minigame(pt[0]);
-                rope_B.draw_minigame(pt[1]);
-            }
-            if (bStatistics) {
-                gameEnd(4);
-            }
-            control.draw();
+            LEVEL_DRAW_4();
         }break;
         case LEVEL_5:{
-            drawScene(5);
-            game_menu.draw();
-            if (levelOver_A && levelOver_B) {
-                catchGame.draw();
-                pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
-                pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
-                pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
-                pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
-                rope_A.draw_minigame(pt[0]);
-                rope_B.draw_minigame(pt[1]);
-            }
-            if (bStatistics) {
-                gameEnd(5);
-            }
-            control.draw();
+            LEVEL_DRAW_5();
         }break;
         case LEVEL_6:{
-            drawScene(6);
-            game_menu.draw();
-            if (levelOver_A && levelOver_B) {
-                catchGame.draw();
-                pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
-                pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
-                pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
-                pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
-                rope_A.draw_minigame(pt[0]);
-                rope_B.draw_minigame(pt[1]);
-            }
-            if (bStatistics) {
-                gameEnd(6);
-            }
-            control.draw();
+           LEVEL_DRAW_6();
         }break;
     }
     
-
-       
     ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
     ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
 
@@ -724,27 +622,9 @@ void testApp::drawScene(int level){
         ofPopMatrix();
         
         sky.drawCloud();
-        if (level == 0) {
-            
-            for (int i=0; i<birds_A.size(); i++) {
-                birds_A[i].draw();
-                }
-        }
-        if (level == 1) {
-
-        }
-        if (level == 2) {
-
-        }if (level == 3) {
-
-        }
-        if (level == 4) {
-
-        }if (level == 5) {
-
-        }
-        if (level == 6) {
-
+    
+        for (int i=0; i<birds_A.size(); i++) {
+            birds_A[i].draw();
         }
     
         ofPushMatrix();
@@ -1258,10 +1138,148 @@ void testApp::LEVEL_UPDATE_6(){
     }
 
 }
-
-
-
-
-
-
-
+//--------------------------------------------------------------
+void testApp::LEVEL_DRAW_0(){
+    ofPoint pt[2];
+    float radius = 40;
+    
+    drawScene(0);
+    
+    game_menu.draw();
+    
+    if (levelOver_A && levelOver_B) {
+        catchGame.draw();
+        pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
+        pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
+        pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
+        pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
+        rope_A.draw_minigame(pt[0]);
+        rope_B.draw_minigame(pt[1]);
+    }
+    
+    if (bStatistics) {
+        gameEnd(0);
+    }
+    
+    control.draw();
+}
+//--------------------------------------------------------------
+void testApp::LEVEL_DRAW_1(){
+    ofPoint pt[2];
+    float radius = 40;
+    drawScene(1);
+    game_menu.draw();
+    if (levelOver_A && levelOver_B) {
+        catchGame.draw();
+        pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
+        pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
+        pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
+        pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
+        rope_A.draw_minigame(pt[0]);
+        rope_B.draw_minigame(pt[1]);
+    }
+    if (bStatistics) {
+        gameEnd(1);
+    }
+    control.draw();
+}
+//--------------------------------------------------------------
+void testApp::LEVEL_DRAW_2(){
+    ofPoint pt[2];
+    float radius = 40;
+    drawScene(2);
+    game_menu.draw();
+    if (levelOver_A && levelOver_B) {
+        catchGame.draw();
+        pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
+        pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
+        pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
+        pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
+        rope_A.draw_minigame(pt[0]);
+        rope_B.draw_minigame(pt[1]);
+    }
+    if (bStatistics) {
+        gameEnd(2);
+    }
+    control.draw();
+}
+//--------------------------------------------------------------
+void testApp::LEVEL_DRAW_3(){
+    ofPoint pt[2];
+    float radius = 40;
+    drawScene(3);
+    game_menu.draw();
+    if (levelOver_A && levelOver_B) {
+        catchGame.draw();
+        pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
+        pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
+        pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
+        pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
+        rope_A.draw_minigame(pt[0]);
+        rope_B.draw_minigame(pt[1]);
+    }
+    if (bStatistics) {
+        gameEnd(3);
+    }
+    control.draw();
+}
+//--------------------------------------------------------------
+void testApp::LEVEL_DRAW_4(){
+    ofPoint pt[2];
+    float radius = 40;
+    drawScene(4);
+    game_menu.draw();
+    if (levelOver_A && levelOver_B) {
+        catchGame.draw();
+        pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
+        pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
+        pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
+        pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
+        rope_A.draw_minigame(pt[0]);
+        rope_B.draw_minigame(pt[1]);
+    }
+    if (bStatistics) {
+        gameEnd(4);
+    }
+    control.draw();
+}
+//--------------------------------------------------------------
+void testApp::LEVEL_DRAW_5(){
+    ofPoint pt[2];
+    float radius = 40;
+    drawScene(5);
+    game_menu.draw();
+    if (levelOver_A && levelOver_B) {
+        catchGame.draw();
+        pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
+        pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
+        pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
+        pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
+        rope_A.draw_minigame(pt[0]);
+        rope_B.draw_minigame(pt[1]);
+    }
+    if (bStatistics) {
+        gameEnd(5);
+    }
+    control.draw();
+}
+//--------------------------------------------------------------
+void testApp::LEVEL_DRAW_6(){
+    ofPoint pt[2];
+    float radius = 40;
+    drawScene(6);
+    game_menu.draw();
+    if (levelOver_A && levelOver_B) {
+        catchGame.draw();
+        pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
+        pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
+        pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
+        pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
+        rope_A.draw_minigame(pt[0]);
+        rope_B.draw_minigame(pt[1]);
+    }
+    if (bStatistics) {
+        gameEnd(6);
+    }
+    control.draw();
+}
