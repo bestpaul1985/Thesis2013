@@ -71,21 +71,11 @@ void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
 		vector <string> pts = ofSplitString(strLines[i], ",");
 		if(pts.size() > 0) {
 			ofxBox2dPolygon poly;
-            ttGroundVisual temp;
 			for (int j=0; j<pts.size(); j+=2) {
 				if(pts[j].size() > 0) {
 					float x = ofToFloat(pts[j]);
 					float y = ofToFloat(pts[j+1]);
-                    poly.addVertex(x, y);
-                    
-                    if (j>0) {
-                        if (prevX != x) {
-                            temp.setup(x, y, prevX-x, 100);
-                            drawGround.push_back(temp);
-                        }
-                    }
-                    prevX = x;
-                    prevY = y;
+					poly.addVertex(x, y);
 				}
 			}
             poly.setPhysics(0.0f, 0.0f, 0.1f);
@@ -93,9 +83,6 @@ void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
 			ground.push_back(poly);
 		}
 	}
-    
-    
- 
     
     
 }
@@ -107,7 +94,7 @@ void ttGround::draw(){
 //    for (int i = 0 ; i< bgImg.size(); i++) {
 //        if (levelNo == 1) {
 //            float imgMul = bgImg[0].width*(ofGetHeight()/2)/bgImg[0].height;
-// //           float imgMul = 483*(384)/386;
+////            float imgMul = 483*(384)/386;
 //            if (charNo == 0) {
 //                ofSetColor(255,255);
 //                bgImg[i].draw(-410 + (imgMul*i)-i ,-250, imgMul, 384);
@@ -117,20 +104,10 @@ void ttGround::draw(){
 //            }
 //        }
 //    }
-    
-    
-    
-    for (int i=0; i<drawGround.size(); i++) {
-		drawGround[i].draw();
-	}
-    
 }
 
-
-
 void ttGround::drawPolyLine(){
-    ofSetColor(ofColor::violet);
-    ofSetLineWidth(2);
+    ofSetColor(ofColor::blueViolet);
     for (int i=0; i<ground.size(); i++) {
 		ground[i].draw();
 	}
@@ -142,7 +119,6 @@ void ttGround::destroy(){
     for (int i=0; i<ground.size(); i++) {
         ground[i].destroy();
     }
-    drawGround.clear();
 }
 
 
