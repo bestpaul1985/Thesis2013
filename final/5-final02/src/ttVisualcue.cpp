@@ -7,3 +7,22 @@
 //
 
 #include "ttVisualcue.h"
+
+ttVisualcue::ttVisualcue(){
+    
+    
+}
+
+void ttVisualcue::setup(ofImage &Image){
+    image = & Image;
+}
+
+
+void ttVisualcue::draw(ofPoint Pos, float W, float H){
+    
+    pos = Pos;
+    w = W;
+    h = H;
+    image->draw(pos, w, h);
+    
+}

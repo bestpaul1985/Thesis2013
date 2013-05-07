@@ -11,6 +11,8 @@
 void ttThorn::setup(ofxBox2d &World, int level, int charnum){
     charNum = charnum;
     world = &World;
+    
+    
     if (level == 0) {
         if (charNum == 0) {
             ofxBox2dRect thorn;
@@ -39,6 +41,24 @@ void ttThorn::setup(ofxBox2d &World, int level, int charnum){
         }
     }
     
+    if (level ==1) {
+        
+    }
+    if (level ==2) {
+        
+    }
+    if (level ==3) {
+        
+    }
+    if (level ==4) {
+        
+    }
+    if (level ==5) {
+        
+    }
+    if (level ==6) {
+        
+    }
     
 }
 

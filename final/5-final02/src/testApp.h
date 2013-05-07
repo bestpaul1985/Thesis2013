@@ -21,7 +21,7 @@
 #include "inGameMenu.h"
 #include "ttCatchgame.h"
 #include "ttBirds.h"
-
+#include "ttVisualcue.h"
 enum game_condition {
     MAIN_MEUN,
     LEVEL_0,
@@ -60,6 +60,23 @@ class testApp : public ofxiPhoneApp{
         void position(int level);
         void gamePlay(int level);
         void gameEnd(int level);
+    
+        void LEVEL_UPDATE_0();
+        void LEVEL_UPDATE_1();
+        void LEVEL_UPDATE_2();
+        void LEVEL_UPDATE_3();
+        void LEVEL_UPDATE_4();
+        void LEVEL_UPDATE_5();
+        void LEVEL_UPDATE_6();
+    
+        void LEVEL_DRAW_0();
+        void LEVEL_DRAW_1();
+        void LEVEL_DRAW_2();
+        void LEVEL_DRAW_3();
+        void LEVEL_DRAW_4();
+        void LEVEL_DRAW_5();
+        void LEVEL_DRAW_6();
+    
         game_condition condition;
     
         ofxBox2d            world_A,        world_B;
@@ -128,8 +145,15 @@ class testApp : public ofxiPhoneApp{
         ttCatchgame catchGame;
     
         int timer;
-        //elements
+        //cue
         ofImage element[5];
+        vector<ttVisualcue> d4;
+        vector<ttVisualcue> d6;
+        vector<ttVisualcue> d8;
+        vector<ttVisualcue> d12;
+        vector<ttVisualcue> d20;
+
+
 };
 
 

@@ -14,9 +14,12 @@
 class ttVisualcue{
 public:
     
-    void setup();
-    void draw();
+    ttVisualcue();
+    void setup(ofImage & Image);
+    void draw(ofPoint Pos, float W, float H);
     ofImage *image;
+    ofPoint pos;
+    float w, h;
 };
 
 #endif /* defined(__final02__ttVisualcue__) */
