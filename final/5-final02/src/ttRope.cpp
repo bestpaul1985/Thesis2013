@@ -118,9 +118,9 @@ void ttRope::draw_push(){
         hook_end->y = (1-hook_pct)*hook_start->y + hook_pct*(hook_start->y+offset);
         
         ofSetColor(0,100);
-        ofLine(hook_start->x,hook_start->y,hook_end->x, hook_end->y);
+//        ofLine(hook_start->x,hook_start->y,hook_end->x, hook_end->y);
         ofSetColor(255,0,100);
-        ofCircle(hook_end->x, hook_end->y, 10);
+//        ofCircle(hook_end->x, hook_end->y, 10);
         }
   
 }

@@ -115,7 +115,7 @@ void testApp::setup(){
     //gameEnd;
     gameEnd_bg.loadImage("menu/emojigraph72.png");
     gameEnd_font.loadFont("font/NewMedia Fett.ttf", 14);
-    gameEnd_font2.loadFont("font/NewMedia Fett.ttf", 16);
+    gameEnd_font2.loadFont("font/NewMedia Fett.ttf", 21);
     //minigame
     catchGame.setup(ofxAccelerometer.getForce(), control);
     timer = 0;
@@ -670,14 +670,6 @@ void testApp::drawScene(int level){
         emoji_B.draw();
         ofPopMatrix();
         // cub
-//    ofPushMatrix();
-    
-//    for (int i=0; i<d4.size(); i++) {d4[i].draw();}
-//    for (int i=0; i<d6.size(); i++) {d6[i].draw();}
-//    for (int i=0; i<d8.size(); i++) {d8[i].draw();}
-//    for (int i=0; i<d12.size(); i++) {d12[i].draw();}
-//    for (int i=0; i<d20.size(); i++) {d20[i].draw();}
-//    ofPopMatrix();
     
         //draw swing rope A
         rope_A.draw_swing(screen_B);
@@ -873,7 +865,6 @@ void testApp::LEVEL_UPDATE_0(){
         }
         
         for (int i=0; i<bCue.size(); i++) {
-            cout<<"ok"<<endl;
             if (char_A.character.getPosition().distance(posCue[i])< 36 || char_B.character.getPosition().distance(posCue[i])< 36  ) {
                 if (bCue[i]) {
                     bCue[i] = false;
