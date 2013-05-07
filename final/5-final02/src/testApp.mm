@@ -70,7 +70,7 @@ void testApp::setup(){
     bInSky_B = false;
     levelOver_A = false;
     levelOver_B = false;
-    levelRester = true;
+   
     bStatistics = false;
     //renderers
     dog_Render = new ofxSpriteSheetRenderer(1, 1000, 0, 120);
@@ -114,8 +114,8 @@ void testApp::setup(){
     
     //gameEnd;
     gameEnd_bg.loadImage("menu/emojigraph72.png");
-    gameEnd_font.loadFont("font/NewMedia Fett.ttf", 12);
-    
+    gameEnd_font.loadFont("font/NewMedia Fett.ttf", 14);
+    gameEnd_font2.loadFont("font/NewMedia Fett.ttf", 16);
     //minigame
     catchGame.setup(ofxAccelerometer.getForce(), control);
     timer = 0;
@@ -126,7 +126,10 @@ void testApp::setup(){
     D12.loadImage("visualcue/d12.png");
     D20.loadImage("visualcue/d20.png");
     
-    condition = LEVEL_0;
+    condition = MAIN_MEUN;
+    levelRester = false;
+    bStatistics = false;
+    cue_Num = 0;
 }   
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -556,6 +559,42 @@ void testApp::gameEnd(int level){
     number[3] = 0;
     number[4] = 0;
     
+    ofPushMatrix();
+    ofRectangle rect = gameEnd_font2.getStringBoundingBox("Items "+ofToString(cue_Num)+"/3", 0, 0);
+    ofTranslate(512+rect.getWidth()/2,590+rect.getHeight()/2);
+    ofSetColor(150);
+    ofScale(-1, -1);
+    gameEnd_font2.drawString("Items "+ ofToString(cue_Num)+"/3",0,0);
+    ofPopMatrix();
+   
+    // cub display -------------------------------------------------------------
+    ofSetColor(255);
+    ofImage *img;
+    if (level ==0)img = &D8;
+    if (level ==1)img = &D4;
+    if (level ==2)img = &D4;
+    if (level ==3)img = &D4;
+    if (level ==4)img = &D4;
+    if (level ==5)img = &D4;
+    if (level ==6)img = &D4;
+
+    
+    if (cue_Num == 1) {
+            img->draw(512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+        }
+    if (cue_Num == 2) {
+            img->draw(512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+            img->draw(54+512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+        }
+        
+    if (cue_Num == 3) {
+            img->draw(-54+512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+            img->draw(512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+            img->draw(54+512-(img->getWidth()/2)/4*3,(660-img->getHeight()/2)/4*3, img->getWidth()/4*3, img->getHeight()/4*3);
+        }
+    
+    
+    
 }
 //--------------------------------------------------------------
 void testApp::draw(){
@@ -759,26 +798,24 @@ void testApp::position(int level){
 //--------------------------------------------------------------
 void testApp::LEVEL_UPDATE_0(){
     if (levelRester) {
+        //ground setup------------------
         ground_A.destroy();
         ground_B.destroy();
         ground_A.setup(0, 0, world_A);
         ground_B.setup(0, 1, world_B);
         
-        cue.clear();
+        //cub setup------------------
+        for (int i=0; i<3; i++) {
+            cue[i] = &D8;
+            bCue[i] = true;
+        }
+        posCue[0].set(460, -138);
+        posCue[1].set(460, 138);
+        posCue[2].set(1910, -9);
         
-        ttVisualcue temp;
-        temp.setup(D20,422,-16,screen_A,0);
-        temp.bFix = true;
-        cue.push_back(temp);
-        
-        temp.setup(D20,1004,-16,screen_B,1);
-        temp.bFix = false;
-        cue.push_back(temp);
-        
-        temp.setup(D20,1608,-16,screen_A,0);
-        temp.bFix = false;
-        cue.push_back(temp);
-        
+        cueScreen[0] = &screen_A;
+        cueScreen[1] = &screen_B;
+        cueScreen[2] = &screen_A;
         
         levelRester = false;
     }
@@ -820,8 +857,18 @@ void testApp::LEVEL_UPDATE_0(){
                 char_B.condition = C_STOP;
                 rope_A.condition = R_NO_USE;
                 rope_B.condition = R_NO_USE;
+                cue_Num = 0;
                 
                 condition = LEVEL_1;
+            }
+        }
+        
+        for (int i=0; i<3; i++) {
+            if (char_A.character.getPosition().distance(posCue[i])< 36 || char_B.character.getPosition().distance(posCue[i])< 36  ) {
+                if ( bCue[i]) {
+                    bCue[i] = false;
+                    cue_Num ++;
+                }
             }
         }
     }
@@ -832,22 +879,15 @@ void testApp::LEVEL_DRAW_0(){
     float radius = 40;
     
     drawScene(0);
-    
-    ofSetColor(255, 255, 255);
-
+    //cub draw--------------------
     for (int i=0; i<3; i++) {
-        cue[i].draw();
+        if (bCue[i]) {
+            ofSetColor(255);
+            cue[i]->draw( posCue[i].x + cueScreen[i]->x-cue[i]->getWidth()/2,
+                          posCue[i].y + cueScreen[i]->y-cue[i]->getHeight()/2);
+           
+        }
     }
-
-    ofPushMatrix();
-    ofTranslate(screen_A);
-    cue[1].draw();
-    ofPopMatrix();
-    
-    ofPushMatrix();
-    ofTranslate(screen_B);
-    cue[2].draw();
-    ofPopMatrix();
     
     game_menu.draw();
     
@@ -874,6 +914,20 @@ void testApp::LEVEL_UPDATE_1(){
         char_B.condition = C_STOP;
         rope_A.condition = R_NO_USE;
         rope_B.condition = R_NO_USE;
+        
+        //cub setup------------------
+        for (int i=0; i<3; i++) {
+            cue[i] = &D8;
+            bCue[i] = true;
+        }
+        posCue[0].set(460, -138);
+        posCue[1].set(460, 138);
+        posCue[2].set(1910, -9);
+        
+        cueScreen[0] = &screen_A;
+        cueScreen[1] = &screen_B;
+        cueScreen[2] = &screen_A;
+
         
         ground_A.destroy();
         ground_B.destroy();
@@ -930,6 +984,18 @@ void testApp::LEVEL_UPDATE_2(){
         char_B.condition = C_STOP;
         rope_A.condition = R_NO_USE;
         rope_B.condition = R_NO_USE;
+        //cub setup------------------
+        for (int i=0; i<3; i++) {
+            cue[i] = &D8;
+            bCue[i] = true;
+        }
+        posCue[0].set(460, -138);
+        posCue[1].set(460, 138);
+        posCue[2].set(1910, -9);
+        
+        cueScreen[0] = &screen_A;
+        cueScreen[1] = &screen_B;
+        cueScreen[2] = &screen_A;
         
         ground_A.destroy();
         ground_B.destroy();
@@ -983,6 +1049,19 @@ void testApp::LEVEL_UPDATE_3(){
         rope_A.condition = R_NO_USE;
         rope_B.condition = R_NO_USE;
         
+        //cub setup------------------
+        for (int i=0; i<3; i++) {
+            cue[i] = &D8;
+            bCue[i] = true;
+        }
+        posCue[0].set(460, -138);
+        posCue[1].set(460, 138);
+        posCue[2].set(1910, -9);
+        
+        cueScreen[0] = &screen_A;
+        cueScreen[1] = &screen_B;
+        cueScreen[2] = &screen_A;
+
         ground_A.destroy();
         ground_B.destroy();
         ground_A.setup(3, 0, world_A);
@@ -1036,6 +1115,19 @@ void testApp::LEVEL_UPDATE_4(){
         char_B.condition = C_STOP;
         rope_A.condition = R_NO_USE;
         rope_B.condition = R_NO_USE;
+        
+        //cub setup------------------
+        for (int i=0; i<3; i++) {
+            cue[i] = &D8;
+            bCue[i] = true;
+        }
+        posCue[0].set(460, -138);
+        posCue[1].set(460, 138);
+        posCue[2].set(1910, -9);
+        
+        cueScreen[0] = &screen_A;
+        cueScreen[1] = &screen_B;
+        cueScreen[2] = &screen_A;
         
         ground_A.destroy();
         ground_B.destroy();
@@ -1092,6 +1184,19 @@ void testApp::LEVEL_UPDATE_5(){
         rope_A.condition = R_NO_USE;
         rope_B.condition = R_NO_USE;
         
+        //cub setup------------------
+        for (int i=0; i<3; i++) {
+            cue[i] = &D8;
+            bCue[i] = true;
+        }
+        posCue[0].set(460, -138);
+        posCue[1].set(460, 138);
+        posCue[2].set(1910, -9);
+        
+        cueScreen[0] = &screen_A;
+        cueScreen[1] = &screen_B;
+        cueScreen[2] = &screen_A;
+
         ground_A.destroy();
         ground_B.destroy();
         ground_A.setup(5, 0, world_A);
@@ -1146,7 +1251,19 @@ void testApp::LEVEL_UPDATE_6(){
         char_B.condition = C_STOP;
         rope_A.condition = R_NO_USE;
         rope_B.condition = R_NO_USE;
+        //cub setup------------------
+        for (int i=0; i<3; i++) {
+            cue[i] = &D8;
+            bCue[i] = true;
+        }
+        posCue[0].set(460, -138);
+        posCue[1].set(460, 138);
+        posCue[2].set(1910, -9);
         
+        cueScreen[0] = &screen_A;
+        cueScreen[1] = &screen_B;
+        cueScreen[2] = &screen_A;
+
         ground_A.destroy();
         ground_B.destroy();
         ground_A.setup(6, 0, world_A);
@@ -1198,6 +1315,15 @@ void testApp::LEVEL_DRAW_1(){
     ofPoint pt[2];
     float radius = 40;
     drawScene(1);
+    //cub draw--------------------
+    for (int i=0; i<3; i++) {
+        if (bCue[i]) {
+            ofSetColor(255);
+            cue[i]->draw( posCue[i].x + cueScreen[i]->x-cue[i]->getWidth()/2,
+                         posCue[i].y + cueScreen[i]->y-cue[i]->getHeight()/2);
+            
+        }
+    }
     game_menu.draw();
     if (levelOver_A && levelOver_B) {
         catchGame.draw();
@@ -1218,6 +1344,15 @@ void testApp::LEVEL_DRAW_2(){
     ofPoint pt[2];
     float radius = 40;
     drawScene(2);
+    //cub draw--------------------
+    for (int i=0; i<3; i++) {
+        if (bCue[i]) {
+            ofSetColor(255);
+            cue[i]->draw( posCue[i].x + cueScreen[i]->x-cue[i]->getWidth()/2,
+                         posCue[i].y + cueScreen[i]->y-cue[i]->getHeight()/2);
+            
+        }
+    }
     game_menu.draw();
     if (levelOver_A && levelOver_B) {
         catchGame.draw();
@@ -1238,6 +1373,15 @@ void testApp::LEVEL_DRAW_3(){
     ofPoint pt[2];
     float radius = 40;
     drawScene(3);
+    //cub draw--------------------
+    for (int i=0; i<3; i++) {
+        if (bCue[i]) {
+            ofSetColor(255);
+            cue[i]->draw( posCue[i].x + cueScreen[i]->x-cue[i]->getWidth()/2,
+                         posCue[i].y + cueScreen[i]->y-cue[i]->getHeight()/2);
+            
+        }
+    }
     game_menu.draw();
     if (levelOver_A && levelOver_B) {
         catchGame.draw();
@@ -1258,6 +1402,15 @@ void testApp::LEVEL_DRAW_4(){
     ofPoint pt[2];
     float radius = 40;
     drawScene(4);
+    //cub draw--------------------
+    for (int i=0; i<3; i++) {
+        if (bCue[i]) {
+            ofSetColor(255);
+            cue[i]->draw( posCue[i].x + cueScreen[i]->x-cue[i]->getWidth()/2,
+                         posCue[i].y + cueScreen[i]->y-cue[i]->getHeight()/2);
+            
+        }
+    }
     game_menu.draw();
     if (levelOver_A && levelOver_B) {
         catchGame.draw();
@@ -1278,6 +1431,15 @@ void testApp::LEVEL_DRAW_5(){
     ofPoint pt[2];
     float radius = 40;
     drawScene(5);
+    //cub draw--------------------
+    for (int i=0; i<3; i++) {
+        if (bCue[i]) {
+            ofSetColor(255);
+            cue[i]->draw( posCue[i].x + cueScreen[i]->x-cue[i]->getWidth()/2,
+                         posCue[i].y + cueScreen[i]->y-cue[i]->getHeight()/2);
+            
+        }
+    }
     game_menu.draw();
     if (levelOver_A && levelOver_B) {
         catchGame.draw();
@@ -1298,6 +1460,15 @@ void testApp::LEVEL_DRAW_6(){
     ofPoint pt[2];
     float radius = 40;
     drawScene(6);
+    //cub draw--------------------
+    for (int i=0; i<3; i++) {
+        if (bCue[i]) {
+            ofSetColor(255);
+            cue[i]->draw( posCue[i].x + cueScreen[i]->x-cue[i]->getWidth()/2,
+                         posCue[i].y + cueScreen[i]->y-cue[i]->getHeight()/2);
+            
+        }
+    }
     game_menu.draw();
     if (levelOver_A && levelOver_B) {
         catchGame.draw();

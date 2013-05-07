@@ -8,26 +8,21 @@
 
 #include "ttVisualcue.h"
 
-ttVisualcue::ttVisualcue(){
-    
-    
-}
 
-void ttVisualcue::setup(ofImage &Image,float x, float y,ofPoint Screen, int CharNum){
+void ttVisualcue::setup(ofImage &Image,float X, float Y,ofPoint Screen){
     image = & Image;
-    pos.set(x, y);
-    charNum = CharNum;
-    bFix = true;
+    x = X;
+    y = Y;
     screen = Screen;
+    bFix = true;
 }
 
 
 void ttVisualcue::draw(){
     
     if (bFix) {
-        ofPushMatrix();
-        ofTranslate(screen);
-        image->draw(pos);
-        ofPopMatrix();
+        ofSetColor(255);
+        image->draw( x + screen.x - image->getWidth()/2,  y + screen.y - image->getHeight()/2);
+        
     }
 }

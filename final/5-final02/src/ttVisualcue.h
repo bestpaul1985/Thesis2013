@@ -14,13 +14,11 @@
 class ttVisualcue{
 public:
     
-    ttVisualcue();
-    void setup(ofImage & Image,float x, float y, ofPoint Screen, int CharNum);
+    void setup(ofImage & Image,float X, float Y, ofPoint screen);
     void draw();
+    
     ofImage *image;
-    ofPoint pos;
-    float w, h;
-    int charNum;
+    float x, y;
     bool bFix;
     ofPoint screen;
 };

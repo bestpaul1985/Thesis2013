@@ -138,15 +138,21 @@ class testApp : public ofxiPhoneApp{
         ofxSpriteSheetRenderer *bird_Render;
         //gameEnd;
         ofImage gameEnd_bg;
-        ofTrueTypeFont gameEnd_font;
+    ofTrueTypeFont gameEnd_font;
+    ofTrueTypeFont gameEnd_font2;
+
         //minigame
         ttCatchgame catchGame;
     
         int timer;
         //cue
         ofImage D4,D6,D8,D12,D20;
-        vector<ttVisualcue> cue;
-
+        ofImage* cue[3];
+        bool  bCue[3];
+        ofPoint posCue[3];
+        ofPoint *cueScreen[3];
+        vector<ttVisualcue> cues;
+        int cue_Num;
 };
 
 
