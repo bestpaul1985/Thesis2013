@@ -13,13 +13,16 @@
 
 class mainMenu{
 public:
-    void setup(ofImage &sky,ofImage &Logo, ofImage &Text);
+    void setup(ofImage &sky,ofImage &Logo, ofImage &Text, ofPoint &_accFrc);
     void update();
     void draw();
     
     ofImage *skyBg;
     ofImage *logo;
     ofImage *text;
+    ofPoint *accFrc;
+    ofPoint accXeno;
+    
 };
 
 #endif /* defined(__final02__mainMenu__) */

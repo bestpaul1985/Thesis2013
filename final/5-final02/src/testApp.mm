@@ -118,7 +118,7 @@ void testApp::setup(){
     //meun
     logo.loadImage("menu/firstmenuLogo72.png");
     mainMenuText.loadImage("menu/firstmenuText72.png");
-    main_menu.setup(skyBg, logo,mainMenuText);
+    main_menu.setup(skyBg, logo,mainMenuText, ofxAccelerometer.getForce());
     
     condition = MAIN_MEUN;
     game_menu.setup();
