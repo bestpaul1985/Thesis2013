@@ -33,6 +33,13 @@ enum game_condition {
     LEVEL_6,
 };
 
+enum _game_loader{
+    LOADER_GROUND,
+    LOADER_CUB,
+    LOADER_ENEMY,
+    LOADER_DONE,
+};
+
 class testApp : public ofxiPhoneApp{
     public:
         void setup();
@@ -140,8 +147,8 @@ class testApp : public ofxiPhoneApp{
         ofxSpriteSheetRenderer *bird_Render;
         //gameEnd;
         ofImage gameEnd_bg;
-    ofTrueTypeFont gameEnd_font;
-    ofTrueTypeFont gameEnd_font2;
+        ofTrueTypeFont gameEnd_font;
+        ofTrueTypeFont gameEnd_font2;
 
         //minigame
         ttCatchgame catchGame;
@@ -154,7 +161,10 @@ class testApp : public ofxiPhoneApp{
         vector<ofPoint*>cueScreen;
         vector<ofImage*>cue;
         int cue_Num;
-    
+        //loading
+        _game_loader loader;
+        int loaderPct;
+        ofImage *loaderBG;
 };
 
 

@@ -102,6 +102,7 @@ void ttGround::draw(){
             bgImg[i].draw(-502 + (imgMul*i), 0, imgMul, 384);
         }
     }
+    
 }
 
 void ttGround::drawPolyLine(){
