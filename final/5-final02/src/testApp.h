@@ -1,5 +1,3 @@
-#define ITEM_NUMBER 10
-
 #pragma once
 
 #include "ofMain.h"
