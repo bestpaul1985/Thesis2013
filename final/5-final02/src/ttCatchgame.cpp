@@ -71,8 +71,9 @@ void ttCatchgame::draw(){
     ofCircle(cursorIn, cursorSize);
     
     //moving prompt
-    ofColor promptColor = ofColor::burlyWood;
-    ofSetColor(promptColor,200);
+    ofColor targetColor = ofColor::crimson;
+    float alpha = abs(sin(ofGetElapsedTimef()*3)*50);
+    ofSetColor(targetColor,150+alpha);
     runAlgorithm(3);
     ofCircle(targetPos, targetSize);
     
