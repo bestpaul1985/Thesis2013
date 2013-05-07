@@ -13,16 +13,21 @@ ttVisualcue::ttVisualcue(){
     
 }
 
-void ttVisualcue::setup(ofImage &Image){
+void ttVisualcue::setup(ofImage &Image,float x, float y,ofPoint Screen, int CharNum){
     image = & Image;
+    pos.set(x, y);
+    charNum = CharNum;
+    bFix = true;
+    screen = Screen;
 }
 
 
-void ttVisualcue::draw(ofPoint Pos, float W, float H){
+void ttVisualcue::draw(){
     
-    pos = Pos;
-    w = W;
-    h = H;
-    image->draw(pos, w, h);
-    
+    if (bFix) {
+        ofPushMatrix();
+        ofTranslate(screen);
+        image->draw(pos);
+        ofPopMatrix();
+    }
 }

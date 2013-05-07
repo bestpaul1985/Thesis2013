@@ -29,7 +29,7 @@ void testApp::setup(){
     ofAddListener(world_B.contactEndEvents,this, &testApp::contactEnd_worldB);
     numFootContacts_A = 0;
     numFootContacts_B = 0;
-    
+
     //contorl
     control.setup();
     
@@ -44,9 +44,8 @@ void testApp::setup(){
     char_Render[2] ->loadTexture("sprites/run_boy.png", 1000, GL_NEAREST);
     char_Render[3] ->loadTexture("sprites/push_boy.png", 1000, GL_NEAREST);
     char_Render[4] ->loadTexture("sprites/pull_boy.png", 1000, GL_NEAREST);
-    
-    char_A.setup(world_A, ofPoint(0,-100), 0,char_Render[0],char_Render[1],char_Render[1]);
-    char_B.setup(world_B, ofPoint(0,100), 1,char_Render[2],char_Render[3],char_Render[4]);
+    char_A.setup(world_A, ofPoint(0,-200), 0,char_Render[0],char_Render[1],char_Render[1]);
+    char_B.setup(world_B, ofPoint(0,200), 1,char_Render[2],char_Render[3],char_Render[4]);
     //camera
     translate_A.set(384,768/2);
     translate_B.set(384,768/2);
@@ -80,15 +79,7 @@ void testApp::setup(){
     rabit_Render ->loadTexture("sprites/rabit.png", 2040, GL_NEAREST);
     bird_Render =new ofxSpriteSheetRenderer(1,1000,0,100);
     bird_Render ->loadTexture("sprites/all_bird.png", 2040, GL_NEAREST);
-   
-   
 
-//    //dog
-//    dog_A.setup(world_A,dog_Render, -1000, 2000, 0);
-//    dog_B.setup(world_B,dog_Render, -1000, 2000, 1);
-//    //rabit
-//    rabit_A.setup(world_A,rabit_Render, -200, 2000, 0);
-//    rabit_B.setup(world_B,rabit_Render, -200, 2000, 1);
     //emoji
     emoji_A.setup(char_A.character.getPosition(),char_A,0);
     emoji_B.setup(char_B.character.getPosition(),char_B,1);
@@ -119,8 +110,6 @@ void testApp::setup(){
     logo.loadImage("menu/firstmenuLogo72.png");
     mainMenuText.loadImage("menu/firstmenuText72.png");
     main_menu.setup(skyBg, logo,mainMenuText, ofxAccelerometer.getForce());
-    
-    condition = MAIN_MEUN;
     game_menu.setup();
     
     //gameEnd;
@@ -131,11 +120,13 @@ void testApp::setup(){
     catchGame.setup(ofxAccelerometer.getForce(), control);
     timer = 0;
     //elements
-    element[0].loadImage("visualcue/d4.png");
-    element[1].loadImage("visualcue/d6.png");
-    element[2].loadImage("visualcue/d8.png");
-    element[3].loadImage("visualcue/d12.png");
-    element[4].loadImage("visualcue/d20.png");
+    D4.loadImage("visualcue/d4.png");
+    D6.loadImage("visualcue/d6.png");
+    D8.loadImage("visualcue/d8.png");
+    D12.loadImage("visualcue/d12.png");
+    D20.loadImage("visualcue/d20.png");
+    
+    condition = LEVEL_0;
 }   
 //--------------------------------------------------------------
 void testApp::contactStart_worldA(ofxBox2dContactArgs &e){
@@ -627,9 +618,9 @@ void testApp::drawScene(int level){
             birds_A[i].draw();
         }
     
+       //char draw
         ofPushMatrix();
         ofTranslate(screen_A);
-   
         char_A.draw();
         emoji_A.draw();
         ofPopMatrix();
@@ -639,6 +630,15 @@ void testApp::drawScene(int level){
         char_B.draw();
         emoji_B.draw();
         ofPopMatrix();
+        // cub
+//    ofPushMatrix();
+    
+//    for (int i=0; i<d4.size(); i++) {d4[i].draw();}
+//    for (int i=0; i<d6.size(); i++) {d6[i].draw();}
+//    for (int i=0; i<d8.size(); i++) {d8[i].draw();}
+//    for (int i=0; i<d12.size(); i++) {d12[i].draw();}
+//    for (int i=0; i<d20.size(); i++) {d20[i].draw();}
+//    ofPopMatrix();
     
         //draw swing rope A
         rope_A.draw_swing(screen_B);
@@ -759,20 +759,27 @@ void testApp::position(int level){
 //--------------------------------------------------------------
 void testApp::LEVEL_UPDATE_0(){
     if (levelRester) {
-        char_A.character.setPosition(0, 0);
-        char_B.character.setPosition(0, 0);
-        char_A.condition = C_STOP;
-        char_B.condition = C_STOP;
-        rope_A.condition = R_NO_USE;
-        rope_B.condition = R_NO_USE;
-        
         ground_A.destroy();
         ground_B.destroy();
         ground_A.setup(0, 0, world_A);
         ground_B.setup(0, 1, world_B);
-        ttBirds bird;
-        bird.setup(world_A, bird_Render, char_A, 0, 300, 0);
-        birds_A.push_back(bird);
+        
+        cue.clear();
+        
+        ttVisualcue temp;
+        temp.setup(D20,422,-16,screen_A,0);
+        temp.bFix = true;
+        cue.push_back(temp);
+        
+        temp.setup(D20,1004,-16,screen_B,1);
+        temp.bFix = false;
+        cue.push_back(temp);
+        
+        temp.setup(D20,1608,-16,screen_A,0);
+        temp.bFix = false;
+        cue.push_back(temp);
+        
+        
         levelRester = false;
     }
     else{
@@ -806,10 +813,57 @@ void testApp::LEVEL_UPDATE_0(){
             if (timer > 70) {
                 timer = 0;
                 bStatistics = false;
+                
+                char_A.character.setPosition(100, 0);
+                char_B.character.setPosition(-100, 0);
+                char_A.condition = C_STOP;
+                char_B.condition = C_STOP;
+                rope_A.condition = R_NO_USE;
+                rope_B.condition = R_NO_USE;
+                
                 condition = LEVEL_1;
             }
         }
     }
+}
+//--------------------------------------------------------------
+void testApp::LEVEL_DRAW_0(){
+    ofPoint pt[2];
+    float radius = 40;
+    
+    drawScene(0);
+    
+    ofSetColor(255, 255, 255);
+
+    for (int i=0; i<3; i++) {
+        cue[i].draw();
+    }
+
+    ofPushMatrix();
+    ofTranslate(screen_A);
+    cue[1].draw();
+    ofPopMatrix();
+    
+    ofPushMatrix();
+    ofTranslate(screen_B);
+    cue[2].draw();
+    ofPopMatrix();
+    
+    game_menu.draw();
+    
+    if (levelOver_A && levelOver_B) {
+        catchGame.draw();
+        pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
+        pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
+        pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
+        pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
+        rope_A.draw_minigame(pt[0]);
+        rope_B.draw_minigame(pt[1]);
+    }
+    
+    if (bStatistics) {gameEnd(0);}
+    
+    control.draw();
 }
 //--------------------------------------------------------------
 void testApp::LEVEL_UPDATE_1(){
@@ -1138,31 +1192,7 @@ void testApp::LEVEL_UPDATE_6(){
     }
 
 }
-//--------------------------------------------------------------
-void testApp::LEVEL_DRAW_0(){
-    ofPoint pt[2];
-    float radius = 40;
-    
-    drawScene(0);
-    
-    game_menu.draw();
-    
-    if (levelOver_A && levelOver_B) {
-        catchGame.draw();
-        pt[0].x = catchGame.cursorIn.x + radius*cos(0*DEG_TO_RAD);
-        pt[0].y = catchGame.cursorIn.y + radius*-sin(0*DEG_TO_RAD);
-        pt[1].x = catchGame.cursorIn.x + radius*cos(180*DEG_TO_RAD);
-        pt[1].y = catchGame.cursorIn.y + radius*-sin(180*DEG_TO_RAD);
-        rope_A.draw_minigame(pt[0]);
-        rope_B.draw_minigame(pt[1]);
-    }
-    
-    if (bStatistics) {
-        gameEnd(0);
-    }
-    
-    control.draw();
-}
+
 //--------------------------------------------------------------
 void testApp::LEVEL_DRAW_1(){
     ofPoint pt[2];

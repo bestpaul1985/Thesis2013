@@ -146,13 +146,8 @@ class testApp : public ofxiPhoneApp{
     
         int timer;
         //cue
-        ofImage element[5];
-        vector<ttVisualcue> d4;
-        vector<ttVisualcue> d6;
-        vector<ttVisualcue> d8;
-        vector<ttVisualcue> d12;
-        vector<ttVisualcue> d20;
-
+        ofImage D4,D6,D8,D12,D20;
+        vector<ttVisualcue> cue;
 
 };
 
