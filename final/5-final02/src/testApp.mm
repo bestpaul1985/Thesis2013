@@ -129,7 +129,8 @@ void testApp::setup(){
     levelRester = false;
     bStatistics = false;
     cue_Num = 0;
-    
+    //elevtor
+    elevetor[0].loadImage("bg/ground/elevetor_A.png");
     //loading
     loader = LOADER_DONE;
     loaderPct = 0;
@@ -876,7 +877,7 @@ void testApp::LEVEL_UPDATE_0(){
                 timer = 0;
                 loader = LOADER_DONE;}}
     
-        else if(loader == LOADER_DONE){
+        if(loader == LOADER_TIMER || loader == LOADER_DONE){
             if (!game_menu.show) {
                 gamePlay(LEVEL);
                 
@@ -975,17 +976,17 @@ void testApp::LEVEL_UPDATE_1(){
         cueScreen.clear();
         posCue.clear();
         ofPoint  cuePos[3];
-        cuePos[0].set(460, -138);
-        cuePos[1].set(460, 138);
-        cuePos[2].set(2190, -36);
+        cuePos[0].set(424, 87);
+        cuePos[1].set(1043, -190);
+        cuePos[2].set(1626, 0);
         for (int i=0; i<3; i++) {
             cue.push_back(D);
             posCue.push_back(cuePos[i]);
             bool temCue = true;
             bCue.push_back(temCue);}
-        cueScreen.push_back(&screen_A);
         cueScreen.push_back(&screen_B);
         cueScreen.push_back(&screen_A);
+        cueScreen.push_back(&screen_B);
         loader = LOADER_GROUND;}
     else if(loader == LOADER_GROUND){
         ground_A.destroy();
@@ -1002,9 +1003,14 @@ void testApp::LEVEL_UPDATE_1(){
         timer++;
         if (timer>50) {
             timer = 0;
-            loader = LOADER_DONE;}}
+            loader = LOADER_DONE;}
+    }
     
-    else if(loader == LOADER_DONE){
+    
+        
+        
+        
+    if(loader == LOADER_TIMER ||  loader == LOADER_DONE){
         if (!game_menu.show) {
             gamePlay(LEVEL);
             
@@ -1103,9 +1109,9 @@ void testApp::LEVEL_UPDATE_2(){
         cueScreen.clear();
         posCue.clear();
         ofPoint  cuePos[3];
-        cuePos[0].set(460, -138);
-        cuePos[1].set(460, 138);
-        cuePos[2].set(2190, -36);
+        cuePos[0].set(668, -28);
+        cuePos[1].set(1231, -234);
+        cuePos[2].set(1231, 165);
         for (int i=0; i<3; i++) {
             cue.push_back(D);
             posCue.push_back(cuePos[i]);
@@ -1113,7 +1119,7 @@ void testApp::LEVEL_UPDATE_2(){
             bCue.push_back(temCue);}
         cueScreen.push_back(&screen_A);
         cueScreen.push_back(&screen_B);
-        cueScreen.push_back(&screen_A);
+        cueScreen.push_back(&screen_B);
         loader = LOADER_GROUND;}
     else if(loader == LOADER_GROUND){
         ground_A.destroy();
@@ -1132,7 +1138,7 @@ void testApp::LEVEL_UPDATE_2(){
             timer = 0;
             loader = LOADER_DONE;}}
     
-    else if(loader == LOADER_DONE){
+    if(loader == LOADER_TIMER ||  loader == LOADER_DONE){
         if (!game_menu.show) {
             gamePlay(LEVEL);
             
