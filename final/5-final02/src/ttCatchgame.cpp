@@ -8,8 +8,8 @@
 
 #include "ttCatchgame.h"
 
-void ttCatchgame::setup(ofPoint &_accFrc, ttControl &_control){
-    
+void ttCatchgame::setup(ofImage &Logo,ofPoint &_accFrc, ttControl &_control){
+    logo = &Logo;
     start.set(ofGetWidth()/2, ofGetHeight()/2);
     cursorIn = targetPos = start;
     
@@ -17,7 +17,7 @@ void ttCatchgame::setup(ofPoint &_accFrc, ttControl &_control){
     cursorSize  = 60;
     targetSize  = 30;
     goal        = 350;
-    increaseSpeed = 5;
+    increaseSpeed = 1;
     decreaseSpeed = 3.5;
     
     accXeno.set(0,0);
@@ -45,7 +45,8 @@ void ttCatchgame::update(){
 }
 
 void ttCatchgame::draw(){
-    
+    ofSetColor(0, 100);
+    ofRect(0, 0, ofGetWidth(), ofGetHeight());
     // distance detection
     ofPoint dist = cursorIn-targetPos;
     if (dist.length()< targetSize+cursorSize &&
@@ -55,6 +56,8 @@ void ttCatchgame::draw(){
         indicator -= decreaseSpeed;
     
     //outline
+//    ofSetColor(255,200);
+//    logo->draw(start.x-logo->getWidth()/2, start.y-logo->getHeight()/2);
     ofSetColor(255,200);
     ofNoFill();
     ofCircle(start, goal);
@@ -63,6 +66,8 @@ void ttCatchgame::draw(){
     ofSetColor(255,200);
     ofFill();
     ofCircle(start, indicator);
+    
+    
     
     //cursorIn
     ofColor cursorColor = ofColor::blanchedAlmond;
@@ -78,6 +83,8 @@ void ttCatchgame::draw(){
     ofCircle(targetPos, targetSize);
     
     if (indicator>goal)bFinish = true;
+    
+    
 }
 
 

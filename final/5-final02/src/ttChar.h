@@ -52,6 +52,7 @@ public:
     int charNum;
     float angle;
     int step;
+    
    
 };
 

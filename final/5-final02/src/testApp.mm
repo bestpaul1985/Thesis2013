@@ -116,14 +116,19 @@ void testApp::setup(){
     gameEnd_font.loadFont("font/NewMedia Fett.ttf", 14);
     gameEnd_font2.loadFont("font/NewMedia Fett.ttf", 21);
     //minigame
-    catchGame.setup(ofxAccelerometer.getForce(), control);
+    catchGame.setup(logo,ofxAccelerometer.getForce(), control);
     timer = 0;
-    //elements
-    D4.loadImage("visualcue/d4.png");
-    D6.loadImage("visualcue/d6.png");
-    D8.loadImage("visualcue/d8.png");
-    D12.loadImage("visualcue/d12.png");
-    D20.loadImage("visualcue/d20.png");
+    //cue
+    D4_A.loadImage("visualcue/d4_A.png");
+    D6_A.loadImage("visualcue/d6_A.png");
+    D8_A.loadImage("visualcue/d8_A.png");
+    D12_A.loadImage("visualcue/d12_A.png");
+    D20_A.loadImage("visualcue/d20_A.png");
+    D4_B.loadImage("visualcue/d4_B.png");
+    D6_B.loadImage("visualcue/d6_B.png");
+    D8_B.loadImage("visualcue/d8_B.png");
+    D12_B.loadImage("visualcue/d12_B.png");
+    D20_B.loadImage("visualcue/d20_B.png");
     
     condition = MAIN_MEUN;
     levelRester = false;
@@ -241,19 +246,24 @@ void testApp::update(){
                 timer ++;
                 if (timer>50) {
                     timer = 0;
-                    char_A.character.setPosition(0, -100);
-                    char_B.character.setPosition(0, 100);
+                    char_A.character.setPosition(0, -200);
+                    char_B.character.setPosition(0, 200);
                     char_A.condition = C_STOP;
                     char_B.condition = C_STOP;
                     rope_A.condition = R_NO_USE;
-                    rope_B.condition = R_NO_USE;
+                    rope_B.condition = R_NO_USE;    
                     cue_Num = 0;
                     camera_A.set(0, 0);
                     camera_B.set(0, 0);
                     loader = LOADER_CUB;
-                    condition = LEVEL_4;
+                    condition = LEVEL_0;
                     loaderPct = 0;
+                    bCue.clear();
+                    for (int i=0; i<3; i++) {
+                        bool temCue = true;
+                        bCue.push_back(temCue);}
                     }
+                    cue_Num = 0;
                 }
         }break;
             
@@ -572,13 +582,13 @@ void testApp::gameEnd(int level){
     // cub display -------------------------------------------------------------
     ofSetColor(255);
     ofImage *img;
-    if (level ==0)img = &D8;
-    if (level ==1)img = &D4;
-    if (level ==2)img = &D4;
-    if (level ==3)img = &D4;
-    if (level ==4)img = &D4;
-    if (level ==5)img = &D4;
-    if (level ==6)img = &D4;
+    if (level ==0)img = &D4_A;
+    if (level ==1)img = &D6_A;
+    if (level ==2)img = &D8_A;
+    if (level ==3)img = &D12_A;
+    if (level ==4)img = &D20_A;
+    if (level ==5)img = &D4_A;
+    if (level ==6)img = &D4_A;
 
     
     if (cue_Num == 1) {
@@ -665,7 +675,6 @@ void testApp::drawScene(int level){
         
         ofPushMatrix();
         ofTranslate(screen_A);
-        
         ground_A.draw();
         ground_A.drawPolyLine();
         thorns_A.draw();
@@ -740,13 +749,21 @@ void testApp::position(int level){
     ofPoint catch_A, catch_B;
     ofPoint trans_catch_A, trans_catch_B;
     float tran_speed = 5;
-//    if (level == 0) {
+    float endPos = 1500;
+    
+    if (level == 0) {
+        endPos = 1690;
+    }
+    if (level == 1) {
+        endPos = 1690;
+    }
         char_A.getPos.x<0? A[0] = true: A[0] =false;
         char_B.getPos.x<0? B[0] = true: B[0] =false;
    
-        char_A.getPos.x>1690? A[1] = true: A[1] =false;
-        char_B.getPos.x>1690? B[1] = true: B[1] =false;
-        
+        char_A.getPos.x>endPos? A[1] = true: A[1] =false;
+        char_B.getPos.x>endPos? B[1] = true: B[1] =false;
+    
+    
         //camera setup
         if (A[0]) {
             catch_A.x = 0;
@@ -754,7 +771,7 @@ void testApp::position(int level){
             translate_A.x =384;
             translate_A.y =384;
         }else if(A[1]){
-            catch_A.x = 1690;
+            catch_A.x = endPos;
             catch_A.y =  char_A.getPos.y;
             translate_A.x -=tran_speed;
             if (translate_A.x <0) {
@@ -774,7 +791,7 @@ void testApp::position(int level){
             translate_B.x =384;
             translate_B.y =384;
         }else if(B[1]){
-            catch_B.x = 1690;
+            catch_B.x = endPos;
             catch_B.y = char_B.getPos.y;
             translate_B.x -=tran_speed;
             if (translate_B.x <0) {
@@ -839,9 +856,9 @@ void testApp::position(int level){
 //--------------------------------------------------------------
 void testApp::LEVEL_UPDATE_0(){
     int LEVEL = 0;
-    ofImage *D = &D4;
     
         if (loader == LOADER_CUB ) {
+            bCue.clear();
             cue.clear();
             cueScreen.clear();
             posCue.clear();
@@ -850,19 +867,21 @@ void testApp::LEVEL_UPDATE_0(){
             cuePos[1].set(460, 138);
             cuePos[2].set(2190, -36);
             for (int i=0; i<3; i++) {
-                cue.push_back(D);
                 posCue.push_back(cuePos[i]);
                 bool temCue = true;
                 bCue.push_back(temCue);}
+            cue.push_back(&D4_A);
+            cue.push_back(&D4_B);
+            cue.push_back(&D4_A);
             cueScreen.push_back(&screen_A);
             cueScreen.push_back(&screen_B);
             cueScreen.push_back(&screen_A);
             loader = LOADER_GROUND;}
         else if(loader == LOADER_GROUND){
-            ground_A.destroy();
-            ground_B.destroy();
-            ground_A.setup(LEVEL, 0, world_A);
-            ground_B.setup(LEVEL, 1, world_B);
+            thorns_A.destroy();
+            thorns_B.destroy();
+            thorns_A.setup(world_A, LEVEL, 0);
+            thorns_B.setup(world_B, LEVEL, 1);
             loader = LOADER_ENEMY;}
         else if(loader == LOADER_ENEMY){
             timer++;
@@ -922,7 +941,7 @@ void testApp::LEVEL_UPDATE_0(){
             }
             
             for (int i=0; i<bCue.size(); i++) {
-                if (char_A.character.getPosition().distance(posCue[i])< 36 || char_B.character.getPosition().distance(posCue[i])< 36  ) {
+                if (char_A.character.getPosition().distance(posCue[i])< 50 || char_B.character.getPosition().distance(posCue[i])< 50  ) {
                     if (bCue[i]) {
                         bCue[i] = false;
                         cue_Num ++;
@@ -966,10 +985,10 @@ void testApp::LEVEL_DRAW_0(){
 }
 //--------------------------------------------------------------
 void testApp::LEVEL_UPDATE_1(){
-    int LEVEL = 1;
-    ofImage *D = &D6;
+    int LEVEL = 4;
     
     if (loader == LOADER_CUB ) {
+        bCue.clear();
         cue.clear();
         cueScreen.clear();
         posCue.clear();
@@ -978,10 +997,12 @@ void testApp::LEVEL_UPDATE_1(){
         cuePos[1].set(1043, -190);
         cuePos[2].set(1626, 0);
         for (int i=0; i<3; i++) {
-            cue.push_back(D);
             posCue.push_back(cuePos[i]);
             bool temCue = true;
             bCue.push_back(temCue);}
+        cue.push_back(&D6_B);
+        cue.push_back(&D6_A);
+        cue.push_back(&D6_B);
         cueScreen.push_back(&screen_B);
         cueScreen.push_back(&screen_A);
         cueScreen.push_back(&screen_B);
@@ -995,6 +1016,10 @@ void testApp::LEVEL_UPDATE_1(){
     else if(loader == LOADER_ENEMY){
         timer++;
         if (timer>50) {
+            thorns_A.destroy();
+            thorns_B.destroy();
+            thorns_A.setup(world_A, 0, 0);
+            thorns_B.setup(world_B, 0, 1);
             timer = 0;
             loader = LOADER_DONE;}}
     else if(loader == LOADER_TIMER){
@@ -1055,7 +1080,7 @@ void testApp::LEVEL_UPDATE_1(){
         }
         
         for (int i=0; i<bCue.size(); i++) {
-            if (char_A.character.getPosition().distance(posCue[i])< 36 || char_B.character.getPosition().distance(posCue[i])< 36  ) {
+            if (char_A.character.getPosition().distance(posCue[i])< 50 || char_B.character.getPosition().distance(posCue[i])< 50  ) {
                 if (bCue[i]) {
                     bCue[i] = false;
                     cue_Num ++;
@@ -1067,7 +1092,7 @@ void testApp::LEVEL_UPDATE_1(){
 //--------------------------------------------------------------
 void testApp::LEVEL_DRAW_1(){
     //SETUP HERE-----------
-    int LEVEL = 1;
+    int LEVEL = 4;
     
     //---------------------
     ofPoint pt[2];
@@ -1077,8 +1102,7 @@ void testApp::LEVEL_DRAW_1(){
     for (int i=0; i<cue.size(); i++) {
         if (bCue[i]) {
             ofSetColor(255);
-            cue[i]->draw( posCue[i].x + cueScreen[i]->x-cue[i]->getWidth()/2,
-                         posCue[i].y + cueScreen[i]->y-cue[i]->getHeight()/2);
+            cue[i]->draw(posCue[i].x + cueScreen[i]->x-cue[i]->getWidth()/2,posCue[i].y + cueScreen[i]->y-cue[i]->getHeight()/2);
         }
     }
     
@@ -1100,9 +1124,10 @@ void testApp::LEVEL_DRAW_1(){
 //--------------------------------------------------------------
 void testApp::LEVEL_UPDATE_2(){
     int LEVEL = 2;
-    ofImage *D = &D8;
     
     if (loader == LOADER_CUB ) {
+        bCue.clear();
+        cue_Num = 0;
         cue.clear();
         cueScreen.clear();
         posCue.clear();
@@ -1111,10 +1136,12 @@ void testApp::LEVEL_UPDATE_2(){
         cuePos[1].set(1273, -186);
         cuePos[2].set(1231, 165);
         for (int i=0; i<3; i++) {
-            cue.push_back(D);
             posCue.push_back(cuePos[i]);
             bool temCue = true;
             bCue.push_back(temCue);}
+        cue.push_back(&D8_A);
+        cue.push_back(&D8_B);
+        cue.push_back(&D8_A);
         cueScreen.push_back(&screen_B);
         cueScreen.push_back(&screen_A);
         cueScreen.push_back(&screen_B);
@@ -1128,7 +1155,15 @@ void testApp::LEVEL_UPDATE_2(){
     else if(loader == LOADER_ENEMY){
         timer++;
         if (timer>50) {
+            thorns_A.destroy();
+            thorns_B.destroy();
+            thorns_A.setup(world_A, LEVEL, 0);
+            thorns_B.setup(world_B, LEVEL, 1);
             timer = 0;
+            thorns_A.destroy();
+            thorns_B.destroy();
+            thorns_A.setup(world_A, 2, 0);
+            thorns_B.setup(world_B, 2, 1);
             loader = LOADER_DONE;}}
     else if(loader == LOADER_TIMER){
         timer++;
@@ -1183,7 +1218,7 @@ void testApp::LEVEL_UPDATE_2(){
         }
         
         for (int i=0; i<bCue.size(); i++) {
-            if (char_A.character.getPosition().distance(posCue[i])< 36 || char_B.character.getPosition().distance(posCue[i])< 36  ) {
+            if (char_A.character.getPosition().distance(posCue[i])< 50 || char_B.character.getPosition().distance(posCue[i])< 50  ) {
                 if (bCue[i]) {
                     bCue[i] = false;
                     cue_Num ++;
@@ -1228,9 +1263,10 @@ void testApp::LEVEL_DRAW_2(){
 //--------------------------------------------------------------
 void testApp::LEVEL_UPDATE_3(){
     int LEVEL = 3;
-    ofImage *D = &D12;
     
     if (loader == LOADER_CUB ) {
+        bCue.clear();
+        cue_Num = 0;
         cue.clear();
         cueScreen.clear();
         posCue.clear();
@@ -1239,10 +1275,12 @@ void testApp::LEVEL_UPDATE_3(){
         cuePos[1].set(1273, -186);
         cuePos[2].set(1231, 165);
         for (int i=0; i<3; i++) {
-            cue.push_back(D);
             posCue.push_back(cuePos[i]);
             bool temCue = true;
             bCue.push_back(temCue);}
+        cue.push_back(&D12_B);
+        cue.push_back(&D12_A);
+        cue.push_back(&D12_B);
         cueScreen.push_back(&screen_B);
         cueScreen.push_back(&screen_A);
         cueScreen.push_back(&screen_B);
@@ -1256,6 +1294,10 @@ void testApp::LEVEL_UPDATE_3(){
     else if(loader == LOADER_ENEMY){
         timer++;
         if (timer>50) {
+            thorns_A.destroy();
+            thorns_B.destroy();
+            thorns_A.setup(world_A, LEVEL, 0);
+            thorns_B.setup(world_B, LEVEL, 1);
             timer = 0;
             loader = LOADER_DONE;}}
     else if(loader == LOADER_TIMER){
@@ -1306,12 +1348,12 @@ void testApp::LEVEL_UPDATE_3(){
                 cue_Num = 0;
                 loaderPct = 0;
                 loader = LOADER_CUB;
-                condition = LEVEL_3;
+                condition = LEVEL_4;
             }
         }
         
         for (int i=0; i<bCue.size(); i++) {
-            if (char_A.character.getPosition().distance(posCue[i])< 36 || char_B.character.getPosition().distance(posCue[i])< 36  ) {
+            if (char_A.character.getPosition().distance(posCue[i])< 50 || char_B.character.getPosition().distance(posCue[i])< 50  ) {
                 if (bCue[i]) {
                     bCue[i] = false;
                     cue_Num ++;
@@ -1355,22 +1397,25 @@ void testApp::LEVEL_DRAW_3(){
 }
 //--------------------------------------------------------------
 void testApp::LEVEL_UPDATE_4(){
-    int LEVEL = 4;
-    ofImage *D = &D20;
+    int LEVEL = 1;
     
     if (loader == LOADER_CUB ) {
+        bCue.clear();
+        cue_Num = 0;
         cue.clear();
         cueScreen.clear();
         posCue.clear();
         ofPoint  cuePos[3];
         cuePos[0].set(-265, -27);
-        cuePos[1].set(644, 138);
-        cuePos[2].set(637, -173);
+        cuePos[1].set(654, 138);
+        cuePos[2].set(647, -173);
         for (int i=0; i<3; i++) {
-            cue.push_back(D);
             posCue.push_back(cuePos[i]);
             bool temCue = true;
             bCue.push_back(temCue);}
+        cue.push_back(&D20_A);
+        cue.push_back(&D20_B);
+        cue.push_back(&D20_A);
         cueScreen.push_back(&screen_A);
         cueScreen.push_back(&screen_B);
         cueScreen.push_back(&screen_A);
@@ -1382,6 +1427,10 @@ void testApp::LEVEL_UPDATE_4(){
         ground_B.setup(LEVEL, 1, world_B);
         loader = LOADER_ENEMY;}
     else if(loader == LOADER_ENEMY){
+        thorns_A.destroy();
+        thorns_B.destroy();
+        thorns_A.setup(world_A, LEVEL, 0);
+        thorns_B.setup(world_B, LEVEL, 1);
         timer++;
         if (timer>50) {
             timer = 0;
@@ -1433,13 +1482,13 @@ void testApp::LEVEL_UPDATE_4(){
                 camera_B.set(0, 0);
                 cue_Num = 0;
                 loaderPct = 0;
-                loader = LOADER_CUB;
-                condition = LEVEL_3;
+                loader = LOADER_DONE;
+                condition = MAIN_MEUN;
             }
         }
         
         for (int i=0; i<bCue.size(); i++) {
-            if (char_A.character.getPosition().distance(posCue[i])< 36 || char_B.character.getPosition().distance(posCue[i])< 36  ) {
+            if (char_A.character.getPosition().distance(posCue[i])< 50 || char_B.character.getPosition().distance(posCue[i])< 50  ) {
                 if (bCue[i]) {
                     bCue[i] = false;
                     cue_Num ++;
@@ -1451,7 +1500,7 @@ void testApp::LEVEL_UPDATE_4(){
 //--------------------------------------------------------------
 void testApp::LEVEL_DRAW_4(){
     //SETUP HERE-----------
-    int LEVEL = 4;
+    int LEVEL = 1;
     
     //---------------------
     ofPoint pt[2];
@@ -1493,7 +1542,6 @@ void testApp::LEVEL_UPDATE_5(){
         
         //cub setup------------------
         for (int i=0; i<3; i++) {
-            cue[i] = &D8;
             bCue[i] = true;
         }
         posCue[0].set(460, -138);
@@ -1560,7 +1608,6 @@ void testApp::LEVEL_UPDATE_6(){
         rope_B.condition = R_NO_USE;
         //cub setup------------------
         for (int i=0; i<3; i++) {
-            cue[i] = &D8;
             bCue[i] = true;
         }
         posCue[0].set(460, -138);

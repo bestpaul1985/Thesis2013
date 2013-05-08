@@ -156,7 +156,8 @@ class testApp : public ofxiPhoneApp{
     
         int timer;
         //cue
-        ofImage D4,D6,D8,D12,D20;        
+        ofImage D4_A,D6_A,D8_A,D12_A,D20_A;
+        ofImage D4_B,D6_B,D8_B,D12_B,D20_B;
         vector<bool>bCue;
         vector<ofPoint>posCue;
         vector<ofPoint*>cueScreen;

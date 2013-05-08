@@ -14,7 +14,7 @@
 
 class ttCatchgame{
 public:
-    void setup(ofPoint &_accFrc, ttControl &_control);
+    void setup(ofImage &Logo,ofPoint &_accFrc, ttControl &_control);
     void update();
     void draw();
     void runAlgorithm(int mode);
@@ -34,6 +34,8 @@ public:
     ttControl   *control;
     
     bool        bFinish;
+    
+    ofImage *logo;
 };
 
 

@@ -188,7 +188,7 @@ void ttChar::update(){
 }
 //----------------------------------------------
 void ttChar::draw(){
-    ofSetColor(255, 100);
+//    ofSetColor(255, 100);
 //    character.draw();
     
     ofPushMatrix();
@@ -231,29 +231,17 @@ void ttChar::dead(){
     
     if (charNum == 0) {
     
-        if (character.getPosition().x<2593) {
-            character.setPosition(0, 0);
-        }else if(character.getPosition().x>2593 && character.getPosition().x<4384){
-            character.setPosition(2691, 41);
-        }else if(character.getPosition().x>4384){
-            character.setPosition(4693, -185);
-        }else{
-            character.setPosition(0, 0);
-        }
+        
+            character.setPosition(0, -200);
+        
         
     }
     
     if (charNum == 1) {
     
-        if (character.getPosition().x<2718) {
-            character.setPosition(0, 0);
-        }else if(character.getPosition().x>2718&&character.getPosition().x<4533){
-            character.setPosition(2809, 75);
-        }else if(character.getPosition().x>4533){
-            character.setPosition(4860, 196);
-        }else{
-            character.setPosition(0, 0);
-        }
+        
+            character.setPosition(0, 200);
+        
         
     }
     
