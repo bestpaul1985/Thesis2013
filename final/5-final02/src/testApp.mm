@@ -246,8 +246,8 @@ void testApp::update(){
                 timer ++;
                 if (timer>50) {
                     timer = 0;
-                    char_A.character.setPosition(1800, -200);
-                    char_B.character.setPosition(1800, 200);
+                    char_A.character.setPosition(0, -200);
+                    char_B.character.setPosition(0, 200);
                     char_A.condition = C_STOP;
                     char_B.condition = C_STOP;
                     rope_A.condition = R_NO_USE;
@@ -256,7 +256,7 @@ void testApp::update(){
                     camera_A.set(0, 0);
                     camera_B.set(0, 0);
                     loader = LOADER_CUB;
-                    condition = LEVEL_4;
+                    condition = LEVEL_0;
                     loaderPct = 0;
                     bCue.clear();
                     for (int i=0; i<3; i++) {
