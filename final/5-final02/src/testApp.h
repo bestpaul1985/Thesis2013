@@ -166,9 +166,7 @@ class testApp : public ofxiPhoneApp{
         _game_loader loader;
         int loaderPct;
         ofImage *loaderBG;
-        //elevetor
-        ofImage elevetor[2];
-        ofPoint ele_pos[2];
+
 };
 
 
