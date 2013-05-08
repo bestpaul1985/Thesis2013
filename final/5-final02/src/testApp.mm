@@ -131,6 +131,7 @@ void testApp::setup(){
     cue_Num = 0;
     //elevtor
     elevetor[0].loadImage("bg/ground/elevetor_A.png");
+    elevetor[1].loadImage("bg/ground/elevetor_B.png");
     //loading
     loader = LOADER_DONE;
     loaderPct = 0;
@@ -253,7 +254,7 @@ void testApp::update(){
                     camera_A.set(0, 0);
                     camera_B.set(0, 0);
                     loader = LOADER_CUB;
-                    condition = LEVEL_2;
+                    condition = LEVEL_0;
                     loaderPct = 0;
                     }
                 }
@@ -976,7 +977,7 @@ void testApp::LEVEL_UPDATE_1(){
         cueScreen.clear();
         posCue.clear();
         ofPoint  cuePos[3];
-        cuePos[0].set(424, 87);
+        cuePos[0].set(445, 87);
         cuePos[1].set(1043, -190);
         cuePos[2].set(1626, 0);
         for (int i=0; i<3; i++) {
@@ -1110,15 +1111,15 @@ void testApp::LEVEL_UPDATE_2(){
         posCue.clear();
         ofPoint  cuePos[3];
         cuePos[0].set(668, -28);
-        cuePos[1].set(1231, -234);
+        cuePos[1].set(1273, -186);
         cuePos[2].set(1231, 165);
         for (int i=0; i<3; i++) {
             cue.push_back(D);
             posCue.push_back(cuePos[i]);
             bool temCue = true;
             bCue.push_back(temCue);}
-        cueScreen.push_back(&screen_A);
         cueScreen.push_back(&screen_B);
+        cueScreen.push_back(&screen_A);
         cueScreen.push_back(&screen_B);
         loader = LOADER_GROUND;}
     else if(loader == LOADER_GROUND){
