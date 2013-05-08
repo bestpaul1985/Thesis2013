@@ -17,7 +17,7 @@ void ttThorn::setup(ofxBox2d &World, int level, int charnum){
         
         if (charNum == 0) {
             ofxBox2dRect thorn;
-            shape.set(1925,-214,30,30);
+            shape.set(1975,-214,30,30);
             thorn.setPhysics(0.0f, 0.2f, 0.3f);
             thorn.setup(world->getWorld(), shape);
             thorn.body->GetFixtureList()->SetSensor(true);
@@ -105,6 +105,7 @@ void ttThorn::setup(ofxBox2d &World, int level, int charnum){
             sd = (ttSetData*)thorn.body->GetFixtureList()->GetUserData();
             sd->name	= "thorn";
             thorns.push_back(thorn);
+
             
         }
     }
@@ -120,7 +121,7 @@ void ttThorn::setup(ofxBox2d &World, int level, int charnum){
             sd->name	= "door";
             thorns.push_back(thorn);
             
-            shape.set(614,-455,2338/2,83/2);
+            shape.set(614,-455,2338/2,185/2);
             thorn.setPhysics(0.0f, 0.2f, 0.3f);
             thorn.setup(world->getWorld(), shape);
             thorn.body->GetFixtureList()->SetSensor(true);
@@ -159,7 +160,7 @@ void ttThorn::setup(ofxBox2d &World, int level, int charnum){
             sd->name	= "door";
             thorns.push_back(thorn);
             
-            shape.set(614,455,2338/2,83/2);
+            shape.set(614,455,2338/2,185/2);
             thorn.setPhysics(0.0f, 0.2f, 0.3f);
             thorn.setup(world->getWorld(), shape);
             thorn.body->GetFixtureList()->SetSensor(true);

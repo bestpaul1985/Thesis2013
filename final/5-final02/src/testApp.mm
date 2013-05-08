@@ -246,8 +246,8 @@ void testApp::update(){
                 timer ++;
                 if (timer>50) {
                     timer = 0;
-                    char_A.character.setPosition(0, -200);
-                    char_B.character.setPosition(0, 200);
+                    char_A.character.setPosition(1800, -200);
+                    char_B.character.setPosition(1800, 200);
                     char_A.condition = C_STOP;
                     char_B.condition = C_STOP;
                     rope_A.condition = R_NO_USE;
@@ -256,7 +256,7 @@ void testApp::update(){
                     camera_A.set(0, 0);
                     camera_B.set(0, 0);
                     loader = LOADER_CUB;
-                    condition = LEVEL_0;
+                    condition = LEVEL_2;
                     loaderPct = 0;
                     bCue.clear();
                     for (int i=0; i<3; i++) {
@@ -663,8 +663,8 @@ void testApp::draw(){
     
     
     
-    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
-    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
+//    ofDrawBitmapStringHighlight("world: " + ofToString(char_A.getPos,2)+"\nScreen: "+ofToString(char_A.getPos+screen_A,2), 50,50);
+//    ofDrawBitmapStringHighlight("world: " + ofToString(char_B.getPos,2)+"\nScreen: "+ofToString(char_B.getPos+screen_B,2), 750,700);
 
     
 }
@@ -865,7 +865,7 @@ void testApp::LEVEL_UPDATE_0(){
             ofPoint  cuePos[3];
             cuePos[0].set(460, -138);
             cuePos[1].set(460, 138);
-            cuePos[2].set(2190, -36);
+            cuePos[2].set(1607, -18);
             for (int i=0; i<3; i++) {
                 posCue.push_back(cuePos[i]);
                 bool temCue = true;
@@ -985,7 +985,7 @@ void testApp::LEVEL_DRAW_0(){
 }
 //--------------------------------------------------------------
 void testApp::LEVEL_UPDATE_1(){
-    int LEVEL = 4;
+    int LEVEL = 1;
     
     if (loader == LOADER_CUB ) {
         bCue.clear();
@@ -1092,7 +1092,7 @@ void testApp::LEVEL_UPDATE_1(){
 //--------------------------------------------------------------
 void testApp::LEVEL_DRAW_1(){
     //SETUP HERE-----------
-    int LEVEL = 4;
+    int LEVEL = 1;
     
     //---------------------
     ofPoint pt[2];
@@ -1160,10 +1160,6 @@ void testApp::LEVEL_UPDATE_2(){
             thorns_A.setup(world_A, LEVEL, 0);
             thorns_B.setup(world_B, LEVEL, 1);
             timer = 0;
-            thorns_A.destroy();
-            thorns_B.destroy();
-            thorns_A.setup(world_A, 2, 0);
-            thorns_B.setup(world_B, 2, 1);
             loader = LOADER_DONE;}}
     else if(loader == LOADER_TIMER){
         timer++;
@@ -1397,7 +1393,7 @@ void testApp::LEVEL_DRAW_3(){
 }
 //--------------------------------------------------------------
 void testApp::LEVEL_UPDATE_4(){
-    int LEVEL = 1;
+    int LEVEL = 4;
     
     if (loader == LOADER_CUB ) {
         bCue.clear();
@@ -1500,7 +1496,7 @@ void testApp::LEVEL_UPDATE_4(){
 //--------------------------------------------------------------
 void testApp::LEVEL_DRAW_4(){
     //SETUP HERE-----------
-    int LEVEL = 1;
+    int LEVEL = 4;
     
     //---------------------
     ofPoint pt[2];
