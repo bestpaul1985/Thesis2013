@@ -12,34 +12,36 @@
 void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
    
     if (charNum == 0) {
-        url[0] = "levelTxt/A/level1var1_Paul_A.txt";
-        url[1] = "levelTxt/A/level1var2A.txt";
-        url[2] = "levelTxt/A/level1var3A.txt";
+        url[0] = "levelTxt/A/level1.txt";
+        url[1] = "levelTxt/A/level2.txt";
+        url[2] = "levelTxt/A/level1.txt";
+        url[3] = "levelTxt/A/level1.txt";
+        url[4] = "levelTxt/A/level1.txt";
+        url[5] = "levelTxt/A/level1.txt";
         
-        url[3] = "levelTxt/A/level2var1A.txt";
-        url[4] = "levelTxt/A/level2var2A.txt";
-        url[5] = "levelTxt/A/level2var3A.txt";
-
-        url[6] = "levelTxt/A/level04_A.txt";
-        
-        imgs[0] = "bg/ground";
-        imgs[1] = "bg/ground";
-        imgs[2] = "bg/ground";
+        imgs[0] = "bg/ground/level01/A";
+        imgs[1] = "bg/ground/level02/A";
+        imgs[2] = "bg/ground/level01/A";
+        imgs[3] = "bg/ground/level01/A";
+        imgs[4] = "bg/ground/level01/A";
+        imgs[5] = "bg/ground/level01/A";
+        imgs[6] = "bg/ground/level01/A";
     }
     else{
-        url[0] = "levelTxt/B/level1var1_Paul_B.txt";
-        url[1] = "levelTxt/B/level1var2B.txt";
-        url[2] = "levelTxt/B/level1var3B.txt";
+        url[0] = "levelTxt/B/level1.txt";
+        url[1] = "levelTxt/B/level2.txt";
+        url[2] = "levelTxt/B/level1.txt";
+        url[3] = "levelTxt/B/level1.txt";
+        url[4] = "levelTxt/B/level1.txt";
+        url[5] = "levelTxt/B/level1.txt";
         
-        url[3] = "levelTxt/B/level2var1B.txt";
-        url[4] = "levelTxt/B/level2var2B.txt";
-        url[5] = "levelTxt/B/level2var3B.txt";
-
-        url[6] = "levelTxt/B/level04_B.txt";
-        
-        imgs[0] = "bg/ground";
-        imgs[1] = "bg/ground";
-        imgs[2] = "bg/ground";
+        imgs[0] = "bg/ground/level01/B";
+        imgs[1] = "bg/ground/level02/B";
+        imgs[2] = "bg/ground/level01/A";
+        imgs[3] = "bg/ground/level01/A";
+        imgs[4] = "bg/ground/level01/A";
+        imgs[5] = "bg/ground/level01/A";
+        imgs[6] = "bg/ground/level01/A";
     }
     
     vector <string> strLines;
@@ -89,17 +91,13 @@ void ttGround::setup(int levelNum, int charNum, ofxBox2d &world){
 
 
 void ttGround::draw(){
-    ofSetRectMode(OF_RECTMODE_CORNER);
     ofSetColor(255,255);
     for (int i = 0 ; i< bgImg.size(); i++) {
-        
-        float imgMul = bgImg[0].width*(ofGetHeight()/2)/bgImg[0].height;
-       
         if (charNo == 0) {
-            bgImg[i].draw(-502 + (imgMul*i), -456, imgMul, 384);
+            bgImg[i].draw(-512 + 1024*i, -384);
         }
         if (charNo == 1) {
-            bgImg[i].draw(-502 + (imgMul*i), 0, imgMul, 384);
+            bgImg[i].draw(-512 + 1024*i, 384-bgImg[i].getHeight());
         }
     }
     
