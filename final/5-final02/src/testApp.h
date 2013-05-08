@@ -37,6 +37,7 @@ enum _game_loader{
     LOADER_GROUND,
     LOADER_CUB,
     LOADER_ENEMY,
+    LOADER_TIMER,
     LOADER_DONE,
 };
 
@@ -165,6 +166,9 @@ class testApp : public ofxiPhoneApp{
         _game_loader loader;
         int loaderPct;
         ofImage *loaderBG;
+        //elevetor
+        ofImage elevetor[2];
+        ofPoint ele_pos[2];
 };
 
 
