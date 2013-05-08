@@ -256,7 +256,7 @@ void testApp::update(){
                     camera_A.set(0, 0);
                     camera_B.set(0, 0);
                     loader = LOADER_CUB;
-                    condition = LEVEL_2;
+                    condition = LEVEL_4;
                     loaderPct = 0;
                     bCue.clear();
                     for (int i=0; i<3; i++) {
@@ -676,15 +676,15 @@ void testApp::drawScene(int level){
         ofPushMatrix();
         ofTranslate(screen_A);
         ground_A.draw();
-        ground_A.drawPolyLine();
-        thorns_A.draw();
+//        ground_A.drawPolyLine();
+//        thorns_A.draw();
         ofPopMatrix();
         
         ofPushMatrix();
         ofTranslate(screen_B);
         ground_B.draw();
-        ground_B.drawPolyLine();
-        thorns_B.draw();
+//        ground_B.drawPolyLine();
+//        thorns_B.draw();
         ofPopMatrix();
         
         sky.drawCloud();
