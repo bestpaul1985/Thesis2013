@@ -238,32 +238,29 @@ void testApp::contactEnd_worldB(ofxBox2dContactArgs &e){
 }
 //--------------------------------------------------------------
 void testApp::update(){
-    
     switch (condition) {
         case MAIN_MEUN:{
             //ground setup------------------
             if (control.bAllTouch) {
                 timer ++;
                 if (timer>50) {
+  
                     timer = 0;
+                    bStatistics = false;
                     char_A.character.setPosition(0, -200);
                     char_B.character.setPosition(0, 200);
                     char_A.condition = C_STOP;
                     char_B.condition = C_STOP;
                     rope_A.condition = R_NO_USE;
-                    rope_B.condition = R_NO_USE;    
-                    cue_Num = 0;
+                    rope_B.condition = R_NO_USE;
                     camera_A.set(0, 0);
                     camera_B.set(0, 0);
+                    cue_Num = 0;
+                    loaderPct = 0;
                     loader = LOADER_CUB;
                     condition = LEVEL_0;
-                    loaderPct = 0;
-                    bCue.clear();
-                    for (int i=0; i<3; i++) {
-                        bool temCue = true;
-                        bCue.push_back(temCue);}
                     }
-                    cue_Num = 0;
+                   
                 }
         }break;
             
@@ -723,12 +720,11 @@ void testApp::touchDown(ofTouchEventArgs & touch){
    
     if (condition !=MAIN_MEUN) game_menu.touchDown(touch.x, touch.y,touch.id);
     control.touchDown(touch.x, touch.y,touch.id);
-    ofPoint pos(touch.x, touch.y);
+    
 }
 //--------------------------------------------------------------
 void testApp::touchMoved(ofTouchEventArgs & touch){
     control.touchMove(touch.x, touch.y,touch.id);
-    
 }
 //--------------------------------------------------------------
 void testApp::touchUp(ofTouchEventArgs & touch){
@@ -757,6 +753,12 @@ void testApp::position(int level){
     if (level == 1) {
         endPos = 1690;
     }
+
+    if (level == 2) {
+        endPos = 1690;
+    }
+    
+    
         char_A.getPos.x<0? A[0] = true: A[0] =false;
         char_B.getPos.x<0? B[0] = true: B[0] =false;
    
@@ -878,16 +880,19 @@ void testApp::LEVEL_UPDATE_0(){
             cueScreen.push_back(&screen_A);
             loader = LOADER_GROUND;}
         else if(loader == LOADER_GROUND){
+            ground_A.destroy();
+            ground_B.destroy();
+            ground_A.setup(LEVEL, 0, world_A);
+            ground_B.setup(LEVEL, 1, world_B);
+            
+                        loader = LOADER_ENEMY;}
+        else if(loader == LOADER_ENEMY){
             thorns_A.destroy();
             thorns_B.destroy();
             thorns_A.setup(world_A, LEVEL, 0);
             thorns_B.setup(world_B, LEVEL, 1);
-            loader = LOADER_ENEMY;}
-        else if(loader == LOADER_ENEMY){
-            timer++;
-            if (timer>50) {
-                timer = 0;
-                loader = LOADER_DONE;}}
+            loader = LOADER_TIMER;
+        }
         else if(loader == LOADER_TIMER){
             timer++;
             if (timer>50) {
@@ -936,7 +941,7 @@ void testApp::LEVEL_UPDATE_0(){
                     cue_Num = 0;
                     loaderPct = 0;
                     loader = LOADER_CUB;
-                    condition = LEVEL_1;
+                    condition = LEVEL_3;
                 }
             }
             
@@ -1153,20 +1158,20 @@ void testApp::LEVEL_UPDATE_2(){
         ground_B.setup(LEVEL, 1, world_B);
         loader = LOADER_ENEMY;}
     else if(loader == LOADER_ENEMY){
-        timer++;
-        if (timer>50) {
-            thorns_A.destroy();
-            thorns_B.destroy();
-            thorns_A.setup(world_A, LEVEL, 0);
-            thorns_B.setup(world_B, LEVEL, 1);
-            timer = 0;
-            loader = LOADER_DONE;}}
+        ground_A.destroy();
+        ground_B.destroy();
+        ground_A.setup(LEVEL, 0, world_A);
+        ground_B.setup(LEVEL, 1, world_B);
+        loader = LOADER_TIMER;}
     else if(loader == LOADER_TIMER){
+        thorns_A.destroy();
+        thorns_B.destroy();
+        thorns_A.setup(world_A, LEVEL, 0);
+        thorns_B.setup(world_B, LEVEL, 1);
         timer++;
         if (timer>50) {
             timer = 0;
             loader = LOADER_DONE;}}
-    
     if(loader == LOADER_TIMER ||  loader == LOADER_DONE){
         if (!game_menu.show) {
             gamePlay(LEVEL);
@@ -1259,7 +1264,7 @@ void testApp::LEVEL_DRAW_2(){
 //--------------------------------------------------------------
 void testApp::LEVEL_UPDATE_3(){
     int LEVEL = 3;
-    
+    cout<<"3"<<endl;
     if (loader == LOADER_CUB ) {
         bCue.clear();
         cue_Num = 0;
@@ -1267,7 +1272,7 @@ void testApp::LEVEL_UPDATE_3(){
         cueScreen.clear();
         posCue.clear();
         ofPoint  cuePos[3];
-        cuePos[0].set(668, -28);
+        cuePos[0].set(668, 128);
         cuePos[1].set(1273, -186);
         cuePos[2].set(1231, 165);
         for (int i=0; i<3; i++) {
@@ -1288,14 +1293,11 @@ void testApp::LEVEL_UPDATE_3(){
         ground_B.setup(LEVEL, 1, world_B);
         loader = LOADER_ENEMY;}
     else if(loader == LOADER_ENEMY){
-        timer++;
-        if (timer>50) {
-            thorns_A.destroy();
-            thorns_B.destroy();
-            thorns_A.setup(world_A, LEVEL, 0);
-            thorns_B.setup(world_B, LEVEL, 1);
-            timer = 0;
-            loader = LOADER_DONE;}}
+        thorns_A.destroy();
+        thorns_B.destroy();
+        thorns_A.setup(world_A, LEVEL, 0);
+        thorns_B.setup(world_B, LEVEL, 1);
+        loader = LOADER_TIMER;}
     else if(loader == LOADER_TIMER){
         timer++;
         if (timer>50) {
@@ -1344,7 +1346,7 @@ void testApp::LEVEL_UPDATE_3(){
                 cue_Num = 0;
                 loaderPct = 0;
                 loader = LOADER_CUB;
-                condition = LEVEL_4;
+                condition = LEVEL_1;
             }
         }
         

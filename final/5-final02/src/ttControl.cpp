@@ -89,8 +89,7 @@ void ttControl::touchDown(int x, int y, int TouchId){
 
 //------------------------------------------------
 void ttControl::touchMove(int x, int y, int TouchId){
-
-    
+ 
 }
 //-------------------------------------------------
 void ttControl::touchUp(int x, int y, int TouchId){
