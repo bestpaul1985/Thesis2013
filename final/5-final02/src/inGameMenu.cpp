@@ -30,7 +30,7 @@ void inGameMenu::draw(){
 //        ofCircle(orgPos, 200);
         button.draw(ofGetWidth()/2-button.getWidth()/2, ofGetHeight()/2-button.getWidth()/2);
     }else{
-        ofSetColor(255,150);
+        ofSetColor(255,200);
         ofCircle(startPos, 100);
     }
 }

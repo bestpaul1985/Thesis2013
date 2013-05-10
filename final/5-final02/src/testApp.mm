@@ -1214,7 +1214,7 @@ void testApp::LEVEL_UPDATE_2(){
                 cue_Num = 0;
                 loaderPct = 0;
                 loader = LOADER_CUB;
-                condition = LEVEL_3;
+                condition = LEVEL_4;
             }
         }
         
